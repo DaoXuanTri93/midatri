@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @NoArgsConstructor
@@ -21,11 +18,12 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User {
     @Id
-    @Column(name = "id", nullable = false)
+//    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fullname", length = 45)
-    private String fullname;
+    @Column(name = "user_name", length = 45)
+    private String userName;
 
     @Column(name = "phone", length = 45)
     private String phone;
@@ -36,17 +34,14 @@ public class User {
     @Column(name = "password", nullable = false, length = 45)
     private String password;
 
-    @Column(name = "vendor", nullable = false)
-    private Boolean vendor = false;
+    private Boolean vendor;
 
-    @Column(name = "admin", nullable = false)
-    private Boolean admin = false;
+    private Boolean admin;
 
-    @Column(name = "bartender", nullable = false)
-    private Boolean bartender = false;
+    private Boolean bartender;
 
-    @Column(name = "deleted")
-    private Boolean deleted;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean deleted = false;
 
 
 
