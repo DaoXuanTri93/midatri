@@ -21,15 +21,16 @@ import java.time.Instant;
 public class Item {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false, length = 45)
+    @Column(name = "title", length = 45)
     private String title;
 
-    @Column(name = "price", nullable = false, precision = 12)
+    @Column(name = "price", precision = 12)
     private BigDecimal price;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "img")
@@ -50,15 +51,15 @@ public class Item {
     @Column(name = "content")
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name = "deleted")
+    @Column(name = "deleted" , columnDefinition = "boolean default false")
     private Boolean deleted;
 
 

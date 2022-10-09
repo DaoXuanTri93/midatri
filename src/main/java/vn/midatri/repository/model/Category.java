@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class Category {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "category_name", length = 45)
