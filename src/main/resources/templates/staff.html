@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách nhân viên</title>
+    <!-- LAYOUT HEAD
+    <th:block th:replace="layout/head :: head"/> -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <meta name="keywords"-->
+    <!--          content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Ample lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Ample admin lite dashboard bootstrap 5 dashboard template">-->
+    <!--    <meta name="description"-->
+    <!--          content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">-->
+    <!--    <meta name="robots" content="noindex,nofollow">-->
+    <!-- Favicon icon -->
+    <link rel=" icon" type="image/ico" href="/assets/plugins/images/favicon.ico">
+    <!-- Custom CSS -->
+    <link href="/assets/plugins/bower_components/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+        href="/assets/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css">
+    <!-- Custom CSS -->
+    <link href="/assets/css/style.min.css" rel="stylesheet">
+    <link href="/assets/css/appStyle.css" rel="stylesheet">
+
+    <!--    <link href="/assets/DataTables-1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">-->
+    <!--    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/dt-1.11.5/datatables.min.css">-->
+    <link href="/assets/css/preview_image.css" rel="stylesheet">
+    <link href="/assets/fontawesome/css/all.min.css" rel="stylesheet">
+
+    <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet">
+    <!-- END LAYOUT HEAD -->
+</head>
+
+<body>
+    <!-- <div class="preloader"> -->
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+    </div>
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <!-- LAYOUT NAVBAR
+    <th:block th:replace="layout/navBar :: navBar"/> -->
+        <header class="topbar" data-navbarbg="skin5">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header mx-auto" data-logobg="skin6">
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <a class="navbar-brand" href="/home">
+                        <!-- Logo icon -->
+                        <!--                    <b class="logo-icon">-->
+                        <!--                        &lt;!&ndash; Dark Logo icon &ndash;&gt;-->
+                        <!--                        <img src="/assets/plugins/images/logo-icon.png" alt="homepage" />-->
+                        <!--                    </b>-->
+                        <!--End Logo icon -->
+                        <!-- Logo text -->
+                        <span class="logo-text">
+                            <!-- dark Logo text -->
+                            <img src="/assets/plugins/images/logo.png" width="140px" alt="homepage" />
+                        </span>
+                    </a>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+                        href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
+
+                        <!-- ============================================================== -->
+                        <!-- Search -->
+                        <!-- ============================================================== -->
+                        <!--                    <li class=" in">-->
+                        <!--                        <form role="search" class="app-search d-none d-md-block me-3">-->
+                        <!--                            <input type="text" placeholder="Search..." class="form-control mt-0">-->
+                        <!--                            <a href="" class="active">-->
+                        <!--                                <i class="fa fa-search"></i>-->
+                        <!--                            </a>-->
+                        <!--                        </form>-->
+                        <!--                    </li>-->
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <!--                    <li>-->
+                        <!--                        <a class="profile-pic" href="#">-->
+                        <!--                            <img src="/assets/plugins/images/users/varun.jpg" alt="user-img" width="36"-->
+                        <!--                                 class="img-circle"><span class="text-white font-medium">Steave</span></a>-->
+                        <!--                    </li>-->
+                        <li class="dropdown">
+                            <button class="profile-pic btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" id="dropdownMenuButton1">
+                                <img alt="user-img" th:if="${user.avatar == null}"
+                                    src="/assets/plugins/images/users/1.jpg" width="36" class="img-circle">
+                                <img alt="user-img" th:if="${user.avatar != null}" th:src="${user.avatar.fileUrl}"
+                                    width="36" class="img-circle">
+                                <span class="text-white font-medium" th:text="${user.username}"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                                <li><a th:href="@{/profile/__${user.username}__}" class="dropdown-item"> Profile</a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li><a href="javascript:void(0)" class="dropdown-item" id="logout">Logout</a></li>
+                            </ul>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- END LAYOUT NAVBAR -->
+
+
+        <!-- LAYOUT SIDEBAR
+    <th:block th:replace="layout/sideBar :: sideBar"/> -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <!-- User Profile-->
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/home"
+                                aria-expanded="false">
+                                <i class="far fa-clock" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/orders"
+                                aria-expanded="false">
+                                <i class="fa fa-dollar-sign mr-2" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Tạo order</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/bills"
+                                aria-expanded="false">
+                                <i class="fa fa-money-bill" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Quản lý hóa đơn</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/drinks"
+                                aria-expanded="false">
+                                <i class="fa fa-mug-hot" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Quản lý thức uống</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/tables"
+                                aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Quản lý bàn</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/staffs"
+                                aria-expanded="false">
+                                <i class="fa fa-person" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Quản lý nhân viên</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/users"
+                                aria-expanded="false">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Quản lý User</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/discounts"
+                                aria-expanded="false">
+                                <i class="fa fa-tags" aria-hidden="true"></i>
+                                <span class="hide-menu ms-2"> Quản lý mã khuyến mãi</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- END LAYOUT SIDEBAR -->
+
+        <!-- ============================================================== -->
+        <!--Primary Content-->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Quản lý nhân viên</h4>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col text-end">
+                        <button class="btn btn-outline-primary" id="createStaff"><i class="fa fa-plus-square"></i> Tạo
+                            nhân viên mới
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="" id="tblStaff">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="fw-bold fs-5 text-center">Tên nhân viên</th>
+                                    <th scope="col" class="fw-bold fs-5 text-center">Địa chỉ</th>
+                                    <th scope="col" class="fw-bold fs-5 text-center">Ngày sinh</th>
+                                    <th scope="col" class="fw-bold fs-5 text-center">Số điện thoại</th>
+                                    <th scope="col" class="fw-bold fs-5 text-center">Email</th>
+                                    <th scope="col" class="fw-bold fs-5 text-center">Nhiệm vụ</th>
+                                    <!--                            <th scope="col" colspan="3" class="text-center fw-bold fs-5">Thao tác</th>-->
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-end mt-2">
+                        <a class="btn btn-outline-danger" id="deletedStaff" th:href="@{/staffs/deleted}"><i
+                                class="fa fa-trash"></i> Danh sách nhân viên đã xóa
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <th:block th:replace="layout/footer :: footer" />
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <div class="loader hide"></div>
+    </div>
+
+    <!-- LAY OUT SCRIP
+<th:block th:replace="layout/script :: script"/> -->
+<script src="/assets/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/assets/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/app-style-switcher.js"></script>
+    <script src="/assets/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <!--Wave Effects -->
+    <script src="/assets/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/assets/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/assets/js/custom.js"></script>
+    <!--This page JavaScript -->
+    <!--chartis chart-->
+    <script src="/assets/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+    <script src="/assets/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="/assets/js/pages/dashboards/dashboard1.js"></script>
+    <script src="/assets/plugins/jquery.validate-1.19.3.min.js"></script>
+    <script src="/assets/js/jquery.number.js"></script>
+    <script src="/assets/plugins/fontawesome-free-5.15.4-web/css/fontawesome.css/fontawesome.min.css"></script>
+    <script src="/assets/plugins/fontawesome-free-5.15.4-web/css/solid.css/solid.min.css"></script>
+
+    <script src="/assets/plugins/additionalmethods.min.js"></script>
+    <script src="/assets/js/sweetalert.min.js"></script>
+    <script src="/assets/js/moment-v2.91.1.min.js"></script>
+    <script src="/assets/js/jquery.cookie-1.4.1.min.js"></script>
+    <!--    <script src="/assets/DataTables-1.11.5/js/jquery.dataTables.min.js"></script>-->
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<!--    <script src="/assets/DataTables-1.11.5/js/dataTables.bootstrap5.min.js"></script>-->
+
+    <script src="/assets/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+    <script src="/assets/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="/assets/js/pages/dashboards/dashboard1.js"></script>
+    <script src="/assets/plugins/jquery.validate-1.19.3.min.js"></script>
+    <script src="/assets/js/pages/dashboards/sweetalert.js"></script>
+    <script src="/assets/fontawesome/js/all.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"></script>
+
+
+    <script>
+        class App {
+            static formatNumber() {
+                $(".num-space").number(true, 0, ',', ' ')
+                $(".num-point").number(true, 0, ',', '.');
+                $(".num-comma").number(true, 0, ',', ',');
+            }
+
+            static formatNumberSpace(x) {
+                if (x == null) {
+                    return x;
+                }
+                return x.toString().replace(/ /g, "").replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            }
+
+            static removeFormatNumberSpace(x) {
+                if (x == null) {
+                    return x;
+                }
+                return x.toString().replace(/ /g, "")
+            }
+        }
+
+        $.validator.addMethod("pattern", function (value, element, param) {
+            if (this.optional(element)) {
+                return true;
+            }
+            if (typeof param === "string") {
+                param = new RegExp("^(?:" + param + ")$");
+            }
+            return param.test(value);
+        }, "Invalid format.");
+
+        $("#logout").on('click', function () {
+            swal({
+                title: "Bạn có muốn đăng xuất?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.removeCookie('JWT', {path: '/', domain: location.hostname});
+                        window.location = "/";
+                    }
+                    // } else {
+                    //     swal("Your imaginary file is safe!");
+                    // }
+                });
+        });
+    </script>
+    <!-- END LAYOUT SCRIP -->
+
+    <!-- ---------------------------------------------- -->
+    <div class="modal" tabindex="-1" id="modalCreate">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo nhân viên mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateStaff">
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="nameStaffCre" class="form-label fw-bold">Tên nhân viên:</label>
+                                <input type="text" class="form-control" id="nameStaffCre" name="nameStaffCre">
+                            </div>
+                            <div class="col co4">
+                                <label for="addressStaffCre" class="form-label fw-bold">Địa chỉ nhân viên:</label>
+                                <input type="text" class="form-control" id="addressStaffCre" name="addressStaffCre">
+                            </div>
+                            <div class="col co4">
+                                <label for="phoneStaffCre" class="form-label fw-bold">Số điện thoại nhân
+                                    viên:</label>
+                                <input type="text" class="form-control" id="phoneStaffCre" name="phoneStaffCre">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="emailStaffCre" class="form-label fw-bold">Email nhân viên: </label>
+                                <input type="text" class="form-control" id="emailStaffCre" name="emailStaffCre">
+                            </div>
+                            <div class="col co4">
+                                <label for="bodStaffCre" class="form-label fw-bold">Ngày sinh nhân viên:</label>
+                                <input type="date" class="form-control" id="bodStaffCre" name="bodStaffCre">
+                            </div>
+                            <div class="col">
+                                <label for="positionStaffCre" class="form-label fw-bold">Chức vụ nhân viên:</label>
+                                <select class="form-select" id="positionStaffCre">
+
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreate">Tạo chức vụ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnCreate").on("click", function () {
+            $("#frmCreateStaff").trigger("submit");
+        });
+
+        function createStaff() {
+            let date = new Date($("#bodStaffCre").val()).toISOString().slice(0, 10);
+            let staff = new Staff(0, $("#nameStaffCre").val(), $("#addressStaffCre").val(), $("#phoneStaffCre").val(),
+                $("#emailStaffCre").val(), date, $("#positionStaffCre").val());
+            $(".loader").removeClass('hide');
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: "/api/staffs/create",
+                data: JSON.stringify(staff)
+            })
+                .done(function (data) {
+                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function () {
+                        window.location = "/staffs";
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreate .modal-body .modal-alert-danger").html(str);
+                })
+                .always(function () {
+                    $(".loader").addClass('hide');
+                })
+        }
+
+        $("#modalCreate").on('hidden.bs.modal', function () {
+            $("#modalCreate .modal-body .modal-alert-danger").empty();
+            $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreate input.error").removeClass("error");
+            $("#positionStaffCre option").remove();
+            $("#frmCreateStaff")[0].reset();
+        });
+    </script>
+    <!-- MODAL CREATE
+    <th:block th:replace="staffs/modalCreate :: modalCreate" /> -->
+
+    <!-- END MODAL CREATE -->
+<!-- 
+    MODAL EDIT
+    <th:block th:replace="staffs/modalEdit :: modalEdit" /> -->
+    <div class="modal" tabindex="-1" id="modalEdit">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật nhân viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEditStaff">
+                        <div class="row">
+                            <input type="text" class="form-control" id="idStaffEdit" hidden>
+                            <div class="col co4">
+                                <label for="nameStaffEdit" class="form-label fw-bold">Tên nhân viên:</label>
+                                <input type="text" class="form-control" id="nameStaffEdit" name="nameStaffEdit">
+                            </div>
+                            <div class="col co4">
+                                <label for="addressStaffEdit" class="form-label fw-bold">Địa chỉ nhân viên:</label>
+                                <input type="text" class="form-control" id="addressStaffEdit" name="addressStaffEdit">
+                            </div>
+                            <div class="col co4">
+                                <label for="phoneStaffEdit" class="form-label fw-bold">Số điện thoại nhân
+                                    viên:</label>
+                                <input type="text" class="form-control" id="phoneStaffEdit" name="phoneStaffEdit">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="emailStaffEdit" class="form-label fw-bold">Email nhân viên: </label>
+                                <input type="text" class="form-control" id="emailStaffEdit" name="emailStaffEdit">
+                            </div>
+                            <div class="col co4">
+                                <label for="bodStaffEdit" class="form-label fw-bold">Ngày sinh nhân viên:</label>
+                                <input type="date" class="form-control" id="bodStaffEdit" name="bodStaffEdit">
+                            </div>
+                            <div class="col">
+                                <label for="positionStaffEdit" class="form-label fw-bold">Chức vụ nhân viên:</label>
+                                <select class="form-select" id="positionStaffEdit">
+
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEditStaff">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnEditStaff").on("click", function () {
+            $("#frmEditStaff").trigger("submit");
+        });
+
+        function editStaff() {
+            let id = $("#idStaffEdit").val();
+            let name = $("#nameStaffEdit").val().trim();
+            let address = $("#addressStaffEdit").val().trim();
+            let phone = $("#phoneStaffEdit").val().trim();
+            let email = $("#emailStaffEdit").val().trim();
+            let birthDay = new Date($("#bodStaffEdit").val()).toISOString().slice(0, 10);
+            let position = $("#positionStaffEdit").val();
+            let staff = new Staff(id, name, address, phone, email, birthDay, position);
+            $(".loader").removeClass('hide');
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/staffs/edit/" + id,
+                data: JSON.stringify(staff)
+            })
+                .done(function (data) {
+                    swal("Thành công", "Nhân viên đã được cập nhật", "success").then(function () {
+                        window.location = "/staffs";
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalEdit .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalEdit .modal-body .modal-alert-danger").html(str);
+                })
+                .always(function () {
+                    $(".loader").addClass('hide');
+                })
+        }
+
+        $("#modalEdit").on('hidden.bs.modal', function () {
+            $("#modalEdit .modal-body .modal-alert-danger").empty();
+            $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalEdit input.error").removeClass("error");
+            $("#positionStaffEdit option").remove();
+            $("#frmEditStaff")[0].reset();
+        });
+    </script>
+<!-- END MODAL EDIT -->
+
+<!-- MODAL DELETE
+    <th:block th:replace="staffs/modalDelete :: modalDelete" /> -->
+    <div class="modal" tabindex="-1" id="modalDelete">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xóa chức vụ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmDeleteStaff">
+                        <div class="row">
+                            <input type="text" class="form-control" id="idStaffDelete" hidden>
+                            <div class="col co4">
+                                <label for="nameStaffDelete" class="form-label fw-bold">Tên nhân viên:</label>
+                                <input type="text" class="form-control" id="nameStaffDelete" name="nameStaffDelete" readonly>
+                            </div>
+                            <div class="col co4">
+                                <label for="addressStaffDelete" class="form-label fw-bold">Địa chỉ nhân viên:</label>
+                                <input type="text" class="form-control" id="addressStaffDelete" name="addressStaffDelete" readonly>
+                            </div>
+                            <div class="col co4">
+                                <label for="phoneStaffDelete" class="form-label fw-bold">Số điện thoại nhân viên:</label>
+                                <input type="text" class="form-control" id="phoneStaffDelete" name="phoneStaffDelete" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col co4">
+                                <label for="emailStaffDelete" class="form-label fw-bold">Email nhân viên: </label>
+                                <input type="text" class="form-control" id="emailStaffDelete" name="emailStaffDelete" readonly>
+                            </div>
+                            <div class="col co4">
+                                <label for="bodStaffDelete" class="form-label fw-bold">Ngày sinh nhân viên:</label>
+                                <input type="text" class="form-control" id="bodStaffDelete" name="bodStaffDelete" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="positionStaffDelete" class="form-label fw-bold">Chức vụ nhân viên:</label>
+                                <input type="input" class="form-control" id="positionStaffDelete" name="positionStaffDelete" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnDelete">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnDelete").on("click", function () {
+            deleteStaff();
+        });
+        function deleteStaff() {
+            let id = $("#idStaffDelete").val();
+            let name = $("#nameStaffDelete").val().trim();
+            let address = $("#addressStaffDelete").val().trim();
+            let phone = $("#phoneStaffDelete").val().trim();
+            let email =$("#emailStaffDelete").val().trim();
+            let birthDay = new Date($("#bodStaffDelete").val()).toISOString().slice(0, 10);
+            let staff = new Staff(0, name, address, phone, email, birthDay);
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: "/api/staffs/delete/"+ id,
+                data: JSON.stringify(staff)
+            })
+                .done(function (data) {
+                    swal("Thành công", "Nhân viên đã được xóa", "success").then(function() {
+                        window.location = "/staffs";
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalDelete .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalDelete .modal-body .modal-alert-danger").html(str);
+                })
+        }
+        $("#modalDelete").on('hidden.bs.modal', function () {
+            $("#modalDelete .modal-body .modal-alert-danger").empty();
+            $("#modalDelete .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalDelete input.error").removeClass("error");
+            $("#frmCreateStaff")[0].reset();
+        });
+    </script>
+    <!-- END MODAL DELETE -->
+
+    <!-- MODAL CREATE USER
+    <th:block th:replace="staffs/modalCreateUser :: modalCreateUser" /> -->
+    <div class="modal" tabindex="-1" id="modalCreateUser">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo user mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateUserForStaff">
+                        <input type="text" id="idStafftoCre" hidden>
+                        <div class="row">
+                            <div class="col text-center">
+                                <img id="previewImg" width="100px" class="img-circle mb-2"
+                                     src="/assets/plugins/images/users/1.jpg"/>
+                                <input id="uploadCreForStaff" type="file" accept="image/*" hidden />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mt-2 text-center">
+                                <label class="form-label fw-bold">Nhân viên được cấp:</label>
+                                <label class="form-label" id="forStaffName"></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="usernameCreForStaff" class="form-label fw-bold">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="usernameCreForStaff"
+                                       name="usernameCreForStaff">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="passCreForStaff" class="form-label fw-bold">Mật khẩu:</label>
+                                <input type="password" class="form-control" id="passCreForStaff" name="passCreForStaff">
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateUserForStaff">Tạo user</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnCreateUserForStaff").on("click", function () {
+            $("#frmCreateUserForStaff").trigger("submit");
+        });
+
+        function createUserForStaff() {
+            let formData = new FormData();
+            formData.append("username", $("#usernameCreForStaff").val().toString());
+            formData.append("password", $("#passCreForStaff").val().toString());
+            formData.append("id_staff", $("#idStafftoCre").val().toString());
+            if ($("#uploadCreForStaff")[0].files[0] != null) {
+                formData.append("file", $("#uploadCreForStaff")[0].files[0]);
+            }
+            $("div.loader").removeClass("hide");
+            $.ajax({
+                type: "POST",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "/api/users/create",
+                data: formData
+            })
+                .done(function (data) {
+                    swal("Thành công", "User mới đã được tạo", "success").then(function () {
+                        location.reload();
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalCreateUser .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalCreateUser .modal-body .modal-alert-danger").html(str);
+                })
+                .always(function () {
+                    $("div.loader").addClass("hide");
+                })
+        }
+
+        $("#modalCreateUser").on('hidden.bs.modal', function () {
+            $("#modalCreateUser .modal-body .modal-alert-danger").empty();
+            $("#modalCreateUser .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalCreateUser input.error").removeClass("error");
+            $("#frmCreateUserForStaff")[0].reset();
+        });
+
+        $("#previewImg").on('click', function () {
+            $('#uploadCreForStaff').trigger('click');
+        })
+
+        $('#uploadCreForStaff').change(function () {
+            const file = this.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    $('#previewImg').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+    <!-- END MODAL CREATE USER -->
+    <script src="/assets/App/appStaff.js"></script>
+    <script src="/assets/App/validatedStaff.js"></script>
+    <script src="/assets/App/appPosition.js"></script>
+    <script th:inline="javascript">
+        var listStaffs = [[${ staffs }]];
+        let table = $("#tblStaff").DataTable({
+            data: listStaffs,
+            select: true,
+            rowId: 'id',
+            columns: [
+                { data: 'name' },
+                { data: 'address', orderable: false, searchable: false },
+                { data: 'birthDay', orderable: false },
+                { data: 'phone', orderable: false },
+                { data: 'email', orderable: false },
+                { data: 'position.name', searchable: false },
+                {
+                    data: 'id', render: function (data, type, row, meta) {
+                        return `<button class="btn btn-outline-warning editStaff" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
+                            `;
+                    }, orderable: false
+                },
+                {
+                    data: 'id', render: function (data, type, row, meta) {
+                        return `
+                            <button class="btn btn-outline-danger deleteStaff" data-id="${data}"><i class="fa fa-ban"></i></button>
+                            `;
+                    }, orderable: false
+                },
+                {
+                    targets: 2,
+                    data: { hasUser: 'hasUser', id: 'id' },
+                    render: function (data, type, row, meta) {
+                        if (data.hasUser == true) {
+                            return null;
+                        } else
+                            return `<button class="btn btn-outline-danger createUser" data-id="${data.id}"><i class="fa fa-user-plus"></i></button>`;
+                    }, orderable: false
+                }
+            ],
+        });
+    </script>
+    <script>
+        $("#createStaff").on("click", function () {
+            $.ajax({
+                type: "GET",
+                url: "/api/positions"
+            })
+                .done(function (data) {
+                    let str = "";
+                    for (let i = 0; i < data.length; i++) {
+                        let position = data[i];
+                        str += `
+                    <option value="${position.id}">${position.name}</option>
+                `;
+                    }
+                    let limitDay = "";
+                    let today = new Date();
+                    limitDay = `${today.getFullYear() - 16}-12-31`;
+                    $("#bodStaffCre").attr("max", limitDay);
+                    $("#modalCreate").modal("show");
+                    $("#positionStaffCre").prepend(str);
+                })
+                .fail(function () {
+                    window.location = "/errors";
+                })
+
+
+        });
+        handlerActionStaff();
+        handlerActionCreateUser();
+
+        function handlerActionCreateUser() {
+            $(".createUser").on('click', function () {
+                let id = $(this).data('id');
+                $.ajax({
+                    type: "GET",
+                    url: "/api/staffs/" + id
+                })
+                    .done(function (data) {
+                        $("#idStafftoCre").val(data.id);
+                        $("#forStaffName").text(data.name);
+                        $("#modalCreateUser").modal('show');
+                    })
+                    .fail(function () {
+                        console.log("show modal create user fail");
+                    })
+            })
+        };
+
+
+    </script>
+</body>
+
+</html>

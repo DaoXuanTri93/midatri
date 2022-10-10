@@ -9,8 +9,7 @@ import lombok.experimental.Accessors;
 
 import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.dto.user.UserResult;
-import vn.midatri.repository.model.Category;
-import vn.midatri.repository.model.User;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
