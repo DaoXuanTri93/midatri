@@ -1,8 +1,7 @@
-package vn.midatri.service;
+package vn.midatri.util.service;
 
 import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.repository.model.Category;
-import vn.midatri.service.imp.CategoryService;
 
 import java.util.List;
 
