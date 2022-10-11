@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("order")
+@RequestMapping("/order")
 public class OrderController {
     @GetMapping("")
     public ModelAndView showOrderView(){

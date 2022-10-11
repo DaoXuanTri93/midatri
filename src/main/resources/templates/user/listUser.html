@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý user</title>
-    <th:block th:replace="layout/head :: head"/>
+    <th:block th:replace="/layout/head :: head"/>
 </head>
 <body>
 <!--<div class="preloader">-->
@@ -14,8 +14,8 @@
 <!--</div>-->
 <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-    <th:block th:replace="layout/navBar :: navBar"/>
-    <th:block th:replace="layout/sideBar :: sideBar"/>
+    <th:block th:replace="/layout/navBar :: navBar"/>
+    <th:block th:replace="/layout/sideBar :: sideBar"/>
 
     <!-- ============================================================== -->
     <!--Primary Content-->
@@ -47,13 +47,21 @@
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <table class="" id="tblUser">
+                    <table class="display" id="tblUser">
                         <thead>
                         <tr>
-                            <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>
-                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>
-                            <th scope="col" class="fw-bold fs-5">Chức vụ</th>
-                            <th></th>
+<!--                            <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>-->
+<!--                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>-->
+<!--                            <th scope="col" class="fw-bold fs-5">Chức vụ</th>-->
+<!--                            <th></th>-->
+                            <th>#</th>
+                            <th>ADMIN</th>
+                            <th>BARTENDER</th>
+                            <th>DELETED</th>
+                            <th>EMAIL</th>
+                            <th>PHONE</th>
+                            <th>USER NAME</th>
+                            <th>VENDOR</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -88,59 +96,62 @@
 <th:block th:replace="users/modalDelete :: modalDelete"/>
 <script src="/assets/assetsLayout/App/appUser.js"></script>
 <script src="/assets/assetsLayout/App/validatedUser.js"></script>
-<script th:inline="javascript">
-    var listUser = [[${users}]];
-    $("#tblUser").DataTable({
-        data: listUser,
-        columns: [
-            {data: 'username'},
-            {data: 'staff.name'},
-            {data: 'staff.position.name', searchable: false},
-            {
-                data: 'avatar.fileUrl', render: function (data, type, row, meta) {
-                    // var img = data.fileUrl;
-                    if (data == null) {
-                        // return '<img src="/assets/assetsLayout/plugins/images/users/1.jpg" width="50px"/>';
-                    } else {
-                        return `<img src="${data}" width="50px"/>`;
-                    }
-                }, orderable: false, searchable: false
-            },
-            {
-                data: 'id', render: function (data, type, row, meta) {
-                    return `<button class="btn btn-outline-danger deleteUser" data-id="${data}"><i class="fa fa-ban"></i></button>`;
-                }, orderable: false, searchable: false
-            },
-        ],
-    });
-
-</script>
 <script>
-    $("#createUser").on("click", function () {
-        $.ajax({
-            type: "GET",
-            url: "/api/staffs/notuser"
-        })
-            .done(function (data) {
-                let str = "";
-                for (let i = 0; i < data.length; i++) {
-                    let staff = data[i];
-                    str += `
-                    <option value="${staff.id}">${staff.name}</option>
-                `;
-                }
-                $("#staffCre").prepend(str);
-            })
-            .fail(function () {
-                window.location = "/errors";
-            })
-            .always(function () {
-            })
+    // var listUser = [[${users}]];
+    $(document).readOnly(function (){
+        $("#tblUser").DataTable({
+            ajax: {
+                contentType: 'application/json',
+                url: "http://localhost:8080/api/users",
+                dataSrc: 'data'
+            },
+            columns: [
+                {data: 'id'},
+                {data: 'admin'},
+                {data: 'bartender'},
+                {data: 'admin'},
+                {data: 'deleted'},
+                {data: 'email'},
+                {data: 'phone'},
+                {data: 'username'},
+                {data: 'vendor'},
+                console.log('id'),
 
-        $("#modalCreate").modal("show");
-    });
-    handlerActionUser();
-
+                {
+                    data: 'id', render: function (data, type, row, meta) {
+                        return `<button class="btn btn-outline-danger deleteUser" data-id="${data}"><i class="fa fa-ban"></i></button>`;
+                    }, orderable: false, searchable: false
+                },
+            ],
+        });
+    })
 </script>
+<!--<script>-->
+<!--    $("#createUser").on("click", function () {-->
+<!--        $.ajax({-->
+<!--            type: "GET",-->
+<!--            url: "/api/users"-->
+<!--        })-->
+<!--            .done(function (data) {-->
+<!--                let str = "";-->
+<!--                for (let i = 0; i < data.length; i++) {-->
+<!--                    let staff = data[i];-->
+<!--                    str += `-->
+<!--                    <option value="${staff.id}">${staff.name}</option>-->
+<!--                `;-->
+<!--                }-->
+<!--                $("#staffCre").prepend(str);-->
+<!--            })-->
+<!--            .fail(function () {-->
+<!--                window.location = "/errors";-->
+<!--            })-->
+<!--            .always(function () {-->
+<!--            })-->
+
+<!--        $("#modalCreate").modal("show");-->
+<!--    });-->
+<!--    handlerActionUser();-->
+
+<!--</script>-->
 </body>
 </html>

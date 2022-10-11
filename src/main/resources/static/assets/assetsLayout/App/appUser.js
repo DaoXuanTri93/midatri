@@ -1,8 +1,15 @@
 class User{
-    constructor(username, password, id_staff) {
+    constructor(id,admin,bartender,deleted,email,phone,username,vendor ) {
+        this.id = id;
+        this.admin = admin;
+        this.bartender = bartender;
+        // this.password = password;
+        this.deleted = deleted;
+        this.email = email;
+        this.phone = phone;
         this.username = username;
-        this.password = password;
-        this.id_staff = id_staff;
+        this.vendor = vendor;
+        // this.id_staff = id_staff;
     }
 }
 
