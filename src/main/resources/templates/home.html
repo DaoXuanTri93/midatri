@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <th:block th:replace="layout/head :: head"/>
+</head>
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="layout/navBar :: navBar"/>
+    <th:block th:replace="layout/sideBar :: sideBar"/>
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb bg-white">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">Dashboard</h4>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Three charts -->
+            <!-- ============================================================== -->
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Doanh thu hôm nay</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fa fa-dollar-sign text-success" style="font-size: 50px"></i>
+                            </li>
+                            <li class="ms-auto">
+                                <span class="counter text-success" id="incomeToday"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Số bill trong ngày</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fa fa-money-bill text-purple" style="font-size: 50px"></i>
+                            </li>
+                            <li class="ms-auto">
+                                <span class="counter text-purple" id="billToday"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Doanh thu trong tháng</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
+                            </li>
+                            <li class="ms-auto"><span class="counter text-info" id="incomeToMonth"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Số nhân viên hiện tại</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fa fa-person text-cyan" style="font-size: 50px"></i>
+                            </li>
+                            <li class="ms-auto"><span class="counter text-cyan" id="sumStaff"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Số voucher đang áp dụng</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fa fa-tags text-hightlight" style="font-size: 50px"></i>
+                            </li>
+                            <li class="ms-auto"><span class="counter text-hightlight" id="sumVoucher"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--             ==============================================================-->
+            <!--             PRODUCTS YEARLY SALES-->
+            <!--             ==============================================================-->
+            <div class="row">
+                <div class="col mb-2">
+                    <h3 class="box-title">5 thức uống bán chạy nhất</h3>
+                </div>
+                <div class="ct-drinks">
+                    <div class="chartist-tooltip" style="top: -17px; left: -12px;">
+                        <span class="chartist-tooltip-value">6</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <th:block th:replace="layout/footer :: footer"/>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+<th:block th:replace="layout/script :: script"/>
+<script th:inline="javascript">
+    let incomeToday = [[${incomeToday}]] > 0 ? [[${incomeToday}]] : 0;
+    let incomeToMonth = [[${incomeToMonth}]] > 0 ? [[${incomeToMonth}]] : 0;
+    let billToday = [[${billToday}]] > 0 ? [[${billToday}]] : 0;
+
+    let sumStaff = [[${sumStaff}]] > 0 ? [[${sumStaff}]] : 0;
+    let sumVoucher = [[${sumVoucher}]] > 0 ? [[${sumVoucher}]] : 0;
+    $("#incomeToday").text(App.formatNumberSpace(incomeToday));
+    $("#incomeToMonth").text(App.formatNumberSpace(incomeToMonth));
+    $("#billToday").text(billToday);
+    $("#sumStaff").text(sumStaff);
+    $("#sumVoucher").text(sumVoucher);
+    let summaryDrink = [[${listSummary}]];
+    let dink1 = summaryDrink[0];
+    let dink2 = summaryDrink[1];
+    let dink3 = summaryDrink[2];
+    let dink4 = summaryDrink[3];
+    let dink5 = summaryDrink[4];
+    new Chartist.Bar('.ct-drinks', {
+        labels: [dink1.drinkName, dink2.drinkName, dink3.drinkName, dink4.drinkName, dink5.drinkName],
+        series: [parseInt(dink1.summary), parseInt(dink2.summary), parseInt(dink3.summary), parseInt(dink4.summary), parseInt(dink5.summary)]
+        // series: [2,10,20,12,123]
+    }, {
+        distributeSeries: true
+    });
+</script>
+</body>
+</html>
