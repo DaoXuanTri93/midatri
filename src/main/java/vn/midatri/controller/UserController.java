@@ -8,10 +8,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+
     @GetMapping({"", "/"})
     public ModelAndView UserPage(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/userList");
+        modelAndView.setViewName("/order/list");
         return modelAndView;
     }
 }
