@@ -8,21 +8,15 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <a class="navbar-brand" href="/home">
-          <!-- Logo icon -->
-          <!--                    <b class="logo-icon">-->
-          <!--                        &lt;!&ndash; Dark Logo icon &ndash;&gt;-->
-          <!--                        <img src="/assets/plugins/images/logo-icon.png" alt="homepage" />-->
-          <!--                    </b>-->
-          <!--End Logo icon -->
-          <!-- Logo text -->
+
           <span class="logo-text">
-                            <!-- dark Logo text -->
-                            <img src="/assets/plugins/images/logo.png" width="140px" alt="homepage" />
+                            <img src="/assets/assetsLayout/plugins/images/logo.png" width="140px" alt="homepage" />
                         </span>
         </a>
         <!-- ============================================================== -->
         <!-- End Logo -->
         <!-- ============================================================== -->
+
         <!-- ============================================================== -->
         <!-- toggle and nav items -->
         <!-- ============================================================== -->
@@ -39,39 +33,19 @@
         <!-- ============================================================== -->
         <ul class="navbar-nav ms-auto d-flex align-items-center">
 
-          <!-- ============================================================== -->
-          <!-- Search -->
-          <!-- ============================================================== -->
-          <!--                    <li class=" in">-->
-          <!--                        <form role="search" class="app-search d-none d-md-block me-3">-->
-          <!--                            <input type="text" placeholder="Search..." class="form-control mt-0">-->
-          <!--                            <a href="" class="active">-->
-          <!--                                <i class="fa fa-search"></i>-->
-          <!--                            </a>-->
-          <!--                        </form>-->
-          <!--                    </li>-->
-          <!-- ============================================================== -->
-          <!-- User profile and search -->
-          <!-- ============================================================== -->
-          <!--                    <li>-->
-          <!--                        <a class="profile-pic" href="#">-->
-          <!--                            <img src="/assets/plugins/images/users/varun.jpg" alt="user-img" width="36"-->
-          <!--                                 class="img-circle"><span class="text-white font-medium">Steave</span></a>-->
-          <!--                    </li>-->
-          <li class="dropdown">
-            <button class="profile-pic btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton1">
-              <img alt="user-img" th:if="${user.avatar == null}" src="/assets/plugins/images/users/1.jpg" width="36" class="img-circle">
-              <img alt="user-img" th:if="${user.avatar != null}" th:src="${user.avatar.fileUrl}" width="36" class="img-circle">
-              <span class="text-white font-medium" th:text="${user.username}"></span></button>
-            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
-              <li><a th:href="@{/profile/__${user.username}__}" class="dropdown-item"> Profile</a></li>
-              <li class="dropdown-divider"></li>
-              <li><a href="javascript:void(0)" class="dropdown-item" id="logout">Logout</a></li>
-            </ul>
-          </li>
-          <!-- ============================================================== -->
-          <!-- User profile and search -->
-          <!-- ============================================================== -->
+
+<!--          <li class="dropdown">-->
+<!--            <button class="profile-pic btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="dropdownMenuButton1">-->
+<!--              <img alt="user-img" th:if="${user.avatar == null}" src="/assets/assetsLayout/plugins/images/users/1.jpg" width="36" class="img-circle">-->
+<!--              <img alt="user-img" th:if="${user.avatar != null}" th:src="${user.avatar.fileUrl}" width="36" class="img-circle">-->
+<!--              <span class="text-white font-medium" th:text="${user.username}"></span></button>-->
+<!--            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">-->
+<!--              <li><a th:href="@{/profile/__${user.username}__}" class="dropdown-item"> Profile</a></li>-->
+<!--              <li class="dropdown-divider"></li>-->
+<!--              <li><a href="javascript:void(0)" class="dropdown-item" id="logout">Logout</a></li>-->
+<!--            </ul>-->
+<!--          </li>-->
+
         </ul>
       </div>
     </nav>
