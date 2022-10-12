@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface IItemService {
     List<Item> findAllByDeleted(Boolean deleted);
+//    List<Item> findByIdCategory(Long id);
+    List<Item> findAllByCategoryId(Long id);
     Item findById(Long id);
 
     ItemResult save(ItemCreate itemCreate);

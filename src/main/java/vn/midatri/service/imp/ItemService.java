@@ -29,6 +29,16 @@ public class ItemService implements IItemService {
     }
 
     @Override
+    public List<Item> findAllByCategoryId(Long id) {
+        return itemRepository.findAllByCategoryId(id);
+    }
+
+//    @Override
+//    public List<Item> findByIdCategory(Long id) {
+//        return itemRepository.findByIdCategory(id);
+//    }
+
+    @Override
     public Item findById(Long id) {
         return itemRepository.findById(id).get();
     }

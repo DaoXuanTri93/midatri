@@ -22,11 +22,8 @@ public class CategoryService  implements ICategoryService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public List<CategoryResult> findAll() {
-        return categoryRepository.findAll()
-                .stream()
-                .map(category -> categoryMapper.toDTO(category))
-                .collect(Collectors.toList());
+    public List<Category> findAll() {
+        return categoryRepository.findAll();
     }
 
     @Override
