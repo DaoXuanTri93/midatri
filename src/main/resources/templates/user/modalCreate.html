@@ -21,22 +21,29 @@
             </div>
             <div class="row">
               <div class="col col-md-6">
-                <label for="usernameCre" class="form-label fw-bold">Tên đăng nhập:</label>
-                <input type="text" class="form-control" id="usernameCre" name="usernameCre">
+                <label for="userName" class="form-label fw-bold">Tên đăng nhập:</label>
+                <input type="text" class="form-control" id="userName" name="userName">
               </div>
               <div class="col col-md-6">
-                <label for="passCre" class="form-label fw-bold">Mật khẩu:</label>
-                <input type="password" class="form-control" id="passCre" name="passCre">
+                <label for="password" class="form-label fw-bold">Mật khẩu:</label>
+                <input type="password" class="form-control" id="password" name="password">
               </div>
             </div>
             <div class="row">
-              <div class="col">
-                <label for="staffCre" class="form-label fw-bold">Nhân viên được cấp:</label>
-                <select class="form-select" id="staffCre">
+<!--              <div class="col">-->
+<!--                <label for="staffCre" class="form-label fw-bold">Nhân viên được cấp:</label>-->
+<!--                <select class="form-select" id="staffCre">-->
 
-                </select>
-              </div>
-
+<!--                </select>-->
+<!--              </div>-->
+<!--              <div class="col col-md-6">-->
+<!--                <label for="phoneCre" class="form-label fw-bold">Số Điện Thoại:</label>-->
+<!--                <input type="tel" class="form-control" id="phoneCre" name="phoneCre">-->
+<!--              </div>-->
+<!--              <div class="col col-md-6">-->
+<!--                <label for="emailCre" class="form-label fw-bold">Email:</label>-->
+<!--                <input type="email" class="form-control" id="emailCre" name="emailCre">-->
+<!--              </div>-->
             </div>
           </form>
         </div>
@@ -50,24 +57,24 @@
 
   <script>
     $("#btnCreateUser").on("click", function () {
+      // createUser();
       $("#frmCreateUser").trigger("submit");
     });
 
     function createUser() {
       let formData = new FormData();
-      formData.append("username", $("#usernameCre").val().toString());
-      formData.append("password", $("#passCre").val().toString());
-      formData.append("id_staff", $("#staffCre").val().toString());
-      if ($("#uploadCre")[0].files[0] != null) {
-        formData.append("file", $("#uploadCre")[0].files[0]);
-      }
+      formData.append("userName", $("#userName").val().toString());
+      formData.append("password", $("#password").val().toString());
+      // if ($("#uploadCre")[0].files[0] != null) {
+      //   formData.append("file", $("#uploadCre")[0].files[0]);
+      // }
       $("div.loader").removeClass("hide");
       $.ajax({
         type: "POST",
         contentType: false,
         cache: false,
         processData: false,
-        url: "/api/users/create",
+        url: "http://localhost:8080/api/users/create",
         data: formData
       })
               .done(function (data) {
@@ -76,45 +83,46 @@
                 });
               })
               .fail(function (jqXHR) {
-                let str = ``;
-                if (jqXHR.responseJSON) {
-                  $.each(jqXHR.responseJSON, function (key, value) {
-                    str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
-                    $("#" + key).addClass("error");
-                  });
-                } else {
-                  str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                }
+                // let str = ``;
+                // if (jqXHR.responseJSON) {
+                //   $.each(jqXHR.responseJSON, function (key, value) {
+                //     str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                //     $("#" + key).addClass("error");
+                //   });
+                // } else {
+                //   str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                // }
                 $("#modalCreate .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
                 $("#modalCreate .modal-body .modal-alert-danger").html(str);
               })
               .always(function () {
-                $("div.loader").addClass("hide");
+                // $("div.loader").addClass("hide");
               })
     }
+    // createUser();
 
-    $("#modalCreate").on('hidden.bs.modal', function () {
-      $("#modalCreate .modal-body .modal-alert-danger").empty();
-      $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
-      $("#modalCreate input.error").removeClass("error");
-      $("#staffCre option").remove();
-      $("#frmCreateUser")[0].reset();
-    });
+    // $("#modalCreate").on('hidden.bs.modal', function () {
+    //   $("#modalCreate .modal-body .modal-alert-danger").empty();
+    //   $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+    //   $("#modalCreate input.error").removeClass("error");
+    //   $("#staffCre option").remove();
+    //   $("#frmCreateUser")[0].reset();
+    // });
 
-    $("#previewImg").on('click', function () {
-      $('#uploadCre').trigger('click');
-    })
+    // $("#previewImg").on('click', function () {
+    //   $('#uploadCre').trigger('click');
+    // })
 
-    $('#uploadCre').change(function(){
-      const file = this.files[0];
-      if (file){
-        let reader = new FileReader();
-        reader.onload = function(event){
-          $('#previewImg').attr('src', event.target.result);
-        }
-        reader.readAsDataURL(file);
-      }
-    });
+    // $('#uploadCre').change(function(){
+    //   const file = this.files[0];
+    //   if (file){
+    //     let reader = new FileReader();
+    //     reader.onload = function(event){
+    //       $('#previewImg').attr('src', event.target.result);
+    //     }
+    //     reader.readAsDataURL(file);
+    //   }
+    // });
 
   </script>
 

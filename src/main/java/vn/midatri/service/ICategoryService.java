@@ -1,4 +1,4 @@
-package vn.midatri.util.service;
+package vn.midatri.service;
 
 import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.repository.model.Category;

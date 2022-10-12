@@ -1,4 +1,4 @@
-package vn.midatri.util.service;
+package vn.midatri.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

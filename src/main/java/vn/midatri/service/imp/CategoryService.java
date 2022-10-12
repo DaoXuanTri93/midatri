@@ -1,4 +1,4 @@
-package vn.midatri.util.service.imp;
+package vn.midatri.service.imp;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,9 @@ import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.repository.CategoryRepository;
 import vn.midatri.repository.model.Category;
-import vn.midatri.util.service.ICategoryService;
+import vn.midatri.service.ICategoryService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

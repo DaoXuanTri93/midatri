@@ -1,4 +1,4 @@
-package vn.midatri.util.service.imp;
+package vn.midatri.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import vn.midatri.dto.user.UserResult;
 import vn.midatri.mapper.UserMapper;
 import vn.midatri.repository.UserRepository;
 import vn.midatri.repository.model.User;
-import vn.midatri.util.service.IUserService;
+import vn.midatri.service.IUserService;
 
 import java.util.List;
 import java.util.stream.Collectors;

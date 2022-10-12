@@ -1,4 +1,4 @@
-package vn.midatri.util.service.imp;
+package vn.midatri.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
 import vn.midatri.repository.model.Item;
-import vn.midatri.util.service.IItemService;
+import vn.midatri.service.IItemService;
 
 import java.util.List;
 

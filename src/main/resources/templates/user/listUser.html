@@ -50,10 +50,6 @@
                     <table class="display" id="tblUser">
                         <thead>
                         <tr class="color-text">
-<!--                            <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>-->
-<!--                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>-->
-<!--                            <th scope="col" class="fw-bold fs-5">Chức vụ</th>-->
-<!--                            <th></th>-->
                             <th>#</th>
                             <th>ADMIN</th>
                             <th>BARTENDER</th>
@@ -109,8 +105,6 @@
                 {data: 'id'},
                 {data: 'admin'},
                 {data: 'bartender'},
-                // {data: 'admin'},
-                // {data: 'deleted'},
                 {data: 'email'},
                 {data: 'phone'},
                 {data: 'userName'},
@@ -128,31 +122,37 @@
     })
 </script>
 <script>
-    $("#createUser").on("click", function () {
-        alert("aaaa")
-        $.ajax({
-            type: "GET",
-            url: "/api/users"
-        })
-            .done(function (data) {
-                let str = "";
-                for (let i = 0; i < data.length; i++) {
-                    let staff = data[i];
-                    str += `
-                    <option value="${staff.id}">${staff.name}</option>
-                `;
-                }
-                $("#staffCre").prepend(str);
-            })
-            .fail(function () {
-                window.location = "/errors";
-            })
-            .always(function () {
-            })
-
+    $("#createUser").on("click",function () {
         $("#modalCreate").modal("show");
-    });
-    handlerActionUser();
+        // createUser();
+    })
+    // $("#createUser").on("click", function () {
+    //     $.ajax({
+    //         contentType: 'application/json',
+    //         type: "GET",
+    //         url: "http://localhost:8080/api/users",
+    //         // dataSrc : ''
+    //     })
+    //         .done(function (data) {
+    //             // let str = "";
+    //             // for (let i = 0; i < data.length; i++) {
+    //             //     let staff = data[i];
+    //             //     str += `
+    //             //     <option value="${staff.id}">${staff.name}</option>
+    //             // `;
+    //             // }
+    //             // $("#staffCre").prepend(str);
+    //             // console.log(data)
+    //         })
+    //         .fail(function () {
+    //             window.location = "/errors";
+    //         })
+    //         .always(function () {
+    //         })
+    //
+    //     $("#modalCreate").modal("show");
+    // });
+    // handlerActionUser();
 
 </script>
 </body>
