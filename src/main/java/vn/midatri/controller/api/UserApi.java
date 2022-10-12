@@ -11,7 +11,7 @@ import vn.midatri.dto.user.UserRegister;
 import vn.midatri.dto.user.UserResult;
 import vn.midatri.mapper.UserMapper;
 import vn.midatri.repository.model.User;
-import vn.midatri.util.service.IUserService;
+import vn.midatri.service.IUserService;
 import vn.midatri.util.AppUtils;
 
 import java.util.List;

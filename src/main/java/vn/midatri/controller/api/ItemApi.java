@@ -11,8 +11,8 @@ import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.mapper.UserMapper;
 import vn.midatri.repository.model.Item;
-import vn.midatri.util.service.ICategoryService;
-import vn.midatri.util.service.IItemService;
+import vn.midatri.service.ICategoryService;
+import vn.midatri.service.IItemService;
 
 import java.util.List;
 
