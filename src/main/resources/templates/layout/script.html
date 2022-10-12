@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="script">
+  <script src="/assets/assetsLayout/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="/assets/assetsLayout/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/assetsLayout/js/app-style-switcher.js"></script>
+  <script src="/assets/assetsLayout/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js"></script>
+  <!--Wave Effects -->
+  <script src="/assets/assetsLayout/js/waves.js"></script>
+  <!--Menu sidebar -->
+  <script src="/assets/assetsLayout/js/sidebarmenu.js"></script>
+  <!--Custom JavaScript -->
+  <script src="/assets/assetsLayout/js/custom.js"></script>
+
+  <!-- Datatables -->
+  <script src="/assets/assetsLayout/datatables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="/assets/assetsLayout/datatables/Buttons-2.2.3/js/dataTables.buttons.min.js"></script>
+  <script src="/assets/assetsLayout/datatables/Buttons-2.2.3/js/buttons.bootstrap4.min.js"></script>
+  <script src="/assets/assetsLayout/datatables/DataTables-1.12.1/js/dataTables.bootstrap4.min.js"></script>
+  <script src="/assets/assetsLayout/datatables/Responsive-2.3.0/js/dataTables.responsive.min.js"></script>
+  <script src="/assets/assetsLayout/datatables/Responsive-2.3.0/js/responsive.bootstrap4.min.js"></script>
+
+  <!--This page JavaScript -->
+  <!--chartis chart-->
+  <script src="/assets/assetsLayout/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+  <script src="/assets/assetsLayout/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+  <script src="/assets/assetsLayout/js/pages/dashboards/dashboard1.js"></script>
+  <script src="/assets/assetsLayout/plugins/jquery.validate-1.19.3.min.js"></script>
+  <script src="/assets/assetsLayout/js/jquery.number.js"></script>
+
+  <script src="/assets/assetsLayout/plugins/fontawesome-free-5.15.4-web/css/fontawesome.min.css"></script>
+  <script src="/assets/assetsLayout/plugins/fontawesome-free-5.15.4-web/css/solid.min.css"></script>
+
+  <script src="/assets/assetsLayout/plugins/additionalmethods.min.js"></script>
+  <script src="/assets/assetsLayout/js/sweetalert.min.js"></script>
+  <script src="/assets/assetsLayout/js/moment-v2.91.1.min.js"></script>
+  <script src="/assets/assetsLayout/js/jquery.cookie-1.4.1.min.js"></script>
+
+<!--  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>-->
+
+  <script src="/assets/assetsLayout/plugins/bower_components/chartist/dist/chartist.min.js"></script>
+  <script src="/assets/assetsLayout/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+  <script src="/assets/assetsLayout/js/pages/dashboards/dashboard1.js"></script>
+  <script src="/assets/assetsLayout/plugins/jquery.validate-1.19.3.min.js"></script>
+  <script src="/assets/assetsLayout/js/pages/dashboards/sweetalert.js"></script>
+  <script src="/assets/assetsLayout/fontawesome/js/all.min.js"></script>
+
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<!--<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>-->
+<!--  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>-->
+<!--  <script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.colVis.min.js"></script>-->
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>-->
+
+
+  <script>
+    class App {
+      static formatNumber() {
+        $(".num-space").number(true, 0, ',', ' ')
+        $(".num-point").number(true, 0, ',', '.');
+        $(".num-comma").number(true, 0, ',', ',');
+      }
+
+      static formatNumberSpace(x) {
+        if (x == null) {
+          return x;
+        }
+        return x.toString().replace(/ /g, "").replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      }
+
+      static removeFormatNumberSpace(x) {
+        if (x == null) {
+          return x;
+        }
+        return x.toString().replace(/ /g, "")
+      }
+    }
+
+    $.validator.addMethod("pattern", function (value, element, param) {
+      if (this.optional(element)) {
+        return true;
+      }
+      if (typeof param === "string") {
+        param = new RegExp("^(?:" + param + ")$");
+      }
+      return param.test(value);
+    }, "Invalid format.");
+
+    $("#logout").on('click', function () {
+      swal({
+        title: "Bạn có muốn đăng xuất?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+              .then((willDelete) => {
+                if (willDelete) {
+                  $.removeCookie('JWT', {path: '/', domain: location.hostname});
+                  window.location = "/";
+                }
+                // } else {
+                //     swal("Your imaginary file is safe!");
+                // }
+              });
+    });
+  </script>
+</th:block>
