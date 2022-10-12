@@ -1,4 +1,4 @@
-package vn.midatri.service;
+package vn.midatri.util.service;
 
 
 import vn.midatri.dto.item.ItemCreate;

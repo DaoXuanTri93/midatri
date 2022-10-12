@@ -10,8 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping({"/home", "/" , ""})
 public class HomeController {
 
-
-
     @GetMapping("")
     public ModelAndView toDashboard(){
 
@@ -19,4 +17,5 @@ public class HomeController {
         return  new ModelAndView("home");
 
     }
+
 }
