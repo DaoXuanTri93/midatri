@@ -37,7 +37,7 @@
         <!-- ============================================================== -->
         <!-- Container fluid  -->
         <!-- ============================================================== -->
-        <div class="container-fluid">
+        <div class="container-fluid bgr-color">
             <div class="row mb-2">
                 <div class="col text-end">
                     <button class="btn btn-outline-primary" id="createUser"><i class="fa fa-plus-square"></i> Tạo
@@ -49,7 +49,7 @@
                 <div class="col text-center">
                     <table class="display" id="tblUser">
                         <thead>
-                        <tr>
+                        <tr class="color-text">
 <!--                            <th scope="col" class="fw-bold fs-5">Tên đăng nhập</th>-->
 <!--                            <th scope="col" class="fw-bold fs-5">Tên nhân viên</th>-->
 <!--                            <th scope="col" class="fw-bold fs-5">Chức vụ</th>-->
@@ -57,7 +57,6 @@
                             <th>#</th>
                             <th>ADMIN</th>
                             <th>BARTENDER</th>
-                            <th>DELETED</th>
                             <th>EMAIL</th>
                             <th>PHONE</th>
                             <th>USER NAME</th>
@@ -91,67 +90,70 @@
 </div>
 <div class="loader hide"></div>
 <th:block th:replace="layout/script :: script"/>
-<th:block th:replace="users/modalCreate :: modalCreate"/>
-<th:block th:replace="users/modalEdit :: modalEdit"/>
-<th:block th:replace="users/modalDelete :: modalDelete"/>
-<script src="/assets/assetsLayout/App/appUser.js"></script>
-<script src="/assets/assetsLayout/App/validatedUser.js"></script>
+<th:block th:replace="user/modalCreate :: modalCreate"/>
+<!--<th:block th:replace="users/modalEdit :: modalEdit"/>-->
+<!--<th:block th:replace="users/modalDelete :: modalDelete"/>-->
+<!--<script src="/assets/assetsLayout/App/appUser.js"></script>-->
+<!--<script src="/assets/assetsLayout/App/validatedUser.js"></script>-->
 <script>
     // var listUser = [[${users}]];
-    $(document).readOnly(function (){
+    $(document).ready(function (){
         $("#tblUser").DataTable({
             ajax: {
                 contentType: 'application/json',
                 url: "http://localhost:8080/api/users",
-                dataSrc: 'data'
+                type : "GET",
+                dataSrc: ''
             },
             columns: [
                 {data: 'id'},
                 {data: 'admin'},
                 {data: 'bartender'},
-                {data: 'admin'},
-                {data: 'deleted'},
+                // {data: 'admin'},
+                // {data: 'deleted'},
                 {data: 'email'},
                 {data: 'phone'},
-                {data: 'username'},
+                {data: 'userName'},
                 {data: 'vendor'},
-                console.log('id'),
 
-                {
-                    data: 'id', render: function (data, type, row, meta) {
-                        return `<button class="btn btn-outline-danger deleteUser" data-id="${data}"><i class="fa fa-ban"></i></button>`;
-                    }, orderable: false, searchable: false
-                },
+
+                // {
+                //     data: 'id', render: function (data, type, row, meta) {
+                //         return `<button class="btn btn-outline-danger deleteUser" data-id="${data}"><i class="fa fa-ban"></i></button>`;
+                //     }, orderable: false, searchable: false
+                // },
             ],
+
         });
     })
 </script>
-<!--<script>-->
-<!--    $("#createUser").on("click", function () {-->
-<!--        $.ajax({-->
-<!--            type: "GET",-->
-<!--            url: "/api/users"-->
-<!--        })-->
-<!--            .done(function (data) {-->
-<!--                let str = "";-->
-<!--                for (let i = 0; i < data.length; i++) {-->
-<!--                    let staff = data[i];-->
-<!--                    str += `-->
-<!--                    <option value="${staff.id}">${staff.name}</option>-->
-<!--                `;-->
-<!--                }-->
-<!--                $("#staffCre").prepend(str);-->
-<!--            })-->
-<!--            .fail(function () {-->
-<!--                window.location = "/errors";-->
-<!--            })-->
-<!--            .always(function () {-->
-<!--            })-->
+<script>
+    $("#createUser").on("click", function () {
+        alert("aaaa")
+        $.ajax({
+            type: "GET",
+            url: "/api/users"
+        })
+            .done(function (data) {
+                let str = "";
+                for (let i = 0; i < data.length; i++) {
+                    let staff = data[i];
+                    str += `
+                    <option value="${staff.id}">${staff.name}</option>
+                `;
+                }
+                $("#staffCre").prepend(str);
+            })
+            .fail(function () {
+                window.location = "/errors";
+            })
+            .always(function () {
+            })
 
-<!--        $("#modalCreate").modal("show");-->
-<!--    });-->
-<!--    handlerActionUser();-->
+        $("#modalCreate").modal("show");
+    });
+    handlerActionUser();
 
-<!--</script>-->
+</script>
 </body>
 </html>

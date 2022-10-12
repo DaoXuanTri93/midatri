@@ -1,5 +1,5 @@
 class User{
-    constructor(id,admin,bartender,deleted,email,phone,username,vendor ) {
+    constructor(id,admin,bartender,deleted,email,phone,userName,vendor ) {
         this.id = id;
         this.admin = admin;
         this.bartender = bartender;
@@ -7,7 +7,7 @@ class User{
         this.deleted = deleted;
         this.email = email;
         this.phone = phone;
-        this.username = username;
+        this.userName = userName;
         this.vendor = vendor;
         // this.id_staff = id_staff;
     }
