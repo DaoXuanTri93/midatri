@@ -38,11 +38,13 @@ public class ItemApi {
     @GetMapping()
     public ResponseEntity<?> renderitem(){
         List<Item> itemList = itemService.findAllByDeleted(false);
-
         return new ResponseEntity<>(itemList, HttpStatus.OK);
     }
-
-
+    @GetMapping("/category/{id}")
+    public ResponseEntity<?> findByIdCategory(@PathVariable Long id){
+        List<Item> item = itemService.findAllByCategoryId(id);
+        return new ResponseEntity<>(item, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdItem(@PathVariable Long id){
         Item item = itemService.findById(id);
