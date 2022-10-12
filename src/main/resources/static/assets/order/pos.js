@@ -13,7 +13,7 @@ function renderCategory() {
             let str = `
                     <div class="swiper-slide product-category-item-parent render-category" data-id="${item.id}"
                     onclick="handleFilterCategory(${item.id})">
-                        <a class="btn btn-text-gray" onclick="handleActive(${item.id})" >${item.categoryName}</a>
+                        <a class="btn btn-text-gray" >${item.categoryName}</a>
                     </div>
                 `
             $("#renderCategory").append(str);
@@ -24,9 +24,6 @@ function renderCategory() {
     }).fail(error => {
 
     })
-}
-function handleActive(id){
-    $(".btn-text-gray").addClass('active');
 }
 function renderProducts() {
     $("#render-product li").remove();
@@ -85,6 +82,7 @@ function handleFilterCategory(categoryId) {
                         </a>
                         </li>
                         `
+            $("#render-product").append(str);
             handelRemoveEvent();
         })
 
