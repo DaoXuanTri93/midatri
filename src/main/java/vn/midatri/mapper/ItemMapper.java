@@ -24,6 +24,7 @@ public class ItemMapper {
         item.setContent(itemCreate.getContent());
         item.setCategory(itemCreate.getCategory_id());
         item.setUser(itemCreate.getUser_id());
+        item.setDeleted(itemCreate.isDeleted());
         return item;
     }
 
@@ -37,6 +38,7 @@ public class ItemMapper {
         itemResult.setContent(item.getContent());
         itemResult.setCategoryResult(categoryMapper.toDTO(item.getCategory()));
         itemResult.setUserResult(userMapper.toDTO(item.getUser()));
+        itemResult.setDeleted(item.isDeleted());
         return itemResult;
     }
 

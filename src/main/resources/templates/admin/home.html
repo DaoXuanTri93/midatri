@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <th:block th:replace="layout/head :: head"/>
+    <th:block th:replace="/admin/layout/head::head"/>
 </head>
 <body>
 <div class="preloader">
@@ -14,8 +14,7 @@
 </div>
 <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-    <th:block th:replace="layout/navBar :: navBar"/>
-<!--    <th:block th:replace="layout/sideBar :: sideBar"/>-->
+    <th:block th:replace="/admin/layout/navBar :: navBar"/>
 
     <!-- ============================================================== -->
     <!--Primary Content-->
@@ -125,13 +124,13 @@
         <!-- ============================================================== -->
         <!-- footer -->
         <!-- ============================================================== -->
-        <th:block th:replace="layout/footer :: footer"/>
+        <th:block th:replace="/admin/layout/footer :: footer"/>
         <!-- ============================================================== -->
         <!-- End footer -->
         <!-- ============================================================== -->
     </div>
 </div>
-<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="/admin/layout/script :: script"/>
 <script th:inline="javascript">
     let incomeToday = [[${incomeToday}]] > 0 ? [[${incomeToday}]] : 0;
     let incomeToMonth = [[${incomeToMonth}]] > 0 ? [[${incomeToMonth}]] : 0;

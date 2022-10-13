@@ -24,6 +24,6 @@ public class ItemResult {
     private String content;
     private CategoryResult categoryResult;
     private UserResult userResult;
-
+    private boolean deleted;
 }
 

@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.dto.item.ItemCreate;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.mapper.UserMapper;
+import vn.midatri.repository.model.Category;
 import vn.midatri.repository.model.Item;
 import vn.midatri.service.ICategoryService;
 import vn.midatri.service.IItemService;
@@ -63,6 +65,7 @@ public class ItemApi {
     }
     @PostMapping("/create")
     public ResponseEntity<?> createItem(@RequestBody ItemCreate itemCreate){
+
         ItemResult itemResult = itemService.save(itemCreate);
         return new ResponseEntity<>(itemResult, HttpStatus.OK);
     }

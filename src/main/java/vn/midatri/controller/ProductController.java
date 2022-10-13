@@ -17,7 +17,7 @@ public class ProductController {
     @GetMapping("")
     public ModelAndView UserPage(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/product/list");
+        modelAndView.setViewName("/admin/product/list");
         return modelAndView;
     }
 //    @GetMapping
