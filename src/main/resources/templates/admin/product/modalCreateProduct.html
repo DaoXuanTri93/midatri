@@ -31,6 +31,11 @@
                                 <input type="text" class="form-control num-space" id="priceProductCreate"
                                        name="priceProductCreate">
                             </div>
+                            <div class="mb-3 col-6">
+                                <label for="priceProductCreate" class="form-label fw-bold">Số Lượng thức uống</label>
+                                <input type="text" class="form-control num-space" id="quantityProductCreate"
+                                       name="quantityProductCreate">
+                            </div>
                             <div class="mb-3 col">
                                 <label for="catalogsCreate" class="form-label fw-bold">Danh mục</label>
                                 <select class="form-control" id="catalogsCreate">
@@ -82,6 +87,7 @@
             let user = new User();
             product.title = $("#productNameCreate").val();
             product.price = $("#priceProductCreate").val();
+            product.quantity=$("#quantityProductCreate").val();
             product.content = $("#desProductCreate").val();
             product.category_id = {
                 id: $("#catalogsCreate").val()
