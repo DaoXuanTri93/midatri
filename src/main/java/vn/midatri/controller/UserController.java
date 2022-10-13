@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping()
     public ModelAndView UserPage(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user/listUser");
+        modelAndView.setViewName("user/list");
         return modelAndView;
     }
 }

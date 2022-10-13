@@ -10,8 +10,10 @@ public class UserMapper {
 
     public User toUserRegister(UserRegister userRegister){
         User user = new User();
-        user.setUserName(userRegister.getUserName());
+        user.setUserName(userRegister.getUsername());
         user.setPassword(userRegister.getPassword());
+        user.setEmail(userRegister.getEmail());
+        user.setPhone(userRegister.getPhone());
         return user;
     }
 
