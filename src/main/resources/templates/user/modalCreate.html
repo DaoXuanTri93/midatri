@@ -30,6 +30,14 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col col-md-6">
+                                <label for="phone" class="form-label fw-bold">Phone:</label>
+                                <input type="phone" class="form-control" id="phone" name="password">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="email" class="form-label fw-bold">Email:</label>
+                                <input type="email" class="form-control" id="email" name="password">
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -44,12 +52,16 @@
     <script>
         $("#btnCreateUser").on("click", function () {
             createUser();
+            $("#btnCreateUser").trigger("submit");
         });
 
         function createUser() {
             let newUser = {
                 username: $('#userName').val(),
-                password: $('#password').val()
+                password: $('#password').val(),
+                phone: $('#phone').val(),
+                email: $('#email').val()
+
             }
             console.log(newUser);
             api.user.create(
@@ -61,6 +73,9 @@
                     <tr id="tr_${item.id}">
                        <th>${item.userName}</th>
                        <th>${item.password}</th>
+                       <th>${item.phone}</th>
+                       <th>${item.email}</th>
+
                     </tr>
                         `;
                         $("tblUser tbody").append(str);

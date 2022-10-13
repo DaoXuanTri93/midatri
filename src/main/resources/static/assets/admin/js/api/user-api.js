@@ -21,6 +21,7 @@ function UserAPI() {
         })
             .done((data) => {
                 done(data);
+                window.location.href="/user";
             })
             .fail((jqXHR) => {
                 fail(jqXHR);

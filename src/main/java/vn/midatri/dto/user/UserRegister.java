@@ -15,4 +15,6 @@ public class UserRegister {
     private String username;
     @NotBlank(message = "Khong duoc bo trong password")
     private String password;
+    private String phone;
+    private String email;
 }
