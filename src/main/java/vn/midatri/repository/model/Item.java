@@ -60,7 +60,7 @@ public class Item {
     private Category category;
 
     @Column(name = "deleted" , columnDefinition = "boolean default false")
-    private Boolean deleted;
+    private boolean deleted = false;
 
 
 }

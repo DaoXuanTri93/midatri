@@ -14,7 +14,7 @@ public class HomeController {
     public ModelAndView toDashboard(){
 
 
-        return  new ModelAndView("home");
+        return  new ModelAndView("/admin/home");
 
     }
 
