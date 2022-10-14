@@ -57,11 +57,12 @@ public class UserApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
     @PutMapping ("/edit/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
+    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user) {
         UserResult userResult = userMapper.toDTO(userService.findUserById(id));
         user.setId(user.getId());
         userService.save(user);
-        return new ResponseEntity<>(user,HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

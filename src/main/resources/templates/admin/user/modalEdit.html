@@ -70,8 +70,8 @@
                 contentType: false,
                 cache: false,
                 processData: false,
-                url: "http://localhost:8080/api/users/" + id,
-                data: formData
+                url: "http://localhost:8080/api/users" + id,
+                data: JSON.stringify(formData)
             })
                 .done(function (data) {
                     swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function () {
