@@ -13,7 +13,6 @@ import java.util.Optional;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findAllByDeleted(Boolean deleted);
     Item save(ItemResult itemResult);
-
     List<Item> findAllByCategoryId(Long id);
     Optional<Item> findById(Long id);
 

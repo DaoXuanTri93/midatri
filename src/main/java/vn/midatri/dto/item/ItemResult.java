@@ -7,10 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import vn.midatri.dto.category.CategoryResult;
-import vn.midatri.dto.user.UserResult;
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
