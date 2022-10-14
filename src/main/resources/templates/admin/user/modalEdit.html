@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalEdit">
+    <div class="modal" tabindex="-1" id="modalEdit">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật user</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEditUser">
+                        <input type="text" id="idEdit" hidden>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="usernameEdit" class="form-label fw-bold">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="usernameEdit" name="usernameEdit">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="passEdit" class="form-label fw-bold">Mật khẩu mới:</label>
+                                <input type="password" class="form-control" id="passEdit" name="passEdit">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="phoneEdit" class="form-label fw-bold">Phone:</label>
+                                <input type="phone" class="form-control" id="phoneEdit" name="phoneEdit">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="emailEdit" class="form-label fw-bold">Email:</label>
+                                <input type="emailEdit" class="form-control" id="emailEdit" name="emailEdit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // $(".editUser").on("click", function () {
+        //     alert(1);
+        //     handlerShowUserEdit();
+        //     $("#frmEditUser").modal("show");
+        // })
+        $("#btnEdit").on("click", function () {
+            $("#frmEditUser").trigger("submit");
+        });
+
+        function editUser() {
+            let id = $("#idEdit").val();
+            let formData = new FormData();
+            formData.append("username", $("#usernameEdit").val().trim().toString());
+            if ($("#passEdit").val() == "") {
+                formData.append("password", null);
+            } else {
+                formData.append("password", $("#passEdit").val().trim().toString());
+            }
+            if ($("#uploadEdit")[0].files[0] != null) {
+                formData.append("file", $("#uploadEdit")[0].files[0]);
+            }
+            $.ajax({
+                type: "PUT",
+                contentType: false,
+                cache: false,
+                processData: false,
+                url: "http://localhost:8080/api/users/" + id,
+                data: formData
+            })
+                .done(function (data) {
+                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function () {
+                        window.location = "/users";
+                    });
+                })
+                .fail(function (jqXHR) {
+                    let str = ``;
+                    if (jqXHR.responseJSON) {
+                        $.each(jqXHR.responseJSON, function (key, value) {
+                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                            $("#" + key).addClass("error");
+                        });
+                    } else {
+                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                    }
+                    $("#modalEdit .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalEdit .modal-body .modal-alert-danger").html(str);
+                })
+        }
+
+        // $("#modalEdit").on('hidden.bs.modal', function () {
+        //     $("#modalEdit .modal-body .modal-alert-danger").empty();
+        //     $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        //     $("#modalEdit input.error").removeClass("error");
+        //     $("#frmEditUser")[0].reset();
+        // });
+
+        function handlerShowUserEdit(id) {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/users/" + id
+            })
+                .done((data) => {
+                    console.log(data);
+                    $("#idEdit").val(data.id);
+                    $("#usernameEdit").val(data.userName);
+                    $("#phoneEdit").val(data.phone);
+                    $("#emailEdit").val(data.email);
+                    // $("#inventoryDrinkDelete").val(data.inventory);
+                    $("#modalEdit").modal("show");
+                })
+
+
+            // .fail(function (resp) {
+            //     alert("Show modal delete error");
+            // })
+
+        }
+    </script>
+
+</th:block>

@@ -23,6 +23,8 @@ public class UserMapper {
         userResult.setUserName(user.getUserName());
         userResult.setPassword(user.getPassword());
         userResult.setDeleted(user.getDeleted());
+        userResult.setPhone(user.getPhone());
+        userResult.setEmail(user.getEmail());
         return userResult;
     }
 
