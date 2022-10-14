@@ -25,12 +25,6 @@ public class UserApi {
     @Autowired
     UserMapper userMapper;
 
-//    @GetMapping()
-//    public ResponseEntity<?> renderUser() {
-//        List<UserResult> users = userService.findAll();
-//        return new ResponseEntity<>(users , HttpStatus.OK);
-//    }
-
     @GetMapping()
     public ResponseEntity<?> renderUser() {
 
@@ -41,7 +35,6 @@ public class UserApi {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         UserResult userResult = userService.findById(id);
-
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
     @PostMapping("/create")

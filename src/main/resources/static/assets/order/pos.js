@@ -168,7 +168,7 @@ function handleFilterCategory(categoryId) {
 }
 
 function handleEventOnClick(id) {
-    alert(id)
+    alert(id + "aa")
 }
 
 function handleAddBookingItem(bookingItemId) {
@@ -183,7 +183,97 @@ function handleAddBookingItem(bookingItemId) {
 }
 
 function handelTableTop(tableTopId) {
-    alert(tableTopId);
+    $("#render-tableTop div").remove();
+    $.ajax({
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        type: "GET",
+        url: "http://localhost:8080/api/bookingItem/" + tableTopId
+    })
+        .done((data) => {
+            $.each(data,(i,item) => {
+                let str = `
+                <div class="product-cart-item" id="cab7a4b0-ebdc-4383-876a-dd5f885f094d">
+                                                <kv-cashier-cart-item class="row-list row-list-active active">
+                                                    <div class="row-list-content">
+                                                        <div class="cell-action">
+                                                            <a class="btn-icon btn-trash" href="javascript:void(0);"
+                                                               title="Xóa món">
+                                                                <i class="fa-regular fa-trash-can"></i>
+                                                            </a>
+                                                        </div>
+                                                        <div class="cell-order"> 1.
+                                                            <div>
+                                                                <button class="btn-icon" type="button"
+                                                                        title="Món ưu tiên">
+                                                                    <i class="fa-star fa-regular"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row-product">
+                                                            <div class="cell-name full">
+                                                                <div class="wrap-name">
+                                                                    <h4 title="APEROL SPRITZ"> APEROL SPRITZ </h4>
+                                                                    <span class="wrap-icons"></span>
+                                                                    <div class="attr-wrapper">
+                                                                    </div>
+                                                                </div>
+                                                                <ul class="comboset-list-item">
+
+                                                                </ul>
+                                                                <div class="wrap-note" href="javascript:void(0)">
+                                                                    <button class="btn btn-sm btn-light has-Update"
+                                                                            style="cursor: pointer;">
+                                                                        <i class="far fa-pen"></i>
+                                                                        <span class="note-hint"
+                                                                              style="cursor: pointer;">Ghi chú món</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="list-topping">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="cell-quatity">
+                                                                <div class="cell-quantity-inner">
+                                                                    <button class="btn-icon down" type="button"
+                                                                            title="Giảm số lượng món">
+                                                                        <i class="fa-regular fa-minus"></i>
+                                                                    </button>
+                                                                    <button class="form-control form-control-sm item-quantity">
+                                                                        1
+                                                                    </button>
+                                                                    <button class="btn-icon up" type="button"
+                                                                            title="Tăng số lượng món">
+                                                                        <i class="fa-regular fa-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="cell-change-price">
+                                                                <div class="popup-anchor">
+                                                                    <button class="form-control form-control-sm">
+                                                                        30,000
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="cell-price"> 30,000</div>
+                                                            <div class="cell-actions">
+                                                                <div class="btn-group" dropdown="">
+                                                                    <button class="dropdown-toggle" type="button"
+                                                                            title="Thêm dòng mới">
+                                                                        <i class="fas fa-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </kv-cashier-cart-item>
+                                            </div>
+                `
+                $("#render-tableTop").append(str)
+            })
+        })
 }
 
 function handelRemoveEvent() {

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.bookingItem.BookingItemResult;
+import vn.midatri.mapper.BookingMapper;
 import vn.midatri.repository.model.BookingItem;
 import vn.midatri.service.IBookingItemService;
 
@@ -16,25 +17,26 @@ import java.util.List;
 public class BookingItemApi {
     @Autowired
     private IBookingItemService bookingItemService;
-
+    @Autowired
+    private BookingMapper bookingMapper;
 
     @GetMapping
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll() {
         List<BookingItemResult> bookingItemResults = bookingItemService.findAll();
 
         return new ResponseEntity<>(bookingItemResults, HttpStatus.OK);
     }
 
-//    @GetMapping(("/{id}"))
-//    public ResponseEntity<?> findAllBookingId(@PathVariable Long id){
-//        List<BookingItem> bookingItems = bookingItemService.findAllByBookingId(id);
-//        return new ResponseEntity<>(bookingItems, HttpStatus.OK);
-//    }
+    @GetMapping(("/{id}"))
+    public ResponseEntity<?> findAllBookingId(@PathVariable Long id){
+        List<BookingItemResult> bookingItems = bookingItemService.findAllByBookingId(id);
+        return new ResponseEntity<>(bookingItems, HttpStatus.OK);
+    }
 
-//    @PostMapping("/addBookingItem")
-//    public ResponseEntity<?> addBookingItem(){
-//
-//        return new ResponseEntity<>(null,HttpStatus.OK);
-//    }
+    @PostMapping("/addBookingItem")
+    public ResponseEntity<?> addBookingItem(){
+
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
 
 }

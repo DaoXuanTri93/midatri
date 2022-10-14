@@ -19,7 +19,7 @@ public class BookingResult {
     private String email;
     private String address;
     private String content;
-    private UserResult userResult;
-    private TableTopResult tableTopResult;
+    private Long user_id;
+    private Long tableTop_id;
 
 }

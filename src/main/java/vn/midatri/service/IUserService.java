@@ -1,7 +1,5 @@
 package vn.midatri.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.user.UserRegister;
 import vn.midatri.dto.user.UserResult;
 import vn.midatri.repository.model.User;

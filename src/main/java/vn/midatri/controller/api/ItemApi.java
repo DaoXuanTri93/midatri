@@ -38,12 +38,12 @@ public class ItemApi {
 
     @GetMapping()
     public ResponseEntity<?> renderitem(){
-        List<Item> itemList = itemService.findAllByDeleted(false);
+        List<ItemResult> itemList = itemService.findAllByDeleted(false);
         return new ResponseEntity<>(itemList, HttpStatus.OK);
     }
     @GetMapping("/category/{id}")
     public ResponseEntity<?> findByIdCategory(@PathVariable Long id){
-        List<Item> item = itemService.findAllByCategoryId(id);
+        List<ItemResult> item = itemService.findAllByCategoryId(id);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
     @GetMapping("/{id}")
@@ -56,11 +56,10 @@ public class ItemApi {
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> doEdit(@RequestBody ItemResult itemResult, @PathVariable Long id){
         Item item = itemService.findById(id);
-
         itemResult.setId(item.getId());
-        itemResult.setCategoryResult(categoryMapper.toDTO(item.getCategory()));
-        itemResult.setUserResult(userMapper.toDTO(item.getUser()));
-        itemService.save(itemMapper.toItem(itemResult));
+        itemResult.setCategory_id(item.getCategory().getId());
+        itemResult.setUser_id(item.getUser().getId());
+        itemService.save(itemResult);
         return new ResponseEntity<>(itemResult, HttpStatus.OK);
     }
     @PostMapping("/create")

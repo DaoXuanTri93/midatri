@@ -11,6 +11,7 @@ import vn.midatri.repository.model.Item;
 import vn.midatri.service.IItemService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -24,13 +25,19 @@ public class ItemService implements IItemService {
     private ItemMapper itemMapper;
 
     @Override
-    public List<Item> findAllByDeleted(Boolean deleted) {
-        return itemRepository.findAllByDeleted(deleted);
+    public List<ItemResult> findAllByDeleted(Boolean deleted) {
+        return itemRepository.findAllByDeleted(deleted)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Item> findAllByCategoryId(Long id) {
-        return itemRepository.findAllByCategoryId(id);
+    public List<ItemResult> findAllByCategoryId(Long id) {
+        return itemRepository.findAllByCategoryId(id)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
     }
 
 //    @Override
@@ -53,5 +60,10 @@ public class ItemService implements IItemService {
     @Override
     public Item save(Item item) {
         return itemRepository.save(item);
+    }
+
+    @Override
+    public Item save(ItemResult itemResult) {
+        return itemRepository.save(itemResult);
     }
 }
