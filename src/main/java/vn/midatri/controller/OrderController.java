@@ -12,7 +12,7 @@ public class OrderController {
     @GetMapping()
     public ModelAndView UserPage(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/order/list");
+        modelAndView.setViewName("/order/listOrder");
 
 
         return modelAndView;

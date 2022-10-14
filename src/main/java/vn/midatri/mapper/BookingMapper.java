@@ -15,17 +15,16 @@ public class BookingMapper {
     private TableTopMapper tableTopMapper;
 
 
-    public BookingResult toDTO(Booking booking){
-        BookingResult bookingResult = new BookingResult();
-        bookingResult.setId(booking.getId());
-        bookingResult.setFullName(booking.getFullName());
-        bookingResult.setStatus(booking.getStatus());
-        bookingResult.setPhone(booking.getPhone());
-        bookingResult.setEmail(booking.getEmail());
-        bookingResult.setAddress(booking.getAddress());
-        bookingResult.setContent(booking.getContent());
-        bookingResult.setUserResult(userMapper.toDTO(booking.getUser()));
-        bookingResult.setTableTopResult(tableTopMapper.toDTO(booking.getTableTop()));
-        return bookingResult;
+    public BookingResult toDTO(Booking booking) {
+        return new BookingResult()
+                .setId(booking.getId())
+                .setFullName(booking.getFullName())
+                .setStatus(booking.getStatus())
+                .setPhone(booking.getPhone())
+                .setEmail(booking.getEmail())
+                .setAddress(booking.getAddress())
+                .setContent(booking.getContent())
+                .setUser_id(booking.getUser().getId())
+                .setTableTop_id(booking.getTableTop().getId());
     }
 }

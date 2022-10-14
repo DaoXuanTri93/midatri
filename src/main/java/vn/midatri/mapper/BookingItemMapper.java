@@ -15,26 +15,17 @@ public class BookingItemMapper {
     @Autowired
     BookingMapper bookingMapper;
 
-    public BookingItem toModel(BookingItemAdd bookingItemAdd) {
-        BookingItem bookingItem = new BookingItem();
-        bookingItem.setId(bookingItemAdd.getId());
-        bookingItem.setPrice(bookingItemAdd.getPrice());
-        bookingItem.setQuantity(bookingItemAdd.getQuantity());
-        return bookingItem;
-    }
-
     public BookingItemResult toDTO(BookingItem bookingItem) {
-        BookingItemResult bookingItemResult = new BookingItemResult();
-        bookingItemResult.setId(bookingItem.getId());
-        bookingItemResult.setBookingResult(bookingMapper.toDTO(bookingItem.getBooking()));
-        bookingItemResult.setItemResult(itemMapper.toDTO(bookingItem.getItem()));
-        bookingItemResult.setPrice(bookingItem.getPrice());
-        bookingItemResult.setQuantity(bookingItem.getQuantity());
-        bookingItemResult.setDiscount(bookingItem.getDiscount());
-        bookingItemResult.setStatus(bookingItem.getStatus());
-        bookingItemResult.setContent(bookingItem.getContent());
-        bookingItemResult.setGrandTotal(bookingItem.getGrandTotal());
-        return bookingItemResult;
+        return new BookingItemResult()
+                .setId(bookingItem.getId())
+                .setBookingId(bookingItem.getBooking().getId())
+                .setItemId(bookingItem.getItem().getId())
+                .setPrice(bookingItem.getPrice())
+                .setQuantity(bookingItem.getQuantity())
+                .setDiscount(bookingItem.getDiscount())
+                .setStatus(bookingItem.getStatus())
+                .setContent(bookingItem.getContent())
+                .setGrandTotal(bookingItem.getGrandTotal());
     }
 
 }

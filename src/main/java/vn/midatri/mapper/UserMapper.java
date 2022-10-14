@@ -9,29 +9,16 @@ import vn.midatri.repository.model.User;
 public class UserMapper {
 
     public User toUserRegister(UserRegister userRegister){
-        User user = new User();
-        user.setUserName(userRegister.getUserName());
-        user.setPassword(userRegister.getPassword());
-        return user;
+        return new User()
+        .setUserName(userRegister.getUserName())
+        .setPassword(userRegister.getPassword());
     }
 
     public UserResult toDTO(User user){
-        UserResult userResult = new UserResult();
-        userResult.setId(user.getId());
-        userResult.setUserName(user.getUserName());
-        userResult.setPassword(user.getPassword());
-        userResult.setDeleted(user.getDeleted());
-        return userResult;
+        return new UserResult()
+        .setId(user.getId())
+        .setUserName(user.getUserName())
+        .setPassword(user.getPassword())
+        .setDeleted(user.getDeleted());
     }
-
-    public User toUser(UserResult userResult){
-        User user = new User();
-        user.setId(userResult.getId());
-        user.setUserName(userResult.getUserName());
-        user.setPassword(userResult.getPassword());
-        user.setDeleted(userResult.getDeleted());
-        return user;
-    }
-
-
 }

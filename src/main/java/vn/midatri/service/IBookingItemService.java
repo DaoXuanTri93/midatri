@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface IBookingItemService {
     List<BookingItemResult> findAll();
-//    BookingItem save (BookingItemAdd bookingItemAdd);
-//    List<BookingItem> findAllByBookingId(Long id);
+
+    List<BookingItemResult> findAllByBookingId(Long bookingId);
 }
