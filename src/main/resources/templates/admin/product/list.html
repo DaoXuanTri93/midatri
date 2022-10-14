@@ -35,7 +35,7 @@
                         <div class="data-table-list">
                             <div class="row">
                                 <div class="basic-tb-hd">
-                                    <h2>Product</h2>
+                                    <h2>Quản lý thức uống</h2>
                                 </div>
                                 <div class="col mb-2">
                                     <div class="d-flex justify-content-end">
@@ -54,7 +54,8 @@
                                         <th>Position</th>
                                         <th>Office</th>
                                         <th>Age</th>
-
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -83,7 +84,7 @@
 <th:block th:replace="/admin/layout/script::script"/>
 <th:block th:replace="/admin/product/modalCreateProduct::modalCreateProduct"/>
 <!--<th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>-->
-<!--<th:block th:replace="drink/modalDeleteDrink :: modalDeleteDrink"/>-->
+<th:block th:replace="/admin/product/modalDeleteProduct::modalDeleteProduct"/>
 <!--<script src="/assets/App/validatedDrink.js"></script>-->
 </body>
 <script>
@@ -105,24 +106,24 @@
                 {
                     data:  'img',
                     render:function (img){
-                        return `<img src="${img}" style="width: 100px ; height: 100px"/>`
+                        return `<img src="${img}" style="width: 50px ; height: 50px"/>`
                     }
 
                 },
-                // {
-                //     data: 'id',
-                //     render: function (data, type, row, meta) {
-                //         return `<button class="btn btn-outline-warning edit" data-id="${data}"><i class="fa fa-pencil-alt"></i></button>
-                //                     `;
-                //     }, orderable: false
-                // },
-                // {
-                //     data: 'id',
-                //     render: function (data, type, row, meta) {
-                //         return `<button class="btn btn-outline-danger delete" data-id="${data}"><i class="fa fa-archive"></i></button>
-                //                     `;
-                //     }, orderable: false
-                // },
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return `<button class="btn btn-outline-warning edit" data-id="${data}"><i class="fa fa-edit"></i></button>
+                                    `;
+                    }, orderable: false
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return `<button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
+                                    `;
+                    }, orderable: false
+                },
             ]
         });
 
@@ -157,13 +158,6 @@
 
 
 
-
-    //set event for button create
-    $("#btnCreateDrink").on("click", function () {
-        $("#frmCreateProduct").trigger('submit');
-    })
-
-
     //reset modal Create
     $("#modalCreateProduct").on('hidden.bs.modal', function () {
         $("#modalCreateProduct .modal-body .modal-alert-danger").empty();
@@ -173,6 +167,87 @@
         $("#frmCreateProduct")[0].reset();
     });
 
+// show modal delete
+
+
+    function deleteProduct() {
+        let drink = {
+            id: $("#idProductDelete").val(),
+            drinkName: $("#productNameDelete").val(),
+            price: $("#priceProductDelete").val(),
+            description: $("#desProductDelete").val(),
+            inventory: $("#inventoryProductDelete").val()
+
+        };
+        $(".loader").removeClass('hide');
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "DELETE",
+            url: "http://localhost:8080/api/item/deleted/"+ drink.id,
+            data: JSON.stringify(drink)
+        })
+            .done(function (data) {
+                window.location.href = '/products';
+                console.log(data);
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str +=
+                            `<label id="${key}-error" class="error" for="${key}">${value}</lable>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalDeleteProduct .modal-body .modal-alert-danger").removeClass("hide").addClass(
+                    "show");
+                $("#modalDeleteProduct .modal-body .modal-alert-danger").html(str);
+            })
+            .always(function () {
+                $(".loader").addClass('hide');
+            })
+    }
+    // handlerShowModalDelete
+    function handlerShowModalDelete(id) {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/item/" + id
+            })
+                .done(function (data) {
+                    $("#idProductDelete").val(data.id);
+                    $("#productNameDelete").val(data.title);
+                    $("#priceProductDelete").val(data.price);
+                    $("#desProductDelete").val(data.content);
+                    $("#inventoryProductDelete").val(data.inventory);
+                    $("#modalDeleteProduct").modal("show");
+                })
+                .fail(function (resp) {
+                    alert("Show modal delete error");
+                })
+
+    }
+
+
+
+    // set event for button delete
+    $("#btnDeleteProduct").on("click", function () {
+        deleteProduct();
+    });
+    $("#modalDeleteProduct").on('hidden.bs.modal', function () {
+        $("#modalDeleteProduct .modal-body .modal-alert-danger").empty();
+        $("#modalDeleteProduct .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalDeleteProduct input.error").removeClass("error");
+        $("#frmDeleteProduct")[0].reset();
+    });
 </script>
 
 </html>

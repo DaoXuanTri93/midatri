@@ -7,7 +7,7 @@
             <div class="modal-content ">
                 <div class="modal-header bg-primary">
                     <h1 class="modal-title ">Thêm mới thức uống</h1>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body" style="margin: 0 30px">
@@ -52,7 +52,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     <button type="button" class="btn btn-outline-primary" id="btnCreateProduct">Tạo thức uống</button>
                 </div>
             </div>
@@ -111,7 +111,22 @@
             }).done(() => {
                 alert(" Thành Công");
                 window.location.href = '/products';
-            })
+            }).fail(function (jqXHR) {
+                                let str = ``;
+                                if (jqXHR.responseJSON) {
+                                    $.each(jqXHR.responseJSON, function (key, value) {
+                                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                                        $("#" + key).addClass("error");
+                                    });
+                                } else {
+                                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                                }
+                                $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                                $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
+                            })
+                            .always(function () {
+                                $(".loader").addClass('hide');
+                            })
         }
 
         // function createProduct() {
