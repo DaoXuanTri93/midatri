@@ -61,7 +61,7 @@ public class UserApi {
     public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody UserResult userResult){
         User user = userService.findUserById(id);
         userResult.setId(user.getId());
-        userService.save(userMapper.toUser(userResult));
+        userService.save(user);
         return new ResponseEntity<>(userResult,HttpStatus.OK);
     }
 }
