@@ -10,7 +10,6 @@ import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.mapper.UserMapper;
-import vn.midatri.repository.model.Item;
 import vn.midatri.service.ICategoryService;
 import vn.midatri.service.IItemService;
 
