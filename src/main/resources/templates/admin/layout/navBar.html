@@ -290,19 +290,19 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
-            <li><a data-toggle="tab" href="/admin/home"><i class="notika-icon notika-house"></i> Tổng Quan</a>
+            <li><a data-bs-toggle="collapse" href="/home"><i class="notika-icon notika-house"></i> Tổng Quan</a>
             </li>
-            <li><a data-toggle="tab" href="#Products"><i class="notika-icon notika-mail"></i> Hàng Hóa</a>
+            <li><a data-bs-toggle="collapse" href="#Products"><i class="notika-icon notika-mail"></i> Hàng Hóa</a>
             </li>
-            <li><a data-toggle="tab" href="/tables"><i class="notika-icon notika-windows"></i> Phòng/Bàn</a>
+            <li><a data-bs-toggle="collapse" href="/tables"><i class="notika-icon notika-windows"></i> Phòng/Bàn</a>
             </li>
-            <li><a data-toggle="tab" href="#Tran"><i class="notika-icon notika-bar-chart"></i> Giao Dịch</a>
+            <li><a data-bs-toggle="collapse" href="#Tran"><i class="notika-icon notika-bar-chart"></i> Giao Dịch</a>
             </li>
             <li class="active"><a data-toggle="tab" href="/user"><i class="notika-icon notika-edit"></i> Nhân Viên</a>
             </li>
-            <li><a data-toggle="tab" href="#Forms"><i class="notika-icon notika-form"></i> Báo Cáo</a>
+            <li><a data-bs-toggle="collapse" href="#Forms"><i class="notika-icon notika-form"></i> Báo Cáo</a>
             </li>
-            <li><a data-toggle="tab" href="/orders"><i class="notika-icon notika-app"></i> Thu Ngân</a>
+            <li><a data-bs-toggle="collapse" href="/orders"><i class="notika-icon notika-app"></i> Thu Ngân</a>
             </li>
 <!--            <li><a data-toggle="tab" href="#Page"><i class="notika-icon notika-support"></i> Pages</a>-->
 <!--            </li>-->
@@ -324,9 +324,11 @@
 <!--                </li>-->
 <!--              </ul>-->
 <!--            </div>-->
-            <div id="Products" class="tab-pane notika-tab-menu-bg animated flipInX">
+            <div id="Products" class="collapse multi-collapse notika-tab-menu-bg animated flipInX">
               <ul class="notika-main-menu-dropdown">
                 <li><a href="/products">Danh Mục</a>
+                </li>
+                <li><a href="#">Danh Mục Ngừng Hoạt Động</a>
                 </li>
                 <li><a href="#">Thiết Lập Giá</a>
                 </li>
@@ -348,7 +350,7 @@
 <!--                </li>-->
 <!--              </ul>-->
 <!--            </div>-->
-            <div id="Tran" class="tab-pane notika-tab-menu-bg animated flipInX">
+            <div id="Tran" class="collapse multi-collapse notika-tab-menu-bg animated flipInX">
               <ul class="notika-main-menu-dropdown">
                 <li><a href="">Hóa Đơn</a>
                 </li>
@@ -370,7 +372,7 @@
 <!--                </li>-->
 <!--              </ul>-->
 <!--            </div>-->
-            <div id="Forms" class="tab-pane notika-tab-menu-bg animated flipInX">
+            <div id="Forms" class="collapse multi-collapse notika-tab-menu-bg animated flipInX">
               <ul class="notika-main-menu-dropdown">
                 <li><a href="">Cuối Ngày</a>
                 </li>

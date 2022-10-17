@@ -25,11 +25,8 @@ public class ItemService implements IItemService {
     private ItemMapper itemMapper;
 
     @Override
-    public List<ItemResult> findAllByDeleted(Boolean deleted) {
-        return itemRepository.findAllByDeleted(deleted)
-                .stream()
-                .map(item -> itemMapper.toDTO(item))
-                .collect(Collectors.toList());
+    public List<Item> findAllByDeleted(Boolean deleted) {
+        return itemRepository.findAllByDeleted(deleted);
     }
 
     @Override
@@ -58,12 +55,17 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public Item save(Item item) {
-        return itemRepository.save(item);
+    public ItemResult save(Item item) {
+        return itemMapper.toDTO(itemRepository.save(item));
     }
 
-    @Override
-    public Item save(ItemResult itemResult) {
-        return itemRepository.save(itemResult);
-    }
+//    @Override
+//    public Item save(Item item) {
+//        return itemRepository.save(item);
+//    }
+
+//    @Override
+//    public Item save(ItemResult itemResult) {
+//        return itemRepository.save(itemResult);
+//    }
 }

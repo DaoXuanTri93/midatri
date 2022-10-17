@@ -27,6 +27,8 @@ public class ItemMapper {
                 .setDeleted(itemCreate.isDeleted());
     }
 
+
+
     public ItemResult toDTO(Item item) {
         return new ItemResult()
                 .setId(item.getId())
@@ -39,5 +41,6 @@ public class ItemMapper {
                 .setUser_id(item.getUser().getId())
                 .setDeleted(item.isDeleted());
     }
+
 
 }

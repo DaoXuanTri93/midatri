@@ -38,7 +38,7 @@ public class ItemApi {
 
     @GetMapping()
     public ResponseEntity<?> renderitem(){
-        List<ItemResult> itemList = itemService.findAllByDeleted(false);
+        List<Item> itemList = itemService.findAllByDeleted(false);
         return new ResponseEntity<>(itemList, HttpStatus.OK);
     }
     @GetMapping("/category/{id}")
@@ -54,13 +54,10 @@ public class ItemApi {
 
 
     @PutMapping("/edit/{id}")
-    public ResponseEntity<?> doEdit(@RequestBody ItemResult itemResult, @PathVariable Long id){
-        Item item = itemService.findById(id);
-        itemResult.setId(item.getId());
-        itemResult.setCategory_id(item.getCategory().getId());
-        itemResult.setUser_id(item.getUser().getId());
-        itemService.save(itemResult);
-        return new ResponseEntity<>(itemResult, HttpStatus.OK);
+    public ResponseEntity<?> doEdit(@RequestBody Item item, @PathVariable Long id){
+        item.setId(id);
+        itemService.save(item);
+        return new ResponseEntity<>(item, HttpStatus.OK);
     }
     @PostMapping("/create")
     public ResponseEntity<?> createItem(@RequestBody ItemCreate itemCreate){
