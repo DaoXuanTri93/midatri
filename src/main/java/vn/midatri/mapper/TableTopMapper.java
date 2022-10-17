@@ -2,7 +2,6 @@ package vn.midatri.mapper;
 
 
 import org.springframework.stereotype.Component;
-import vn.midatri.dto.tableTop.TableTopRegister;
 import vn.midatri.dto.tableTop.TableTopResult;
 import vn.midatri.repository.model.TableTop;
 
@@ -16,13 +15,5 @@ public class TableTopMapper {
         .setCapacity(tableTop.getCapacity())
         .setContent(tableTop.getContent())
         .setDeleted(tableTop.getDeleted());
-    }
-    public TableTop toModelRegister(TableTopRegister tableTopRegister){
-        return new TableTop()
-                .setId(tableTopRegister.getId())
-                .setCode(tableTopRegister.getCode())
-                .setStatus(tableTopRegister.getStatus())
-                .setCapacity(tableTopRegister.getCapacity())
-                .setContent(tableTopRegister.getContent());
     }
 }

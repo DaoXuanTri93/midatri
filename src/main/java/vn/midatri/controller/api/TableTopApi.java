@@ -7,9 +7,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import vn.midatri.dto.tableTop.TableTopRegister;
-import vn.midatri.dto.tableTop.TableTopResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import vn.midatri.repository.model.TableTop;
 import vn.midatri.service.ITableTopService;
 
@@ -24,14 +25,7 @@ public class TableTopApi {
 
     @GetMapping()
     public ResponseEntity<?> renderTableTop(){
-        List<TableTop> tableTops = tableTopService.findAllByDeleted(false);
+        List<TableTop> tableTops = tableTopService.findAll();
         return new ResponseEntity<>(tableTops, HttpStatus.OK);
     }
-
-    @PostMapping("/create")
-    public ResponseEntity<?> createNewTable(@RequestBody TableTop tableTop){
-        TableTop tableTopResult = tableTopService.save(tableTop);
-        return new ResponseEntity<>(tableTopResult,HttpStatus.OK);
-    }
-
 }
