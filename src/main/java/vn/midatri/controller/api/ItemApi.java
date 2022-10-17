@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.midatri.dto.item.ItemCreate;
+import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.mapper.ItemMapper;
@@ -36,7 +36,12 @@ public class ItemApi {
 
     @GetMapping()
     public ResponseEntity<?> renderitem(){
-        List<Item> itemList = itemService.findAllByDeleted(false);
+        List<ItemResult> itemList = itemService.findAllByDeleted(false);
+        return new ResponseEntity<>(itemList, HttpStatus.OK);
+    }
+    @GetMapping("/restore")
+    public ResponseEntity<?> restoreitem(){
+        List<ItemResult> itemList = itemService.findAllByDeleted(true);
         return new ResponseEntity<>(itemList, HttpStatus.OK);
     }
     @GetMapping("/category/{id}")
@@ -46,33 +51,38 @@ public class ItemApi {
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdItem(@PathVariable Long id){
-        Item item = itemService.findById(id);
-        return new ResponseEntity<>(item, HttpStatus.OK);
+        ItemResult itemResult = itemService.findById(id);
+        return new ResponseEntity<>(itemResult, HttpStatus.OK);
     }
 
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> doEdit(@RequestBody ItemResult itemResult, @PathVariable Long id){
-        Item item = itemService.findById(id);
-        itemResult.setId(item.getId());
-        itemResult.setCategory_id(item.getCategory().getId());
-        itemResult.setUser_id(item.getUser().getId());
-        itemService.save(itemResult);
+        itemResult.setId(id);
+        itemService.update(itemResult);
         return new ResponseEntity<>(itemResult, HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<?> createItem(@RequestBody ItemCreate itemCreate){
+    public ResponseEntity<?> createItem(@RequestBody CreateItem createItem){
 
-        ItemResult itemResult = itemService.save(itemCreate);
+        ItemResult itemResult = itemService.create(createItem);
         return new ResponseEntity<>(itemResult, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleted/{id}")
     public ResponseEntity<?> deletedItem(@PathVariable Long id){
-        Item item = itemService.findById(id);
-        item.setDeleted(true);
-        itemService.save(item);
-        return new ResponseEntity<>(item, HttpStatus.OK);
+        ItemResult itemResult = itemService.findById(id);
+        itemResult.setDeleted(true);
+        itemService.update(itemResult);
+        return new ResponseEntity<>(itemResult, HttpStatus.OK);
+    }
+
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<?> restoreItem(@PathVariable Long id){
+        ItemResult itemResult = itemService.findById(id);
+        itemResult.setDeleted(false);
+        itemService.update(itemResult);
+        return new ResponseEntity<>(itemResult, HttpStatus.OK);
     }
 
 

@@ -11,4 +11,10 @@ public class CategoryMapper {
         .setId(category.getId())
         .setCategoryName(category.getCategoryName());
     }
+    public Category toModel(CategoryResult categoryResult){
+        return new Category()
+                .setId(categoryResult.getId())
+                .setCategoryName(categoryResult.getCategoryName());
+    }
+
 }

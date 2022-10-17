@@ -37,8 +37,10 @@
                                 <div class="basic-tb-hd">
                                     <h2>Quản lý thức uống</h2>
                                 </div>
+
                                 <div class="col mb-2">
                                     <div class="d-flex justify-content-end">
+
                                         <button type="button" class="btn btn-outline-primary create">
                                             <i class="fa fa-plus-square"></i>
                                             Thêm thức uống mới
@@ -50,10 +52,10 @@
                                 <table id="tblProduct" class="table table-striped ">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
+                                        <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
+                                        <th scope="col" class="fw-bold fs-5">Giá</th>
+                                        <th scope="col" class="fw-bold fs-5">Danh mục</th>
+                                        <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -61,6 +63,16 @@
                                     <tbody>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mt-2">
+                                <div class="d-flex justify-content-end">
+                                    <a type="button" class="btn btn-danger restore" href="/products/restore">
+                                        <i class="fa fa-trash-restore"></i>
+                                        Khôi phục thức uống
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,9 +95,8 @@
 <div class="loader hide"></div>
 <th:block th:replace="/admin/layout/script::script"/>
 <th:block th:replace="/admin/product/modalCreateProduct::modalCreateProduct"/>
-<!--<th:block th:replace="drink/modalUpdateDrink :: modalUpdateDrink"/>-->
+<th:block th:replace="/admin/product/modalUpdateProduct::modalUpdateProduct"/>
 <th:block th:replace="/admin/product/modalDeleteProduct::modalDeleteProduct"/>
-<!--<script src="/assets/App/validatedDrink.js"></script>-->
 </body>
 <script>
     $(document).ready(function () {
@@ -113,7 +124,7 @@
                 {
                     data: 'id',
                     render: function (data, type, row, meta) {
-                        return `<button class="btn btn-outline-warning edit" data-id="${data}"><i class="fa fa-edit"></i></button>
+                        return `<button class="btn btn-outline-warning edit" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
                                     `;
                     }, orderable: false
                 },
@@ -130,9 +141,7 @@
     });
 </script>
 <script>
-    // $(document).on('input', '.num-space', function (e) {
-    //     $(this).val(App.formatNumberSpace($(this).val()));
-    // })
+
     //show modal create
     $("button.create").on("click", function () {
         $.ajax({
@@ -247,6 +256,70 @@
         $("#modalDeleteProduct .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
         $("#modalDeleteProduct input.error").removeClass("error");
         $("#frmDeleteProduct")[0].reset();
+    });
+
+
+    // show modal Edit
+    function handlerShowModalEdit(id) {
+        let category;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category",
+        })
+            .done(function (data) {
+
+                category = data;
+                $.ajax({
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: "http://localhost:8080/api/item/" + id
+                })
+                    .done(function (data) {
+                        $("#idProductUpdate").val(data.id);
+                        $("#productNameUpdate").val(data.title);
+                        $("#priceProductUpdate").val(data.price);
+                        $("#quantityProductUpdate").val(data.quantity);
+                        $("#desProductUpdate").val(data.description);
+                        for (let i = 0; i < category.length; i++) {
+                            let id = category[i].id;
+                            let name = category[i].categoryName;
+                            if (category[i].id == data.category.id) {
+                                $("#catalogsUpdate").append(
+                                    `<option value="${id}" selected>${name}</option>`);
+                            } else {
+                                $("#catalogsUpdate").append(
+                                    `<option value="${id}">${name}</option>`);
+                            }
+                        }
+
+                        $("#modalUpdateProduct").modal("show");
+                    })
+                    .fail(function (resp) {
+                        alert("Show modal update error");
+                    });
+
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            });
+
+
+    }
+
+
+    $("#modalUpdateProduct").on('hidden.bs.modal', function () {
+        $("#modalUpdateProduct .modal-body .modal-alert-danger").empty();
+        $("#modalUpdateProduct .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalUpdateProduct input.error").removeClass("error");
+        $("#catalogsUpdate option").remove();
+        $("#frmUpdateProduct")[0].reset();
     });
 </script>
 

@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-    <script src="/assets/admin/App.js"></script>
+    <script src="/js/App.js"></script>
     <script>
         $("#previewImg").on('click', function () {
             $("#uploadCre").trigger('click');
@@ -84,15 +84,14 @@
         function createProduct() {
             let product = new Product();
             let category = new Category();
-            let user = new User();
             product.title = $("#productNameCreate").val();
             product.price = $("#priceProductCreate").val();
             product.quantity=$("#quantityProductCreate").val();
             product.content = $("#desProductCreate").val();
-            product.category_id = {
+            product.category = {
                 id: $("#catalogsCreate").val()
             };
-            product.user_id = {
+            product.user = {
                 id: 1
             };
             product.deleted = false;
@@ -129,51 +128,12 @@
                             })
         }
 
-        // function createProduct() {
-        //     let formData = new FormData();
-        //     formData.append("name", $("#productNameCreate").val());
-        //     formData.append("price", $("#priceProductCreate").val());
-        //     formData.append("catalog", $("#catalogsCreate").val());
-        //     formData.append("description", $("#desProductCreate").val());
-        //     if ($("#uploadCre")[0].files[0] != null) {
-        //         formData.append("file", $("#uploadCre")[0].files[0]);
-        //     }
-        //     $(".loader").removeClass('hide');
-        //     $.ajax({
-        //         type: "POST",
-        //         contentType: false,
-        //         cache: false,
-        //         processData: false,
-        //         url: "http://localhost:8080/api/item/create",
-        //         data: formData
-        //     })
-        //         .done(function (data) {
-        //             alert("Thành Công");
-        //         })
-        //         .fail(function (jqXHR) {
-        //             let str = ``;
-        //             if (jqXHR.responseJSON) {
-        //                 $.each(jqXHR.responseJSON, function (key, value) {
-        //                     str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
-        //                     $("#" + key).addClass("error");
-        //                 });
-        //             } else {
-        //                 str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-        //             }
-        //             $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-        //             $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
-        //         })
-        //         .always(function () {
-        //             $(".loader").addClass('hide');
-        //         })
-        // }
-        //
-        // $("div.image-preview, div.file-name").on('click', function () {
-        //     $("#imageFile").trigger('click');
-        // });
-        // $("#imageFile").on('change', function () {
-        //     changeImagePreview();
-        // });
+        $("div.image-preview, div.file-name").on('click', function () {
+            $("#imageFile").trigger('click');
+        });
+        $("#imageFile").on('change', function () {
+            changeImagePreview();
+        });
 
         function loadImageToCanvas(imageFile) {
             $("section .image-preview canvas").css("display", "");
