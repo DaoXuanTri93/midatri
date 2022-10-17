@@ -12,15 +12,11 @@ class Product {
     }
 }
 
-
-
 class Category {
     constructor(id, category) {
         this.id = id;
         this.category_name = category;
     }
-
-
 }
 class User {
     constructor(id,userName,password,phone,email,deleted) {
