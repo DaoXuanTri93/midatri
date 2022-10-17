@@ -24,27 +24,19 @@
                                 <label for="userName" class="form-label fw-bold">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="userName" name="userName">
                             </div>
-
-                        </div>
-                        <div class="row">
                             <div class="col col-md-6">
                                 <label for="password" class="form-label fw-bold">Mật khẩu:</label>
                                 <input type="password" class="form-control" id="password" name="password">
                             </div>
-
-                            <div class="col col-md-6">
-                                <label for="email" class="form-label fw-bold">Email:</label>
-                                <input type="email" class="form-control" id="email" name="password">
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
-                                <label for="password1" class="form-label fw-bold">Nhập Lại Mật khẩu:</label>
-                                <input type="password" class="form-control" id="password1" name="password1">
-                            </div>
-                            <div class="col col-md-6">
                                 <label for="phone" class="form-label fw-bold">Phone:</label>
                                 <input type="phone" class="form-control" id="phone" name="password">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="email" class="form-label fw-bold">Email:</label>
+                                <input type="email" class="form-control" id="email" name="password">
                             </div>
                         </div>
                     </form>
@@ -59,18 +51,17 @@
 
     <script>
         $("#btnCreateUser").on("click", function () {
-            // checkPassword();
             createUser();
             $("#btnCreateUser").trigger("submit");
         });
 
         function createUser() {
-            checkPassword();
             let newUser = {
                 username: $('#userName').val(),
                 password: $('#password').val(),
                 phone: $('#phone').val(),
-                email: $('#email').val(),
+                email: $('#email').val()
+
             }
             console.log(newUser);
             api.user.create(
@@ -84,30 +75,40 @@
                        <th>${item.password}</th>
                        <th>${item.phone}</th>
                        <th>${item.email}</th>
+
                     </tr>
                         `;
                         $("tblUser tbody").append(str);
                     })
-                }
-                ,
+                },
                 (jqXHR) => {
-
                     console.log(jqXHR.error);
                 }
             )
         }
 
-       function checkPassword() {
-      let     pas = $('#password').val();
-      let pas1 = $('#password1').val();
-      if(pas===pas1){
-          return true;
-      }else {
-          $('#modalCreate').modal('show');
-          return false;
-      }
-       }
+        // $("#modalCreate").on('hidden.bs.modal', function () {
+        //   $("#modalCreate .modal-body .modal-alert-danger").empty();
+        //   $("#modalCreate .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        //   $("#modalCreate input.error").removeClass("error");
+        //   $("#staffCre option").remove();
+        //   $("#frmCreateUser")[0].reset();
+        // });
 
+        // $("#previewImg").on('click', function () {
+        //   $('#uploadCre').trigger('click');
+        // })
+
+        // $('#uploadCre').change(function(){
+        //   const file = this.files[0];
+        //   if (file){
+        //     let reader = new FileReader();
+        //     reader.onload = function(event){
+        //       $('#previewImg').attr('src', event.target.result);
+        //     }
+        //     reader.readAsDataURL(file);
+        //   }
+        // });
 
     </script>
 </th:block>

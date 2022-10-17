@@ -7,7 +7,7 @@
   <title>Data Table | Notika - Notika Admin Template</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <th:block th:replace="/admin/layout/head :: head"/>
+  <th:block th:replace="/layout/head :: head"/>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
 <!-- Start Header Top Area -->
-<th:block th:replace="/admin/layout/navBar :: navBar"/>
+<th:block th:replace="/layout/navBar :: navBar"/>
 <!-- Main Menu area End-->
 <!-- Breadcomb area Start-->
 <div class="breadcomb-area">
@@ -45,15 +45,12 @@
               <thead>
               <tr>
                 <th>#</th>
-                <th>Bartender</th>
-                <th>Admin</th>
-                <th>Email</th>
-                <th>Phone</th>
                 <th>User Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th>Bartender</th>
                 <th>Vendor</th>
-<!--                <th scope="col" colspan="2" class="text-center fw-bold fs-3">Action</th>-->
-                <th></th>
-                <th></th>
               </tr>
               </thead>
               <tbody>
@@ -70,14 +67,12 @@
 <div class="footer-copyright-area">
   <div class="container">
     <div class="row">
-      <th:block th:replace="/admin/layout/footer :: footer"/>
+      <th:block th:replace="layout/footer :: footer"/>
     </div>
   </div>
 </div>
-<th:block th:replace="/admin/layout/script :: script"/>
-<th:block th:replace="/admin/user/modalCreate :: modalCreate"/>
-<th:block th:replace="/admin/user/modalEdit :: modalEdit"/>
-<th:block th:replace="/admin/user/modalDelete ::modalDelete"/>
+<th:block th:replace="layout/script :: script"/>
+<th:block th:replace="user/modalCreate :: modalCreate"/>
 
 
 </body>
@@ -92,40 +87,20 @@
       },
       columns: [
         {data: 'id'},
-        {data: 'bartender'},
         {data: 'admin'},
+        {data: 'bartender'},
         {data: 'email'},
         {data: 'phone'},
         {data: 'userName'},
         {data: 'vendor'},
-        {
-          data: 'id',
-          render: function (data, type, row, meta) {
-            return `<button class="btn btn-outline-warning editUser" onclick="handlerShowUserEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                                    `;
-          }, orderable: false
-        },
-        {
-          data: 'id',
-          render: function (data, type, row, meta) {
-            return `<button class="btn btn-outline-danger delUser" onclick="handleShowDeleteForm(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                                    `;
-          }, orderable: false
-        },
-
       ]
     });
-  });
+  })
 </script>
 <script>
   $("#createUser").on("click",function () {
     $("#modalCreate").modal("show")
-  });
-  
-
-
-
+  })
 </script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>
-
