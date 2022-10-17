@@ -19,7 +19,7 @@ import java.time.Instant;
 @Table(name = "table_top")
 public class TableTop {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -12,7 +12,10 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 public class BookingItemAdd {
     private Long id;
-    private String title;
     private BigDecimal price;
     private Integer quantity;
+    private String content;
+    private Long booking_id;
+    private Long item_id;
+
 }

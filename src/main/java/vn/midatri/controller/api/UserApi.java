@@ -50,18 +50,21 @@ public class UserApi {
     @PostMapping("/deleted/{id}")
     public ResponseEntity<?> deletedUser(@PathVariable Long id){
         User user = userService.findUserById(id);
-
         user.setDeleted(true);
         userService.save(user);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @PutMapping ("/edit/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user) {
-        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
-        user.setId(user.getId());
+
+//    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user) {
+//        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
+//        user.setId(user.getId());
+ ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
+//        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
+        user.setId(id);
+
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

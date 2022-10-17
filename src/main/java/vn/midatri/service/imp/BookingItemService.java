@@ -38,7 +38,20 @@ public class BookingItemService implements IBookingItemService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public BookingItem save(BookingItem bookingItem) {
+        return bookingItemRepository.save(bookingItem);
+    }
 
+    @Override
+    public BookingItemResult findById(Long id) {
+        return bookingItemMapper.toDTO(bookingItemRepository.findById(id).get());
+    }
+
+    @Override
+    public void deletedBookingItem(Long id) {
+        bookingItemRepository.deleteById(id);
+    }
 
 
 }

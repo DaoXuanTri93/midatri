@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import vn.midatri.dto.booking.BookingResult;
+import vn.midatri.dto.item.ItemResult;
+
 import java.math.BigDecimal;
 
 @NoArgsConstructor
@@ -12,8 +15,8 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 public class BookingItemResult {
     private Long id;
-    private Long itemId;
-    private Long bookingId;
+    private ItemResult item;
+    private BookingResult booking;
     private BigDecimal price;
     private Integer quantity;
     private Float discount;
