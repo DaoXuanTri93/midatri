@@ -24,6 +24,7 @@ public class BookingItem {
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne( optional = false)
@@ -58,7 +59,4 @@ public class BookingItem {
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
 
-    public Booking getBooking() {
-        return booking;
-    }
 }

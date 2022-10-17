@@ -20,6 +20,7 @@ import java.time.Instant;
 public class Booking {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "full_name", nullable = false, length = 45)

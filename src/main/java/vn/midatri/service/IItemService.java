@@ -8,7 +8,7 @@ import vn.midatri.repository.model.Item;
 import java.util.List;
 
 public interface IItemService {
-    List<ItemResult> findAllByDeleted(Boolean deleted);
+    List<Item> findAllByDeleted(Boolean deleted);
 //    List<Item> findByIdCategory(Long id);
     List<ItemResult> findAllByCategoryId(Long id);
     Item findById(Long id);

@@ -27,16 +27,28 @@ public class BookingItemApi {
         return new ResponseEntity<>(bookingItemResults, HttpStatus.OK);
     }
 
-    @GetMapping(("/{id}"))
-    public ResponseEntity<?> findAllBookingId(@PathVariable Long id){
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findAllBookingId(@PathVariable Long id) {
         List<BookingItemResult> bookingItems = bookingItemService.findAllByBookingId(id);
         return new ResponseEntity<>(bookingItems, HttpStatus.OK);
     }
 
-    @PostMapping("/addBookingItem")
-    public ResponseEntity<?> addBookingItem(){
+    @GetMapping("/find/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        BookingItemResult bookingItemResult = bookingItemService.findById(id);
+        return new ResponseEntity<>(bookingItemResult, HttpStatus.OK);
+    }
 
-        return new ResponseEntity<>(null,HttpStatus.OK);
+    @PostMapping("/create")
+    public ResponseEntity<?> addBookingItem(@RequestBody BookingItem bookingItem) {
+        bookingItemService.save(bookingItem);
+        return new ResponseEntity<>(bookingItem, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<?> deletedBookingItem(@PathVariable Long id) {
+        bookingItemService.deletedBookingItem(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
