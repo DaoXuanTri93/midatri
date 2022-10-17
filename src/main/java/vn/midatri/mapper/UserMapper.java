@@ -26,4 +26,13 @@ public class UserMapper {
         .setEmail(user.getEmail());
 
     }
+    public User toModel(UserResult userResult){
+        return new User()
+                .setId(userResult.getId())
+                .setUserName(userResult.getUserName())
+                .setPassword(userResult.getPassword())
+                .setDeleted(userResult.getDeleted())
+                .setPhone(userResult.getPhone())
+                .setEmail(userResult.getEmail());
+    }
 }

@@ -15,22 +15,16 @@ import java.util.List;
 public class ProductController {
 
     @GetMapping("")
-    public ModelAndView UserPage(){
+    public ModelAndView ProductPage(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/admin/product/list");
         return modelAndView;
     }
-//    @GetMapping
-//    public ModelAndView showListPage() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("product/list");
-//        List<Item> products = ;
-//        List<Category> categories = ;
-//        User user = ;
-//        modelAndView.addObject("user", user);
-//        modelAndView.addObject("categories", categories);
-//        modelAndView.addObject("products", products);
-//        return modelAndView;
-//    }
+
+//
+    @GetMapping("/restore")
+    public  ModelAndView restoreProduct(){
+        return new ModelAndView("/admin/product/restore");
+    }
 
 }

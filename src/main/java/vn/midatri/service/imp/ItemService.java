@@ -3,7 +3,7 @@ package vn.midatri.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vn.midatri.dto.item.ItemCreate;
+import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
@@ -25,8 +25,12 @@ public class ItemService implements IItemService {
     private ItemMapper itemMapper;
 
     @Override
-    public List<Item> findAllByDeleted(Boolean deleted) {
-        return itemRepository.findAllByDeleted(deleted);
+    public List<ItemResult> findAllByDeleted(Boolean deleted) {
+        return itemRepository.findAllByDeleted(deleted)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+
     }
 
     @Override
@@ -37,35 +41,24 @@ public class ItemService implements IItemService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<Item> findByIdCategory(Long id) {
-//        return itemRepository.findByIdCategory(id);
-//    }
 
     @Override
-    public Item findById(Long id) {
-        return itemRepository.findById(id).get();
+    public ItemResult findById(Long id) {
+        return itemMapper.toDTO(itemRepository.findById(id).get());
     }
 
     @Override
-    public ItemResult save(ItemCreate itemCreate) {
-        Item item = itemMapper.toModel(itemCreate);
+    public ItemResult create(CreateItem createItem) {
+        Item item = itemMapper.toModel(createItem);
         itemRepository.save(item);
         return itemMapper.toDTO(item);
     }
 
     @Override
-    public ItemResult save(Item item) {
-        return itemMapper.toDTO(itemRepository.save(item));
+    public ItemResult update(ItemResult itemResult) {
+
+        itemRepository.save(itemMapper.toModel(itemResult));
+        return itemResult;
     }
 
-//    @Override
-//    public Item save(Item item) {
-//        return itemRepository.save(item);
-//    }
-
-//    @Override
-//    public Item save(ItemResult itemResult) {
-//        return itemRepository.save(itemResult);
-//    }
 }

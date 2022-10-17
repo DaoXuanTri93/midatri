@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <th:block th:replace="/admin/layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Quản lý thức uống</title>
+    <!--    <th:block th:replace="layout/firstScript :: firstScript"/>-->
+</head>
+
+<body>
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="/admin/layout/navBar :: navBar"/>
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+<!--    <div class="page-wrapper">-->
+<!--        &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--        &lt;!&ndash; Bread crumb and right sidebar toggle &ndash;&gt;-->
+<!--        &lt;!&ndash; ============================================================== &ndash;&gt;-->
+<!--        <div class="page-breadcrumb bg-white">-->
+<!--            <div class="row align-items-center">-->
+<!--                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">-->
+<!--                    <h1 class="page-title">Quản lý thức uống</h1>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; /.col-lg-12 &ndash;&gt;-->
+<!--        </div>-->
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+<!--            Header-->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Quản lý thức uống</h1>
+            </div>
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-outline-primary" href="/products">
+                            <i class="fa fa-arrow-left"></i>
+                            Quay lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row table-responsive " id="row_tbl">
+                <div class="col text-center">
+                    <table class="table table-striped" id="tblProduct">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
+                            <th scope="col" class="fw-bold fs-5">Giá</th>
+                            <th scope="col" class="fw-bold fs-5">Danh mục</th>
+                            <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
+                            <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page-->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <th:block th:replace="/admin/layout/footer :: footer"/>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+<th:block th:replace="/admin/layout/script :: script"/>
+<th:block th:replace="/admin/product/modalRestoreProduct::modalRestoreProduct"/>
+</body>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $("#tblProduct").DataTable({
+            ajax: {
+                contentType: 'application/json',
+                url: 'http://localhost:8080/api/item/restore',
+                type : 'GET',
+
+                dataSrc: '',
+            },
+            columns: [
+                {data: 'title'},
+                {
+                    data: 'price'
+                },
+                {data: 'category.categoryName'},
+                {
+                    data:  'img',
+                    render:function (img){
+                        if (img == null) {
+                            return '<img src="/assets/img/Logo.png" style="width: 50px ; height: 50px/>';
+                        } else {
+                            return `<img src="${img}" style="width: 50px ; height: 50px"/>`
+
+                        }
+                    }
+
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return `<button class="btn btn-outline-warning restore" onclick="handlerShowModalRestore(${data})" data-id="${data}"><i class="fa fa-undo"></i></button>
+                                    `;
+                    }
+                },
+
+            ]
+        });
+
+    });
+
+</script>
+<script>
+  function handlerShowModalRestore(id){
+      let category;
+      $.ajax({
+          headers: {
+              "Accept": "application/json",
+              "Content-type": "application/json"
+          },
+          type: "GET",
+          url: "http://localhost:8080/api/category",
+      })
+          .done(function (data) {
+
+              category = data;
+              $.ajax({
+                  headers: {
+                      "Accept": "application/json",
+                      "Content-type": "application/json"
+                  },
+                  type: "GET",
+                  url: "http://localhost:8080/api/item/" + id
+              })
+                  .done(function (data) {
+                      $("#idProductRestore").val(data.id);
+                      $("#productNameRestore").val(data.title);
+                      $("#priceProductRestore").val(data.price);
+                      $("#quantityProductRestore").val(data.quantity);
+                      $("#desProductRestore").val(data.description);
+                      for (let i = 0; i < category.length; i++) {
+                          let id = category[i].id;
+                          let name = category[i].categoryName;
+                          if (category[i].id == data.category.id) {
+                              $("#catalogsRestore").append(
+                                  `<option value="${id}" selected>${name}</option>`);
+                          } else {
+                              $("#catalogsRestore").append(
+                                  `<option value="${id}">${name}</option>`);
+                          }
+                      }
+
+                      $("#modalRestoreDrink").modal("show");
+                  })
+                  .fail(function (resp) {
+                      alert("Show modal restore error");
+                  });
+
+          })
+          .fail(function (jqXHR) {
+              console.log("get drinks fails");
+          });
+    }
+</script>
+</html>
