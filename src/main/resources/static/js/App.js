@@ -10,8 +10,10 @@ class Product {
     }
 }
 
+
+
 class Category {
-    constructor(id,category) {
+    constructor(id, category) {
         this.id = id;
         this.category_name = category;
     }

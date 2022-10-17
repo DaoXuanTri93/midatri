@@ -25,11 +25,8 @@ public class ItemService implements IItemService {
     private ItemMapper itemMapper;
 
     @Override
-    public List<ItemResult> findAllByDeleted(Boolean deleted) {
-        return itemRepository.findAllByDeleted(deleted)
-                .stream()
-                .map(item -> itemMapper.toDTO(item))
-                .collect(Collectors.toList());
+    public List<Item> findAllByDeleted(Boolean deleted) {
+        return itemRepository.findAllByDeleted(deleted);
     }
 
     @Override
