@@ -12,16 +12,13 @@
                     <div class="modal-alert-danger hide">
                     </div>
                     <form id="frmEditUser">
-                        <input type="text" id="idEdit" hidden>
+                        <input type="hidden" id="idEdit">
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="usernameEdit" class="form-label fw-bold">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="usernameEdit" name="usernameEdit">
                             </div>
-                            <div class="col col-md-6">
-                                <label for="passEdit" class="form-label fw-bold">Mật khẩu mới:</label>
-                                <input type="password" class="form-control" id="passEdit" name="passEdit">
-                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
@@ -42,63 +39,28 @@
             </div>
         </div>
     </div>
-
+    <script src="/js/App.js"></script>
     <script>
-        // $(".editUser").on("click", function () {
-        //     alert(1);
-        //     handlerShowUserEdit();
-        //     $("#frmEditUser").modal("show");
-        // })
-        $("#btnEdit").on("click", function () {
-            $("#frmEditUser").trigger("submit");
-        });
-
-        function editUser() {
-            let id = $("#idEdit").val();
-            let formData = new FormData();
-            formData.append("username", $("#usernameEdit").val().trim().toString());
-            if ($("#passEdit").val() == "") {
-                formData.append("password", null);
-            } else {
-                formData.append("password", $("#passEdit").val().trim().toString());
-            }
-            if ($("#uploadEdit")[0].files[0] != null) {
-                formData.append("file", $("#uploadEdit")[0].files[0]);
-            }
+        function editUser1(id) {
+            let editUser = new User();
+            editUser.id = id;
+            editUser.userName = $("#usernameEdit").val();
+            // editUser.password = $("#passEdit").val();
+            editUser.phone = $("#phoneEdit").val();
+            editUser.email = $("#emailEdit").val();
+            editUser.deleted = false;
             $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
                 type: "PUT",
-                contentType: false,
-                cache: false,
-                processData: false,
-                url: "http://localhost:8080/api/users/edit" + users.id,
-                data: JSON.stringify(user)
+                url: "http://localhost:8080/api/users/edit/" + id,
+                data: JSON.stringify(editUser)
+            }).done(function (data) {
+                window.location.href = "/user"
             })
-                .done(function (data) {
-                    swal("Thành công", "Nhân viên mới đã được tạo", "success").then(function () {
-                        window.location = "/users";
-                    });
-                })
-                .fail(function (jqXHR) {
-                    let str = ``;
-                    if (jqXHR.responseJSON) {
-                        $.each(jqXHR.responseJSON, function (key, value) {
-                            str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
-                            $("#" + key).addClass("error");
-                        });
-                    } else {
-                        str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
-                    }
-                    $("#modalEdit .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                    $("#modalEdit .modal-body .modal-alert-danger").html(str);
-                })
         }
-
-        // $("#modalEdit").on('hidden.bs.modal', function () {
-        //     $("#modalEdit .modal-body .modal-alert-danger").empty();
-        //     $("#modalEdit .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
-        //     $("#modalEdit input.error").removeClass("error");
-        //     $("#frmEditUser")[0].reset();
-        // });
 
         function handlerShowUserEdit(id) {
             $.ajax({
@@ -115,16 +77,34 @@
                     $("#usernameEdit").val(data.userName);
                     $("#phoneEdit").val(data.phone);
                     $("#emailEdit").val(data.email);
-                    // $("#inventoryDrinkDelete").val(data.inventory);
                     $("#modalEdit").modal("show");
+                    $("#btnEdit").on('click', function () {
+                        // checkPassword();
+                        editUser1(data.id);
+                        $("#btnEdit").trigger("submit")
+
+                    });
                 })
-
-
-            // .fail(function (resp) {
-            //     alert("Show modal delete error");
-            // })
+                // .fail()
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Oops...',
+                //     text: 'Something went wrong!',
+                //     footer: '<a href="">Why do I have this issue?</a>'
+                // })
 
         }
+
+        // function checkPassword() {
+        //     let pas = $('#passEdit').val();
+        //     let pas1 = $('#passEdit1').val();
+        //     if (pas == pas1) {
+        //         password: $('#passEdit').val();
+        //     } else {
+        //         alert('mật khẩu không khớp');
+        //         $('#modalEdit').modal('show');
+        //     }
+        // }
     </script>
 
 </th:block>

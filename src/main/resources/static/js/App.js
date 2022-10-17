@@ -15,4 +15,16 @@ class Category {
         this.id = id;
         this.category_name = category;
     }
+
+
+}
+class User {
+    constructor(id,userName,password,phone,email,deleted) {
+        this.id= id;
+        this.userName = userName;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
+        this.deleted = deleted;
+    }
 }

@@ -4,13 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.springframework.beans.factory.annotation.Autowired;
-import vn.midatri.dto.booking.BookingResult;
-import vn.midatri.dto.item.ItemResult;
-import vn.midatri.mapper.BookingMapper;
-import vn.midatri.repository.model.Booking;
-import vn.midatri.repository.model.Item;
-
 import java.math.BigDecimal;
 
 @NoArgsConstructor
