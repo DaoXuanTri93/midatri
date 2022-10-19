@@ -22,6 +22,7 @@
      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <th:block th:replace="/admin/layout/navBar :: navBar"/>
 
+
     <!-- ============================================================== -->
     <!--Primary Content-->
     <div class="container">
@@ -30,7 +31,10 @@
         <!-- ============================================================== -->
         <div class="data-table-area ">
             <div class="container">
-                <div class="row">
+                <div class="row col-3" style="float:left">
+                    <th:block th:replace="/admin/layout/rightTable :: rightTable"/>
+                </div>
+                <div class="row col-9">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="data-table-list">
                             <div class="row">
@@ -104,7 +108,7 @@
             ajax: {
                 contentType: 'application/json',
                 url: 'http://localhost:8080/api/item',
-                type : 'GET',
+                type: 'GET',
 
                 dataSrc: '',
             },
@@ -115,8 +119,8 @@
                 },
                 {data: 'category.categoryName'},
                 {
-                    data:  'img',
-                    render:function (img){
+                    data: 'img',
+                    render: function (img) {
                         return `<img src="${img}" style="width: 50px ; height: 50px"/>`
                     }
 
@@ -166,7 +170,6 @@
     });
 
 
-
     //reset modal Create
     $("#modalCreateProduct").on('hidden.bs.modal', function () {
         $("#modalCreateProduct .modal-body .modal-alert-danger").empty();
@@ -176,7 +179,7 @@
         $("#frmCreateProduct")[0].reset();
     });
 
-// show modal delete
+    // show modal delete
 
 
     function deleteProduct() {
@@ -195,7 +198,7 @@
                 "Content-type": "application/json"
             },
             type: "DELETE",
-            url: "http://localhost:8080/api/item/deleted/"+ drink.id,
+            url: "http://localhost:8080/api/item/deleted/" + drink.id,
             data: JSON.stringify(drink)
         })
             .done(function (data) {
@@ -221,30 +224,30 @@
                 $(".loader").addClass('hide');
             })
     }
+
     // handlerShowModalDelete
     function handlerShowModalDelete(id) {
-            $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/item/" + id
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/item/" + id
+        })
+            .done(function (data) {
+                $("#idProductDelete").val(data.id);
+                $("#productNameDelete").val(data.title);
+                $("#priceProductDelete").val(data.price);
+                $("#desProductDelete").val(data.content);
+                $("#inventoryProductDelete").val(data.inventory);
+                $("#modalDeleteProduct").modal("show");
             })
-                .done(function (data) {
-                    $("#idProductDelete").val(data.id);
-                    $("#productNameDelete").val(data.title);
-                    $("#priceProductDelete").val(data.price);
-                    $("#desProductDelete").val(data.content);
-                    $("#inventoryProductDelete").val(data.inventory);
-                    $("#modalDeleteProduct").modal("show");
-                })
-                .fail(function (resp) {
-                    alert("Show modal delete error");
-                })
+            .fail(function (resp) {
+                alert("Show modal delete error");
+            })
 
     }
-
 
 
     // set event for button delete
@@ -321,6 +324,29 @@
         $("#catalogsUpdate option").remove();
         $("#frmUpdateProduct")[0].reset();
     });
+
+    $('#btnShowMenuType').on("click", function () {
+        if($("#menuType").hasClass("hide")) {
+            $("#menuType").removeClass("hide");
+        }else {
+            $("#menuType").addClass("hide");
+        }
+    })
+    $('#btnShowProduct').on('click', function () {
+        if($("#filterProduct").hasClass("hide")) {
+            $("#filterProduct").removeClass("hide");
+        }else {
+            $("#filterProduct").addClass("hide");
+        }
+    })
+    $('#btnShowGroupProduct').on('click', function (){
+        if($('#groupProduct').hasClass("hide")) {
+            $('#groupProduct').removeClass("hide");
+        }else {
+            $('#groupProduct').addClass("hide");
+        }
+    })
+
 </script>
 
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:fragment="modalCreate">
-    <div class="modal" tabindex="-1" id="modalCreate">
+<th:block th:fragment="modalCreateTable">
+    <div class="modal" tabindex="-1" id="modalCreateTable">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -27,14 +27,14 @@
 
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
-                                <label for="codeTable" class="form-label fw-bold">Mã số bàn:</label>
-                                <input type="text" class="form-control" id="codeTable" name="codeTable">
-                            </div>
+<!--                            <div class="col col-md-6">-->
+<!--                                <label for="id" class="form-label fw-bold">Mã số bàn:</label>-->
+<!--                                <input type="text" class="form-control" id="codeTable" name="codeTable">-->
+<!--                            </div>-->
 
                             <div class="col col-md-6">
                                 <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
-                                <input type="text" class="form-control" id="statusTable" name="statusTable">
+                                <input type="number" class="form-control" id="statusTable" name="statusTable">
                             </div>
                         </div>
                         <div class="row">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnCreateUser">Tạo bàn</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateTable">Tạo bàn</button>
                 </div>
             </div>
         </div>
@@ -59,32 +59,47 @@
 
     <script>
         $("#btnCreateTable").on("click", function () {
-
             CreateTable();
             $("#btnCreateTable").trigger("submit");
         });
 
         function CreateTable() {
             let NewTable = {
-                code: $('#codeTable').val(),
+                // code: $('#codeTable').val(),
                 status: $('#statusTable').val(),
                 capacity: $('#capacityTable').val(),
-                content: $('#contentTable').val()
+                content: $('#contentTable').val(),
+                deleted : false,
             }
+            console.log(NewTable);
             $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
                 type: 'POST',
-                contentType: 'application/json',
                 url: 'http://localhost:8080/api/table-top/create',
                 data: JSON.stringify(NewTable)
 
             }) .done(function (data) {
-                swal("Thành công", "User mới đã được tạo", "success").then(function () {
+                $.each(data, (i, item) => {
+                    let str = `
+                    <tr id="tr_${item.id}">
+                       <th>${item.status}</th>
+                       <th>${item.capacity}</th>
+                       <th>${item.content}</th>
+                    </tr>
+                        `;
+                    $("tblTop tbody").append(str);
                     window.location = "/table-top";
-                });
+                //     swal("Thành công", "table mới đã được tạo", "success").then(function () {
+                // });
+                    swal("Thành công","bàn mới đã được tạo");
             })
                 .fail(function (jqXHR) {
                     let str = ``;
                 })
+        })
         }
 
 

@@ -27,4 +27,13 @@ class User {
         this.email = email;
         this.deleted = deleted;
     }
+
+}
+class TableTop{
+    constructor(id,status,capacity,content) {
+        this.id = id;
+        this.status = status;
+        this.capacity = capacity;
+        this.content = content;
+    }
 }
