@@ -56,4 +56,15 @@ public class ItemMapper {
     }
 
 
+    public CreateItem toCreateItemDTO(Item item){
+        return new CreateItem()
+                .setTitle(item.getTitle())
+                .setPrice(item.getPrice())
+                .setQuantity(item.getQuantity())
+                .setImg(item.getImg())
+                .setContent(item.getContent())
+                .setCategory(categoryMapper.toDTO(item.getCategory()))
+                .setUser(userMapper.toDTO(item.getUser()))
+                .setDeleted(item.isDeleted());
+    }
 }

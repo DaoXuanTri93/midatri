@@ -6,7 +6,7 @@ import vn.midatri.repository.model.Category;
 import java.util.List;
 
 public interface ICategoryService {
-    List<Category> findAll();
+    List<CategoryResult> findAll();
     CategoryResult save(Category category);
 
     CategoryResult findById(Long id);

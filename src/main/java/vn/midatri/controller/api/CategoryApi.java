@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.repository.model.Category;
 import vn.midatri.repository.model.Item;
 import vn.midatri.service.ICategoryService;
@@ -20,7 +21,7 @@ public class CategoryApi {
     private ICategoryService categoryService;
     @GetMapping
     public ResponseEntity<?> renderCategory(){
-        List<Category> categories = categoryService.findAll();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        List<CategoryResult> categoryResults = categoryService.findAll();
+        return new ResponseEntity<>(categoryResults, HttpStatus.OK);
     }
 }

@@ -11,6 +11,7 @@ import vn.midatri.repository.model.Category;
 import vn.midatri.service.ICategoryService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,8 +22,11 @@ public class CategoryService  implements ICategoryService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryResult> findAll() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(category -> categoryMapper.toDTO(category))
+                .collect(Collectors.toList());
     }
 
     @Override

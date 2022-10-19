@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Transactional
+
 public class ItemService implements IItemService {
 
     @Autowired
@@ -25,7 +25,7 @@ public class ItemService implements IItemService {
     private ItemMapper itemMapper;
 
     @Override
-
+    @Transactional(readOnly = true)
     public List<ItemResult> findAllByDeleted(Boolean deleted) {
         return itemRepository.findAllByDeleted(deleted)
                 .stream()
@@ -36,6 +36,7 @@ public class ItemService implements IItemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ItemResult> findAllByCategoryId(Long id) {
         return itemRepository.findAllByCategoryId(id)
                 .stream()
@@ -45,22 +46,22 @@ public class ItemService implements IItemService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public ItemResult findById(Long id) {
         return itemMapper.toDTO(itemRepository.findById(id).get());
     }
 
     @Override
+    @Transactional
     public ItemResult create(CreateItem createItem) {
-        Item item = itemMapper.toModel(createItem);
-        itemRepository.save(item);
-        return itemMapper.toDTO(item);
+
+        return itemMapper.toDTO(itemRepository.save(itemMapper.toModel(createItem)));
     }
 
     @Override
+    @Transactional
     public ItemResult update(ItemResult itemResult) {
-
-        itemRepository.save(itemMapper.toModel(itemResult));
-        return itemResult;
+        return itemMapper.toDTO(itemRepository.save(itemMapper.toModel(itemResult)));
     }
 
 }
