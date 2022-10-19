@@ -12,5 +12,5 @@ public interface TableTopRepository extends JpaRepository<TableTop, Long> {
     List<TableTop> findAll();
 
     List<TableTop> findAllByDeleted(boolean deleted);
-    TableTop save(TableTopResult tableTopResult);
+    TableTop save(TableTop tableTop);
 }

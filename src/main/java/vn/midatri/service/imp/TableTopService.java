@@ -12,6 +12,7 @@ import vn.midatri.repository.model.TableTop;
 import vn.midatri.service.ITableTopService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,21 +26,47 @@ public class TableTopService implements ITableTopService {
 
 
     @Override
-    public List<TableTop> findAll() {
-        return tableTopRepository.findAll();
+    public List<TableTopResult> findAll() {
+        return tableTopRepository.findAll()
+                .stream()
+                .map(tableTop -> tableTopMapper.toDTO(tableTop))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<TableTop> findAllByDeleted(boolean deleted) {
-        return tableTopRepository.findAllByDeleted(deleted);
+    public List<TableTopResult> findAllByDeleted(boolean deleted) {
+        return tableTopRepository.findAllByDeleted(deleted)
+                .stream()
+                .map(tableTop -> tableTopMapper.toDTO(tableTop))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public TableTop save(TableTop tableTop) {
+    public TableTopResult save(TableTopResult tableTopResult) {
+        return tableTopMapper.toDTO(tableTopRepository.save(tableTopMapper.toModelResult(tableTopResult)));
+    }
+
+    @Override
+    public TableTopResult findTableById(Long id) {
+        return tableTopMapper.toDTO(tableTopRepository.findById(id).get());
+    }
+
+    @Override
+    public TableTopResult create(TableTopRegister tableTopRegister) {
+        TableTop tableTop = tableTopMapper.toModelRegister(tableTopRegister);
+        tableTopRepository.save(tableTop);
+        return tableTopMapper.toDTO(tableTop);
+    }
+
+    @Override
+    public TableTop save1(TableTop tableTop) {
         return tableTopRepository.save(tableTop);
     }
 
-
+    @Override
+    public TableTop findById(Long id) {
+        return tableTopRepository.findById(id).get();
+    }
 
 
 }

@@ -25,4 +25,14 @@ public class TableTopMapper {
                 .setCapacity(tableTopRegister.getCapacity())
                 .setContent(tableTopRegister.getContent());
     }
+
+    public  TableTop toModelResult (TableTopResult tableTopResult){
+        return  new TableTop()
+                .setId(tableTopResult.getId())
+                .setCode(tableTopResult.getCode())
+                .setStatus(tableTopResult.getStatus())
+                .setCapacity(tableTopResult.getCapacity())
+                .setContent(tableTopResult.getContent());
+
+    }
 }

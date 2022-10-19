@@ -24,14 +24,48 @@ public class TableTopApi {
 
     @GetMapping()
     public ResponseEntity<?> renderTableTop(){
-        List<TableTop> tableTops = tableTopService.findAllByDeleted(false);
-        return new ResponseEntity<>(tableTops, HttpStatus.OK);
+        List<TableTopResult> tableTop = tableTopService.findAllByDeleted(false);
+        return new ResponseEntity<>(tableTop, HttpStatus.OK);
+    }
+
+    @GetMapping("/renderDeletedTable")
+    public ResponseEntity<?> listTableDeleted(){
+        List<TableTopResult> tableTopResults = tableTopService.findAllByDeleted(true);
+        return new ResponseEntity<>(tableTopResults,HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createNewTable(@RequestBody TableTop tableTop){
-        TableTop tableTopResult = tableTopService.save(tableTop);
+    public ResponseEntity<?> createNewTable(@RequestBody TableTopRegister tableTopRegister){
+        TableTopResult tableTopResult = tableTopService.create(tableTopRegister);
         return new ResponseEntity<>(tableTopResult,HttpStatus.OK);
+    }
+    @PostMapping("/deleted/{id}")
+    public ResponseEntity<?> deletedTable(@PathVariable Long id){
+        TableTop tableTop = tableTopService.findById(id);
+        tableTop.setDeleted(true);
+        tableTopService.save1(tableTop);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/restore/{id}")
+    public ResponseEntity<?> restoreTable(@PathVariable Long id){
+        TableTop tableTop = tableTopService.findById(id);
+        tableTop.setDeleted(false);
+        tableTopService.save1(tableTop);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        TableTop tableTop = tableTopService.findById(id) ;
+        return  new ResponseEntity<>(tableTop,HttpStatus.OK);
+    }
+    @PutMapping("edit/{id}")
+    public ResponseEntity<?> editTable(@PathVariable Long id,@RequestBody TableTop tableTop){
+        TableTopResult tableTopResult = tableTopService.findTableById(id);
+        tableTop.setId(tableTop.getId());
+        tableTopService.save1(tableTop);
+        return new ResponseEntity<>(tableTop,HttpStatus.OK);
+
     }
 
 }

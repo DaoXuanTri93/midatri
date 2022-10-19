@@ -42,7 +42,7 @@ public class TableTop {
     private String content;
 
     @Column(name = "deleted")
-    private Boolean deleted;
+    private Boolean deleted = false;
 
 
 }
