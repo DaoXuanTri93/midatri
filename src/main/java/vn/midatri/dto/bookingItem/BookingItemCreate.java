@@ -10,12 +10,13 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
-public class BookingItemAdd {
+public class BookingItemCreate {
     private Long id;
     private BigDecimal price;
     private Integer quantity;
     private String content;
+    private BigDecimal grandTotal;
+    private float discount;
     private Long booking_id;
     private Long item_id;
-
 }

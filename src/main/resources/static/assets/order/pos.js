@@ -6,22 +6,24 @@ class Booking {
     }
 }
 
-class BookingItem {
-    constructor(id, discount, grandTotal, price, quantity, booking, item) {
+class BookingItemCreate {
+    constructor(id, discount, grandTotal, price, quantity, booking_id, item_id) {
         this.id = id;
         this.discount = discount;
         this.grandTotal = grandTotal;
         this.price = price;
         this.quantity = quantity;
-        this.booking = booking;
-        this.item = item;
+        this.booking_id = booking_id;
+        this.item_id = item_id;
     }
 }
 
 let booking_id = 0;
 let tableTopId = 0;
+let totalBookingItem = 0;
 
 function renderTableTop() {
+
     $.ajax({
         headers: {
             "Accept": "application/json",
@@ -125,7 +127,7 @@ function renderProducts() {
     })
 }
 
-function handleRenderAll() {
+function renderCategoryItem() {
     $("#render-product li").remove();
     $.ajax({
         headers: {
@@ -213,19 +215,10 @@ function handleEventOnClick(item_id) {
         data: JSON.stringify(booking)
     })
         .done((booking) => {
-            console.log(booking)
-            let bookingItem = new BookingItem();
-            bookingItem.price = 10;
-            bookingItem.quantity = 2;
-            bookingItem.grandTotal = 50;
-            bookingItem.discount = 5;
-            bookingItem.booking = {
-                id: booking.id
-            };
-            bookingItem.item = {
-                id: item_id
-            };
-
+            let bookingItem = new BookingItemCreate();
+            bookingItem.booking_id = booking.id
+            bookingItem.item_id = item_id
+            // console.log(JSON.stringify(bookingItem))
             $.ajax({
                 headers: {
                     "Accept": "application/json",
@@ -257,88 +250,12 @@ function handleEventOnClick(item_id) {
                             })
                                 .done((data) => {
                                     $.each(data, (i, item) => {
-                                        let str = `
-                    <div class="product-cart-item" id="${item.id}">
-                                                    <kv-cashier-cart-item class="row-list row-list-active active">
-                                                        <div class="row-list-content">
-                                                            <div class="cell-action">
-                                                                <a class="btn-icon btn-trash" href="javascript:void(0);"
-                                                                   title="Xóa món">
-                                                                    <i class="fa-regular fa-trash-can" 
-                                                                    onclick="hanldeDeletedBookingItem(${item.id})"
-                                                                    ></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="cell-order"> 1.
-                                                                <div>
-                                                                    <button class="btn-icon" type="button"
-                                                                            title="Món ưu tiên">
-                                                                        <i class="fa-star fa-regular"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row-product">
-                                                                <div class="cell-name full">
-                                                                    <div class="wrap-name">
-                                                                        <h4 title="APEROL SPRITZ">${item.item.title}</h4>
-                                                                        <span class="wrap-icons"></span>
-                                                                        <div class="attr-wrapper">
-                                                                        </div>
-                                                                    </div>
-                                                                    <ul class="comboset-list-item">
-
-                                                                    </ul>
-                                                                    <div class="wrap-note" href="javascript:void(0)">
-                                                                        <button class="btn btn-sm btn-light has-Update"
-                                                                                style="cursor: pointer;">
-                                                                            <i class="far fa-pen"></i>
-                                                                            <span class="note-hint"
-                                                                                  style="cursor: pointer;">Ghi chú món</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="list-topping">
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cell-quatity">
-                                                                    <div class="cell-quantity-inner">
-                                                                        <button class="btn-icon down" type="button"
-                                                                                title="Giảm số lượng món">
-                                                                            <i class="fa-regular fa-minus"></i>
-                                                                        </button>
-                                                                        <button class="form-control form-control-sm item-quantity">
-                                                                            ${item.quantity}
-                                                                        </button>
-                                                                        <button class="btn-icon up" type="button"
-                                                                                title="Tăng số lượng món">
-                                                                            <i class="fa-regular fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cell-change-price">
-                                                                    <div class="popup-anchor">
-                                                                        <button class="form-control form-control-sm">
-                                                                            ${item.price}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cell-price">${item.price}</div>
-                                                                <div class="cell-actions">
-                                                                    <div class="btn-group" dropdown="">
-                                                                        <button class="dropdown-toggle" type="button"
-                                                                                title="Thêm dòng mới">
-                                                                            <i class="fas fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </kv-cashier-cart-item>
-                                                </div>
-                    `
+                                        let str = renderBookingItem(item);
                                         $("#render-tableTop").append(str);
-                                        $('.total-price').text(item.price + item.quantity);
+
+                                        totalBookingItem += item.grandTotal;
                                     })
+                                    $('.total-price').text(totalBookingItem);
                                 })
                         })
 
@@ -350,7 +267,6 @@ function handleEventOnClick(item_id) {
 }
 
 function hanldeDeletedBookingItem(bookingIdItem) {
-    alert(bookingIdItem)
     $.ajax({
         headers: {
             "Accept": "application/json",
@@ -359,7 +275,154 @@ function hanldeDeletedBookingItem(bookingIdItem) {
         type: "POST",
         url: "http://localhost:8080/api/bookingItem/" + bookingIdItem
     })
+        .done(() => {
+            $("#render-tableTop div").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/booking/" + tableTopId
+            }).done((data) => {
+                $.each(data, (i, item) => {
+                    booking_id = item.id;
+                    $.ajax({
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: "http://localhost:8080/api/bookingItem/" + booking_id
+                    })
+                        .done((data) => {
+                            $.each(data, (i, item) => {
+                                let str = renderBookingItem(item);
+                                $("#render-tableTop").append(str);
+                                totalBookingItem += item.grandTotal;
+                            })
+                            $('.total-price').text(totalBookingItem);
+                        })
+                })
 
+            })
+
+        })
+
+}
+
+function renderBookingItem(item) {
+
+    return `
+            <div class="product-cart-item" id="${item.id}">
+                <kv-cashier-cart-item class="row-list row-list-active active">
+                    <div class="row-list-content">
+                        <div class="cell-action">
+                            <a class="btn-icon btn-trash" href="javascript:void(0);"
+                               title="Xóa món">
+                                <i class="fa-regular fa-trash-can" 
+                                onclick="hanldeDeletedBookingItem(${item.id})"
+                                ></i>
+                            </a>
+                        </div>
+                        <div class="cell-order"> 1.
+                            <div>
+                                <button class="btn-icon" type="button"
+                                        title="Món ưu tiên">
+                                    <i class="fa-star fa-regular"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row-product">
+                            <div class="cell-name full">
+                                <div class="wrap-name">
+                                    <h4 title="APEROL SPRITZ">${item.item.title}</h4>
+                                    <span class="wrap-icons"></span>
+                                    <div class="attr-wrapper">
+                                    </div>
+                                </div>
+                                <ul class="comboset-list-item">
+
+                                </ul>
+                                <div class="wrap-note" href="javascript:void(0)">
+                                    <button class="btn btn-sm btn-light has-Update"
+                                            style="cursor: pointer;">
+                                        <i class="far fa-pen"></i>
+                                        <span class="note-hint"
+                                              style="cursor: pointer;">Ghi chú món</span>
+                                    </button>
+                                </div>
+                                <div class="list-topping">
+
+                                </div>
+                            </div>
+                            <div class="cell-quatity">
+                                <div class="cell-quantity-inner">
+                                    <button class="btn-icon down" type="button"
+                                            title="Giảm số lượng món"
+                                            onclick="handleReduceQuantity(${item.id})">
+                                        <i class="fa-regular fa-minus"></i>
+                                    </button>
+                                    <button class="form-control form-control-sm item-quantity" >
+                                        ${item.quantity}
+                                    </button>
+                                    <button class="btn-icon up" type="button"
+                                            title="Tăng số lượng món"
+                                            onclick="handleIncreaseQuantity(${item.id})">
+                                        <i class="fa-regular fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cell-change-price">
+                                <div class="popup-anchor">
+                                    <button class="form-control form-control-sm">
+                                        ${item.price}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cell-price">${item.price}</div>
+                            <div class="cell-actions">
+                                <div class="btn-group" dropdown="">
+                                    <button class="dropdown-toggle" type="button"
+                                            title="Thêm dòng mới">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kv-cashier-cart-item>
+            </div>
+                    `
+}
+
+function handleIncreaseQuantity(bookingItem_id) {
+
+    $.ajax({
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        type: "PATCH",
+        url: `http://localhost:8080/api/bookingItem/${bookingItem_id}/increaseQuantity`
+    })
+        .done(() => {
+            handelTableTop(tableTopId)
+        })
+}
+function handleReduceQuantity(bookingItem_id) {
+
+    $.ajax({
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        type: "PATCH",
+        url: `http://localhost:8080/api/bookingItem/${bookingItem_id}/reduceQuantity`
+    })
+        .done(() => {
+            handelTableTop(tableTopId)
+        })
 }
 
 function handelTableTop(tableTopId) {
@@ -373,6 +436,7 @@ function handelTableTop(tableTopId) {
         url: "http://localhost:8080/api/booking/" + tableTopId
     })
         .done((data) => {
+
             $.each(data, (i, item) => {
                 booking_id = item.id;
                 $.ajax({
@@ -385,86 +449,11 @@ function handelTableTop(tableTopId) {
                 })
                     .done((data) => {
                         $.each(data, (i, item) => {
-                            let str = `
-                    <div class="product-cart-item" id="${item.id}">
-                                                    <kv-cashier-cart-item class="row-list row-list-active active">
-                                                        <div class="row-list-content">
-                                                            <div class="cell-action">
-                                                                <a class="btn-icon btn-trash" href="javascript:void(0);"
-                                                                   title="Xóa món">
-                                                                    <i class="fa-regular fa-trash-can" onclick="hanldeDeletedBookingItem(${item.id})"></i>
-                                                                </a>
-                                                            </div>
-                                                            <div class="cell-order"> 1.
-                                                                <div>
-                                                                    <button class="btn-icon" type="button"
-                                                                            title="Món ưu tiên">
-                                                                        <i class="fa-star fa-regular"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row-product">
-                                                                <div class="cell-name full">
-                                                                    <div class="wrap-name">
-                                                                        <h4 title="APEROL SPRITZ">${item.item.title}</h4>
-                                                                        <span class="wrap-icons"></span>
-                                                                        <div class="attr-wrapper">
-                                                                        </div>
-                                                                    </div>
-                                                                    <ul class="comboset-list-item">
-
-                                                                    </ul>
-                                                                    <div class="wrap-note" href="javascript:void(0)">
-                                                                        <button class="btn btn-sm btn-light has-Update"
-                                                                                style="cursor: pointer;">
-                                                                            <i class="far fa-pen"></i>
-                                                                            <span class="note-hint"
-                                                                                  style="cursor: pointer;">Ghi chú món</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="list-topping">
-
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cell-quatity">
-                                                                    <div class="cell-quantity-inner">
-                                                                        <button class="btn-icon down" type="button"
-                                                                                title="Giảm số lượng món">
-                                                                            <i class="fa-regular fa-minus"></i>
-                                                                        </button>
-                                                                        <button class="form-control form-control-sm item-quantity">
-                                                                            ${item.quantity}
-                                                                        </button>
-                                                                        <button class="btn-icon up" type="button"
-                                                                                title="Tăng số lượng món">
-                                                                            <i class="fa-regular fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cell-change-price">
-                                                                    <div class="popup-anchor">
-                                                                        <button class="form-control form-control-sm">
-                                                                            ${item.price}
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="cell-price">${item.price}</div>
-                                                                <div class="cell-actions">
-                                                                    <div class="btn-group" dropdown="">
-                                                                        <button class="dropdown-toggle" type="button"
-                                                                                title="Thêm dòng mới">
-                                                                            <i class="fas fa-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </kv-cashier-cart-item>
-                                                </div>
-                    `
+                            let str = renderBookingItem(item);
                             $("#render-tableTop").append(str);
-                            $('.total-price').text(item.price + item.quantity);
+                            totalBookingItem += item.grandTotal;
                         })
+                        $('.total-price').text(totalBookingItem);
                     })
             })
 
@@ -472,6 +461,7 @@ function handelTableTop(tableTopId) {
 
 
 }
+
 
 function handelRemoveEvent() {
     $(".btn-add-product").off();

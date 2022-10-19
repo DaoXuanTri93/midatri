@@ -58,5 +58,4 @@ public class BookingItem {
 
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
-
 }

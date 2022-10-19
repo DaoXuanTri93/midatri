@@ -1,14 +1,12 @@
 package vn.midatri.controller.api;
 
 
-import org.hibernate.mapping.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.repository.model.Booking;
-import vn.midatri.repository.model.TableTop;
 import vn.midatri.service.IBookingService;
 
 import java.util.List;

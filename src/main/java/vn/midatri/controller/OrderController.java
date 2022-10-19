@@ -13,8 +13,12 @@ public class OrderController {
     public ModelAndView UserPage(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/order/listOrder");
-
-
+        return modelAndView;
+    }
+    @GetMapping("/bill")
+    public ModelAndView bills(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/bills/bills");
         return modelAndView;
     }
 }
