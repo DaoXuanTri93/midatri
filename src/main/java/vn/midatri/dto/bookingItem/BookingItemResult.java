@@ -15,12 +15,12 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 public class BookingItemResult {
     private Long id;
-    private ItemResult item;
-    private BookingResult booking;
     private BigDecimal price;
     private Integer quantity;
     private Float discount;
     private Short status;
     private String content;
     private BigDecimal grandTotal;
+    private ItemResult item;
+    private BookingResult booking;
 }

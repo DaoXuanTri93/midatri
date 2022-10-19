@@ -56,5 +56,7 @@ public class Booking {
     private TableTop tableTop;
 
 
-
+    public Booking(long id) {
+        this.id=id;
+    }
 }

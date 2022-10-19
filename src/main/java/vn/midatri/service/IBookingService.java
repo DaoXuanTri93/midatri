@@ -12,5 +12,6 @@ public interface IBookingService {
     Booking create(Booking booking);
 
     Optional<Booking> findByTableTopId(Long id);
+    BookingResult findById(Long id);
 
 }

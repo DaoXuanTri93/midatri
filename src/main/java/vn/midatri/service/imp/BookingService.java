@@ -40,5 +40,10 @@ public class BookingService implements IBookingService {
         return bookingRepository.findByTableTopId(id);
     }
 
+    @Override
+    public BookingResult findById(Long id) {
+        return bookingMapper.toDTO(bookingRepository.findById(id).get());
+    }
+
 
 }

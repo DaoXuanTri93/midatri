@@ -27,4 +27,17 @@ public class BookingMapper {
                 .setUser_id(booking.getUser().getId())
                 .setTableTop_id(booking.getTableTop().getId());
     }
+
+//    public Booking toModel(BookingResult bookingResult){
+//        return new Booking()
+//                .setId(bookingResult.getId())
+//                .setFullName(bookingResult.getFullName())
+//                .setStatus(bookingResult.getStatus())
+//                .setPhone(bookingResult.getPhone())
+//                .setEmail(bookingResult.getEmail())
+//                .setAddress(bookingResult.getAddress())
+//                .setContent(bookingResult.getContent())
+//                .setUser(bookingResult.getUser_id())
+//                .setTableTop_id(bookingResult.getTableTop().getId());
+//    }
 }

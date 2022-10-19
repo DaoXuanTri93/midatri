@@ -62,5 +62,7 @@ public class Item {
     @Column(name = "deleted" , columnDefinition = "boolean default false")
     private boolean deleted = false;
 
-
+    public Item(long id){
+        this.id = id;
+    }
 }
