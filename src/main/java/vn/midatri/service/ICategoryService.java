@@ -6,8 +6,9 @@ import vn.midatri.repository.model.Category;
 import java.util.List;
 
 public interface ICategoryService {
-    List<CategoryResult> findAll();
+    List<CategoryResult> findCategoryByParentIsNotNull();
     CategoryResult save(Category category);
 
     CategoryResult findById(Long id);
+    List<CategoryResult> findCategoryByParentIsnull();
 }

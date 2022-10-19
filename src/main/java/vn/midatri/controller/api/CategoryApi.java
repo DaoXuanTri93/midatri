@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.midatri.dto.category.CategoryResult;
-import vn.midatri.repository.model.Category;
-import vn.midatri.repository.model.Item;
 import vn.midatri.service.ICategoryService;
 
 import java.util.List;
@@ -21,7 +19,13 @@ public class CategoryApi {
     private ICategoryService categoryService;
     @GetMapping
     public ResponseEntity<?> renderCategory(){
-        List<CategoryResult> categoryResults = categoryService.findAll();
+        List<CategoryResult> categoryResults = categoryService.findCategoryByParentIsNotNull();
+        return new ResponseEntity<>(categoryResults, HttpStatus.OK);
+    }
+
+    @GetMapping("/parent")
+    public ResponseEntity<?> renderCategoryParent(){
+        List<CategoryResult> categoryResults = categoryService.findCategoryByParentIsnull();
         return new ResponseEntity<>(categoryResults, HttpStatus.OK);
     }
 }

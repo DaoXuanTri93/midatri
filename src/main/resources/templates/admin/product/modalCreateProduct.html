@@ -22,24 +22,34 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="mb-3 col-6">
+                            <div class="mb-3 col-8">
                                 <label for="productNameCreate" class="form-label fw-bold">Tên thức uống</label>
                                 <input type="text" class="form-control" id="productNameCreate" name="productNameCreate">
                             </div>
-                            <div class="mb-3 col-6">
-                                <label for="priceProductCreate" class="form-label fw-bold">Giá thức uống</label>
-                                <input type="text" class="form-control num-space" id="priceProductCreate"
-                                       name="priceProductCreate">
+                            <div class="mb-3 col-4">
+                                <label for="imPriceProductCreate" class="form-label fw-bold">Giá Nhập</label>
+                                <input type="text" class="form-control num-space text-right" id="imPriceProductCreate"
+                                       name="imPriceProductCreate">
                             </div>
-                            <div class="mb-3 col-6">
-                                <label for="priceProductCreate" class="form-label fw-bold">Số Lượng thức uống</label>
-                                <input type="text" class="form-control num-space" id="quantityProductCreate"
-                                       name="quantityProductCreate">
-                            </div>
-                            <div class="mb-3 col">
+                            <div class="mb-3 col-8">
                                 <label for="catalogsCreate" class="form-label fw-bold">Danh mục</label>
                                 <select class="form-control" id="catalogsCreate">
                                 </select>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="priceProductCreate" class="form-label fw-bold">Giá Bán</label>
+                                <input type="text" class="form-control num-space text-right" id="priceProductCreate"
+                                       name="priceProductCreate">
+                            </div>
+                            <div class="mb-3 col-8">
+                                <label for="catalogsParentCreate" class="form-label fw-bold">Loại Thực Đơn</label>
+                                <select class="form-control" id="catalogsParentCreate">
+                                </select>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="quantityProductCreate" class="form-label fw-bold ">Số Lượng thức uống</label>
+                                <input type="text" class="form-control num-space text-right" id="quantityProductCreate"
+                                       name="quantityProductCreate">
                             </div>
                         </div>
                         <div class="row">
@@ -85,7 +95,7 @@
             let product = new Product();
             let category = new Category();
             product.title = $("#productNameCreate").val();
-            product.price = $("#priceProductCreate").val();
+            product.price = $("#imPriceProductCreate").val();
             product.quantity=$("#quantityProductCreate").val();
             product.content = $("#desProductCreate").val();
             product.category = {

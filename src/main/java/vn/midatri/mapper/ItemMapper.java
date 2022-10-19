@@ -4,8 +4,11 @@ package vn.midatri.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.midatri.dto.item.CreateItem;
+import vn.midatri.dto.item.ItemParam;
 import vn.midatri.dto.item.ItemResult;
+import vn.midatri.repository.model.Category;
 import vn.midatri.repository.model.Item;
+import vn.midatri.repository.model.User;
 
 @Component
 public class ItemMapper {
@@ -15,7 +18,6 @@ public class ItemMapper {
     UserMapper userMapper;
 
     public Item toModel(CreateItem createItem) {
-
         return new Item()
                 .setTitle(createItem.getTitle())
                 .setPrice(createItem.getPrice())
@@ -50,10 +52,11 @@ public class ItemMapper {
                 .setQuantity(item.getQuantity())
                 .setImg(item.getImg())
                 .setContent(item.getContent())
-                .setCategory(categoryMapper.toDTO(item.getCategory()))
+                .setCategory(categoryMapper.toDToResultName(item.getCategory()))
                 .setUser(userMapper.toDTO(item.getUser()))
                 .setDeleted(item.isDeleted());
     }
+
 
 
     public CreateItem toCreateItemDTO(Item item){
