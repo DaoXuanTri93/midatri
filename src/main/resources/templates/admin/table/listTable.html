@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Data Table | Notika - Notika Admin Template</title>
+    <title>Quản lý bàn</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <th:block th:replace="/admin/layout/head :: head"/>
@@ -21,16 +21,9 @@
 <div class="breadcomb-area">
     <div class="container">
         <div class="row">
-            <div class="breadcomb-list">
-                <div class="row mb-2" >
-                    <div class="col text-end">
-                        <button class="btn btn-outline-primary" id="createNewTable"><i class="fa fa-plus-square"></i> Tạo
-                            bàn mới
-                        </button>
-                    </div>
-                        <div class="col">
-                            <a href="/table-top/restoreTable">Danh sách bàn đã xóa</a>
-                        </div>
+            <div class="breadcomb-list bg-primary">
+                <div class="row mb-4 text-center " >
+                    <h1>Quản lý bàn</h1>
                     </div>
                 </div>
             </div>
@@ -47,7 +40,7 @@
                     <div class="table-responsive">
                         <table id="tblTop" class="table table-striped">
                             <thead>
-                            <tr>
+                            <tr class="bg-success">
                                 <th>#</th>
                                 <th>Status</th>
                                 <th>Capacity</th>
@@ -58,6 +51,12 @@
                             </thead>
                             <tbody>
                             </tbody>
+                            <div class="col text-end">
+                                <a class="btn btn-outline-warning" href="/table-top/restoreTable">Danh sách bàn đã xóa</a>
+                            </div>
+                            <div class="col text-end ">
+                                <button class="btn btn-outline-primary" id="createNewTable"><i class="fa fa-plus-square"></i> Tạo bàn mới</button>
+                            </div>
                         </table>
                     </div>
                 </div>
@@ -120,10 +119,6 @@
     $("#createNewTable").on("click",function () {
         $("#modalCreateTable").modal("show")
     });
-
-
-
-
 </script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>

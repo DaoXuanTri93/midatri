@@ -12,11 +12,11 @@
                     <div class="modal-alert-danger hide">
                     </div>
                     <form id="frmEditTable">
-                        <input type="hidden" id="idEdit">
+<!--                        <input type="hidden" id="idEdit">-->
                         <div class="row">
                             <div class="col col-md-6">
-                                <label  class="form-label fw-bold">Số thứ tự:</label>
-                                <input type="text" class="form-control" id="${id}" name="idTable">
+                                <label  class="form-label fw-bold" >Số thứ tự:</label>
+                                <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" readonly>
                             </div>
                             <div class="col col-md-6">
                                 <label for="statusEdit" class="form-label fw-bold">Trạng thái:</label>
@@ -46,7 +46,7 @@
     <script>
         function editTable(id) {
             let editTable = new TableTop();
-            editTable.id = id;
+            editTable.id =id;
             editTable.status = $("#statusEdit").val();
             editTable.capacity = $("#capacityEdit").val();
             editTable.content = $("#contentEdit").val();
@@ -75,7 +75,7 @@
             })
                 .done((data) => {
                     console.log(data);
-                    $("#idEdit").val(data.id);
+                    $("#idTableEdit").val(data.id);
                     $("#statusEdit").val(data.status);
                     $("#capacityEdit").val(data.capacity);
                     $("#contentEdit").val(data.content);

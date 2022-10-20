@@ -4,8 +4,8 @@
     <div class="modal" tabindex="-1" id="modalCreateTable">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tạo bàn mới</h5>
+                <div class="modal-header bg-success">
+                    <h5 class="modal-title ">Tạo bàn mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -13,25 +13,10 @@
                     </div>
                     <form id="frmCreateTable">
                         <div class="row">
-                            <div class="col text-center">
-                                <!--                                <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>-->
-                                <!--                <img id="previewImg" width="100px" class="img-circle mb-2" src="/assets/plugins/images/users/1.jpg"/>-->
-                                <!--                <input id="uploadCre" type="file" accept="image/*" hidden />-->
+                            <div class="col col-md-6">
+                                <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>
+                                <input type="number" class="form-control" id="idTable" name="idTable" readonly>
                             </div>
-                        </div>
-                        <div class="row">
-                            <!--                            <div class="col col-md-6">-->
-                            <!--                                <label for="tableName" class="form-label fw-bold">Tên bàn:</label>-->
-                            <!--                                <input type="text" class="form-control" id="tableName" name="tableName">-->
-                            <!--                            </div>-->
-
-                        </div>
-                        <div class="row">
-<!--                            <div class="col col-md-6">-->
-<!--                                <label for="id" class="form-label fw-bold">Mã số bàn:</label>-->
-<!--                                <input type="text" class="form-control" id="codeTable" name="codeTable">-->
-<!--                            </div>-->
-
                             <div class="col col-md-6">
                                 <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
                                 <input type="number" class="form-control" id="statusTable" name="statusTable">
@@ -65,11 +50,10 @@
 
         function CreateTable() {
             let NewTable = {
-                // code: $('#codeTable').val(),
                 status: $('#statusTable').val(),
                 capacity: $('#capacityTable').val(),
                 content: $('#contentTable').val(),
-                deleted : false,
+                deleted: false,
             }
             console.log(NewTable);
             $.ajax({
@@ -81,10 +65,11 @@
                 url: 'http://localhost:8080/api/table-top/create',
                 data: JSON.stringify(NewTable)
 
-            }) .done(function (data) {
+            }).done(function (data) {
                 $.each(data, (i, item) => {
                     let str = `
                     <tr id="tr_${item.id}">
+                        <th>${item.id}</th>
                        <th>${item.status}</th>
                        <th>${item.capacity}</th>
                        <th>${item.content}</th>
@@ -92,14 +77,12 @@
                         `;
                     $("tblTop tbody").append(str);
                     window.location = "/table-top";
-                //     swal("Thành công", "table mới đã được tạo", "success").then(function () {
-                // });
-                    swal("Thành công","bàn mới đã được tạo");
-            })
-                .fail(function (jqXHR) {
-                    let str = ``;
+                    swal("Thành công", "bàn mới đã được tạo");
                 })
-        })
+                    .fail(function (jqXHR) {
+                        let str = ``;
+                    })
+            })
         }
 
 
