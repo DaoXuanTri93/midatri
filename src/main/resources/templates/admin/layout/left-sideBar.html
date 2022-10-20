@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <th:block th:fragment="leftTable">
+        <div class=" ">
+            <div class="">
+                <div class=" ">
+                    <h3 class="" id="btnShowMenuType">
+                        Loại thực đơn
+                        <a class="">
+                            <i class="fa fa-chevron-circle-up"></i>
+                        </a>
+                    </h3>
+                    <div class="" id="menuType">
+                        <ul class="">
+                            <li  class="">
+                                <div class="blue">
+                                    <input type="checkbox"  class="thucDon" data-label="Đồ ăn" >
+                                    <a href="javascript:void(0)" tabindex="0" class=""></a>
+                                    <label  class="">Đồ ăn</label>
+                                </div>
+                            </li>
+                            <li >
+                                <div class="">
+                                    <input type="checkbox"  class="thucDon" data-label="Đồ Uống" >
+                                    <a href="javascript:void(0)" tabindex="0" class=""></a>
+                                    <label  class="">Đồ Uống</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="">
+                    <h3 class="" id="btnShowGroupProduct">Nhóm hàng
+                        <span class="">
+                    <a ng-click="EditCategory()" href="javascript:void(0)" title="Thêm nhóm hàng">
+                    <i class="fa fa-plus-circle">
+
+                </i>
+                </a>
+                    <a class="">
+                        <i class="fa fa-chevron-circle-up"></i>
+                </a>
+                </span>
+                    </h3>
+                    <div class="" id="groupProduct">
+                        <div >
+                            <div class="">
+                                <div class=""><i class="fa fa-search"></i>
+                                    <input type="text"  placeholder="Tìm kiếm nhóm hàng">
+                                </div>
+                            </div>
+                            <div class="hover">
+                                <div id="idProductCatTreeAll"
+                                     class="">
+                                    Tất cả
+                                    <a class="" title="Sửa nhóm hàng">
+                                        <i class="far fa-pen">
+                                        </i>
+                                    </a>
+                                </div>
+                                <div id="productCatTreeView">
+                                    <ul class="" role="tree">
+                                        <li role="treeitem" class="" data-uid="">
+                                            <div class="" ><span class="">
+                                            <span>
+                                            <span class="" id="bia">BIA &amp; THUỐC LÁ</span>
+                                            <a class="" title="Sửa nhóm hàng">
+                                            <i class="far fa-pen"></i>
+                                        </a>
+                                        </span>
+                                        </span>
+                                            </div>
+                                        </li>
+                                        <li role="treeitem" class="" data-uid="">
+                                            <div class="">
+                                            <span class="k-in"><span>
+                                                <span class="" id="cock">CLASSIC COCKTAILS</span>
+                                                <a class="" title="Sửa nhóm hàng">
+                                                    <i class="far fa-pen"></i>
+                                                </a>
+                                            </span>
+                                            </span>
+                                            </div>
+                                        </li>
+
+                                        <div class="">
+                                            <span class=""><span>
+                                                <span class="" id="khaivi">MÓN KHAI VỊ</span>
+                                                <a class=""  title="Sửa nhóm hàng">
+                                                    <i class="far fa-pen"></i>
+                                                </a>
+                                            </span>
+                                            </span>
+                                        </div>
+                                        </li>
+                                        <div class="">
+                                            <span class="k-in"><span>
+                                                <span class="" id="sup">SÚP</span>
+                                                <a class="" title="Sửa nhóm hàng">
+                                                    <i class="far fa-pen">
+                                                </i>
+                                                </a>
+                                            </span>
+                                            </span>
+                                        </div>
+                                        </li>
+                                        <li role="treeitem" class="">
+                                            <div class="">
+                                            <span class=""><span>
+                                                <span class="" id=" ">TEA</span>
+                                                <a class=""  title="Sửa nhóm hàng">
+                                                    <i class="far fa-pen"></i>
+                                                </a>
+                                            </span>
+                                            </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <h3 class="" >
+                        Lựa chọn hiển thị
+
+                    </h3>
+
+                    <div class=" ">
+                        <ul class="">
+                            <li class="">
+                                <div class="">
+                                    <input type="radio"  data-label="Hàng đang Kinh doanh" >
+                                    <a href="javascript:void(0)" tabindex="0" class="checked"></a>
+                                    <label  class="checked">Hàng đang Kinh doanh</label>
+                                </div>
+                            </li>
+                            <li class="">
+                                <div class="blue">
+                                    <input type="radio"  name="ActiveRadio"  data-label="Hàng ngừng Kinh doanh" >
+                                    <a href="javascript:void(0)" tabindex="0" class=""></a>
+                                    <label  class="">Hàng ngừng Kinh doanh</label>
+                                </div>
+                            </li>
+                            <li class="">
+                                <div class="">
+                                    <input type="radio"  data-label="Tất cả" >
+                                    <a href="javascript:void(0)" tabindex="0" class=""></a>
+                                    <label  class="">Tất cả</label></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </th:block>
+
+    </html>
+
+</th:block>
+
+</html>

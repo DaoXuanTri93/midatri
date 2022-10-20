@@ -19,13 +19,13 @@ public class CategoryMapper {
 
 
 
-//    public Category toModel(CategoryResult categoryResult) {
-//        Category category = new Category(categoryResult.getId());
-//        return new Category()
-//                .setId(categoryResult.getId())
-//                .setCategoryName(categoryResult.getCategoryName())
-//                .setParent(category);
-//    }
+    public Category toModel(CategoryResult categoryResult) {
+
+        return new Category()
+                .setId(categoryResult.getId())
+                .setCategoryName(categoryResult.getCategoryName())
+                .setParentId(categoryResult.getParentId());
+    }
 
 
 
