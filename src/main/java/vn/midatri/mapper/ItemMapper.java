@@ -52,7 +52,7 @@ public class ItemMapper {
                 .setQuantity(item.getQuantity())
                 .setImg(item.getImg())
                 .setContent(item.getContent())
-                .setCategory(categoryMapper.toDToResultName(item.getCategory()))
+                .setCategory(categoryMapper.toDT0ResultName(item.getCategory()))
                 .setUser(userMapper.toDTO(item.getUser()))
                 .setDeleted(item.isDeleted());
     }

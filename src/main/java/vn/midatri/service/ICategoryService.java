@@ -10,5 +10,5 @@ public interface ICategoryService {
     CategoryResult save(Category category);
 
     CategoryResult findById(Long id);
-//    List<CategoryResult> findCategoryByParentIsnull();
+    List<CategoryResult> findAllByParentIsNull();
 }

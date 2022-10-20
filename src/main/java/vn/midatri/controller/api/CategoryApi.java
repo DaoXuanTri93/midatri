@@ -23,9 +23,9 @@ public class CategoryApi {
         return new ResponseEntity<>(categoryResults, HttpStatus.OK);
     }
 
-//    @GetMapping("/parent")
-//    public ResponseEntity<?> renderCategoryParent(){
-//        List<CategoryResult> categoryResults = categoryService.findCategoryByParentIsnull();
-//        return new ResponseEntity<>(categoryResults, HttpStatus.OK);
-//    }
+    @GetMapping("/parent")
+    public ResponseEntity<?> renderCategoryParent(){
+        List<CategoryResult> categoryResults = categoryService.findAllByParentIsNull();
+        return new ResponseEntity<>(categoryResults, HttpStatus.OK);
+    }
 }

@@ -16,7 +16,7 @@ public class CategoryMapper {
                 ;
     }
 
-    public CategoryResultName toDToResultName(Category category){
+    public CategoryResultName toDT0ResultName(Category category){
         return new CategoryResultName()
                 .setId(category.getId())
                 .setCategoryName(category.getCategoryName());
@@ -32,11 +32,9 @@ public class CategoryMapper {
     }
 
     public Category toModel(CategoryResultName categoryResultName) {
-        Category category = new Category(categoryResultName.getId());
         return new Category()
                 .setId(categoryResultName.getId())
-                .setCategoryName(categoryResultName.getCategoryName())
-                .setParent(category);
+                .setCategoryName(categoryResultName.getCategoryName());
     }
 
 }
