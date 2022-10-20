@@ -4,14 +4,15 @@ package vn.midatri.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.mapper.BookingItemMapper;
 import vn.midatri.repository.BookingItemRepository;
+import vn.midatri.repository.ItemRepository;
 import vn.midatri.repository.model.BookingItem;
+import vn.midatri.repository.model.Item;
 import vn.midatri.service.IBookingItemService;
 import vn.midatri.service.IItemService;
 
@@ -25,6 +26,8 @@ import java.util.stream.Collectors;
 public class BookingItemService implements IBookingItemService {
     @Autowired
     private BookingItemRepository bookingItemRepository;
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Autowired
     private BookingItemMapper bookingItemMapper;
@@ -58,28 +61,33 @@ public class BookingItemService implements IBookingItemService {
 
     @Override
     @Transactional
-    public BookingItemResult create(BookingItemCreate bookingItemCreate) {
-        ItemResult item = itemService.findById(bookingItemCreate.getItem_id());
-        BookingItemResult bookingItemResult
-                = findByBookingIdAndItemId(bookingItemCreate.getBooking_id(), bookingItemCreate.getItem_id());
-        if (bookingItemResult == null) {
-            bookingItemCreate.setId(0L);
-            bookingItemCreate.setQuantity(1);
-            bookingItemCreate.setPrice(item.getPrice());
-            BigDecimal price = bookingItemCreate.getPrice();
-            bookingItemCreate.setGrandTotal(price.multiply(new BigDecimal(bookingItemCreate.getQuantity())));
-            bookingItemCreate.setDiscount(1f);
-            return bookingItemMapper.toDTO(bookingItemRepository.save(bookingItemMapper.toModel(bookingItemCreate)));
-        }
+    public BookingItemResult create(BookingItemCreate param) {
+        Optional<Item> itemOption = itemRepository.findById(param.getItemId());
+        if (itemOption.isEmpty())
+            throw new NotFoundException("");
 
-        int oldQuantity = bookingItemResult.getQuantity();
-        int newQuantity = oldQuantity + 1;
-        bookingItemCreate.setId(bookingItemResult.getId());
-        BigDecimal price = bookingItemResult.getPrice();
-        bookingItemCreate.setPrice(price);
-        bookingItemCreate.setGrandTotal(price.multiply(new BigDecimal(newQuantity)));
-        bookingItemCreate.setQuantity(newQuantity);
-        return bookingItemMapper.toDTO(bookingItemRepository.save(bookingItemMapper.toModel(bookingItemCreate)));
+        BookingItem bookingItem
+                = bookingItemRepository.findByBookingIdAndItemId(param.getBookingId(), param.getItemId());
+        if (bookingItem != null)
+            throw new NotFoundException("Exits");
+
+        Item item = itemOption.get();
+        param.setQuantity(1);
+        BookingItem newBookingItem = bookingItemMapper.toModel(param);
+        newBookingItem.setPrice(item.getPrice());
+        //  newBookingItem.setDiscount(item.getD)
+        bookingItem = bookingItemRepository.save(newBookingItem);
+        return bookingItemMapper.toDTO(bookingItem);
+
+
+//        int oldQuantity = bookingItemResult.getQuantity();
+//        int newQuantity = oldQuantity + 1;
+//        bookingItemCreate.setId(bookingItemResult.getId());
+//        BigDecimal price = bookingItemResult.getPrice();
+//        bookingItemCreate.setPrice(price);
+//        bookingItemCreate.setGrandTotal(price.multiply(new BigDecimal(newQuantity)));
+//        bookingItemCreate.setQuantity(newQuantity);
+//        return bookingItemMapper.toDTO(bookingItemRepository.save(bookingItemMapper.toModel(bookingItemCreate)));
     }
 
     @Override

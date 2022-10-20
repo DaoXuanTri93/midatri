@@ -1,22 +1,22 @@
 package vn.midatri.dto.bookingItem;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
 public class BookingItemCreate {
-    private Long id;
-    private BigDecimal price;
     private Integer quantity;
     private String content;
-    private BigDecimal grandTotal;
-    private float discount;
-    private Long booking_id;
-    private Long item_id;
+    @JsonProperty("booking_id")
+    private long bookingId;
+    @JsonProperty("item_id")
+    private long itemId;
 }

@@ -24,8 +24,8 @@ public class CreateItem {
     private Integer quantity;
     private String img;
     private String content;
-    private CategoryResult category;
-    private UserResult user;
+    private long category;
+    private long user;
     private boolean deleted ;
 
 
