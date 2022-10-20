@@ -34,15 +34,12 @@ public class BookingItemMapper {
                 .setGrandTotal(bookingItem.getGrandTotal());
     }
 
-    public BookingItem toModel(BookingItemCreate bookingItemCreate) {
-        Booking booking = new Booking(bookingItemCreate.getBooking_id());
-        Item item = new Item(bookingItemCreate.getItem_id());
+    public BookingItem toModel(BookingItemCreate createParam) {
+        Booking booking = new Booking(createParam.getBookingId());
+        Item item = new Item(createParam.getItemId());
         return new BookingItem()
-                .setId(bookingItemCreate.getId())
-                .setPrice(bookingItemCreate.getPrice())
-                .setQuantity(bookingItemCreate.getQuantity())
-                .setDiscount(bookingItemCreate.getDiscount())
-                .setGrandTotal(bookingItemCreate.getGrandTotal())
+                .setContent(createParam.getContent())
+                .setQuantity(createParam.getQuantity())
                 .setBooking(booking)
                 .setItem(item);
     }

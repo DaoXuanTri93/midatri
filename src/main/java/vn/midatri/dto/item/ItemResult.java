@@ -21,7 +21,8 @@ public class ItemResult {
     private Integer quantity;
     private String img;
     private String content;
-    private CategoryResultName category;
+    private CategoryResult category;
+    private long categoryId;
     private UserResult user;
     private boolean deleted;
 }

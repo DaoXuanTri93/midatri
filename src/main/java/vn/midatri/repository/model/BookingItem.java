@@ -27,11 +27,14 @@ public class BookingItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne( optional = false)
+    @Column(name = "booking_id", nullable = false, insertable = false, updatable = false)
+    private Long bookingId;
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
-    @ManyToOne( optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
