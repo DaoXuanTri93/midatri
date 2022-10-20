@@ -29,7 +29,7 @@ public class ItemMapper {
                 .setDeleted(createItem.isDeleted());
     }
 
-    public Item toModel(ItemResult itemResult){
+    public Item toModel(ItemResult itemResult) {
         return new Item()
                 .setId(itemResult.getId())
                 .setTitle(itemResult.getTitle())
@@ -43,7 +43,6 @@ public class ItemMapper {
     }
 
 
-
     public ItemResult toDTO(Item item) {
         return new ItemResult()
                 .setId(item.getId())
@@ -52,14 +51,13 @@ public class ItemMapper {
                 .setQuantity(item.getQuantity())
                 .setImg(item.getImg())
                 .setContent(item.getContent())
-                .setCategory(categoryMapper.toDToResultName(item.getCategory()))
-                .setUser(userMapper.toDTO(item.getUser()))
+              //  .setCategory(categoryMapper.toDTO(item.getCategory()))
+              //  .setUser(userMapper.toDTO(item.getUser()))
                 .setDeleted(item.isDeleted());
     }
 
 
-
-    public CreateItem toCreateItemDTO(Item item){
+    public CreateItem toCreateItemDTO(Item item) {
         return new CreateItem()
                 .setTitle(item.getTitle())
                 .setPrice(item.getPrice())

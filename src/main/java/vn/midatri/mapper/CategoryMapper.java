@@ -12,14 +12,7 @@ public class CategoryMapper {
         return new CategoryResult()
                 .setId(category.getId())
                 .setCategoryName(category.getCategoryName())
-                .setParentId(category.getParent().getId())
-                ;
-    }
-
-    public CategoryResultName toDToResultName(Category category){
-        return new CategoryResultName()
-                .setId(category.getId())
-                .setCategoryName(category.getCategoryName());
+                .setParentId(category.getParentId());
     }
 
 
