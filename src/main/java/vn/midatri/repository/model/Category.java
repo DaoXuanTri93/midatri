@@ -33,7 +33,6 @@ public class Category {
     @Column(name = "parentId", nullable = false, insertable = false, updatable = false)
     private Long parentId;
 
-
     public Category(Long id) {
         this.id = id;
     }

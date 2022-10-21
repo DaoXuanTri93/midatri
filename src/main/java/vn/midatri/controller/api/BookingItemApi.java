@@ -75,5 +75,11 @@ public class BookingItemApi {
         bookingItemService.deletedBookingItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+//    @PostMapping("/pay/{id}")
+//    public ResponseEntity<?> deletedAll(@PathVariable Long id) {
+//        bookingItemService.deleteByBookingId(id);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+
 
 }

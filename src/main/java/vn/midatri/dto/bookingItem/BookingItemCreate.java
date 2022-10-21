@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class BookingItemCreate {
     private Integer quantity;
     private String content;
+    private BigDecimal grandTotal;
     @JsonProperty("booking_id")
     private long bookingId;
     @JsonProperty("item_id")

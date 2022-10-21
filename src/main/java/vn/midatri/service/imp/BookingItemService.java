@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
-import vn.midatri.dto.item.ItemResult;
 import vn.midatri.exceptions.NotFoundException;
+import vn.midatri.exceptions.NumberFormatException;
 import vn.midatri.mapper.BookingItemMapper;
 import vn.midatri.repository.BookingItemRepository;
 import vn.midatri.repository.ItemRepository;
@@ -64,18 +64,29 @@ public class BookingItemService implements IBookingItemService {
     public BookingItemResult create(BookingItemCreate param) {
         Optional<Item> itemOption = itemRepository.findById(param.getItemId());
         if (itemOption.isEmpty())
-            throw new NotFoundException("");
+            throw new NotFoundException("NOT FOUND !!!");
 
         BookingItem bookingItem
                 = bookingItemRepository.findByBookingIdAndItemId(param.getBookingId(), param.getItemId());
-        if (bookingItem != null)
-            throw new NotFoundException("Exits");
+        if (bookingItem != null) {
+            BookingItem bookingItemParam = bookingItemMapper.toModel(param);
+            int oldQuantity = bookingItem.getQuantity();
+            int newQuantity = oldQuantity + 1;
+            bookingItem.setId(bookingItem.getId());
+            BigDecimal price = bookingItem.getPrice();
+            bookingItem.setPrice(price);
+            bookingItem.setGrandTotal(price.multiply(new BigDecimal(newQuantity)));
+            bookingItem.setQuantity(newQuantity);
+            return bookingItemMapper.toDTO(bookingItemParam);
+//            throw new NotFoundException("Exits");
+        }
 
         Item item = itemOption.get();
         param.setQuantity(1);
         BookingItem newBookingItem = bookingItemMapper.toModel(param);
         newBookingItem.setPrice(item.getPrice());
-        //  newBookingItem.setDiscount(item.getD)
+        BigDecimal price = newBookingItem.getPrice();
+        newBookingItem.setGrandTotal(price.multiply(new BigDecimal(newBookingItem.getQuantity())));
         bookingItem = bookingItemRepository.save(newBookingItem);
         return bookingItemMapper.toDTO(bookingItem);
 
@@ -102,10 +113,15 @@ public class BookingItemService implements IBookingItemService {
         bookingItemRepository.deleteById(id);
     }
 
-    @Override
-    public int increaseQuantity(long id, int quantity) {
-        return 0;
-    }
+//    @Override
+//    public void deleteByBookingId(long id) {
+//        bookingItemRepository.deleteByBookingId(id);
+//    }
+
+//    @Override
+//    public int increaseQuantity(long id, int quantity) {
+//        return quantity + 1;
+//    }
 
     //    @Override
 //    @Transactional
@@ -126,6 +142,7 @@ public class BookingItemService implements IBookingItemService {
             throw new NotFoundException("BookingItem not found");
         BookingItem bookingItem = optional.get();
         bookingItem.setQuantity(bookingItem.getQuantity() + 1);
+        bookingItem.setGrandTotal(bookingItem.getPrice().multiply(new BigDecimal(bookingItem.getQuantity())));
         bookingItemRepository.save(bookingItem);
         return bookingItem.getQuantity();
     }
@@ -134,10 +151,17 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public int reduceQuantity(long id) {
         Optional<BookingItem> optional = bookingItemRepository.findById(id);
+
         if (optional.isEmpty())
             throw new NotFoundException("BookingItem not found");
+
         BookingItem bookingItem = optional.get();
-        bookingItem.setQuantity(bookingItem.getQuantity() - 1);
+        int quantity = bookingItem.getQuantity();
+        if (quantity <= 0) {
+            throw new NumberFormatException("Quantity cannot be lower");
+        }
+        bookingItem.setQuantity(quantity - 1);
+        bookingItem.setGrandTotal(bookingItem.getPrice().multiply(new BigDecimal(bookingItem.getQuantity())));
         bookingItemRepository.save(bookingItem);
         return bookingItem.getQuantity();
     }
