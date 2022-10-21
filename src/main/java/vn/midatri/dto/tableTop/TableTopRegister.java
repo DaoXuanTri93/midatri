@@ -11,8 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class TableTopRegister {
     private Long id;
-    private String code;
-    private Short status;
+    private Boolean status;
     private Short capacity;
     private String content;
 }

@@ -18,10 +18,6 @@
                                 <label  class="form-label fw-bold" >Số thứ tự:</label>
                                 <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" readonly>
                             </div>
-                            <div class="col col-md-6">
-                                <label for="statusEdit" class="form-label fw-bold">Trạng thái:</label>
-                                <input type="number" class="form-control" id="statusEdit" name="statusEdit">
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
@@ -47,7 +43,6 @@
         function editTable(id) {
             let editTable = new TableTop();
             editTable.id =id;
-            editTable.status = $("#statusEdit").val();
             editTable.capacity = $("#capacityEdit").val();
             editTable.content = $("#contentEdit").val();
             $.ajax({
@@ -76,11 +71,15 @@
                 .done((data) => {
                     console.log(data);
                     $("#idTableEdit").val(data.id);
-                    $("#statusEdit").val(data.status);
                     $("#capacityEdit").val(data.capacity);
                     $("#contentEdit").val(data.content);
                     $("#modalEditTable").modal("show");
                     $("#btnEdit").on('click', function () {
+                        swal.fire({
+                            title : "Chỉnh sửa thông tin thành công!",
+                            text : "Xin chờ!!!",
+                            time : 5000
+                        })
                         editTable(data.id);
                         $("#btnEdit").trigger("submit")
 

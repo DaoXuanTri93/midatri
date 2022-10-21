@@ -13,38 +13,43 @@
                     </div>
                     <form id="frmCreateUser">
                         <div class="row">
-                            <div class="col text-center">
-                                <!--                                <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>-->
-                                <!--                <img id="previewImg" width="100px" class="img-circle mb-2" src="/assets/plugins/images/users/1.jpg"/>-->
-                                <!--                <input id="uploadCre" type="file" accept="image/*" hidden />-->
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col col-md-6">
                                 <label for="userName" class="form-label fw-bold">Tên đăng nhập:</label>
-                                <input type="text" class="form-control" id="userName" name="userName">
+                                <input type="text" class="form-control" id="userName" name="userName" required>
                             </div>
 
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="password" class="form-label fw-bold">Mật khẩu:</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <small id="passwordHelpInline" class="text-muted">
+                                    Must be 8-30 characters long.
+                                </small>
                             </div>
 
                             <div class="col col-md-6">
                                 <label for="email" class="form-label fw-bold">Email:</label>
-                                <input type="email" class="form-control" id="email" name="password">
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                <small id="emailHelpInLine" class="text-muted">
+                                    eg: abc@gmail.com
+                                </small>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="password1" class="form-label fw-bold">Nhập Lại Mật khẩu:</label>
-                                <input type="password" class="form-control" id="password1" name="password1">
+                                <input type="password" class="form-control" id="password1" name="password1" required>
+                                <small id="passwordHelpInline1" class="text-muted">
+                                    Must be 8-30 characters long.
+                                </small>
                             </div>
                             <div class="col col-md-6">
                                 <label for="phone" class="form-label fw-bold">Phone:</label>
-                                <input type="phone" class="form-control" id="phone" name="password">
+                                <input type="phone" class="form-control " id="phone" name="phone" required>
+                                <small id="phoneHelpInLine" class="text-muted">
+                                    start from 0 or +84 and have only 10 numbers
+                                </small>
                             </div>
                         </div>
                     </form>
@@ -59,9 +64,8 @@
 
     <script>
         $("#btnCreateUser").on("click", function () {
-            // checkPassword();
-            createUser();
-            $("#btnCreateUser").trigger("submit");
+            $("#frmCreateUser").submit();
+            // $("#btnCreateUser").trigger("submit");
         });
 
         function createUser() {
@@ -87,11 +91,24 @@
                     </tr>
                         `;
                         $("tblUser tbody").append(str);
+                    }
+                    )
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Thêm mới người dùng thành công !!!',
+                        showConfirmButton: false,
+                        timer: 3000
                     })
+                    setTimeout(() => {
+                        window.location.href = "/user"
+                    }, 3000)
                 }
                 ,
                 (jqXHR) => {
+                    $('#frmCreateUser').on("click", function () {
 
+                    });
                     console.log(jqXHR.error);
                 }
             )
@@ -101,8 +118,14 @@
       let     pas = $('#password').val();
       let pas1 = $('#password1').val();
       if(pas===pas1){
+
           return true;
       }else {
+          swal.fire({
+              title: "Thất bại",
+              text: "Mật khẩu nhập lại phải giống nhau!",
+              time : 5000
+          })
           $('#modalCreate').modal('show');
           return false;
       }

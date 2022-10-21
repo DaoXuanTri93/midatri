@@ -23,4 +23,10 @@ public class UserController {
         modelAndView.setViewName("admin/user/list");
         return modelAndView;
     }
+    @GetMapping("/restore")
+    public ModelAndView ListUserDeleted(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/user/restoreUser");
+        return modelAndView;
+    }
 }

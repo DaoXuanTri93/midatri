@@ -34,8 +34,8 @@ public class TableTopService implements ITableTopService {
     }
 
     @Override
-    public List<TableTopResult> findAllByDeleted(boolean deleted) {
-        return tableTopRepository.findAllByDeleted(deleted)
+    public List<TableTopResult> findAllByStatus(boolean status) {
+        return tableTopRepository.findAllByStatus(status)
                 .stream()
                 .map(tableTop -> tableTopMapper.toDTO(tableTop))
                 .collect(Collectors.toList());

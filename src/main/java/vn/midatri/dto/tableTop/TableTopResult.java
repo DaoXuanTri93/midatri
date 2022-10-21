@@ -13,9 +13,7 @@ import java.time.Instant;
 @Accessors(chain = true)
 public class TableTopResult {
     private Long id;
-    private String code;
-    private Short status;
+    private Boolean status;
     private Short capacity;
     private String content;
-    private Boolean deleted;
 }

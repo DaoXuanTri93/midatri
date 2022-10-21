@@ -1,10 +1,134 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Data Table | Notika - Notika Admin Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="/admin/layout/head :: head"/>
 </head>
+
 <body>
-$END$
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<th:block th:replace="/admin/layout/navBar :: navBar"/>
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="row mb-lg-2 " >
+            <div class="col-8">
+                <h1>Danh Sách người dùng đã xóa</h1>
+            </div>
+            <div class="col-4">
+                <div class="col text-end">
+                    <a href="/user" class="btn btn-outline-light bg-primary">
+                        <i class="fa fa-list" aria-hidden="true">
+                        Quay lại trang người dùng
+                        </i>
+                    </a>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="data-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="data-table-list">
+                    <div class="table-responsive">
+                        <table id="tblRestore" class="table table-striped">
+                            <thead>
+                            <tr class="bg-danger">
+                                <th>#</th>
+                                <th>Bartender</th>
+                                <th>Admin</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>UserName</th>
+                                <th>Vendor</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Data Table area End-->
+<!-- Start Footer area-->
+<div class="footer-copyright-area">
+    <div class="container">
+        <div class="row">
+            <th:block th:replace="/admin/layout/footer :: footer"/>
+        </div>
+    </div>
+</div>
+<th:block th:replace="/admin/layout/script :: script"/>
+<th:block th:replace="/admin/user/modalRestoreUser :: modalRestoreUser"/>
 </body>
+<script>
+    $(document).ready(function renderRestoreUser() {
+        $("#tblRestore").DataTable({
+            ajax: {
+                contentType: 'application/json',
+                url: "http://localhost:8080/api/users/renderDeletedUser",
+                type: "GET",
+                dataSrc: ''
+            },
+            columns: [
+                {data: 'id'},
+                {data: 'bartender'},
+                {data: 'admin'},
+                {data: 'email'},
+                {data: 'phone'},
+                {data: 'userName'},
+                {data: 'vendor'},
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return `<button class="btn btn-outline-light bg-primary" onclick="handleShowRestoreUser(${data})" data-id="${data}"><i class="fa fa-plus"></i></button>
+                                    `;
+                    }, orderable: false
+                },
+            ]
+        });
+    });
+
+</script>
+<script>
+    function handleShowRestoreUser(id) {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/users/" + id
+        }).done((data)=>{
+                console.log(data);
+                $('#idRestore').val(data.id);
+                $('#userNameRestore').val(data.userName);
+                $('#emailRestore').val(data.email);
+                $('#phoneRestore').val(data.phone);
+                $('#modalRestoreUser').modal('show');
+                $('#btnRestore').on('click', function () {
+                    restoreUser();
+                    $('#btnRestore').trigger("submit");
+                })
+            }
+        )
+    }
+</script>
+<script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>
+

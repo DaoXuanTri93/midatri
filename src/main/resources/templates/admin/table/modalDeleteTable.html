@@ -14,18 +14,14 @@
                     <form id="frmDeleteTable">
                         <div class="row">
                             <div class="row">
-                                <input type="" id="idDelete" hidden>
+                                <label for="idDelete" class="form-label fw-bold">Số thứ tự:</label>
+                                <input type="number" class="form-control"  name="idDelete" id="idDelete" readonly>
 
                             </div>
                             <div class="row">
                                 <div class="col col-md-6">
-                                    <label for="statusTable" class="form-label fw-bold">Trạng thái bàn:</label>
-                                    <input type="number" class="form-control" id="statusTable" name="statusTable"
-                                           readonly>
-                                </div>
-                                <div class="col col-md-6">
-                                    <label for="capacityTable" class="form-label fw-bold">Sức chứa bàn:</label>
-                                    <input type="number" class="form-control" id="capacityTable" name="capacityTable"
+                                    <label for="capacityDelete" class="form-label fw-bold">Sức chứa bàn:</label>
+                                    <input type="number" class="form-control" id="capacityDelete" name="capacityDelete"
                                            readonly>
                                 </div>
                             </div>
@@ -54,8 +50,7 @@
                 .done((data) => {
                     console.log(data);
                     $("#idDelete").val(data.id);
-                    $("#statusTable").val(data.status);
-                    $("#capacityTable").val(data.capacity);
+                    $("#capacityDelete").val(data.capacity);
                     $("#modalDeleteTable").modal("show");
                     $("#btnDelete").on("click", function () {
                         deleteTable(data.id);
@@ -71,12 +66,12 @@
                     },
                     type: "POST",
                     url: "http://localhost:8080/api/table-top/deleted/" + id,
-                    // data: JSON.stringify(idTableDel)
                 }).done(function (data) {
-                    console.log(data);
-                     $("#idDelete").val(data.id);
-                     $("#statusTable").val(data.status);
-                     $("#capacityTable").val(data.capacity);
+                   swal.fire({
+                       title : "Xóa người dùng thành công ",
+                       text : "Xin chờ!!!",
+                       time : 5000
+                       })
                     window.location.href = "/table-top"
                 })
             }

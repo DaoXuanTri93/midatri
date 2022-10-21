@@ -11,16 +11,13 @@ public class TableTopMapper {
     public TableTopResult toDTO(TableTop tableTop){
         return  new TableTopResult()
         .setId(tableTop.getId())
-        .setCode(tableTop.getCode())
         .setStatus(tableTop.getStatus())
         .setCapacity(tableTop.getCapacity())
-        .setContent(tableTop.getContent())
-        .setDeleted(tableTop.getDeleted());
+        .setContent(tableTop.getContent());
     }
     public TableTop toModelRegister(TableTopRegister tableTopRegister){
         return new TableTop()
                 .setId(tableTopRegister.getId())
-                .setCode(tableTopRegister.getCode())
                 .setStatus(tableTopRegister.getStatus())
                 .setCapacity(tableTopRegister.getCapacity())
                 .setContent(tableTopRegister.getContent());
@@ -29,7 +26,6 @@ public class TableTopMapper {
     public  TableTop toModelResult (TableTopResult tableTopResult){
         return  new TableTop()
                 .setId(tableTopResult.getId())
-                .setCode(tableTopResult.getCode())
                 .setStatus(tableTopResult.getStatus())
                 .setCapacity(tableTopResult.getCapacity())
                 .setContent(tableTopResult.getContent());

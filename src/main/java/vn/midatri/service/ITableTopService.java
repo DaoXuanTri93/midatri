@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ITableTopService {
     List<TableTopResult> findAll();
-    List<TableTopResult> findAllByDeleted(boolean deleted);
+    List<TableTopResult> findAllByStatus(boolean status);
     TableTopResult save(TableTopResult tableTopResult);
     TableTopResult findTableById( Long id);
     TableTopResult create(TableTopRegister tableTopRegister);

@@ -15,21 +15,25 @@
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>
-                                <input type="number" class="form-control" id="idTable" name="idTable" readonly>
+                                <input type="number" class="form-control" id="idTable" name="idTable" readonly placeholder="Số thứ tự tự động tăng">
                             </div>
-                            <div class="col col-md-6">
-                                <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
-                                <input type="number" class="form-control" id="statusTable" name="statusTable">
-                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="capacityTable" class="form-label fw-bold">Sức chứa:</label>
-                                <input type="number" class="form-control" id="capacityTable" name="capacityTable">
+                                <input type="number" class="form-control text-end" id="capacityTable" name="capacityTable">
                             </div>
                             <div class="col col-md-6">
+                                <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
+                                <input type="number" class="form-control text-end" id="statusTable" name="statusTable">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-12">
                                 <label for="contentTable" class="form-label fw-bold">Ghi chú:</label>
-                                <input type="text" class="form-control" id="contentTable" name="contentTable">
+                                <textarea rows="4" cols="100%" type="text" class="form-control" id="contentTable" name="contentTable" ></textarea>
                             </div>
                         </div>
                     </form>
@@ -44,16 +48,14 @@
 
     <script>
         $("#btnCreateTable").on("click", function () {
-            CreateTable();
-            $("#btnCreateTable").trigger("submit");
+            $('#frmCreateTable').submit();
         });
 
         function CreateTable() {
             let NewTable = {
-                status: $('#statusTable').val(),
                 capacity: $('#capacityTable').val(),
                 content: $('#contentTable').val(),
-                deleted: false,
+                status: false,
             }
             console.log(NewTable);
             $.ajax({
@@ -70,14 +72,21 @@
                     let str = `
                     <tr id="tr_${item.id}">
                         <th>${item.id}</th>
-                       <th>${item.status}</th>
                        <th>${item.capacity}</th>
                        <th>${item.content}</th>
                     </tr>
                         `;
                     $("tblTop tbody").append(str);
-                    window.location = "/table-top";
-                    swal("Thành công", "bàn mới đã được tạo");
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Thêm mới bàn dùng thành công !!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(() => {
+                        window.location.href = "/user"
+                    }, 3000)
                 })
                     .fail(function (jqXHR) {
                         let str = ``;
@@ -87,4 +96,5 @@
 
 
     </script>
+    <script src="/js/validateTable.js"></script>
 </th:block>

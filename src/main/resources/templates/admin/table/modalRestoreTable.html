@@ -1,58 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="modalRestoreTable">
-  <div class="modal" tabindex="-1" id="modalRestoreTable">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Khôi phục bàn </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-alert-danger hide">
-          </div>
-          <form id="frmRestoreTable">
-            <div class="row">
-              <label for="idTableRestore" class="form-label fw-bold">  Số thứ tự :</label>
-              <input type="text" class="form-control" id="idTableRestore" readonly>
-              <div class="col co4">
-                <label for="statusTableRestore" class="form-label fw-bold">  Status:</label>
-                <input type="number" class="form-control" id="statusTableRestore" name="statusTableRestore" readonly>
-              </div>
-              <div class="col co4">
-                <label for="capacityTableRestore" class="form-label fw-bold">Sức chứa bàn:</label>
-                <input type="number" class="form-control" id="capacityTableRestore"
-                       name="capacityTable" readonly>
-              </div>
+    <div class="modal" tabindex="-1" id="modalRestoreTable">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Khôi phục bàn </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmRestoreTable">
+                        <div class="row">
+                            <label for="idTableRestore" class="form-label fw-bold"> Số thứ tự :</label>
+                            <input type="text" class="form-control" id="idTableRestore" readonly>
+                            <div class="col co4">
+                                <label for="capacityTableRestore" class="form-label fw-bold">Sức chứa bàn:</label>
+                                <input type="number" class="form-control" id="capacityTableRestore"
+                                       name="capacityTable" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-ban"></i>Cancel
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestore"><i class="fa fa-plus"></i>Khôi
+                        phục
+                    </button>
+                </div>
             </div>
-          </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-ban"></i>Cancel</button>
-          <button type="button" class="btn btn-outline-primary" id="btnRestore"><i class="fa fa-plus"></i>Khôi phục</button>
-        </div>
-      </div>
     </div>
-  </div>
-  <script>
+    <script>
 
-    function restoreTable() {
-     let  id = $("#idRestore").val();
-      $.ajax({
-        headers: {
-          "Accept": "application/json",
-          "Content-type": "application/json"
-        },
-        url: "http://localhost:8080/api/table-top/restore/" + id,
-        type : "POST"
-      })
-              .done(function (data) {
-                swal("Thành công", "User đã được khôi phục", "success").then(function () {
-                  window.location.href = "/restoreTable";
-                });
-              })
-    }
+        function restoreTable() {
+            let id = $("#idTableRestore").val();
+            console.log(id);
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                url: "http://localhost:8080/api/table-top/restore/" + id,
+                type: "POST"
+            })
+                .done(function (data) {
+                    Swal.fire({
+                        title: 'Thành công',
+                        text: 'Xin chờ',
+                        timer: 3000
+                    }).then(function () {
+                        window.location.href = "/table-top/restoreTable";
+                    });
+
+                    // window.location.href = "/table-top/restoreTable"
+
+                })
+        }
 
 
-  </script>
+    </script>
 </th:block>
