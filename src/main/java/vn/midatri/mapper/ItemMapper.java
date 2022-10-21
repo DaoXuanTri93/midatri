@@ -19,6 +19,7 @@ public class ItemMapper {
 
     public Item toModel(CreateItem createItem) {
         return new Item()
+                .setId(0L)
                 .setTitle(createItem.getTitle())
                 .setPrice(createItem.getPrice())
                 .setQuantity(createItem.getQuantity())
@@ -37,8 +38,8 @@ public class ItemMapper {
                 .setQuantity(itemResult.getQuantity())
                 .setImg(itemResult.getImg())
                 .setContent(itemResult.getContent())
-                .setCategory(categoryMapper.toModel(itemResult.getCategory()))
-                .setUser(userMapper.toModel(itemResult.getUser()))
+                .setCategoryId(itemResult.getCategoryId())
+                .setUserId(itemResult.getUser())
                 .setDeleted(itemResult.isDeleted());
     }
 
@@ -51,21 +52,21 @@ public class ItemMapper {
                 .setQuantity(item.getQuantity())
                 .setImg(item.getImg())
                 .setContent(item.getContent())
-              //  .setCategory(categoryMapper.toDTO(item.getCategory()))
-              //  .setUser(userMapper.toDTO(item.getUser()))
-                .setDeleted(item.isDeleted());
-    }
-
-
-    public CreateItem toCreateItemDTO(Item item) {
-        return new CreateItem()
-                .setTitle(item.getTitle())
-                .setPrice(item.getPrice())
-                .setQuantity(item.getQuantity())
-                .setImg(item.getImg())
-                .setContent(item.getContent())
                 .setCategory(categoryMapper.toDTO(item.getCategory()))
-                .setUser(userMapper.toDTO(item.getUser()))
+//                .setUser(userMapper.toDTO(item.getUser()))
                 .setDeleted(item.isDeleted());
     }
+
+
+//    public CreateItem toCreateItemDTO(Item item) {
+//        return new CreateItem()
+//                .setTitle(item.getTitle())
+//                .setPrice(item.getPrice())
+//                .setQuantity(item.getQuantity())
+//                .setImg(item.getImg())
+//                .setContent(item.getContent())
+//                .setCategory(item.getCategoryId())
+//                .setUser(item.getUserId())
+//                .setDeleted(item.isDeleted());
+//    }
 }

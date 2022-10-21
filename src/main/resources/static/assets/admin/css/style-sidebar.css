@@ -1,0 +1,19 @@
+#productCatTreeView li :hover .k-in a, .k-in :hover{
+
+    color: #fff3cd;
+    display: block;
+    cursor: pointer;
+}
+.k-in{
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.k-in a{
+    display: none;
+    cursor: pointer;
+}
+
+#productCatTreeView li :hover {
+    background-color: grey;
+}

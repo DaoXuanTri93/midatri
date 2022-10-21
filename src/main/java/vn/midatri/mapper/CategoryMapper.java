@@ -12,24 +12,21 @@ public class CategoryMapper {
         return new CategoryResult()
                 .setId(category.getId())
                 .setCategoryName(category.getCategoryName())
-                .setParentId(category.getParentId());
+                .setParentId(category.getParentId())
+                ;
     }
+
+
 
 
     public Category toModel(CategoryResult categoryResult) {
-        Category category = new Category(categoryResult.getId());
+
         return new Category()
                 .setId(categoryResult.getId())
                 .setCategoryName(categoryResult.getCategoryName())
-                .setParent(category);
+                .setParentId(categoryResult.getParentId());
     }
 
-    public Category toModel(CategoryResultName categoryResultName) {
-        Category category = new Category(categoryResultName.getId());
-        return new Category()
-                .setId(categoryResultName.getId())
-                .setCategoryName(categoryResultName.getCategoryName())
-                .setParent(category);
-    }
+
 
 }

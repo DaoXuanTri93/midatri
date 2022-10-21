@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 
 @Accessors(chain = true)
 public class CreateItem {
+    private long id ;
     private String title;
     private BigDecimal price;
     private Integer quantity;

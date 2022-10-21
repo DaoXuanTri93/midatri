@@ -23,7 +23,7 @@ public class ItemResult {
     private String content;
     private CategoryResult category;
     private long categoryId;
-    private UserResult user;
+    private long user;
     private boolean deleted;
 }
 
