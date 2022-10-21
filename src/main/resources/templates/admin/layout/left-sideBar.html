@@ -1,6 +1,8 @@
 <!DOCTYPE html>
     <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <th:block th:fragment="leftTable">
+        <link rel="stylesheet" href="/assets/admin/css/style-sidebar.css">
+
         <div class=" ">
             <div class="">
                 <div class=" ">
@@ -14,7 +16,7 @@
                         <ul class="">
                             <li  class="">
                                 <div class="blue">
-                                    <input type="checkbox"  class="thucDon" data-label="Đồ ăn" >
+                                    <input type="checkbox" id="action" class="thucDon" data-label="Đồ ăn" >
                                     <a href="javascript:void(0)" tabindex="0" class=""></a>
                                     <label  class="">Đồ ăn</label>
                                 </div>
@@ -30,16 +32,14 @@
                     </div>
                 </div>
                 <div class="">
-                    <h3 class="" id="btnShowGroupProduct">Nhóm hàng
+                    <h3 class="" >Nhóm hàng
                         <span class="">
-                    <a ng-click="EditCategory()" href="javascript:void(0)" title="Thêm nhóm hàng">
-                    <i class="fa fa-plus-circle">
-
-                </i>
-                </a>
-                    <a class="">
+                    <a onclick="`${alert('ccc')}`"  href="javascript:void(0)" title="Thêm nhóm hàng">
+                        <i class="fa fa-plus-circle"></i>
+                    </a>
+                    <a class="" id="btnShowGroupProduct">
                         <i class="fa fa-chevron-circle-up"></i>
-                </a>
+                    </a>
                 </span>
                     </h3>
                     <div class="" id="groupProduct">
@@ -49,72 +49,27 @@
                                     <input type="text"  placeholder="Tìm kiếm nhóm hàng">
                                 </div>
                             </div>
-                            <div class="hover">
-                                <div id="idProductCatTreeAll"
-                                     class="">
+                            <div class="">
+                                <div id="idProductCatTreeAll" onclick="`${alert('mmm')}`"
+                                     class="fw-bold">
                                     Tất cả
                                     <a class="" title="Sửa nhóm hàng">
-                                        <i class="far fa-pen">
+                                        <i class="fa fa-pen">
                                         </i>
                                     </a>
                                 </div>
                                 <div id="productCatTreeView">
-                                    <ul class="" role="tree">
-                                        <li role="treeitem" class="" data-uid="">
-                                            <div class="" ><span class="">
-                                            <span>
-                                            <span class="" id="bia">BIA &amp; THUỐC LÁ</span>
-                                            <a class="" title="Sửa nhóm hàng">
-                                            <i class="far fa-pen"></i>
-                                        </a>
-                                        </span>
-                                        </span>
-                                            </div>
-                                        </li>
-                                        <li role="treeitem" class="" data-uid="">
-                                            <div class="">
-                                            <span class="k-in"><span>
-                                                <span class="" id="cock">CLASSIC COCKTAILS</span>
-                                                <a class="" title="Sửa nhóm hàng">
-                                                    <i class="far fa-pen"></i>
-                                                </a>
-                                            </span>
-                                            </span>
-                                            </div>
-                                        </li>
-
-                                        <div class="">
-                                            <span class=""><span>
-                                                <span class="" id="khaivi">MÓN KHAI VỊ</span>
-                                                <a class=""  title="Sửa nhóm hàng">
-                                                    <i class="far fa-pen"></i>
-                                                </a>
-                                            </span>
-                                            </span>
-                                        </div>
-                                        </li>
-                                        <div class="">
-                                            <span class="k-in"><span>
-                                                <span class="" id="sup">SÚP</span>
-                                                <a class="" title="Sửa nhóm hàng">
-                                                    <i class="far fa-pen">
-                                                </i>
-                                                </a>
-                                            </span>
-                                            </span>
-                                        </div>
-                                        </li>
-                                        <li role="treeitem" class="">
-                                            <div class="">
-                                            <span class=""><span>
-                                                <span class="" id=" ">TEA</span>
-                                                <a class=""  title="Sửa nhóm hàng">
-                                                    <i class="far fa-pen"></i>
-                                                </a>
-                                            </span>
-                                            </span>
-                                            </div>
-                                        </li>
+                                    <ul class="" role="tree" >
+<!--                                        <li role="treeitem" class="" data-uid="">-->
+<!--                                            <div class="" >-->
+<!--                                            <span class="k-in">-->
+<!--                                            <span id="bia"  onclick="`${alert('aaa')}`" >BIA &amp; THUỐC LÁ</span>-->
+<!--                                            <a class="" onclick="`${alert('bb')}`" title="Sửa nhóm hàng">-->
+<!--                                            <i class="fa fa-pencil"></i>-->
+<!--                                        </a>-->
+<!--                                        </span>-->
+<!--                                            </div>-->
+<!--                                        </li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -124,7 +79,6 @@
                 <div class="">
                     <h3 class="" >
                         Lựa chọn hiển thị
-
                     </h3>
 
                     <div class=" ">
@@ -155,11 +109,65 @@
             </div>
 
         </div>
+        <th:block th:replace="/admin/layout/script::script"/>
+        <script>
 
+            $('input[type="checkbox"]').click(function(){
+                if($(this).prop("checked") === true){
+                    console.log($(this).context.dataset.label);
+
+                }
+                else if($(this).prop("checked") === false) {
+                    console.log("a")
+                }
+            });
+        </script>
+
+        <script>
+            function getAllCategory(){
+                // let str = `
+                //              <li role="treeitem" class="" data-uid="">
+                //                             <div class="" >
+                //                             <span class="k-in">
+                //                             <span id=""   value="${id}">${name}</span>
+                //                             <a class="" onclick="${alert('bb')}" title="Sửa nhóm hàng">
+                //                             <i class="fa fa-pencil"></i>
+                //                         </a>
+                //                         </span>
+                //                             </div>
+                //                         </li>
+                //         `;
+                $.ajax({
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: "http://localhost:8080/api/category",
+                })
+                    .done(function (data) {
+                            $.each(data, (i,item)=>{
+                               let str = `<li role="treeitem" class="" data-uid="">
+                                            <div class="" >
+                                            <span class="k-in">
+                                            <span id="" data-label="${item.id}">${item.categoryName}</span>
+                                            <a class=""  title="Sửa nhóm hàng">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        </span>
+                                            </div>
+                                        </li>`
+                                $("#productCatTreeView ul").append(str);
+                            })
+                    })
+                    .fail(function (jqXHR) {
+                        console.log("get drinks fails");
+                    })
+            }
+            getAllCategory();
+        </script>
     </th:block>
 
     </html>
 
-</th:block>
 
-</html>
