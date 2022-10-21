@@ -17,8 +17,9 @@ public interface IBookingItemService {
     BookingItemResult findById(Long id);
 
     void deletedBookingItem(Long id);
+//    void deleteByBookingId(long id);
 
-    int increaseQuantity(long id, int quantity);
+//    int increaseQuantity(long id, int quantity);
     int increaseQuantity(long id);
 
     int reduceQuantity(long id);

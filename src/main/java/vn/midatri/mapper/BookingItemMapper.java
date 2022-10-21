@@ -38,6 +38,7 @@ public class BookingItemMapper {
         Booking booking = new Booking(createParam.getBookingId());
         Item item = new Item(createParam.getItemId());
         return new BookingItem()
+                .setGrandTotal(createParam.getGrandTotal())
                 .setContent(createParam.getContent())
                 .setQuantity(createParam.getQuantity())
                 .setBooking(booking)
