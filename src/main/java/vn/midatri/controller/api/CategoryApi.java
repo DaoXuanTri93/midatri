@@ -4,10 +4,12 @@ package vn.midatri.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import vn.midatri.dto.category.CategoryParam;
 import vn.midatri.dto.category.CategoryResult;
+import vn.midatri.dto.category.CreateCategory;
+import vn.midatri.dto.item.CreateItem;
+import vn.midatri.dto.item.ItemResult;
 import vn.midatri.service.ICategoryService;
 
 import java.util.List;
@@ -27,5 +29,25 @@ public class CategoryApi {
     public ResponseEntity<?> renderCategoryParent(){
         List<CategoryResult> categoryResults = categoryService.findAllByParentIsNull();
         return new ResponseEntity<>(categoryResults, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        CategoryResult categoryResults = categoryService.findById(id);
+        return new ResponseEntity<>(categoryResults,HttpStatus.OK);
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> doEdit(@RequestBody CategoryParam categoryParam, @PathVariable Long id){
+        categoryParam.setId(id);
+        categoryService.update(categoryParam);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createCategory(@RequestBody CreateCategory createCategory){
+
+        CategoryResult categoryResult = categoryService.create(createCategory);
+        return new ResponseEntity<>(categoryResult, HttpStatus.OK);
     }
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalUpdateCategory" >
+    <div class="modal" tabindex="-1" id="modalUpdateCategory">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sửa Nhóm Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                   <div class="row">
+                       <div class="mb-3 col-12">
+                           <input type="text" id="idCategoryUpdate" hidden>
+                           <label for="nameCategoryUpdate" class="form-label fw-bold">Tên Nhóm</label>
+                           <input type="text" class="form-control" id="nameCategoryUpdate" name="nameCategoryUpdate">
+                       </div>
+                       <div class="mb-3 col-12">
+                           <label for="parentCategoryUpdate" class="form-label fw-bold">Loại Thực Đơn</label>
+                           <select class="form-control" id="parentCategoryUpdate" name="parentCategoryUpdate">
+                           </select>
+                       </div>
+                   </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdateCategory">Cập Nhập</button>
+                    <button type="button" class="btn btn-danger">Xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function updateCategory(){
+            let category = new Category()
+            category.id = $("#idCategoryUpdate").val();
+            category.categoryName = $("#nameCategoryUpdate").val();
+            category.parentId = $("#parentCategoryUpdate").val();
+            category.parent={
+                id:$("#parentCategoryUpdate").val()
+            }
+            console.log(category.id)
+            $.ajax({
+                headers : {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "PUT",
+                url: 'http://localhost:8080/api/category/edit/'+ category.id,
+                data: JSON.stringify(category)
+            })
+                .done(()=>{
+                    console.log( category.id)
+                    alert("Đổi Nhóm Hàng Thành Công");
+                    window.location.href="/products";
+                })
+                .fail(()=>{
+                    alert("error");
+                })
+        }
+        $("#btnUpdateCategory").on('click',()=>{
+            updateCategory();
+        })
+    </script>
+</th:block>
+</html>

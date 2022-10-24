@@ -137,14 +137,6 @@
                                     `;
                     }, orderable: false
                 },
-                // {
-                //     data: 'id',
-                //     render: function (data, type, row, meta) {
-                //         return `<button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                //                     `;
-                //     }, orderable: false
-                // }
-
             ]
         });
 
@@ -153,6 +145,7 @@
 <script>
 
     function handlerShowCategory(){
+        let category;
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -162,10 +155,14 @@
             url: "http://localhost:8080/api/category",
         })
             .done(function (data) {
-                for (let i = 0; i < data.length; i++) {
-                    let id = data[i].id;
-                    let name = data[i].categoryName;
-                    $("#catalogsCreate").append(`<option value=${id}>${name}</option>`);
+                category=data;
+                $("#catalogsCreate").append(`
+                             <option tabindex="-1" selected>Lựa Chọn</option>`)
+                for (let i = 0; i < category.length; i++) {
+                    let id = category[i].id;
+                    let name = category[i].categoryName;
+                    let parentId = category[i].parentId;
+                    $("#catalogsCreate").append(`<option value=${parentId}>${name}</option>`);
                 }
                 $("#modalCreateProduct").modal("show");
             })
@@ -198,7 +195,7 @@
 
     //show modal create
     $("button.create").on("click", function () {
-        // handlerShowCategoryParent();
+        handlerShowCategoryParent();
         handlerShowCategory();
     });
 
@@ -298,6 +295,7 @@
     // show modal Edit
     function handlerShowModalEdit(id) {
         let category;
+        let parent;
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -309,6 +307,7 @@
             .done(function (data) {
 
                 category = data;
+
                 $.ajax({
                     headers: {
                         "Accept": "application/json",
@@ -326,20 +325,40 @@
                         for (let i = 0; i < category.length; i++) {
                             let id = category[i].id;
                             let name = category[i].categoryName;
+                            let parent = category[i].parentId
                             if (category[i].id == data.category.id) {
                                 $("#catalogsUpdate").append(
-                                    `<option value="${id}" selected>${name}</option>`);
+                                    `<option value="${parent}"  selected>${name}</option>`);
                             } else {
                                 $("#catalogsUpdate").append(
-                                    `<option value="${id}">${name}</option>`);
+                                    `<option value="${parent}"  >${name}</option>`);
                             }
                         }
+                        $("#catalogsParentUpdate option").remove();
+                        $.ajax({
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-type": "application/json"
+                            },
+                            type: "GET",
+                            url: "http://localhost:8080/api/category/"+ ($("#catalogsUpdate").val()) ,
+                        })
+                            .done(function (data) {
+                                parent = data
+
+                                $("#catalogsParentUpdate").append(`<option value=${parent.id} selected>${parent.categoryName}</option>`);
+
+                            })
+                            .fail(function (jqXHR) {
+                                console.log("get drinks fails");
+                            })
 
                         $("#modalUpdateProduct").modal("show");
                     })
                     .fail(function (resp) {
                         alert("Show modal update error");
                     });
+
 
             })
             .fail(function (jqXHR) {
@@ -348,6 +367,8 @@
 
 
     }
+
+
 
 
     $("#modalUpdateProduct").on('hidden.bs.modal', function () {
@@ -379,6 +400,7 @@
             $('#groupProduct').addClass("hide");
         }
     })
+
 
 </script>
 

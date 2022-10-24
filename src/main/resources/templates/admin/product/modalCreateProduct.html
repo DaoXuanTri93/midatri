@@ -28,7 +28,8 @@
                             </div>
                             <div class="mb-3 col-8">
                                 <label for="catalogsCreate" class="form-label fw-bold">Danh mục</label>
-                                <select class="form-control" id="catalogsCreate">
+                                <select class="form-select" onclick="handelCreateCategoryParent()" id="catalogsCreate">
+
                                 </select>
                             </div>
                             <div class="mb-3 col-4">
@@ -91,9 +92,28 @@
 
         $('#btnCreateProduct').on('click', function () {
             createProduct();
-            // $('#frmCreateProduct').submit();
-
         })
+
+        function handelCreateCategoryParent(){
+            $("#catalogsParentCreate option").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category/"+ ($("#catalogsCreate").val()) ,
+            })
+                .done( (data) => {
+                    parent = data
+
+                    $("#catalogsParentCreate").append(`<option value=${parent.id} selected>${parent.categoryName}</option>`);
+
+                })
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                })
+        }
 
         function createProduct() {
             let product = new Product();
@@ -102,7 +122,10 @@
             product.quantity=$("#quantityProductCreate").val();
             product.content = $("#desProductCreate").val();
             product.category ={
-                id:$("#catalogsCreate").val()
+                id:($("#catalogsCreate").val()),
+                parent:{
+                    id:$("#catalogsParentCreate").val()
+                }
             };
             product.user = {
                 id:1

@@ -14,25 +14,35 @@
                     </div>
                     <form id="frmUpdateProduct">
                         <div class="row">
-                            <div class="mb-3 col-6">
-                                <input type="text" id="idProductUpdate" hidden>
-                                <label for="productNameUpdate" class="form-label fw-bold">Tên thức uống</label>
-                                <input type="text" class="form-control" id="productNameUpdate" name="productNameUpdate">
-                            </div>
-                            <div class=" mb-3 col-6">
-                                <label for="priceProductUpdate" class="form-label fw-bold">Giá thức uống</label>
-                                <input type="text" class="form-control num-space"
-                                       id="priceProductUpdate" name="priceProductUpdate">
+                            <div class="row">
+                                <div class="mb-3 col-8">
+                                    <input type="text" id="idProductUpdate" hidden>
+                                    <label for="productNameUpdate" class="form-label fw-bold">Tên thức uống</label>
+                                    <input type="text" class="form-control" id="productNameUpdate" name="productNameUpdate">
+                                </div>
+                                <div class=" mb-3 col-4">
+                                    <label for="priceProductUpdate" class="form-label fw-bold">Giá thức uống</label>
+                                    <input type="text" class="form-control num-space"
+                                           id="priceProductUpdate" name="priceProductUpdate">
+                                </div>
                             </div>
                             <div class="row">
-                                <div class=" mb-3 col-6">
+                                <div class=" mb-3 col-8">
+                                    <label for="catalogsUpdate" class="form-label fw-bold">Danh mục</label>
+                                    <select class="form-select" onclick="handelCategoryParent()" id="catalogsUpdate">
+
+                                    </select>
+                                </div>
+                                <div class=" mb-3 col-4">
                                     <label for="quantityProductUpdate" class="form-label fw-bold">Số Lượng</label>
                                     <input type="text" class="form-control num-space"
                                            id="quantityProductUpdate" name="quantityProductUpdate">
                                 </div>
-                                <div class=" mb-3 col-6">
-                                    <label for="catalogsUpdate" class="form-label fw-bold">Danh mục</label>
-                                    <select class="form-select" id="catalogsUpdate">
+                            </div>
+                            <div class="row">
+                                <div class=" mb-3 col-8">
+                                    <label for="catalogsParentUpdate" class="form-label fw-bold">Loại Thực Đơn</label>
+                                    <select class="form-select" id="catalogsParentUpdate">
 
                                     </select>
                                 </div>
@@ -63,6 +73,28 @@
     </div>
     <script src="/js/App.js"></script>
     <script>
+
+        function handelCategoryParent(){
+            $("#catalogsParentUpdate option").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category/"+ ($("#catalogsUpdate").val()) ,
+            })
+                .done(function (data) {
+                    parent = data
+
+                    $("#catalogsParentUpdate").append(`<option value=${parent.id} selected>${parent.categoryName}</option>`);
+
+                })
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                })
+        }
+
         $('#uploadUpdate').change(function () {
             const fileUpdate = this.files[0];
             if (fileUpdate) {
@@ -73,6 +105,7 @@
                 readerUpdate.readAsDataURL(fileUpdate);
             }
         });
+
 
         function updateProduct() {
             let product = new Product();

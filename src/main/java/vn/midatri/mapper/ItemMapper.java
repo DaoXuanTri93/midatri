@@ -38,6 +38,7 @@ public class ItemMapper {
                 .setQuantity(itemResult.getQuantity())
                 .setImg(itemResult.getImg())
                 .setContent(itemResult.getContent())
+                .setCategory(categoryMapper.toModel(itemResult.getCategory()))
                 .setCategoryId(itemResult.getCategoryId())
                 .setUserId(itemResult.getUser())
                 .setDeleted(itemResult.isDeleted());
@@ -53,7 +54,8 @@ public class ItemMapper {
                 .setImg(item.getImg())
                 .setContent(item.getContent())
                 .setCategory(categoryMapper.toDTO(item.getCategory()))
-//                .setUser(userMapper.toDTO(item.getUser()))
+                .setCategoryId(item.getCategoryId())
+                .setUser(item.getUserId())
                 .setDeleted(item.isDeleted());
     }
 

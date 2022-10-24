@@ -31,10 +31,7 @@ public class Category {
     private Category parent;
 
     @Column(name = "parentId", nullable = false, insertable = false, updatable = false)
-    private Long parentId;
+    private Long parentId ;
 
-    public Category(Long id) {
-        this.id = id;
-    }
 
 }

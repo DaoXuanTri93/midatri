@@ -13,10 +13,11 @@ class Product {
 }
 
 class Category {
-    constructor(id, categoryName , parenId) {
+    constructor(id, categoryName , parenId ,parent) {
         this.id = id;
         this.categoryName = categoryName;
         this.parentId = parenId;
+        this.parent=parent;
     }
 }
 class User {
