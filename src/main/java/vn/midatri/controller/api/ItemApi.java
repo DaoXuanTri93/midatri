@@ -5,13 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.mapper.UserMapper;
-import vn.midatri.repository.model.Category;
 import vn.midatri.service.ICategoryService;
 import vn.midatri.service.IItemService;
 
@@ -35,7 +33,7 @@ public class ItemApi {
     @Autowired
     private UserMapper userMapper;
 
-    @GetMapping()
+
     public ResponseEntity<?> renderItem(){
         List<ItemResult> itemResultList = itemService.findAllByDeleted(false);
         return new ResponseEntity<>(itemResultList, HttpStatus.OK);
@@ -44,11 +42,6 @@ public class ItemApi {
     public ResponseEntity<?> restoreItem(){
         List<ItemResult> itemList = itemService.findAllByDeleted(true);
         return new ResponseEntity<>(itemList, HttpStatus.OK);
-    }
-    @GetMapping("/category/{id}")
-    public ResponseEntity<?> findByIdCategory(@PathVariable Long id){
-        List<ItemResult> item = itemService.findAllByCategoryId(id);
-        return new ResponseEntity<>(item, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdItem(@PathVariable Long id){

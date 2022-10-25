@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping({"/home", "/" , ""})
+@RequestMapping({"/home", "/", ""})
 public class HomeController {
-
-    @GetMapping("")
-    public ModelAndView toDashboard(){
-
-
-        return  new ModelAndView("/admin/home");
-
+    @GetMapping()
+    public String toLogin() {
+        return "redirect:/login";
     }
 
+    @GetMapping("")
+    public ModelAndView dashboard() {
+        return new ModelAndView("/admin/home");
+    }
 }

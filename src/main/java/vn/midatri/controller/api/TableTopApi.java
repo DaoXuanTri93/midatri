@@ -41,9 +41,9 @@ public class TableTopApi {
     }
     @PostMapping("/deleted/{id}")
     public ResponseEntity<?> deletedTable(@PathVariable Long id){
-        TableTop tableTop = tableTopService.findById(id);
-        tableTop.setStatus(true);
-        tableTopService.save1(tableTop);
+//        TableTop tableTop = tableTopService.findById(id);
+//        tableTop.setStatus(true);
+//        tableTopService.save1(tableTop);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -51,7 +51,7 @@ public class TableTopApi {
     public ResponseEntity<?> restoreTable(@PathVariable Long id){
         TableTop tableTop = tableTopService.findById(id);
         tableTop.setStatus(false);
-        tableTopService.save1(tableTop);
+//        tableTopService.save1(tableTop);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("{id}")
@@ -63,7 +63,7 @@ public class TableTopApi {
     public ResponseEntity<?> editTable(@PathVariable Long id,@RequestBody TableTop tableTop){
         TableTopResult tableTopResult = tableTopService.findTableById(id);
         tableTop.setId(tableTop.getId());
-        tableTopService.save1(tableTop);
+//        tableTopService.save1(tableTop);
         return new ResponseEntity<>(tableTop,HttpStatus.OK);
 
     }

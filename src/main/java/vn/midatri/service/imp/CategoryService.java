@@ -24,8 +24,14 @@ public class CategoryService  implements ICategoryService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public List<CategoryResult> findCategoryByParentIsNotNull() {
-        return categoryRepository.findCategoryByParentIsNotNull()
+    public List<CategoryResult> findAll() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(category -> categoryMapper.toDTO(category))
+                .collect(Collectors.toList());
+    }
+    public List<CategoryResult> findAllByParentId(Long parentId){
+        return categoryRepository.findAllByParentId(parentId)
                 .stream()
                 .map(category -> categoryMapper.toDTO(category))
                 .collect(Collectors.toList());
@@ -36,13 +42,13 @@ public class CategoryService  implements ICategoryService {
         return categoryMapper.toDTO(categoryRepository.findById(id).get());
     }
 
-    @Override
-    public List<CategoryResult> findAllByParentIsNull() {
-        return categoryRepository.findAllByParentIsNull()
-                .stream()
-                .map(category -> categoryMapper.toDTO(category))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<CategoryResult> findAllByParentIsNull() {
+//        return categoryRepository.findAllByParentIsNull()
+//                .stream()
+//                .map(category -> categoryMapper.toDTO(category))
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public CategoryResult create(CreateCategory createCategory) {

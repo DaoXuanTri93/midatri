@@ -13,5 +13,4 @@ public class CategoryParam {
     private Long id;
     private String categoryName;
     private Long parentId;
-    private CategoryResult parent;
 }

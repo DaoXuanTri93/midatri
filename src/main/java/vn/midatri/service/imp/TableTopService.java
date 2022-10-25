@@ -58,10 +58,6 @@ public class TableTopService implements ITableTopService {
         return tableTopMapper.toDTO(tableTop);
     }
 
-    @Override
-    public TableTop save1(TableTop tableTop) {
-        return tableTopRepository.save(tableTop);
-    }
 
     @Override
     public TableTop findById(Long id) {

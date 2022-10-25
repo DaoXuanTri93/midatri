@@ -7,7 +7,6 @@ import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
-import vn.midatri.repository.model.Item;
 import vn.midatri.service.IItemService;
 
 import java.util.List;
@@ -35,14 +34,8 @@ public class ItemService implements IItemService {
 
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<ItemResult> findAllByCategoryId(Long id) {
-        return itemRepository.findAllByCategoryId(id)
-                .stream()
-                .map(item -> itemMapper.toDTO(item))
-                .collect(Collectors.toList());
-    }
+
+
 
 
     @Override

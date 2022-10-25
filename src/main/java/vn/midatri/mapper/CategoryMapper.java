@@ -33,20 +33,17 @@ public class CategoryMapper {
     public Category toModel(CreateCategory createCategory){
         return new Category()
                 .setCategoryName(createCategory.getCategoryName())
-                .setParentId(createCategory.getParentId())
-                .setParent(toModel(createCategory.getParent()));
+                .setParentId(createCategory.getParentId());
     }
     public Category toModel(CategoryParam categoryParam){
         return new Category()
                 .setId(categoryParam.getId())
                 .setCategoryName(categoryParam.getCategoryName())
-                .setParentId(categoryParam.getParentId())
-                .setParent(toModel(categoryParam.getParent()));
+                .setParentId(categoryParam.getParentId());
     }
 
 
     public Category toModel(CategoryResult categoryResult) {
-
         return new Category()
                 .setId(categoryResult.getId())
                 .setCategoryName(categoryResult.getCategoryName())

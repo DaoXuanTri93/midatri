@@ -16,7 +16,6 @@ import java.security.Principal;
 public class UserController {
 @Autowired
     UserRepository userRepository;
-
     @GetMapping()
     public ModelAndView UserPage(){
         ModelAndView modelAndView = new ModelAndView();

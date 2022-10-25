@@ -54,7 +54,7 @@ public class BookingItemService implements IBookingItemService {
     }
 
     @Override
-    public BookingItemResult findByBookingIdAndItemId(long bookingId, long itemId) {
+    public BookingItemResult findAllByBookingIdAndItemId(long bookingId, long itemId) {
         return bookingItemMapper.toDTO(bookingItemRepository.findByBookingIdAndItemId(bookingId, itemId));
     }
 

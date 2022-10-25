@@ -11,7 +11,7 @@ public interface IBookingItemService {
     List<BookingItemResult> findAll();
 
     List<BookingItemResult> findAllByBookingId(Long bookingId);
-    BookingItemResult findByBookingIdAndItemId(long bookingId, long itemId);
+    BookingItemResult findAllByBookingIdAndItemId(long bookingId, long itemId);
     BookingItemResult create(BookingItemCreate bookingItemCreate);
 
     BookingItemResult findById(Long id);

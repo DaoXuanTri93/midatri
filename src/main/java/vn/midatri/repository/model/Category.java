@@ -30,8 +30,15 @@ public class Category {
     @JoinColumn(name = "parentId")
     private Category parent;
 
-    @Column(name = "parentId", nullable = false, insertable = false, updatable = false)
-    private Long parentId ;
+    @Column(name = "parentId", insertable = false, updatable = false)
+    private Long parentId;
 
+    public Category(Long parentId) {
+        this.parentId = parentId;
+    }
 
+//    public void setParentId(Long parentId) {
+//        this.parentId = parentId;
+//        this.parent=new Category(parentId);
+//    }
 }

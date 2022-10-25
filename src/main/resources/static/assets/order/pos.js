@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 class Booking {
     constructor(id, tableTop, user) {
         this.id = id;
@@ -66,6 +68,7 @@ function renderTableTop() {
 
     })
 }
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
 
 function renderCategory() {
     $.ajax({
@@ -93,7 +96,10 @@ function renderCategory() {
 
     })
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
 function renderProducts() {
     $("#render-product li").remove();
     $.ajax({
@@ -103,6 +109,15 @@ function renderProducts() {
         },
         type: "GET",
         url: "http://localhost:8080/api/item"
+<<<<<<< HEAD
+    }).done((data) => {
+        console.log(data)
+        $.each(data, (i, item) => {
+            let str = `
+                        <li data-id="${item.id}" class="btn-add-product" onclick="alert(${item.id})">
+                        <a title=${item.title}>
+                            <div class="product-img">
+=======
 
     }).done((data) => {
 
@@ -111,6 +126,7 @@ function renderProducts() {
                         <li data-id="${item.id}" class="btn-add-product">
                         <a title=${item.title}>
                             <div class="product-img" onclick="handleEventOnClick(${item.id})">
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
                                 <img src=${item.img}>
                                 <div class="product-price">${item.price}</div>
                             </div>
@@ -128,6 +144,8 @@ function renderProducts() {
 
     })
 }
+<<<<<<< HEAD
+=======
 
 function renderCategoryItem() {
     $("#render-product li").remove();
@@ -162,6 +180,7 @@ function renderCategoryItem() {
     })
 }
 
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
 function handleFilterCategory(categoryId) {
     $("#render-product li").remove();
     $.ajax({
@@ -174,9 +193,15 @@ function handleFilterCategory(categoryId) {
     }).done((data) => {
         $.each(data, (i, item) => {
             let str = `
+<<<<<<< HEAD
+                        <li data-id="${item.id}" class="btn-add-product" onclick="handleEventOnClick(${item.id})">
+                        <a title=${item.title}>
+                            <div class="product-img">
+=======
                         <li data-id="${item.id}" class="btn-add-product">
                         <a title=${item.title}>
                             <div class="product-img" onclick="handleEventOnClick(${item.id})">
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
                                 <img src=${item.img}>
                                 <div class="product-price">${item.price}</div>
                             </div>
@@ -185,9 +210,17 @@ function handleFilterCategory(categoryId) {
                             </div>
                         </a>
                         </li>
+<<<<<<< HEAD
+                        `
+            $("#render-product").append(str);
+            handelRemoveEvent();
+        })
+
+=======
                 `
             $("#render-product").prepend(str);
         })
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
     }).fail(error => {
 
     }).always(function () {
@@ -195,6 +228,10 @@ function handleFilterCategory(categoryId) {
     });
 }
 
+<<<<<<< HEAD
+function handleEventOnClick(id){
+    alert(id)
+=======
 function handleEventOnClick(item_id) {
 
     if (tableTopId == 0) {
@@ -628,16 +665,23 @@ function handlePayAll(booking_id){
         .done(() => {
             alert("ok")
         })
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
 }
 function handelRemoveEvent() {
     $(".btn-add-product").off();
 }
+<<<<<<< HEAD
+function renderAll() {
+    renderProducts();
+    renderCategory()
+=======
 
 function renderAll() {
     renderProducts();
     renderCategory()
     renderTableTop();
 
+>>>>>>> 4aea585b22403aa178108c53d6ffc6448e32090f
 }
 
 renderAll();
