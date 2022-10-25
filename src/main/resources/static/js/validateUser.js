@@ -63,10 +63,6 @@ $(document).ready(function () {
             }
 
         },
-        // errorLabelContainer: "#modalCreate .modal-alert-danger",
-        // errorPlacement: function (error, element) {
-        //     error.appendTo("#modalCreate .modal-alert-danger");
-        // },
         showErrors: function (errorMap, errorList) {
             if (this.numberOfInvalids() > 0) {
                 $("#modalCreate .modal-alert-danger").removeClass("hide").addClass("show");
@@ -81,4 +77,60 @@ $(document).ready(function () {
         }
     })
 
+    // validate user edit
+    $("#modalEdit").on('hidden.bs.modal', () => {
+        $("#modalEdit .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#frmEditUserUser").validate().resetForm();
+    })
+
+    $("#frmEditUser").validate({
+        rules: {
+            userName: {
+                required: true,
+                minlength: 5,
+                maxlength: 25
+            },
+            email : {
+                required : true,
+                minlength : 8,
+                maxlength: 30,
+            },
+            phone :{
+                required : true,
+                minlength: 10,
+                maxlength : 10
+            }
+
+        },
+        messages: {
+            userName: {
+                required: " Tên đăng nhập không được để trống",
+                minlength: "Tên đăng nhập phải có ít nhất 5 ký tự",
+                maxlength: "Tên đăng nhập phải tối đa có 25 ký tự"
+            },
+            email: {
+                required : "Email không được để trống ",
+                minlength: "Độ dài email tối thiểu là 5",
+                maxlength: "ĐỘ dài email tối đa là 30"
+            },
+            phone: {
+                required: "Số điện thoại không được để trống",
+                minlength : "Số điện thoại phải đủ 10 số",
+                maxlength : "Số điện thoại phải đủ 10 số"
+            }
+
+        },
+        showErrors: function (errorMap, errorList) {
+            if (this.numberOfInvalids() > 0) {
+                $("#modalEdit .modal-alert-danger").removeClass("hide").addClass("show");
+            } else {
+                $("#modalEdit .modal-alert-danger").removeClass("show").addClass("hide").empty();
+                $("#frmEditUser input.error").removeClass("error");
+            }
+            this.defaultShowErrors();
+        },
+        submitHandler: function () {
+            editUser1(data.id);
+        }
+    })
 })

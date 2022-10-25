@@ -21,7 +21,6 @@ public class UserMapper {
         .setId(user.getId())
         .setUserName(user.getUserName())
         .setPassword(user.getPassword())
-        .setDeleted(user.getDeleted())
         .setPhone(user.getPhone())
         .setEmail(user.getEmail());
 
@@ -31,8 +30,15 @@ public class UserMapper {
                 .setId(userResult.getId())
                 .setUserName(userResult.getUserName())
                 .setPassword(userResult.getPassword())
-                .setDeleted(userResult.getDeleted())
                 .setPhone(userResult.getPhone())
                 .setEmail(userResult.getEmail());
+    }
+    public UserResult toDTOEdit(User user){
+        return new UserResult()
+                .setId(user.getId())
+                .setUserName(user.getUserName())
+                .setPassword(user.getPassword())
+                .setEmail(user.getEmail())
+                .setPhone(user.getPhone());
     }
 }

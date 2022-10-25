@@ -14,6 +14,8 @@ import java.time.Instant;
 public class TableTopResult {
     private Long id;
     private Boolean status;
+    private Instant createAt;
+    private Instant updateAt;
     private Short capacity;
     private String content;
 }

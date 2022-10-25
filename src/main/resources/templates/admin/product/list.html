@@ -60,8 +60,8 @@
                                         <th scope="col" class="fw-bold fs-5">Giá</th>
                                         <th scope="col" class="fw-bold fs-5">Danh mục</th>
                                         <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
-                                        <th colspan="2"> Thao tác </th>
-<!--                                        <th></th>-->
+                                        <th colspan="2"> Thao tác</th>
+                                        <!--                                        <th></th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -113,9 +113,9 @@
                 dataSrc: '',
             },
             columns: [
-                {data: 'title'},
+                {data: 'title',},
                 {
-                    data: 'price'
+                    data: 'price',
                 },
                 {data: "category.categoryName"},
                 {
@@ -150,9 +150,13 @@
 
     });
 </script>
+
 <script>
 
-    function handlerShowCategory(){
+
+
+
+        function handlerShowCategory() {
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -173,7 +177,8 @@
                 console.log("get drinks fails");
             })
     }
-    function handlerShowCategoryParent(){
+
+    function handlerShowCategoryParent() {
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -359,26 +364,57 @@
     });
 
     $('#btnShowMenuType').on("click", function () {
-        if($("#menuType").hasClass("hide")) {
+        if ($("#menuType").hasClass("hide")) {
             $("#menuType").removeClass("hide");
-        }else {
+        } else {
             $("#menuType").addClass("hide");
         }
     })
     $('#btnShowProduct').on('click', function () {
-        if($("#filterProduct").hasClass("hide")) {
+        if ($("#filterProduct").hasClass("hide")) {
             $("#filterProduct").removeClass("hide");
-        }else {
+        } else {
             $("#filterProduct").addClass("hide");
         }
     })
-    $('#btnShowGroupProduct').on('click', function (){
-        if($('#groupProduct').hasClass("hide")) {
+    $('#btnShowGroupProduct').on('click', function () {
+        if ($('#groupProduct').hasClass("hide")) {
             $('#groupProduct').removeClass("hide");
-        }else {
+        } else {
             $('#groupProduct').addClass("hide");
         }
     })
+
+
+    // $(document).ready(function() {
+    //     editor = new $.fn.dataTable.Editor({
+    //         ajax: "../php/upload.php",
+    //         table: "#example",
+    //         fields: [{
+    //             label: "First name:",
+    //             name: "first_name"
+    //         }, {
+    //             label: "Last name:",
+    //             name: "last_name"
+    //         }, {
+    //             label: "Phone #:",
+    //             name: "phone"
+    //         }, {
+    //             label: "City:",
+    //             name: "city"
+    //         }, {
+    //             label: "Image:",
+    //             name: "image",
+    //             type: "upload",
+    //             display: function (file_id) {
+    //                 return '<img src="' + editor.file('files', file_id).web_path + '"/>';
+    //             },
+    //             clearText: "Clear",
+    //             noImageText: 'No image'
+    //         }
+    //         ]
+    //     });
+    // })
 
 </script>
 

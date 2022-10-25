@@ -12,17 +12,23 @@
                     <div class="modal-alert-danger hide">
                     </div>
                     <form id="frmEditTable">
-<!--                        <input type="hidden" id="idEdit">-->
+                        <!--                        <input type="hidden" id="idEdit">-->
                         <div class="row">
                             <div class="col col-md-6">
-                                <label  class="form-label fw-bold" >Số thứ tự:</label>
+                                <label class="form-label fw-bold">Số thứ tự:</label>
                                 <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" readonly>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="capacityEdit" class="form-label fw-bold">Sức chứa:</label>
-                                <input type="number" class="form-control" id="capacityEdit" name="capacityEdit">
+                                <select class="form-select" id="capacityEdit" required>
+                                    <option selected >Chọn sức chứa bàn</option>
+                                    <option value="2">2</option>
+                                    <option value="4">4</option>
+                                    <option value="6">6</option>
+                                    <option value="8">8</option>
+                                </select>
                             </div>
                             <div class="col col-md-6">
                                 <label for="contentEdit" class="form-label fw-bold">Ghi chú:</label>
@@ -42,9 +48,10 @@
     <script>
         function editTable(id) {
             let editTable = new TableTop();
-            editTable.id =id;
-            editTable.capacity = $("#capacityEdit").val();
+            editTable.id = id;
+            editTable.capacity = $("#capacityEdit").find(":selected").val();
             editTable.content = $("#contentEdit").val();
+            editTable.status =0;
             $.ajax({
                 headers: {
                     "accept": "application/json",
@@ -56,7 +63,8 @@
                 data: JSON.stringify(editTable)
             }).done(function (data) {
                 window.location.href = "/table-top"
-            })
+            }
+            )
         }
 
         function handlerShowTableEdit(id) {
@@ -71,20 +79,30 @@
                 .done((data) => {
                     console.log(data);
                     $("#idTableEdit").val(data.id);
-                    $("#capacityEdit").val(data.capacity);
+                    $("#capacityEdit").find(":selected").val(data.capacity);
                     $("#contentEdit").val(data.content);
                     $("#modalEditTable").modal("show");
                     $("#btnEdit").on('click', function () {
-                        swal.fire({
-                            title : "Chỉnh sửa thông tin thành công!",
-                            text : "Xin chờ!!!",
-                            time : 5000
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Chỉnh sửa thông tin thành công',
+                            showConfirmButton: false,
+                            timer: 2000
+
                         })
+                        {
+                            $('#modalEditTable').DataTable().ajax.reload();
+                        }
+                        setTimeout(() => {
+                            // window.location.href = "/table-top"
+                        }, 3000)
                         editTable(data.id);
                         $("#btnEdit").trigger("submit")
 
                     });
-                })}
+                })
+        }
     </script>
-
+    <script src="/js/validateTable.js"></script>
 </th:block>

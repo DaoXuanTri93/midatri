@@ -20,15 +20,16 @@
 
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
+                            <div class="col col-md-12">
                                 <label for="capacityTable" class="form-label fw-bold">Sức chứa:</label>
-                                <input type="number" class="form-control text-end" id="capacityTable" name="capacityTable">
+                                <select class="form-select" id="capacityTable">
+                                    <option selected>Chọn sức chứa bàn</option>
+                                    <option value="2">2</option>
+2                                    <option value="4">4</option>
+                                    <option value="6">6</option>
+                                    <option value="8">8</option>
+                                </select>
                             </div>
-                            <div class="col col-md-6">
-                                <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
-                                <input type="number" class="form-control text-end" id="statusTable" name="statusTable">
-                            </div>
-
                         </div>
                         <div class="row">
                             <div class="col col-lg-12">
@@ -48,13 +49,15 @@
 
     <script>
         $("#btnCreateTable").on("click", function () {
-            $('#frmCreateTable').submit();
+            CreateTable();
+            $('#btnCreateTable').trigger('submit');
         });
 
         function CreateTable() {
             let NewTable = {
-                capacity: $('#capacityTable').val(),
+                capacity: $('#capacityTable').find(":selected").val(),
                 content: $('#contentTable').val(),
+                // $("#thanh_pho").find(":selected").val()
                 status: false,
             }
             console.log(NewTable);
@@ -78,14 +81,14 @@
                         `;
                     $("tblTop tbody").append(str);
                     Swal.fire({
+                        title: 'Thêm mới bàn dùng thành công !!!',
                         position: 'top-end',
                         icon: 'success',
-                        title: 'Thêm mới bàn dùng thành công !!!',
                         showConfirmButton: false,
                         timer: 3000
                     })
                     setTimeout(() => {
-                        window.location.href = "/user"
+                        window.location.href = "/table-top"
                     }, 3000)
                 })
                     .fail(function (jqXHR) {
@@ -96,5 +99,5 @@
 
 
     </script>
-    <script src="/js/validateTable.js"></script>
+<!--    <script src="/js/validateTable.js"></script>-->
 </th:block>

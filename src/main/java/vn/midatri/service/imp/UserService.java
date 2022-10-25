@@ -57,15 +57,21 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResult save(User user) {
-        return userMapper.toDTO(userRepository.save(user));
+    public UserResult Update(UserResult userResult,User user) {
+        user.setPassword(userResult.getPassword());
+        user.setId(userResult.getId());
+        UserResult userResults = userMapper.toDTOEdit(userRepository.save(user));
+        userResults.setPassword("null");
+        return userResults;
     }
 
+    @Override
+    public UserResult save(User user) {
+        return null;
+    }
 
     @Override
     public User findUserById(Long id) {
         return userRepository.findUserById(id);
     }
-
-
 }

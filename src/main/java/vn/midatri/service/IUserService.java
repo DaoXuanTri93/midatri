@@ -15,6 +15,9 @@ public interface IUserService {
 
     void deletedById(Long id);
     List<User> findAllByDeleted(boolean deleted);
+    UserResult Update(UserResult userResult,User user);
+
     UserResult save(User user);
     User findUserById(Long id);
+//    User update(User user);
 }

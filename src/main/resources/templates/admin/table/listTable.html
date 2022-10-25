@@ -18,7 +18,8 @@
     </div>
 </div>
 <!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
 <![endif]-->
 <!-- Start Header Top Area -->
 <th:block th:replace="/admin/layout/navBar :: navBar"/>
@@ -28,13 +29,15 @@
     <div class="container">
         <div class="row">
             <div class="breadcomb-list" style="background-color: #8BC34A">
-                <div class="row mb-lg-2 " >
+                <div class="row mb-lg-2 ">
                     <div class="col-7">
-                    <h1>Quản lý bàn</h1>
+                        <h1>Quản lý bàn</h1>
                     </div>
                     <div class="col-2">
-                        <div class="col text-end" >
-                            <button class="btn btn-outline-light bg-primary" id="createNewTable"><i class="fa fa-plus-square"></i> Tạo bàn mới</button>
+                        <div class="col text-end">
+                            <button class="btn btn-outline-light bg-primary" id="createNewTable">
+                                <i class="fa fa-plus-square"></i> Tạo bàn mới
+                            </button>
                         </div>
                     </div>
                     <div class="col-3">
@@ -44,11 +47,11 @@
                                 Danh sách bàn đã xóa</a>
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- Breadcomb area End-->
 <!-- Data Table area Start-->
@@ -63,9 +66,10 @@
                             <tr class="bg-success">
                                 <th>#</th>
                                 <th>Capacity</th>
+                                <th>Create At</th>
+                                <th>Update At</th>
                                 <th>content</th>
-                                <th></th>
-                                <th></th>
+                                <th scope="col" class="text-center fw-bold">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -97,43 +101,72 @@
 
 </body>
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         $("#tblTop").DataTable({
-            ajax: {
-                contentType: 'application/json',
-                url: "http://localhost:8080/api/table-top",
-                type : "GET",
-                dataSrc: ''
-            },
-            columns: [
-                {data: 'id'},
-                {data: 'capacity'},
-                // {data: 'create_at'},
-                // {data: 'update_at'},
-                {data: 'content'},
-                {
-                    data: 'id',
-                    render: function (data, type, row, meta) {
-                        return `<button class="btn btn-outline-warning editUser" onclick="handlerShowTableEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                                    `;
-                    }, orderable: false
+                ajax: {
+                    contentType: 'application/json',
+                    url: "http://localhost:8080/api/table-top",
+                    type: "GET",
+                    dataSrc: ''
                 },
-                {
-                    data: 'id',
-                    render: function (data, type, row, meta) {
-                        return `<button class="btn btn-outline-danger delUser" onclick="handleShowDeleteTableForm(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                                    `;
-                    }, orderable: false
-                },
-            ]
-        });
-    });
+                // searching: false,
+                //    paging: false,
+
+                lengthMenu: [
+                    [5, 10, 15, -1],
+                    ['5', '10', '15', 'All']
+                ],
+                select: true,
+                columns: [
+                    {data: 'id', "width": "5%"},
+                    {data: 'capacity', "width": "10%"},
+                    {
+                        data: 'createAt',
+                        "width": "20%",
+                        render: function (createAt) {
+                            return $.format.date(createAt, "dd/MM/yyyy HH:mm:ss");
+                        }
+                    },
+                    {
+                        data: 'updateAt', "width": "20%",
+                        render: function (updateAt) {
+                            return $.format.date(updateAt, "dd/MM/yyyy HH:mm:ss");
+                        }
+                    },
+                    {data: 'content', "width": "30%"},
+                    {
+                        data: 'id', "width": "15%",
+                        render: function (data, type, row, meta) {
+                            return `<button class="btn btn-outline-warning editUser cssAction" onclick="handlerShowTableEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-outline-danger delUser cssDelete" onclick="handleShowDeleteTableForm(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>    `;
+                        }, orderable: false
+                    },
+                ]
+                ,
+            }
+        )
+    })
+    // var editor = new $.fn.dataTable.Editor({
+    //     ajax: {
+    //         contentType: 'application/json',
+    //         url: "http://localhost:8080/api/table-top",
+    //         type: "GET",
+    //         dataSrc: ''
+    //     },
+    //     table: '#tblTop',
+    //     fields: [
+    //         {label: 'id ', name: 'id'},
+    //         {label: ' capacity', name: 'capacity'},
+    //         {label: ' createAt', name: 'createAt'},
+    //         {label: ' updateAt', name: 'updateAt'},
+    //         {label: ' content', name: 'content'},
+    //     ]
+    // });
 </script>
 <script>
-    $("#createNewTable").on("click",function () {
+    $("#createNewTable").on("click", function () {
         $("#modalCreateTable").modal("show")
     });
 </script>
-<script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>
 
