@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalEditTable">
+    <div class="modal" tabindex="-1" id="modalEditTable">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chỉnh Sửa Bàn</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEditTable">
+<!--                        <input type="hidden" id="idEdit">-->
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label  class="form-label fw-bold" >Số thứ tự:</label>
+                                <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="capacityEdit" class="form-label fw-bold">Sức chứa:</label>
+                                <input type="number" class="form-control" id="capacityEdit" name="capacityEdit">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="contentEdit" class="form-label fw-bold">Ghi chú:</label>
+                                <input type="text" class="form-control" id="contentEdit" name="contentEdit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/App.js"></script>
+    <script>
+        function editTable(id) {
+            let editTable = new TableTop();
+            editTable.id =id;
+            editTable.capacity = $("#capacityEdit").val();
+            editTable.content = $("#contentEdit").val();
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "PUT",
+
+                url: "http://localhost:8080/api/table-top/edit/" + id,
+                data: JSON.stringify(editTable)
+            }).done(function (data) {
+                window.location.href = "/table-top"
+            })
+        }
+
+        function handlerShowTableEdit(id) {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/table-top/" + id
+            })
+                .done((data) => {
+                    console.log(data);
+                    $("#idTableEdit").val(data.id);
+                    $("#capacityEdit").val(data.capacity);
+                    $("#contentEdit").val(data.content);
+                    $("#modalEditTable").modal("show");
+                    $("#btnEdit").on('click', function () {
+                        swal.fire({
+                            title : "Chỉnh sửa thông tin thành công!",
+                            text : "Xin chờ!!!",
+                            time : 5000
+                        })
+                        editTable(data.id);
+                        $("#btnEdit").trigger("submit")
+
+                    });
+                })}
+    </script>
+
+</th:block>

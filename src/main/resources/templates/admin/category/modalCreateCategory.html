@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalCreateCategory" >
+    <div class="modal" tabindex="-1" id="modalCreateCategory">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sửa Nhóm Hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12">
+                            <input type="text" id="idCategoryCreate" hidden>
+                            <label for="nameCategoryCreate" class="form-label fw-bold">Tên Nhóm</label>
+                            <input type="text" class="form-control" id="nameCategoryCreate" name="nameCategoryCreate">
+                        </div>
+                        <div class="mb-3 col-12">
+                            <label for="parentCategoryCreate" class="form-label fw-bold">Loại Thực Đơn</label>
+                            <select class="form-control" id="parentCategoryCreate" name="parentCategoryCreate">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="btnCreateCategory">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function createCategory(){
+            let category = new Category()
+            category.id = 0;
+            category.categoryName = $("#nameCategoryCreate").val();
+            category.parentId = $("#parentCategoryCreate").val();
+            category.parent ={
+                id : $("#parentCategoryCreate").val()
+            }
+            $.ajax({
+                headers : {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "POST",
+                url: 'http://localhost:8080/api/category/create',
+                data:JSON.stringify(category)
+            })
+                .done((data)=>{
+                    alert("Thêm Thành Công");
+                    window.location.href="/products";
+                })
+                .fail(()=>{
+                    alert("error");
+                })
+        }
+        $("#btnCreateCategory").on('click',()=>{
+            createCategory();
+        })
+    </script>
+</th:block>
+</html>

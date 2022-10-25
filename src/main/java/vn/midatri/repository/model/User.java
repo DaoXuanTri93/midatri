@@ -43,6 +43,7 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private Boolean deleted = false;
 
-
-
+    public User (long id ){
+     this.id = id;
+    }
 }

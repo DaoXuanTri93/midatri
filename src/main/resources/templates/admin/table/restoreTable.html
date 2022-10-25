@@ -1,0 +1,118 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Data Table | Notika - Notika Admin Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="/admin/layout/head :: head"/>
+</head>
+
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<th:block th:replace="/admin/layout/navBar :: navBar"/>
+<div class="breadcomb-area">
+    <div class="container">
+        <div class="row">
+            <div class="breadcomb-list">
+                <div class="row mb-2">
+                    <div class="col text-end">
+                        <a href="/table-top"> Quay lại trang
+                        </a><i class="fa fa-plus-square"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="data-table-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="data-table-list">
+                    <div class="table-responsive">
+                        <table id="tblRestore" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Capacity</th>
+                                <th>content</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Data Table area End-->
+<!-- Start Footer area-->
+<div class="footer-copyright-area">
+    <div class="container">
+        <div class="row">
+            <th:block th:replace="/admin/layout/footer :: footer"/>
+        </div>
+    </div>
+</div>
+<th:block th:replace="/admin/layout/script :: script"/>
+<th:block th:replace="/admin/table/modalRestoreTable :: modalRestoreTable"/>
+</body>
+<script>
+    $(document).ready(function renderRestoreTable() {
+        $("#tblRestore").DataTable({
+            ajax: {
+                contentType: 'application/json',
+                url: "http://localhost:8080/api/table-top/renderDeletedTable",
+                type: "GET",
+                dataSrc: ''
+            },
+            columns: [
+                {data: 'id'},
+                {data: 'capacity'},
+                {data: 'content'},
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return `<button class="btn btn-outline-primary " onclick="handleShowRestoreTable(${data})" data-id="${data}"><i class="fa fa-plus"></i></button>
+                                    `;
+                    }, orderable: false
+                },
+            ]
+        });
+    });
+
+</script>
+<script>
+    function handleShowRestoreTable(id) {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/table-top/" + id
+        }).done((data)=>{
+                $('#idTableRestore').val(data.id);
+                $('#capacityTableRestore').val(data.capacity);
+                $('#contentTableRestore').val(data.content);
+                $('#modalRestoreTable').modal('show');
+                $('#btnRestore').on('click', function () {
+                    restoreTable();
+                    $('#btnRestore').trigger("submit");
+                })
+            }
+        )
+    }
+</script>
+<script type="module" src="/assets/admin/js/api/api.js"></script>
+</html>
+

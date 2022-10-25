@@ -19,15 +19,12 @@ import java.time.Instant;
 @Table(name = "table_top")
 public class TableTop {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
-
     @Column(name = "status", nullable = false)
-    private Short status;
+    private Boolean status;
 
     @Column(name = "capacity", nullable = false)
     private Short capacity;
@@ -41,8 +38,6 @@ public class TableTop {
     @Column(name = "content", length = 45)
     private String content;
 
-    @Column(name = "deleted")
-    private Boolean deleted;
 
 
 }

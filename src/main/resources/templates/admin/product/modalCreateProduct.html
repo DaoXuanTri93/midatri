@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalCreateProduct">
+    <div class="modal" tabindex="-1" id="modalCreateProduct">
+
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header bg-primary">
+                    <h1 class="modal-title ">Thêm mới thức uống</h1>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" style="margin: 0 30px">
+                    <div class="modal-alert-danger hide">
+
+                    </div>
+                    <form id="frmCreateProduct">
+
+                        <div class="row">
+                            <div class="mb-3 col-8">
+                                <label for="productNameCreate" class="form-label fw-bold">Tên thức uống</label>
+                                <input type="text" class="form-control" id="productNameCreate" name="productNameCreate">
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="imPriceProductCreate" class="form-label fw-bold">Giá Nhập</label>
+                                <input type="text" class="form-control num-space text-right" id="imPriceProductCreate"
+                                       name="imPriceProductCreate">
+                            </div>
+                            <div class="mb-3 col-8">
+                                <label for="catalogsCreate" class="form-label fw-bold">Danh mục</label>
+                                <select class="form-select" onclick="handelCreateCategoryParent()" id="catalogsCreate">
+
+                                </select>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="priceProductCreate" class="form-label fw-bold">Giá Bán</label>
+                                <input type="text" class="form-control num-space text-right" id="priceProductCreate"
+                                       name="priceProductCreate">
+                            </div>
+                            <div class="mb-3 col-8">
+                                <label for="catalogsParentCreate" class="form-label fw-bold">Loại Thực Đơn</label>
+                                <select class="form-control" id="catalogsParentCreate">
+                                </select>
+                            </div>
+                            <div class="mb-3 col-4">
+                                <label for="quantityProductCreate" class="form-label fw-bold  ">Số Lượng thức uống</label>
+                                <input type="text" class="form-control num-space text-right" id="quantityProductCreate"
+                                       name="quantityProductCreate">
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <label class="form-label fw-bold ">Hình Ảnh</label>
+                            <div class="mb-3 text-center ">
+                                <img id="previewImg" width="150px" class="img-circle mb-2 " src="/assets/img/Logo.png"/>
+                                <input id="uploadCre" type="file" accept="image/*"  hidden/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col">
+                                <label for="desProductCreate" class="form-label fw-bold">Mô tả</label>
+                                <textarea class="form-control" id="desProductCreate" name="desProductCreate" rows="4"
+                                          cols="100%"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateProduct">Tạo thức uống</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/App.js"></script>
+    <script>
+        $("#previewImg").on('click', function () {
+            $("#uploadCre").trigger('click');
+        })
+
+        $('#uploadCre').change(function () {
+            const file = this.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    $('#previewImg').attr('src', event.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        $('#btnCreateProduct').on('click', function () {
+            createProduct();
+        })
+
+        function handelCreateCategoryParent(){
+            $("#catalogsParentCreate option").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category/parent"+$("#catalogsCreate").val(),
+            })
+                .done((data)=>{
+                    $("#catalogsParentCreate").append(`
+                    <option value=${data.id}>${data.categoryName}</option>
+                    `)
+                })
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                })
+        }
+
+        function createProduct() {
+            let product = new Product();
+            product.title = $("#productNameCreate").val();
+            product.price = $("#imPriceProductCreate").val();
+            product.quantity=$("#quantityProductCreate").val();
+            product.content = $("#desProductCreate").val();
+            product.category ={
+                id:($("#catalogsCreate").val()),
+                parent:{
+                    id:$("#catalogsParentCreate").val()
+                }
+            };
+            product.user = {
+                id:1
+            }  ;
+            product.deleted = false;
+            if ($("#uploadCre")[0].files[0] != null) {
+                product.img = $("#productNameCreate").val();
+            }
+
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "POST",
+                url: "http://localhost:8080/api/item/create",
+                data: JSON.stringify(product)
+            }).done(() => {
+                alert(" Thành Công");
+                window.location.href = '/products';
+            }).fail(function (jqXHR) {
+                                let str = ``;
+                                if (jqXHR.responseJSON) {
+                                    $.each(jqXHR.responseJSON, function (key, value) {
+                                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                                        $("#" + key).addClass("error");
+                                    });
+                                } else {
+                                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                                }
+                                $("#modalCreateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                                $("#modalCreateDrink .modal-body .modal-alert-danger").html(str);
+                            })
+                            .always(function () {
+                                $(".loader").addClass('hide');
+                            })
+        }
+
+        $("div.image-preview, div.file-name").on('click', function () {
+            $("#imageFile").trigger('click');
+        });
+        $("#imageFile").on('change', function () {
+            changeImagePreview();
+        });
+
+        function loadImageToCanvas(imageFile) {
+            $("section .image-preview canvas").css("display", "");
+            $("section .wrapper").addClass("active");
+            $("section .wrapper .content").css("opacity", 0);
+            let imageObj = new Image();
+            imageObj.onload = function () {
+                $("#canvas")[0].getContext('2d').width = imageObj.width;
+                $("#canvas")[0].getContext('2d').height = imageObj.height;
+                $("#canvas")[0].getContext('2d').drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+            };
+            imageObj.src = URL.createObjectURL(imageFile)
+        }
+
+        function changeImagePreview() {
+            let imageFile = $("#imageFile")[0].files[0];
+            if (imageFile) {
+                let reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function (e) {
+                    if (e.target.readyState === FileReader.DONE) {
+                        loadImageToCanvas(imageFile);
+                    }
+                }
+            } else {
+                clearImagePreview();
+            }
+        }
+
+        function clearImagePreview() {
+            $("#imageFile")[0].files[0].val("");
+            $("section .image-preview canvas").css("display", "none");
+            $("section .wrapper").removeClass("active");
+            $("section .wrapper .content").css("opacity", 1);
+        }
+    </script>
+</th:block>

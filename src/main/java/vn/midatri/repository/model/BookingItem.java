@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
+import vn.midatri.mapper.BookingMapper;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,15 +21,20 @@ import java.time.Instant;
 @Entity
 @Table(name = "booking_item")
 public class BookingItem {
+
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Column(name = "booking_id", nullable = false, insertable = false, updatable = false)
+    private Long bookingId;
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
@@ -54,7 +61,4 @@ public class BookingItem {
 
     @Column(name = "grand_total", nullable = false, precision = 12)
     private BigDecimal grandTotal;
-
-
-
 }

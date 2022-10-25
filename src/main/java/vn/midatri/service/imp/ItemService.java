@@ -3,18 +3,18 @@ package vn.midatri.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vn.midatri.dto.item.ItemCreate;
+import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
-import vn.midatri.repository.model.Item;
 import vn.midatri.service.IItemService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
-@Transactional
+
 public class ItemService implements IItemService {
 
     @Autowired
@@ -24,34 +24,37 @@ public class ItemService implements IItemService {
     private ItemMapper itemMapper;
 
     @Override
-    public List<Item> findAllByDeleted(Boolean deleted) {
-        return itemRepository.findAllByDeleted(deleted);
+    @Transactional(readOnly = true)
+    public List<ItemResult> findAllByDeleted(Boolean deleted) {
+        return itemRepository.findAllByDeleted(deleted)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+
+
+    }
+
+
+
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public ItemResult findById(Long id) {
+        return itemMapper.toDTO(itemRepository.findById(id).get());
     }
 
     @Override
-    public List<Item> findAllByCategoryId(Long id) {
-        return itemRepository.findAllByCategoryId(id);
-    }
+    @Transactional
+    public ItemResult create(CreateItem createItem) {
 
-//    @Override
-//    public List<Item> findByIdCategory(Long id) {
-//        return itemRepository.findByIdCategory(id);
-//    }
-
-    @Override
-    public Item findById(Long id) {
-        return itemRepository.findById(id).get();
+        return itemMapper.toDTO(itemRepository.save(itemMapper.toModel(createItem)));
     }
 
     @Override
-    public ItemResult save(ItemCreate itemCreate) {
-        Item item = itemMapper.toModel(itemCreate);
-        itemRepository.save(item);
-        return itemMapper.toDTO(item);
+    @Transactional
+    public ItemResult update(ItemResult itemResult) {
+        return itemMapper.toDTO(itemRepository.save(itemMapper.toModel(itemResult)));
     }
 
-    @Override
-    public Item save(Item item) {
-        return itemRepository.save(item);
-    }
 }

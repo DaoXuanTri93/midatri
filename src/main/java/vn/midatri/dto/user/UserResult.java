@@ -14,4 +14,7 @@ public class UserResult {
     private String userName;
     private String password;
     private Boolean deleted;
+    private String phone;
+    private String email;
+
 }

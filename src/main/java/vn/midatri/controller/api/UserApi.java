@@ -25,12 +25,6 @@ public class UserApi {
     @Autowired
     UserMapper userMapper;
 
-//    @GetMapping()
-//    public ResponseEntity<?> renderUser() {
-//        List<UserResult> users = userService.findAll();
-//        return new ResponseEntity<>(users , HttpStatus.OK);
-//    }
-
     @GetMapping()
     public ResponseEntity<?> renderUser() {
 
@@ -40,9 +34,8 @@ public class UserApi {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
-        UserResult userResult = userService.findById(id);
-
-        return new ResponseEntity<>(userResult, HttpStatus.OK);
+        User user = userService.findById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@Validated @RequestBody UserRegister userRegister, BindingResult bindingResult){
@@ -57,10 +50,38 @@ public class UserApi {
     @PostMapping("/deleted/{id}")
     public ResponseEntity<?> deletedUser(@PathVariable Long id){
         User user = userService.findUserById(id);
-
         user.setDeleted(true);
         userService.save(user);
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    @PutMapping ("/edit/{id}")
+
+// ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
+//
+//        user.setId(id);
+
+
+    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user) {
+        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
+        user.setId(user.getId());
+
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/renderDeletedUser")
+    public ResponseEntity<?> ListDeletedUser(){
+        List<User> users = userService.findAllByDeleted(true);
+        return new ResponseEntity<>(users,HttpStatus.OK);
+    }
+@PutMapping("/restore/{id}")
+    public ResponseEntity<?> restoreUser(@PathVariable Long id){
+        User user = userService.findById(id);
+        user.setDeleted(false);
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

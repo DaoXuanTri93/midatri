@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalRestoreProduct">
+    <div class="modal" tabindex="-1" id="modalRestoreDrink">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Khôi Phục thức uống</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+
+                    </div>
+                    <form id="frmRestoreProduct">
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <input type="text" id="idProductRestore" hidden>
+                                <label for="productNameRestore" class="form-label fw-bold">Tên thức uống</label>
+                                <input type="text" class="form-control" id="productNameRestore" name="productNameRestore" readonly>
+                            </div>
+                            <div class=" mb-3 col-6">
+                                <label for="priceProductRestore" class="form-label fw-bold">Giá thức uống</label>
+                                <input type="text" class="form-control num-space"
+                                       id="priceProductRestore" name="priceProductRestore" readonly>
+                            </div>
+                            <div class="row">
+                                <div class=" mb-3 col-6">
+                                    <label for="quantityProductRestore" class="form-label fw-bold">Số Lượng</label>
+                                    <input type="text" class="form-control num-space"
+                                           id="quantityProductRestore" name="quantityProductRestore" readonly>
+                                </div>
+                                <div class=" mb-3 col-6">
+                                    <label for="catalogsRestore" class="form-label fw-bold">Danh mục</label>
+                                    <select class="form-select" id="catalogsRestore" disabled>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col">
+                                <label for="desProductRestore" class="form-label fw-bold">Mô tả</label>
+                                <textarea class="form-control" id="desProductRestore" name="desProductRestore"
+                                          rows="4" cols="100%" readonly></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestoreProduct">Khôi phục thức uống
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/App.js"></script>
+<script>
+    function restoreProduct() {
+        let product = new Product();
+        product.id = $("#idProductRestore").val()
+        product.title = $("#productNameRestore").val();
+        product.price = $("#priceProductRestore").val();
+        product.quantity = $("#quantityProductRestore").val();
+        product.content = $("#desProductRestore").val();
+        product.category = {
+            id: $("#catalogsRestore").val()
+        };
+        product.user = {
+            id: 1
+        };
+        product.deleted = false;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "PUT",
+            url: 'http://localhost:8080/api/item/restore/' + product.id,
+            data: JSON.stringify(product)
+        })
+            .done(function (data) {
+                alert("Khôi Phục Thức Uống Thành Công")
+                window.location.href = "/products/restore";
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str += `<label id= "${key}-error" class="error" for="${key}">${value}</label><br>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalUpdateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                $("#modalUpdateDrink .modal-body .modal-alert-danger").html(str);
+            })
+            .always(function () {
+                $(".loader").addClass('hide');
+            });
+        }
+        $("#btnRestoreProduct").on("click", function () {
+            restoreProduct();
+        });
+</script>
+</th:block>

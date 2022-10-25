@@ -4,11 +4,10 @@ package vn.midatri.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import vn.midatri.repository.model.Category;
-import vn.midatri.repository.model.Item;
+import org.springframework.web.bind.annotation.*;
+import vn.midatri.dto.category.CategoryParam;
+import vn.midatri.dto.category.CategoryResult;
+import vn.midatri.dto.category.CreateCategory;
 import vn.midatri.service.ICategoryService;
 
 import java.util.List;
@@ -18,9 +17,36 @@ import java.util.List;
 public class CategoryApi {
     @Autowired
     private ICategoryService categoryService;
-    @GetMapping
-    public ResponseEntity<?> renderCategory(){
-        List<Category> categories = categoryService.findAll();
+
+    @GetMapping("parent/{parentId}")
+    public ResponseEntity<?> findAllByParentId(@PathVariable Long parentId) {
+        List<CategoryResult> categories = categoryService.findAllByParentId(parentId);
         return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAll() {
+        List<CategoryResult> categories = categoryService.findAll();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        CategoryResult categoryResults = categoryService.findById(id);
+        return new ResponseEntity<>(categoryResults, HttpStatus.OK);
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> doEdit(@RequestBody CategoryParam categoryParam, @PathVariable Long id) {
+        categoryParam.setId(id);
+        categoryService.update(categoryParam);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createCategory(@RequestBody CreateCategory createCategory) {
+
+        CategoryResult categoryResult = categoryService.create(createCategory);
+        return new ResponseEntity<>(categoryResult, HttpStatus.OK);
     }
 }

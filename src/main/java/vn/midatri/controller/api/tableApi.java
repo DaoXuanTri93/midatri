@@ -15,9 +15,10 @@ import java.util.List;
 public class tableApi {
     @Autowired
     private ITableTopService tableTopService;
+
     @GetMapping
-    public ResponseEntity<?> findAll(){
-        List<TableTop> tableTops = tableTopService.findAllByDeleted(false);
-        return new ResponseEntity<>(tableTops, HttpStatus.OK);
+    public ResponseEntity<?> findAll() {
+//        List<TableTop> tableTops = tableTopService.findAll();
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

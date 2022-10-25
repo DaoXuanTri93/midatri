@@ -1,14 +1,18 @@
 package vn.midatri.service;
 
+import vn.midatri.dto.category.CategoryParam;
 import vn.midatri.dto.category.CategoryResult;
-import vn.midatri.repository.model.Category;
-import vn.midatri.service.imp.CategoryService;
+import vn.midatri.dto.category.CreateCategory;
 
 import java.util.List;
 
 public interface ICategoryService {
-    List<Category> findAll();
-    CategoryResult save(Category category);
+    List<CategoryResult> findAll();
 
     CategoryResult findById(Long id);
+    CategoryResult create(CreateCategory createCategory);
+
+    CategoryResult update(CategoryParam categoryParam);
+
+    List<CategoryResult> findAllByParentId(Long parentId);
 }

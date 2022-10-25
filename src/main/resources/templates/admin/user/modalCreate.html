@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalCreate">
+    <div class="modal" tabindex="-1" id="modalCreate">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tạo user mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmCreateUser">
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="userName" class="form-label fw-bold">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="userName" name="userName" required>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="password" class="form-label fw-bold">Mật khẩu:</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <small id="passwordHelpInline" class="text-muted">
+                                    Must be 8-30 characters long.
+                                </small>
+                            </div>
+
+                            <div class="col col-md-6">
+                                <label for="email" class="form-label fw-bold">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                <small id="emailHelpInLine" class="text-muted">
+                                    eg: abc@gmail.com
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="password1" class="form-label fw-bold">Nhập Lại Mật khẩu:</label>
+                                <input type="password" class="form-control" id="password1" name="password1" required>
+                                <small id="passwordHelpInline1" class="text-muted">
+                                    Must be 8-30 characters long.
+                                </small>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="phone" class="form-label fw-bold">Phone:</label>
+                                <input type="phone" class="form-control " id="phone" name="phone" required>
+                                <small id="phoneHelpInLine" class="text-muted">
+                                    start from 0 or +84 and have only 10 numbers
+                                </small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnCreateUser">Tạo user</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $("#btnCreateUser").on("click", function () {
+            $("#frmCreateUser").submit();
+            // $("#btnCreateUser").trigger("submit");
+        });
+
+        function createUser() {
+            checkPassword();
+            let newUser = {
+                username: $('#userName').val(),
+                password: $('#password').val(),
+                phone: $('#phone').val(),
+                email: $('#email').val(),
+            }
+            console.log(newUser);
+            api.user.create(
+                newUser,
+                (data) => {
+                    console.log(data + "data");
+                    $.each(data, (i, item) => {
+                        let str = `
+                    <tr id="tr_${item.id}">
+                       <th>${item.userName}</th>
+                       <th>${item.password}</th>
+                       <th>${item.phone}</th>
+                       <th>${item.email}</th>
+                    </tr>
+                        `;
+                        $("tblUser tbody").append(str);
+                    }
+                    )
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Thêm mới người dùng thành công !!!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    setTimeout(() => {
+                        window.location.href = "/user"
+                    }, 3000)
+                }
+                ,
+                (jqXHR) => {
+                    $('#frmCreateUser').on("click", function () {
+
+                    });
+                    console.log(jqXHR.error);
+                }
+            )
+        }
+
+       function checkPassword() {
+      let     pas = $('#password').val();
+      let pas1 = $('#password1').val();
+      if(pas===pas1){
+
+          return true;
+      }else {
+          swal.fire({
+              title: "Thất bại",
+              text: "Mật khẩu nhập lại phải giống nhau!",
+              time : 5000
+          })
+          $('#modalCreate').modal('show');
+          return false;
+      }
+       }
+
+
+    </script>
+</th:block>

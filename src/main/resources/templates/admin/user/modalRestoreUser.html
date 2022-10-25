@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalRestoreUser">
+    <div class="modal" tabindex="-1" id="modalRestoreUser">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Khôi phục người dùng </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmRestoreTable">
+                        <div class="row">
+                            <input type="hidden" id="idRestore" hidden>
+
+                            <label for="userNameRestore" class="form-label fw-bold"> Tên người dùng :</label>
+                            <input type="text" class="form-control" id="userNameRestore" readonly>
+                            <div class="col co4">
+                                <label for="emailRestore" class="form-label fw-bold">  Email:</label>
+                                <input type="email" class="form-control" id="emailRestore" name="emailUserRestore" readonly>
+                            </div>
+                            <div class="col co4">
+                                <label for="phoneRestore" class="form-label fw-bold">Số điện thoại :</label>
+                                <input type="phone" class="form-control" id="phoneRestore"
+                                       name="phoneRestore" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-ban"></i>Cancel</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnRestore"><i class="fa fa-plus"></i>Khôi phục</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function restoreUser() {
+            let  id = $("#idRestore").val();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                url: "http://localhost:8080/api/users/restore/" + id,
+                type : "PUT"
+            })
+                .done(function (data) {
+                    swal.fire({
+                        title: 'Đưa người đùng quay lại thành công!',
+                        text: 'Xin chờ !!!',
+                        timer: 5000
+                    }).then(function () {
+                        window.location.href = "http://localhost:8080/user/restore";
+                    });
+                })
+        }
+
+
+    </script>
+</th:block>

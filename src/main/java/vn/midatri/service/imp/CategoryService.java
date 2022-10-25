@@ -4,7 +4,9 @@ package vn.midatri.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.midatri.dto.category.CategoryParam;
 import vn.midatri.dto.category.CategoryResult;
+import vn.midatri.dto.category.CreateCategory;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.repository.CategoryRepository;
 import vn.midatri.repository.model.Category;
@@ -22,17 +24,41 @@ public class CategoryService  implements ICategoryService {
     private CategoryMapper categoryMapper;
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
+    public List<CategoryResult> findAll() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(category -> categoryMapper.toDTO(category))
+                .collect(Collectors.toList());
     }
-
-    @Override
-    public CategoryResult save(Category category) {
-        return categoryMapper.toDTO(categoryRepository.save(category));
+    public List<CategoryResult> findAllByParentId(Long parentId){
+        return categoryRepository.findAllByParentId(parentId)
+                .stream()
+                .map(category -> categoryMapper.toDTO(category))
+                .collect(Collectors.toList());
     }
 
     @Override
     public CategoryResult findById(Long id) {
         return categoryMapper.toDTO(categoryRepository.findById(id).get());
+    }
+
+//    @Override
+//    public List<CategoryResult> findAllByParentIsNull() {
+//        return categoryRepository.findAllByParentIsNull()
+//                .stream()
+//                .map(category -> categoryMapper.toDTO(category))
+//                .collect(Collectors.toList());
+//    }
+
+    @Override
+    public CategoryResult create(CreateCategory createCategory) {
+        createCategory.setId(0L);
+
+        return categoryMapper.toDTO(categoryRepository.save(categoryMapper.toModel(createCategory)));
+    }
+
+    @Override
+    public CategoryResult update(CategoryParam categoryParam) {
+        return categoryMapper.toDTO(categoryRepository.save(categoryMapper.toModel(categoryParam)));
     }
 }

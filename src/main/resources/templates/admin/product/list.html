@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <th:block th:replace="/admin/layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Quản lý thức uống</title>
+</head>
+
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="/admin/layout/navBar :: navBar"/>
+
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="container">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="data-table-area ">
+            <div class="container">
+                <div class="row col-3" style="float:left">
+                    <th:block th:replace="/admin/layout/left-sideBar :: leftTable"/>
+                </div>
+                <div class="row col-9">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-table-list">
+                            <div class="row">
+                                <div class="basic-tb-hd">
+                                    <h2>Quản lý thức uống</h2>
+                                </div>
+
+                                <div class="col mb-2">
+                                    <div class="d-flex justify-content-end">
+
+                                        <button type="button" class="btn btn-outline-primary create">
+                                            <i class="fa fa-plus-square"></i>
+                                            Thêm thức uống mới
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive ">
+                                <table id="tblProduct" class="table table-striped ">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
+                                        <th scope="col" class="fw-bold fs-5">Giá</th>
+                                        <th scope="col" class="fw-bold fs-5">Danh mục</th>
+                                        <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
+                                        <th colspan="2"> Thao tác </th>
+<!--                                        <th></th>-->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mt-2">
+                                <div class="d-flex justify-content-end">
+                                    <a type="button" class="btn btn-danger restore" href="/products/restore">
+                                        <i class="fa fa-trash-restore"></i>
+                                        Khôi phục thức uống
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page-->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <th:block th:replace="/admin/layout/footer :: footer"/>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+<div class="loader hide"></div>
+<th:block th:replace="/admin/layout/script::script"/>
+<th:block th:replace="/admin/product/modalCreateProduct::modalCreateProduct"/>
+<th:block th:replace="/admin/product/modalUpdateProduct::modalUpdateProduct"/>
+<th:block th:replace="/admin/product/modalDeleteProduct::modalDeleteProduct"/>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#tblProduct").DataTable({
+            ajax: {
+                contentType: 'application/json',
+                url: 'http://localhost:8080/api/item',
+                type: 'GET',
+
+                dataSrc: '',
+            },
+            columns: [
+                {data: 'title'},
+                {
+                    data: 'price'
+                },
+                {data: "category.categoryName"},
+                {
+                    data: 'img',
+                    render: function (img) {
+                        return `<img src="${img}" style="width: 50px ; height: 50px"/>`
+                    }
+
+                },
+                {
+                    data: 'id',
+                    render: function (data, type, row, meta) {
+                        return `
+                        <div class="d-flex">
+                            <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
+                        </div>
+
+                                    `;
+                    }, orderable: false
+                },
+            ]
+        });
+
+    });
+</script>
+<script>
+
+    function handlerShowCategory(){
+        let category;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category",
+        })
+            .done(function (data) {
+                category=data;
+                $("#catalogsCreate").append(`
+                             <option tabindex="-1" selected>Lựa Chọn</option>`)
+                for (let i = 0; i < category.length; i++) {
+                    let id = category[i].id;
+                    let name = category[i].categoryName;
+                    let parentId = category[i].parentId;
+                    $("#catalogsCreate").append(`<option value=${parentId}>${name}</option>`);
+                }
+                $("#modalCreateProduct").modal("show");
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            })
+    }
+    function handlerShowCategoryParent(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category/parent",
+        })
+            .done(function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    let id = data[i].id;
+                    let name = data[i].categoryName;
+                    let parent = data[i].parentId
+                    $("#catalogsParentCreate").append(`<option value=${id}>${name}</option>`);
+                }
+
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            })
+    }
+
+    //show modal create
+    $("button.create").on("click", function () {
+        handlerShowCategoryParent();
+        handlerShowCategory();
+    });
+
+
+    //reset modal Create
+    $("#modalCreateProduct").on('hidden.bs.modal', function () {
+        $("#modalCreateProduct .modal-body .modal-alert-danger").empty();
+        $("#modalCreateProduct .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalCreateProduct input.error").removeClass("error");
+        $("#catalogsCreate option").remove();
+        $("#frmCreateProduct")[0].reset();
+    });
+
+    // show modal delete
+
+
+    function deleteProduct() {
+        let drink = {
+            id: $("#idProductDelete").val(),
+            drinkName: $("#productNameDelete").val(),
+            price: $("#priceProductDelete").val(),
+            description: $("#desProductDelete").val(),
+            inventory: $("#inventoryProductDelete").val()
+
+        };
+        $(".loader").removeClass('hide');
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "DELETE",
+            url: "http://localhost:8080/api/item/deleted/" + drink.id,
+            data: JSON.stringify(drink)
+        })
+            .done(function (data) {
+                window.location.href = '/products';
+                console.log(data);
+            })
+            .fail(function (jqXHR) {
+                let str = ``;
+                if (jqXHR.responseJSON) {
+                    $.each(jqXHR.responseJSON, function (key, value) {
+                        str +=
+                            `<label id="${key}-error" class="error" for="${key}">${value}</lable>`;
+                        $("#" + key).addClass("error");
+                    });
+                } else {
+                    str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
+                }
+                $("#modalDeleteProduct .modal-body .modal-alert-danger").removeClass("hide").addClass(
+                    "show");
+                $("#modalDeleteProduct .modal-body .modal-alert-danger").html(str);
+            })
+            .always(function () {
+                $(".loader").addClass('hide');
+            })
+    }
+
+    // handlerShowModalDelete
+    function handlerShowModalDelete(id) {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/item/" + id
+        })
+            .done(function (data) {
+                $("#idProductDelete").val(data.id);
+                $("#productNameDelete").val(data.title);
+                $("#priceProductDelete").val(data.price);
+                $("#desProductDelete").val(data.content);
+                $("#inventoryProductDelete").val(data.inventory);
+                $("#modalDeleteProduct").modal("show");
+            })
+            .fail(function (resp) {
+                alert("Show modal delete error");
+            })
+
+    }
+
+
+    // set event for button delete
+    $("#btnDeleteProduct").on("click", function () {
+        deleteProduct();
+    });
+    $("#modalDeleteProduct").on('hidden.bs.modal', function () {
+        $("#modalDeleteProduct .modal-body .modal-alert-danger").empty();
+        $("#modalDeleteProduct .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalDeleteProduct input.error").removeClass("error");
+        $("#frmDeleteProduct")[0].reset();
+    });
+
+
+    // show modal Edit
+    function handlerShowModalEdit(id) {
+        let category;
+        let parent;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category",
+        })
+            .done(function (data) {
+
+                category = data;
+
+                $.ajax({
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: "http://localhost:8080/api/item/" + id
+                })
+                    .done(function (data) {
+                        $("#idProductUpdate").val(data.id);
+                        $("#productNameUpdate").val(data.title);
+                        $("#priceProductUpdate").val(data.price);
+                        $("#quantityProductUpdate").val(data.quantity);
+                        $("#desProductUpdate").val(data.description);
+                        for (let i = 0; i < category.length; i++) {
+                            let id = category[i].id;
+                            let name = category[i].categoryName;
+                            let parent = category[i].parentId
+                            if (category[i].id == data.category.id) {
+                                $("#catalogsUpdate").append(
+                                    `<option value="${parent}"  selected>${name}</option>`);
+                            } else {
+                                $("#catalogsUpdate").append(
+                                    `<option value="${parent}"  >${name}</option>`);
+                            }
+                        }
+                        $("#catalogsParentUpdate option").remove();
+                        $.ajax({
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-type": "application/json"
+                            },
+                            type: "GET",
+                            url: "http://localhost:8080/api/category/"+ ($("#catalogsUpdate").val()) ,
+                        })
+                            .done(function (data) {
+                                parent = data
+
+                                $("#catalogsParentUpdate").append(`<option value=${parent.id} selected>${parent.categoryName}</option>`);
+
+                            })
+                            .fail(function (jqXHR) {
+                                console.log("get drinks fails");
+                            })
+
+                        $("#modalUpdateProduct").modal("show");
+                    })
+                    .fail(function (resp) {
+                        alert("Show modal update error");
+                    });
+
+
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            });
+
+
+    }
+
+
+
+
+    $("#modalUpdateProduct").on('hidden.bs.modal', function () {
+        $("#modalUpdateProduct .modal-body .modal-alert-danger").empty();
+        $("#modalUpdateProduct .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalUpdateProduct input.error").removeClass("error");
+        $("#catalogsUpdate option").remove();
+        $("#frmUpdateProduct")[0].reset();
+    });
+
+    $('#btnShowMenuType').on("click", function () {
+        if($("#menuType").hasClass("hide")) {
+            $("#menuType").removeClass("hide");
+        }else {
+            $("#menuType").addClass("hide");
+        }
+    })
+    $('#btnShowProduct').on('click', function () {
+        if($("#filterProduct").hasClass("hide")) {
+            $("#filterProduct").removeClass("hide");
+        }else {
+            $("#filterProduct").addClass("hide");
+        }
+    })
+    $('#btnShowGroupProduct').on('click', function (){
+        if($('#groupProduct').hasClass("hide")) {
+            $('#groupProduct').removeClass("hide");
+        }else {
+            $('#groupProduct').addClass("hide");
+        }
+    })
+
+
+</script>
+
+</html>

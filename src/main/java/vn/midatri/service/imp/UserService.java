@@ -32,8 +32,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResult findById(Long id) {
-        return userMapper.toDTO(userRepository.findById(id).get()) ;
+    public User findById(Long id) {
+        return userRepository.findById(id).get() ;
     }
 
     @Override
@@ -60,6 +60,7 @@ public class UserService implements IUserService {
     public UserResult save(User user) {
         return userMapper.toDTO(userRepository.save(user));
     }
+
 
     @Override
     public User findUserById(Long id) {

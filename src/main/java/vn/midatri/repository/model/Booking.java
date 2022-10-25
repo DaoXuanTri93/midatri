@@ -20,6 +20,7 @@ import java.time.Instant;
 public class Booking {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "full_name", nullable = false, length = 45)
@@ -46,14 +47,22 @@ public class Booking {
     @Column(name = "content", length = 45)
     private String content;
 
+    @Column(name = "user_id", nullable = false, insertable = false,updatable = false)
+    private Long userId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Column(name = "table_top_id", nullable = false,  insertable = false,updatable = false)
+    private Long tableTopId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "table_top_id", nullable = false)
     private TableTop tableTop;
 
 
-
+    public Booking(long id) {
+        this.id = id;
+    }
 }

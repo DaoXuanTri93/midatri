@@ -51,16 +51,24 @@ public class Item {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private Long userId;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "category_id", nullable = false, insertable = false, updatable = false)
+    private Long categoryId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name = "deleted" , columnDefinition = "boolean default false")
-    private Boolean deleted;
+    @Column(name = "deleted", columnDefinition = "boolean default false")
+    private boolean deleted = false;
 
-
+    public Item(long id) {
+        this.id = id;
+    }
 }

@@ -3,8 +3,10 @@ package vn.midatri.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import vn.midatri.dto.item.ItemCreate;
+import vn.midatri.dto.item.CreateItem;
+import vn.midatri.dto.item.ItemParam;
 import vn.midatri.dto.item.ItemResult;
+import vn.midatri.repository.model.Category;
 import vn.midatri.repository.model.Item;
 import vn.midatri.repository.model.User;
 
@@ -15,41 +17,58 @@ public class ItemMapper {
     @Autowired
     UserMapper userMapper;
 
-    public Item toModel(ItemCreate itemCreate) {
-        Item item = new Item();
-        item.setTitle(itemCreate.getTitle());
-        item.setPrice(itemCreate.getPrice());
-        item.setQuantity(itemCreate.getQuantity());
-        item.setImg(itemCreate.getImg());
-        item.setContent(itemCreate.getContent());
-        item.setCategory(itemCreate.getCategory_id());
-        item.setUser(itemCreate.getUser_id());
-        return item;
+    public Item toModel(CreateItem createItem) {
+        return new Item()
+                .setId(0L)
+                .setTitle(createItem.getTitle())
+                .setPrice(createItem.getPrice())
+                .setQuantity(createItem.getQuantity())
+                .setImg(createItem.getImg())
+                .setContent(createItem.getContent())
+                .setCategory(categoryMapper.toModel(createItem.getCategory()))
+                .setUser(userMapper.toModel(createItem.getUser()))
+                .setDeleted(createItem.isDeleted());
     }
+
+    public Item toModel(ItemResult itemResult) {
+        return new Item()
+                .setId(itemResult.getId())
+                .setTitle(itemResult.getTitle())
+                .setPrice(itemResult.getPrice())
+                .setQuantity(itemResult.getQuantity())
+                .setImg(itemResult.getImg())
+                .setContent(itemResult.getContent())
+                .setCategory(categoryMapper.toModel(itemResult.getCategory()))
+                .setCategoryId(itemResult.getCategoryId())
+                .setUserId(itemResult.getUser())
+                .setDeleted(itemResult.isDeleted());
+    }
+
 
     public ItemResult toDTO(Item item) {
-        ItemResult itemResult = new ItemResult();
-        itemResult.setId(item.getId());
-        itemResult.setTitle(item.getTitle());
-        itemResult.setPrice(item.getPrice());
-        itemResult.setQuantity(item.getQuantity());
-        itemResult.setImg(item.getImg());
-        itemResult.setContent(item.getContent());
-        itemResult.setCategoryResult(categoryMapper.toDTO(item.getCategory()));
-        itemResult.setUserResult(userMapper.toDTO(item.getUser()));
-        return itemResult;
+        return new ItemResult()
+                .setId(item.getId())
+                .setTitle(item.getTitle())
+                .setPrice(item.getPrice())
+                .setQuantity(item.getQuantity())
+                .setImg(item.getImg())
+                .setContent(item.getContent())
+                .setCategory(categoryMapper.toDTO(item.getCategory()))
+                .setCategoryId(item.getCategoryId())
+                .setUser(item.getUserId())
+                .setDeleted(item.isDeleted());
     }
 
-    public Item toItem(ItemResult itemResult) {
-        Item item = new Item();
-        item.setId(itemResult.getId());
-        item.setTitle(itemResult.getTitle());
-        item.setPrice(itemResult.getPrice());
-        item.setQuantity(itemResult.getQuantity());
-        item.setImg(itemResult.getImg());
-        item.setContent(itemResult.getContent());
-        item.setCategory(categoryMapper.toCategory(itemResult.getCategoryResult()));
-        item.setUser(userMapper.toUser(itemResult.getUserResult()));
-        return item;
-    }
+
+//    public CreateItem toCreateItemDTO(Item item) {
+//        return new CreateItem()
+//                .setTitle(item.getTitle())
+//                .setPrice(item.getPrice())
+//                .setQuantity(item.getQuantity())
+//                .setImg(item.getImg())
+//                .setContent(item.getContent())
+//                .setCategory(item.getCategoryId())
+//                .setUser(item.getUserId())
+//                .setDeleted(item.isDeleted());
+//    }
 }

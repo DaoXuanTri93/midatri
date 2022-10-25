@@ -6,11 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,12 +18,27 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class Category {
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
+    @Size(max = 45)
     @Column(name = "category_name", length = 45)
     private String categoryName;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parentId")
+    private Category parent;
 
+    @Column(name = "parentId", insertable = false, updatable = false)
+    private Long parentId;
 
+    public Category(Long parentId) {
+        this.parentId = parentId;
+    }
+
+//    public void setParentId(Long parentId) {
+//        this.parentId = parentId;
+//        this.parent=new Category(parentId);
+//    }
 }

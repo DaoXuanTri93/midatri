@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="modalEdit">
+    <div class="modal" tabindex="-1" id="modalEdit">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cập nhật user</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-alert-danger hide">
+                    </div>
+                    <form id="frmEditUser">
+                        <input type="hidden" id="idEdit">
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="usernameEdit" class="form-label fw-bold ">Tên đăng nhập:</label>
+                                <input type="text" class="form-control" id="usernameEdit" name="usernameEdit">
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="phoneEdit" class="form-label fw-bold">Phone:</label>
+                                <input type="phone" class="form-control text-end" id="phoneEdit" name="phoneEdit">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="emailEdit" class="form-label fw-bold">Email:</label>
+                                <input type="emailEdit" class="form-control" id="emailEdit" name="emailEdit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/App.js"></script>
+    <script>
+        function editUser1(id) {
+            let editUser = new User();
+            editUser.id = id;
+            editUser.userName = $("#usernameEdit").val();
+            editUser.phone = $("#phoneEdit").val();
+            editUser.email = $("#emailEdit").val();
+            editUser.deleted = false;
+            $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "PUT",
+
+                url: "http://localhost:8080/api/users/edit/" + id,
+                data: JSON.stringify(editUser)
+            }).done(function (data) {
+                window.location.href = "/user"
+            })
+        }
+
+        function handlerShowUserEdit(id) {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/users/" + id
+            })
+                .done((data) => {
+                    console.log(data);
+                    $("#idEdit").val(data.id);
+                    $("#usernameEdit").val(data.userName);
+                    $("#phoneEdit").val(data.phone);
+                    $("#emailEdit").val(data.email);
+                    $("#modalEdit").modal("show");
+                    $("#btnEdit").on('click', function () {
+                        // checkPassword();
+                        editUser1(data.id);
+                        $("#btnEdit").trigger("submit")
+
+                    });
+                })
+                // .fail()
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Oops...',
+                //     text: 'Something went wrong!',
+                //     footer: '<a href="">Why do I have this issue?</a>'
+                // })
+
+        }
+
+        // function checkPassword() {
+        //     let pas = $('#passEdit').val();
+        //     let pas1 = $('#passEdit1').val();
+        //     if (pas == pas1) {
+        //         password: $('#passEdit').val();
+        //     } else {
+        //         alert('mật khẩu không khớp');
+        //         $('#modalEdit').modal('show');
+        //     }
+        // }
+    </script>
+
+</th:block>

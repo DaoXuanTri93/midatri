@@ -6,10 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-
 import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.dto.user.UserResult;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +20,9 @@ public class ItemResult {
     private Integer quantity;
     private String img;
     private String content;
-    private CategoryResult categoryResult;
-    private UserResult userResult;
-
+    private CategoryResult category;
+    private long categoryId;
+    private long user;
+    private boolean deleted;
 }
 
