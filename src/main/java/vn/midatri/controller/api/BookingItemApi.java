@@ -1,36 +1,4 @@
-//package vn.midatri.controller.api;
-//
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//import vn.midatri.repository.model.BookingItem;
-//import vn.midatri.service.IBookingItemService;
-//
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping("/api/bookingitem")
-//public class BookingItemApi {
-//    @Autowired
-//    private IBookingItemService bookingItemService;
-//
-//
-//    @GetMapping
-//    public ResponseEntity<?> findAll(){
-//        List<BookingItem> bookingItems = bookingItemService.findAll();
-//
-//        return new ResponseEntity<>(bookingItems, HttpStatus.OK);
-//    }
-//    @PostMapping("/addBookingItem")
-//    public ResponseEntity<?> addBookingItem(@RequestBody BookingItem bookingItem) {
-//        bookingItemService.addBookingItem(bookingItem);
-//        return new ResponseEntity<>(bookingItem, HttpStatus.OK);
-//    }
-//}
 package vn.midatri.controller.api;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,8 +29,8 @@ public class BookingItemApi {
     BookingItemRepository bookingItemRepository;
     @GetMapping
     public ResponseEntity<?> findAll() {
-        List<BookingItemResult> bookingItems = bookingItemService.findAll();
-        return new ResponseEntity<>(bookingItems, HttpStatus.OK);
+        List<BookingItemResult> bookingItemResults = bookingItemService.findAll();
+        return new ResponseEntity<>(bookingItemResults, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -92,8 +60,6 @@ public class BookingItemApi {
 
     @PostMapping("/create")
     public ResponseEntity<?> addBookingItem(@RequestBody BookingItemCreate bookingItemCreate) {
-//        bookingItemService.findByBookingIdAndItemId(bookingItemCreate.getBooking_id(), bookingItemCreate.getItem_id());
-//        bookingItemRepository.findByBookingIdAndItemId(19, 5);
         bookingItemService.create(bookingItemCreate);
         return new ResponseEntity<>(bookingItemCreate, HttpStatus.OK);
     }
@@ -103,7 +69,11 @@ public class BookingItemApi {
         bookingItemService.deletedBookingItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @DeleteMapping("/deleted/{id}")
+    public ResponseEntity<?> deletedAll(@PathVariable Long id) {
+        bookingItemService.deleteAllByBookingId(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }

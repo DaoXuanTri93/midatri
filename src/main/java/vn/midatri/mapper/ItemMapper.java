@@ -4,11 +4,8 @@ package vn.midatri.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.midatri.dto.item.CreateItem;
-import vn.midatri.dto.item.ItemParam;
 import vn.midatri.dto.item.ItemResult;
-import vn.midatri.repository.model.Category;
 import vn.midatri.repository.model.Item;
-import vn.midatri.repository.model.User;
 
 @Component
 public class ItemMapper {
@@ -19,14 +16,13 @@ public class ItemMapper {
 
     public Item toModel(CreateItem createItem) {
         return new Item()
-                .setId(0L)
                 .setTitle(createItem.getTitle())
                 .setPrice(createItem.getPrice())
                 .setQuantity(createItem.getQuantity())
                 .setImg(createItem.getImg())
                 .setContent(createItem.getContent())
-                .setCategory(categoryMapper.toModel(createItem.getCategory()))
-                .setUser(userMapper.toModel(createItem.getUser()))
+                .setCategoryId(createItem.getCategoryId())
+                .setUserId(createItem.getUserId())
                 .setDeleted(createItem.isDeleted());
     }
 
@@ -38,9 +34,8 @@ public class ItemMapper {
                 .setQuantity(itemResult.getQuantity())
                 .setImg(itemResult.getImg())
                 .setContent(itemResult.getContent())
-                .setCategory(categoryMapper.toModel(itemResult.getCategory()))
                 .setCategoryId(itemResult.getCategoryId())
-                .setUserId(itemResult.getUser())
+                .setUserId(itemResult.getUserId())
                 .setDeleted(itemResult.isDeleted());
     }
 
@@ -53,9 +48,8 @@ public class ItemMapper {
                 .setQuantity(item.getQuantity())
                 .setImg(item.getImg())
                 .setContent(item.getContent())
-                .setCategory(categoryMapper.toDTO(item.getCategory()))
                 .setCategoryId(item.getCategoryId())
-                .setUser(item.getUserId())
+                .setUserId(item.getUserId())
                 .setDeleted(item.isDeleted());
     }
 
@@ -67,8 +61,8 @@ public class ItemMapper {
 //                .setQuantity(item.getQuantity())
 //                .setImg(item.getImg())
 //                .setContent(item.getContent())
-//                .setCategory(item.getCategoryId())
-//                .setUser(item.getUserId())
+//                .setCategory(categoryMapper.toDTO(item.getCategory()))
+//                .setUser(userMapper.toDTO(item.getUser()))
 //                .setDeleted(item.isDeleted());
 //    }
 }

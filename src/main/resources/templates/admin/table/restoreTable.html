@@ -40,6 +40,7 @@
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Status</th>
                                 <th>Capacity</th>
                                 <th>content</th>
                                 <th>Action</th>
@@ -77,6 +78,7 @@
             },
             columns: [
                 {data: 'id'},
+                {data: 'status'},
                 {data: 'capacity'},
                 {data: 'content'},
                 {
@@ -93,15 +95,18 @@
 </script>
 <script>
     function handleShowRestoreTable(id) {
+        alert("Aaaaaaaaaaa q " )
         $.ajax({
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json"
             },
-            type: "GET",
-            url: "http://localhost:8080/api/table-top/" + id
+            type: "POST",
+            url: "http://localhost:8080/api/table-top/restore/" + id
         }).done((data)=>{
-                $('#idTableRestore').val(data.id);
+                console.log(data);
+                $('#idRestore').val(data.id);
+                $('#statusTableRestore').val(data.status);
                 $('#capacityTableRestore').val(data.capacity);
                 $('#contentTableRestore').val(data.content);
                 $('#modalRestoreTable').modal('show');

@@ -22,8 +22,6 @@ public class TableTopMapper {
         return new TableTop()
                 .setId(tableTopRegister.getId())
                 .setStatus(tableTopRegister.getStatus())
-                .setCreateAt(tableTopRegister.getCreateAt())
-                .setUpdateAt(tableTopRegister.getUpdateAt())
                 .setCapacity(tableTopRegister.getCapacity())
                 .setContent(tableTopRegister.getContent());
     }

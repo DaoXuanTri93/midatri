@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.dto.item.ItemResult;
+import vn.midatri.repository.model.BookingItemStatus;
 
 import java.math.BigDecimal;
 
@@ -18,9 +19,8 @@ public class BookingItemResult {
     private BigDecimal price;
     private Integer quantity;
     private Float discount;
-    private Short status;
+    private BookingItemStatus status;
     private String content;
-    private BigDecimal grandTotal;
-    private ItemResult item;
-    private BookingResult booking;
+    private long itemId;
+    private long bookingId;
 }

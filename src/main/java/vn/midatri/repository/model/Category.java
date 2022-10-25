@@ -23,7 +23,7 @@ public class Category {
     private Long id;
 
     @Size(max = 45)
-    @Column(name = "category_name", length = 45)
+    @Column(name = "category_name", length = 45, nullable = false)
     private String categoryName;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,9 +36,10 @@ public class Category {
     public Category(Long parentId) {
         this.parentId = parentId;
     }
-
+//
 //    public void setParentId(Long parentId) {
 //        this.parentId = parentId;
 //        this.parent=new Category(parentId);
 //    }
 }
+

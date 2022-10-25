@@ -1,8 +1,9 @@
-import {userAPI} from "./user-api.js";
- window.api = {
+import { userAPI } from "./user-api.js";
+import { bookingAPI } from "./booking-api.js";
+window.api = {
     // category: new CategoryAPI(),
     // size: new SizeAPI(),
     // color: new ColorAPI(),
-    // product: new ProductAPI(),
+    booking: bookingAPI,
     user: userAPI
 }

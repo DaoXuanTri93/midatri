@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.tableTop.TableTopRegister;
 import vn.midatri.dto.tableTop.TableTopResult;
 import vn.midatri.repository.model.TableTop;
+import vn.midatri.repository.model.TabletopStatus;
 import vn.midatri.service.ITableTopService;
 
 import java.util.List;
@@ -41,17 +42,19 @@ public class TableTopApi {
     }
     @PostMapping("/deleted/{id}")
     public ResponseEntity<?> deletedTable(@PathVariable Long id){
-//        TableTop tableTop = tableTopService.findById(id);
-//        tableTop.setStatus(true);
-//        tableTopService.save1(tableTop);
+
+        TableTop tableTop = tableTopService.findById(id);
+        tableTop.setStatus(TabletopStatus.UNAVAILABLE);
+       // tableTopService.save(tableTop);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/restore/{id}")
     public ResponseEntity<?> restoreTable(@PathVariable Long id){
         TableTop tableTop = tableTopService.findById(id);
-        tableTop.setStatus(false);
-//        tableTopService.save1(tableTop);
+        tableTop.setStatus(TabletopStatus.AVAILABLE);
+      //  tableTopService.save1(tableTop);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("{id}")

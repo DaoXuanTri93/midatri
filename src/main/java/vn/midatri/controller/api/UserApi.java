@@ -15,7 +15,6 @@ import vn.midatri.service.IUserService;
 import vn.midatri.util.AppUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -35,8 +34,8 @@ public class UserApi {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
-        User user = userService.findById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        UserResult userResult = userService.findById(id);
+        return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
     @PostMapping("/create")
@@ -69,12 +68,12 @@ public class UserApi {
 //        UserResult newUser= userService.save(userCheck);
 //        return new ResponseEntity<>(newUser, HttpStatus.OK);
 
-@PutMapping("/edit/{id}")
-public ResponseEntity editUser(@PathVariable Long id,@RequestBody User user){
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> editUser(@PathVariable Long id, @RequestBody User user) {
         UserResult userResult = userMapper.toDTOEdit(userService.findUserById(id));
-       UserResult userResult1 =   userService.Update(userResult,user);
-    return new ResponseEntity<>(userResult1,HttpStatus.ACCEPTED);
-}
+        UserResult userResult1 = userService.Update(userResult, user);
+        return new ResponseEntity<>(userResult1, HttpStatus.ACCEPTED);
+    }
 //    @PutMapping("/edit/{id}")
 //    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
 //        U user = userService.findUserById(id);
@@ -91,10 +90,9 @@ public ResponseEntity editUser(@PathVariable Long id,@RequestBody User user){
 
     @PutMapping("/restore/{id}")
     public ResponseEntity<?> restoreUser(@PathVariable Long id) {
-        User user = userService.findById(id);
-        user.setDeleted(false);
-        userService.save(user);
+//        User user = userService.findById(id);
+//        user.setDeleted(false);
+//        userService.save(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

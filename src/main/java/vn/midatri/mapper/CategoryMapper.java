@@ -16,20 +16,6 @@ public class CategoryMapper {
                 .setParentId(category.getParentId());
     }
 
-    public CategoryParam toParamDTO(Category category) {
-        return new CategoryParam()
-                .setId(category.getId())
-                .setCategoryName(category.getCategoryName())
-                .setParentId(category.getParentId());
-    }
-
-    public CreateCategory toCreateDTO(Category category){
-        return new CreateCategory()
-                .setId(category.getId())
-                .setCategoryName(category.getCategoryName())
-                .setParentId(category.getParentId());
-    }
-
     public Category toModel(CreateCategory createCategory){
         return new Category()
                 .setCategoryName(createCategory.getCategoryName())
@@ -41,15 +27,5 @@ public class CategoryMapper {
                 .setCategoryName(categoryParam.getCategoryName())
                 .setParentId(categoryParam.getParentId());
     }
-
-
-    public Category toModel(CategoryResult categoryResult) {
-        return new Category()
-                .setId(categoryResult.getId())
-                .setCategoryName(categoryResult.getCategoryName())
-                .setParentId(categoryResult.getParentId());
-    }
-
-
 
 }

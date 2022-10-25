@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Xóa người dùng</h5>
+                    <h5 class="modal-title">Xóa user</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -38,7 +38,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-danger" id="btnDelete">Xóa</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnDelete">Xóa</button>
                 </div>
             </div>
         </div>
@@ -69,38 +69,16 @@
 
             function deleteUser(id) {
                 let idUserDel = $("#idDelete").val();
-                Swal.fire({
-                    title: 'Bạn có chắc chắn muốn xóa?',
-                    text: "Người dùng này sẽ bị xóa khỏi danh sách !!!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            headers: {
-                                "accept": "application/json",
-                                "content-type": "application/json"
-                            },
-                            type: "POST",
-                            url: "http://localhost:8080/api/users/deleted/" + id,
-                            data: JSON.stringify(idUserDel)
-                        }).done(function (data) {
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: 'Your work has been saved',
-                                    showConfirmButton: false,
-                                    timer: 3000
-                                })
-                                setTimeout(() => {
-                                    window.location.href = "/user"
-                                }, 3000)
-                            }
-                        )
-                    }
+                $.ajax({
+                    headers: {
+                        "accept": "application/json",
+                        "content-type": "application/json"
+                    },
+                    type: "POST",
+                    url: "http://localhost:8080/api/users/deleted/" + id,
+                    data: JSON.stringify(idUserDel)
+                }).done(function (data) {
+                    window.location.href = "/user"
                 })
             }
         }
