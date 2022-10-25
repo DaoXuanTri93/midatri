@@ -116,20 +116,21 @@
                         "Content-type": "application/json"
                     },
                     type: "GET",
-                    url: "http://localhost:8080/api/category",
+                    url: "http://localhost:8080/api/category/parent"
                 })
                     .done(function (data) {
                             $.each(data, (i,item)=>{
                                let str = `<li role="treeitem" class="" data-uid="">
                                             <div class="" >
                                             <span class="k-in">
-                                            <span id="" data-label="${item.id}">${item.categoryName}</span>
+                                            <span id="" data-label="${item.categoryName}">${item.categoryName}</span>
                                             <a class="" id="" onclick="handelUpdateCategory(${item.id})" title="Sửa nhóm hàng">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                         </span>
                                             </div>
                                         </li>`
+
                                 $("#productCatTreeView ul").append(str);
                             })
                     })
@@ -231,6 +232,7 @@
              $("#modalUpdateCategory").modal("show");
          }
          function handelCreateCategory(){
+             $("#parentCategoryCreate option").remove();
                      $.ajax({
                          headers: {
                              "Accept": "application/json",

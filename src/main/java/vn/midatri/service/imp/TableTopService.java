@@ -37,6 +37,7 @@ public class TableTopService implements ITableTopService {
     @Override
     public List<TableTopResult> findAllByStatus(TabletopStatus status) {
         return tableTopRepository.findAllByStatus(TabletopStatus.AVAILABLE)
+//        return tableTopRepository.findAllByStatus(status)
                 .stream()
                 .map(tableTop -> tableTopMapper.toDTO(tableTop))
                 .collect(Collectors.toList());

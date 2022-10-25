@@ -1,7 +1,10 @@
 package vn.midatri.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum OrderStatus {
-    NEW("New"), CHECKOUT("Checkout"), PAID("Paid"), FAILED("Failed"), SHIPPED("Shipped"), DELIVERED("Delivered"), RETURNED("Returned"), COMPLETE("Complete");
+    NEW("NEW"), CHECKOUT("CHECKOUT"), PAID("PAID"), FAILED("FAILED"), SHIPPED("SHIPPED"), DELIVERED("DELIVERED"), RETURNED("RETURNED"), COMPLETE("COMPLETE");
 
     private final String value;
 
@@ -9,6 +12,12 @@ public enum OrderStatus {
         this.value = value;
     }
 
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+
+    @JsonCreator
     public static OrderStatus parseOrderStatus(String value) {
         OrderStatus[] values = values();
         for (OrderStatus orderStatus : values) {

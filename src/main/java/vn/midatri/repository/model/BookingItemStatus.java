@@ -1,12 +1,15 @@
 package vn.midatri.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum BookingItemStatus {
 
-    NEW("New"), KITCHEN("Kitchen"),
+    NEW("NEW"), KITCHEN("KITCHEN"),
 
-    COOKING("Cooking"), COOKED("Cooked"),
+    COOKING("COOKING"), COOKED("COOKED"),
 
-    SERVER("Served");
+    SERVER("SERVER");
 
     private final String value;
 
@@ -14,6 +17,11 @@ public enum BookingItemStatus {
         this.value = value;
     }
 
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+@JsonCreator
     public static BookingItemStatus parseBookingStatus(String value) {
         BookingItemStatus[] values = values();
         for (BookingItemStatus bookingStatus : values) {

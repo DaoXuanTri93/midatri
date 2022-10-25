@@ -1,7 +1,10 @@
 package vn.midatri.repository.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum TabletopStatus {
-    AVAILABLE("Available"), ACTIVE("Active"), UNAVAILABLE("UnAvailable");
+    AVAILABLE("AVAILABLE"), ACTIVE("ACTIVE"), UNAVAILABLE("UNAVAILABLE");
 
     private final String value;
 
@@ -9,6 +12,12 @@ public enum TabletopStatus {
         this.value = value;
     }
 
+    @JsonValue
+    public String getValue() {
+        return value;
+    }
+
+    @JsonCreator
     public static TabletopStatus parseTabletopStatus(String value) {
         TabletopStatus[] values = values();
         for (TabletopStatus tabletopStatus : values) {
