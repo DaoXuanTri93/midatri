@@ -152,7 +152,7 @@
                             let str = `
                                     <li  class="">
                                 <div class="blue">
-                                    <input type="checkbox" id="action" class="thucDon" data-label="Đồ ăn" >
+                                    <input type="checkbox" id="action" class="thucDon" data-label="${item.categoryName}" >
                                     <a href="javascript:void(0)" tabindex="0" class=""></a>
                                     <label  class="">${item.categoryName}</label>
                                 </div>
@@ -160,17 +160,9 @@
                             `
 
                             $("#menuType ul").append(str);
-                            $('input[type="checkbox"]').on('click', function (){
-                                if($(this).prop("checked") === true){
-                                    console.log($(this).context.dataset.label);
 
-                                }
-                                else if($(this).prop("checked") === false) {
-                                    console.log("a")
-                                }
-                            });
                         })
-
+                        handelCheckbox();
                     })
                     .fail(function (jqXHR) {
                         console.log("get drinks fails");
@@ -180,6 +172,16 @@
             getAllCategoryParent();
          function handelCheckbox(){
 
+
+             $('input[type="checkbox"]').on('click', function (){
+                 if($(this).prop("checked") === true){
+                     console.log($(this).context.dataset.label);
+
+                 }
+                 else if($(this).prop("checked") === false) {
+                     console.log("a")
+                 }
+             });
          }
 
          function handelUpdateCategory(id){

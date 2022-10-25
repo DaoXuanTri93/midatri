@@ -102,13 +102,12 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/"+ ($("#catalogsCreate").val()) ,
+                url: "http://localhost:8080/api/category/parent"+$("#catalogsCreate").val(),
             })
-                .done( (data) => {
-                    parent = data
-
-                    $("#catalogsParentCreate").append(`<option value=${parent.id} selected>${parent.categoryName}</option>`);
-
+                .done((data)=>{
+                    $("#catalogsParentCreate").append(`
+                    <option value=${data.id}>${data.categoryName}</option>
+                    `)
                 })
                 .fail(function (jqXHR) {
                     console.log("get drinks fails");
