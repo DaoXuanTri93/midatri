@@ -17,14 +17,20 @@ public class BookingApi {
     @Autowired
     private IBookingService bookingService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> findAllByTabletopId(long tabletopId) {
         List<BookingResult> bookingList = bookingService.findAllByTableTopId(tabletopId);
         return new ResponseEntity<>(bookingList, HttpStatus.OK);
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> createBooking(@RequestBody CreateBookingParam createBookingParam) {
+    @GetMapping("findAllByStatusNotComplete")
+    public ResponseEntity<?> findAllByStatusNotComplete() {
+        List<BookingResult> bookingList = bookingService.findAllByStatusNotComplete();
+        return new ResponseEntity<>(bookingList, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<?> booking(@RequestBody CreateBookingParam createBookingParam) {
         BookingResult booking = bookingService.booking(createBookingParam);
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }

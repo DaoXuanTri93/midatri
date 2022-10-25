@@ -17,6 +17,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "category")
 public class Category {
+    public Category(Long id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -33,13 +37,9 @@ public class Category {
     @Column(name = "parentId", insertable = false, updatable = false)
     private Long parentId;
 
-    public Category(Long parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
+        this.parent = new Category(parentId);
     }
-//
-//    public void setParentId(Long parentId) {
-//        this.parentId = parentId;
-//        this.parent=new Category(parentId);
-//    }
 }
 

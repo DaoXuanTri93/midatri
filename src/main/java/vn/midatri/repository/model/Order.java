@@ -19,6 +19,14 @@ import java.time.Instant;
 @Entity
 @Table(name = "`order`")
 public class Order {
+    public Order(Long id) {
+        this.id = id;
+    }
+
+    public Order(long userId, long categoryId) {
+        this.user = new User(this.userId = userId);
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +61,7 @@ public class Order {
     @Column(name = "address", length = 45)
     private String address;
 
-    @Column(name = "create_at",nullable = false)
+    @Column(name = "create_at", nullable = false)
     private Instant createAt;
 
     @Column(name = "update_at")

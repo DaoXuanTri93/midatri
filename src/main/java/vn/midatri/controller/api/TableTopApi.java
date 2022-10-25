@@ -39,6 +39,9 @@ public class TableTopApi {
     @GetMapping
     public ResponseEntity<?> findAllAvailableTableTop() {
         List<TableTopResult> tableTop = tableTopService.findAllByStatus(TabletopStatus.AVAILABLE);
+//    @GetMapping()
+//    public ResponseEntity<?> findAll() {
+//        List<TableTopResult> tableTop = tableTopService.findAll();
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
 

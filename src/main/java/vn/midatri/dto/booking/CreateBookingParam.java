@@ -11,5 +11,4 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CreateBookingParam {
     private long tabletopId;
-    private long itemId;
 }

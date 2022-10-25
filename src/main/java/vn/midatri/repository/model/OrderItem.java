@@ -18,6 +18,10 @@ import java.time.Instant;
 @Entity
 @Table(name = "order_item")
 public class OrderItem {
+    public OrderItem(long itemId, long orderId) {
+        this.item = new Item(this.itemId = itemId);
+        this.order = new Order(this.orderId = orderId);
+    }
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

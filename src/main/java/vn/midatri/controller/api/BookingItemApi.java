@@ -27,15 +27,15 @@ public class BookingItemApi {
     private IBookingService bookingService;
     @Autowired
     BookingItemRepository bookingItemRepository;
-    @GetMapping
-    public ResponseEntity<?> findAll() {
-        List<BookingItemResult> bookingItemResults = bookingItemService.findAll();
-        return new ResponseEntity<>(bookingItemResults, HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<?> findAll() {
+//        List<BookingItemResult> bookingItemResults = bookingItemService.findAll();
+//        return new ResponseEntity<>(bookingItemResults, HttpStatus.OK);
+//    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findAllBookingId(@PathVariable Long id) {
-        List<BookingItemResult> bookingItems = bookingItemService.findAllByBookingId(id);
+    @GetMapping
+    public ResponseEntity<?> findAllByBookingId(Long bookingId) {
+        List<BookingItemResult> bookingItems = bookingItemService.findAllByBookingId(bookingId);
         return new ResponseEntity<>(bookingItems, HttpStatus.OK);
     }
 
@@ -45,7 +45,7 @@ public class BookingItemApi {
         return new ResponseEntity<>(bookingItemResult, HttpStatus.OK);
     }
 
-//    @PatchMapping("/{id}/increaseQuantity")
+    //    @PatchMapping("/{id}/increaseQuantity")
 //    public ResponseEntity<Integer> increaseQuantity(@PathVariable Long id, @RequestBody int quantity) {
 //        return new ResponseEntity<>(bookingItemService.increaseQuantity(id, quantity), HttpStatus.OK);
 //    }
@@ -53,6 +53,7 @@ public class BookingItemApi {
     public ResponseEntity<Integer> increaseQuantity(@PathVariable Long id) {
         return new ResponseEntity<>(bookingItemService.increaseQuantity(id), HttpStatus.OK);
     }
+
     @PatchMapping("/{id}/reduceQuantity")
     public ResponseEntity<Integer> reduceQuantity(@PathVariable Long id) {
         return new ResponseEntity<>(bookingItemService.reduceQuantity(id), HttpStatus.OK);
@@ -69,6 +70,7 @@ public class BookingItemApi {
         bookingItemService.deletedBookingItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @DeleteMapping("/deleted/{id}")
     public ResponseEntity<?> deletedAll(@PathVariable Long id) {
         bookingItemService.deleteAllByBookingId(id);

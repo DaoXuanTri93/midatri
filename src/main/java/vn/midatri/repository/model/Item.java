@@ -19,18 +19,27 @@ import java.time.Instant;
 @Entity
 @Table(name = "item")
 public class Item {
+    public Item(long id) {
+        this.id = id;
+    }
+
+    public Item(long userId, long categoryId) {
+        this.user = new User(this.userId = userId);
+        this.category = new Category(this.categoryId = categoryId);
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title",nullable = false, length = 45)
+    @Column(name = "title", nullable = false, length = 45)
     private String title;
 
-    @Column(name = "price",nullable = false,  precision = 12)
+    @Column(name = "price", nullable = false, precision = 12)
     private BigDecimal price;
 
-    @Column(name = "quantity",nullable = false)
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
     @Column(name = "img")
@@ -42,7 +51,7 @@ public class Item {
     @Column(name = "description", length = 45)
     private String description;
 
-    @Column(name = "create_at",nullable = false)
+    @Column(name = "create_at")
     private Instant createAt;
 
     @Column(name = "update_at")
@@ -68,7 +77,5 @@ public class Item {
     @Column(name = "deleted", columnDefinition = "boolean default false")
     private boolean deleted = false;
 
-    public Item(long id) {
-        this.id = id;
-    }
+
 }

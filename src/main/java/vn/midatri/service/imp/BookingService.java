@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Transactional
 public class BookingService implements IBookingService {
     @Autowired
     private BookingRepository bookingRepository;
@@ -35,9 +34,9 @@ public class BookingService implements IBookingService {
     private BookingMapper bookingMapper;
 
     @Override
-
-    public List<BookingResult> findAllByTableTopId(Long id) {
-        return bookingRepository.findAllByTableTopId(id)
+    @Transactional(readOnly = true)
+    public List<BookingResult> findAllByTableTopId(Long tableTopId) {
+        return bookingRepository.findAllByTableTopId(tableTopId)
                 .stream()
                 .map(booking -> bookingMapper.toDTO(booking))
                 .collect(Collectors.toList());
@@ -50,38 +49,49 @@ public class BookingService implements IBookingService {
 //    }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Booking> findByTableTopId(Long id) {
         return bookingRepository.findByTableTopId(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BookingResult findById(Long id) {
         return bookingMapper.toDTO(bookingRepository.findById(id).get());
     }
 
     @Override
+    @Transactional
     public BookingResult booking(CreateBookingParam param) {
-        if (!tableTopRepository.existsById(param.getTabletopId()))
-            throw new NotFoundException("Invalid tabletop" + param.getTabletopId());
-        Optional<Item> itemOptional = itemRepository.findById(param.getItemId());
-        if (itemOptional.isEmpty())
-            throw new NotFoundException("Invalid item" + param.getItemId());
-        Item item = itemOptional.get();
-        Optional<Booking> opBooking = bookingRepository.findAllByTableTopIdAndStatus(param.getTabletopId(), BookingStatus.ACTIVE);
-        if (opBooking.isEmpty()) {
-            Booking newBooking = new Booking(param.getTabletopId(), BookingStatus.NEW);
-            Booking booking = bookingRepository.save(newBooking);
-            BookingItem newBookingItem = new BookingItem();
-            newBookingItem.setItemId(param.getItemId());
-            newBookingItem.setBookingId(booking.getId());
-            newBookingItem.setQuantity(1);
-            newBookingItem.setPrice(item.getPrice());
-            newBookingItem.setStatus(BookingItemStatus.NEW);
-            bookingItemRepository.save(newBookingItem);
+        Optional<TableTop> tableTopOptional = tableTopRepository.findById(param.getTabletopId());
+        if (tableTopOptional.isEmpty())
+            throw new NotFoundException("NotFound tabletop " + param.getTabletopId());
+        tableTopOptional.ifPresent(tableTop -> {
+            if (tableTop.getStatus() != TabletopStatus.AVAILABLE)
+                throw new IllegalArgumentException("tabletop" + param.getTabletopId() + " Not availalbe");
+        });
 
+
+        TableTop tabletop = tableTopOptional.get();
+        List<Booking> bookings = bookingRepository.findAllByTableTopIdAndStatusNot(param.getTabletopId(), BookingStatus.COMPLETE);
+        if (bookings.isEmpty()) {
+            Booking newBooking = new Booking(param.getTabletopId(), 1L);
+            newBooking.setStatus(BookingStatus.NEW);
+            Booking booking = bookingRepository.save(newBooking);
+
+            tabletop.setStatus(TabletopStatus.ACTIVE);
+            tableTopRepository.save(tabletop);
+            return bookingMapper.toDTO(booking);
         }
-        return null;
+        throw new RuntimeException("Tabletop exists Booking");
     }
 
-
+    @Override
+    public List<BookingResult> findAllByStatusNotComplete() {
+        return bookingRepository.findAllByStatusNot(BookingStatus.COMPLETE)
+                .stream()
+                .map(booking -> bookingMapper.toDTO(booking))
+                .collect(Collectors.toList());
+    }
 }
+

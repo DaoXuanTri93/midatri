@@ -16,7 +16,7 @@ public class TableTopResult {
     private Long id;
     private Instant createAt;
     private Instant updateAt;
-    private String code;
+    private String title;
     private TabletopStatus status;
     private Short capacity;
     private String content;

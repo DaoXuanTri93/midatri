@@ -20,6 +20,10 @@ import java.time.Instant;
 @Entity
 @Table(name = "table_top")
 public class TableTop {
+    public TableTop(Long id) {
+        this.id = id;
+    }
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +40,9 @@ public class TableTop {
     @Column(name = "capacity", nullable = false)
     private Short capacity;
 
-    @CreationTimestamp
-    @Column(name = "create_at", nullable = false)
+    @Column(name = "create_at")
     private Instant createAt;
 
-    @UpdateTimestamp
     @Column(name = "update_at")
     private Instant updateAt;
 
