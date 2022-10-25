@@ -38,10 +38,7 @@
             category.id = $("#idCategoryUpdate").val();
             category.categoryName = $("#nameCategoryUpdate").val();
             category.parentId = $("#parentCategoryUpdate").val();
-            category.parent={
-                id:$("#parentCategoryUpdate").val()
-            }
-            console.log(category.id)
+
             $.ajax({
                 headers : {
                     "Accept": "application/json",
@@ -52,7 +49,7 @@
                 data: JSON.stringify(category)
             })
                 .done(()=>{
-                    console.log( category.id)
+
                     alert("Đổi Nhóm Hàng Thành Công");
                     window.location.href="/products";
                 })

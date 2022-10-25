@@ -37,9 +37,6 @@
             category.id = 0;
             category.categoryName = $("#nameCategoryCreate").val();
             category.parentId = $("#parentCategoryCreate").val();
-            category.parent ={
-                id : $("#parentCategoryCreate").val()
-            }
             $.ajax({
                 headers : {
                     "Accept": "application/json",
