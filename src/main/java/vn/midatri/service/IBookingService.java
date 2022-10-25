@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface IBookingService {
     List<BookingResult> findAllByTableTopId(Long id);
-    Booking create(Booking booking);
     Optional<Booking> findByTableTopId(Long tableTopId);
     BookingResult findById(Long id);
 
