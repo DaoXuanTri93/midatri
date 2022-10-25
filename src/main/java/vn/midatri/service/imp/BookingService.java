@@ -11,10 +11,7 @@ import vn.midatri.repository.BookingItemRepository;
 import vn.midatri.repository.BookingRepository;
 import vn.midatri.repository.ItemRepository;
 import vn.midatri.repository.TableTopRepository;
-import vn.midatri.repository.model.Booking;
-import vn.midatri.repository.model.BookingItem;
-import vn.midatri.repository.model.BookingStatus;
-import vn.midatri.repository.model.TableTop;
+import vn.midatri.repository.model.*;
 import vn.midatri.service.IBookingService;
 
 import java.util.List;
@@ -66,18 +63,23 @@ public class BookingService implements IBookingService {
     public BookingResult booking(CreateBookingParam param) {
         if (!tableTopRepository.existsById(param.getTabletopId()))
             throw new NotFoundException("Invalid tabletop" + param.getTabletopId());
-        if (!itemRepository.existsById(param.getItemId()))
+        Optional<Item> itemOptional = itemRepository.findById(param.getItemId());
+        if (itemOptional.isEmpty())
             throw new NotFoundException("Invalid item" + param.getItemId());
+        Item item = itemOptional.get();
         Optional<Booking> opBooking = bookingRepository.findAllByTableTopIdAndStatus(param.getTabletopId(), BookingStatus.ACTIVE);
         if (opBooking.isEmpty()) {
             Booking newBooking = new Booking(param.getTabletopId(), BookingStatus.NEW);
             Booking booking = bookingRepository.save(newBooking);
             BookingItem newBookingItem = new BookingItem();
-         //   newBookingItem.setBooking()
+            newBookingItem.setItemId(param.getItemId());
+            newBookingItem.setBookingId(booking.getId());
+            newBookingItem.setQuantity(1);
+            newBookingItem.setPrice(item.getPrice());
+            newBookingItem.setStatus(BookingItemStatus.NEW);
             bookingItemRepository.save(newBookingItem);
 
         }
-        //    bookingRepository.existsById()
         return null;
     }
 

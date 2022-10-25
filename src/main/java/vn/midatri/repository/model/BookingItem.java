@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import vn.midatri.mapper.BookingMapper;
 
@@ -54,6 +55,7 @@ public class BookingItem {
     @Enumerated(EnumType.STRING)
     private BookingItemStatus status;
 
+    @CreationTimestamp
     @Column(name = "create_at")
     private Instant createAt;
 

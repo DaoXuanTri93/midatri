@@ -9,6 +9,7 @@ import vn.midatri.dto.tableTop.TableTopResult;
 import vn.midatri.mapper.TableTopMapper;
 import vn.midatri.repository.TableTopRepository;
 import vn.midatri.repository.model.TableTop;
+import vn.midatri.repository.model.TabletopStatus;
 import vn.midatri.service.ITableTopService;
 
 import java.util.List;
@@ -34,8 +35,8 @@ public class TableTopService implements ITableTopService {
     }
 
     @Override
-    public List<TableTopResult> findAllByStatus(boolean deleted) {
-        return tableTopRepository.findAllByStatus(deleted)
+    public List<TableTopResult> findAllByStatus(TabletopStatus status) {
+        return tableTopRepository.findAllByStatus(status)
                 .stream()
                 .map(tableTop -> tableTopMapper.toDTO(tableTop))
                 .collect(Collectors.toList());

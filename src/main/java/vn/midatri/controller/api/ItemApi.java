@@ -34,9 +34,10 @@ public class ItemApi {
     private UserMapper userMapper;
 
 
+    @GetMapping
     public ResponseEntity<?> renderItem(){
-        List<ItemResult> itemResultList = itemService.findAllByDeleted(false);
-        return new ResponseEntity<>(itemResultList, HttpStatus.OK);
+        List<ItemResult> items = itemService.findAllByDeleted(false);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
     @GetMapping("/restore")
     public ResponseEntity<?> restoreItem(){

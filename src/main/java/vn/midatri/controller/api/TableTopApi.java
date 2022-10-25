@@ -24,52 +24,55 @@ public class TableTopApi {
     private ITableTopService tableTopService;
 
     @GetMapping()
-    public ResponseEntity<?> renderTableTop(){
-        List<TableTopResult> tableTop = tableTopService.findAllByStatus(false);
+    public ResponseEntity<?> findAllAvailableTableTop() {
+        List<TableTopResult> tableTop = tableTopService.findAllByStatus(TabletopStatus.AVAILABLE);
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
 
     @GetMapping("/renderDeletedTable")
-    public ResponseEntity<?> listTableDeleted(){
-        List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(true);
-        return new ResponseEntity<>(tableTopResults,HttpStatus.OK);
+    public ResponseEntity<?> listTableDeleted() {
+        List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(TabletopStatus.UNAVAILABLE);
+        return new ResponseEntity<>(tableTopResults, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createNewTable(@RequestBody TableTopRegister tableTopRegister){
+    public ResponseEntity<?> createNewTable(@RequestBody TableTopRegister tableTopRegister) {
         TableTopResult tableTopResult = tableTopService.create(tableTopRegister);
-        return new ResponseEntity<>(tableTopResult,HttpStatus.OK);
+        return new ResponseEntity<>(tableTopResult, HttpStatus.OK);
     }
+
     @PostMapping("/deleted/{id}")
-    public ResponseEntity<?> deletedTable(@PathVariable Long id){
+    public ResponseEntity<?> deletedTable(@PathVariable Long id) {
 //        tableTop.setStatus(true);
 //        tableTopService.update(tableTop);
 //
 //        TableTop tableTop = tableTopService.findById(id);
 //        tableTop.setStatus(TabletopStatus.UNAVAILABLE);
-       // tableTopService.save(tableTop);
+        // tableTopService.save(tableTop);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/restore/{id}")
-    public ResponseEntity<?> restoreTable(@PathVariable Long id){
+    public ResponseEntity<?> restoreTable(@PathVariable Long id) {
 //        tableTop.setStatus(false);
 //        tableTopService.update(tableTop);
 //        tableTop.setStatus(TabletopStatus.AVAILABLE);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @GetMapping("{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id){
-        TableTop tableTop = tableTopService.findById(id) ;
-        return  new ResponseEntity<>(tableTop,HttpStatus.OK);
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        TableTop tableTop = tableTopService.findById(id);
+        return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
+
     @PutMapping("edit/{id}")
-    public ResponseEntity<?> editTable(@PathVariable Long id,@RequestBody TableTop tableTop){
+    public ResponseEntity<?> editTable(@PathVariable Long id, @RequestBody TableTop tableTop) {
         TableTopResult tableTopResult = tableTopService.findTableById(id);
         tableTop.setId(tableTop.getId());
         tableTopService.update(tableTop);
-        return new ResponseEntity<>(tableTop,HttpStatus.OK);
+        return new ResponseEntity<>(tableTop, HttpStatus.OK);
 
     }
 
