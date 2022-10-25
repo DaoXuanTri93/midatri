@@ -82,7 +82,6 @@ public class BookingItemService implements IBookingItemService {
             bookingItem.setPrice(price);
             bookingItem.setQuantity(newQuantity);
             return bookingItemMapper.toDTO(bookingItemParam);
-//            throw new NotFoundException("Exits");
         }
 
         Item item = itemOption.get();

@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 public class BookingItemCreate {
     private Integer quantity;
     private String content;
-    private BigDecimal grandTotal;
     private long bookingId;
     private long itemId;
 }

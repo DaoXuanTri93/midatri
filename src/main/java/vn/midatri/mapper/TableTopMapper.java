@@ -11,6 +11,7 @@ public class TableTopMapper {
     public TableTopResult toDTO(TableTop tableTop) {
         return new TableTopResult()
                 .setId(tableTop.getId())
+                .setTitle(tableTop.getTitle())
                 .setStatus(tableTop.getStatus())
                 .setCapacity(tableTop.getCapacity())
                 .setCreateAt(tableTop.getCreateAt())

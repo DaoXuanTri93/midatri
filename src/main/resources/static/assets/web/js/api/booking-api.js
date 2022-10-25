@@ -1,4 +1,5 @@
 export const bookingAPI = new BookingAPI();
+
 function BookingAPI() {
     this.findAll = (done, fail) => {
         $.ajax({
@@ -12,9 +13,21 @@ function BookingAPI() {
                 fail(jqXHR);
             })
     }
-    this.create = (data, done, fail) => {
+    this.findAllByStatusNotComplete = (done, fail) => {
         $.ajax({
-            url: `${location.origin}/api/booking/create`,
+            type: "GET",
+            url: `${location.origin}/api/booking/findAllByStatusNotComplete`,
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.booking = (data, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/booking`,
             type: "POST",
             contentType: 'application/json',
             data: JSON.stringify(data)

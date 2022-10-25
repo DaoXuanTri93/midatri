@@ -22,6 +22,10 @@ import java.time.Instant;
 @Entity
 @Table(name = "booking_item")
 public class BookingItem {
+    public BookingItem(long bookingId, long itemId) {
+        this.booking = new Booking(this.bookingId = bookingId);
+        this.item = new Item(this.itemId = itemId);
+    }
 
     @Id
     @Column(name = "id", nullable = false)
@@ -55,7 +59,6 @@ public class BookingItem {
     @Enumerated(EnumType.STRING)
     private BookingItemStatus status;
 
-    @CreationTimestamp
     @Column(name = "create_at")
     private Instant createAt;
 
@@ -64,4 +67,6 @@ public class BookingItem {
 
     @Column(name = "content", length = 45)
     private String content;
+
+
 }

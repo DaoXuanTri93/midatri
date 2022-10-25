@@ -16,16 +16,18 @@ public class CategoryMapper {
                 .setParentId(category.getParentId());
     }
 
-    public Category toModel(CreateCategory createCategory){
-        return new Category()
-                .setCategoryName(createCategory.getCategoryName())
-                .setParentId(createCategory.getParentId());
+    public Category toModel(CreateCategory createCategory) {
+        Category category = new Category()
+                .setCategoryName(createCategory.getCategoryName());
+        category.setParentId(createCategory.getParentId());
+        return category;
     }
-    public Category toModel(CategoryParam categoryParam){
-        return new Category()
-                .setId(categoryParam.getId())
-                .setCategoryName(categoryParam.getCategoryName())
-                .setParentId(categoryParam.getParentId());
+
+    public Category toModel(CategoryParam categoryParam) {
+        Category category = new Category()
+                .setCategoryName(categoryParam.getCategoryName());
+        category.setParentId(categoryParam.getParentId());
+        return category;
     }
 
 }

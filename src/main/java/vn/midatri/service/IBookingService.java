@@ -14,4 +14,6 @@ public interface IBookingService {
     BookingResult findById(Long id);
 
     BookingResult booking(CreateBookingParam createBookingParam);
+
+    List<BookingResult> findAllByStatusNotComplete();
 }

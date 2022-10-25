@@ -19,14 +19,34 @@ class BookingItemCreate {
 }
 
 let tabletops;
-let itemMap;
-let tabletopBookingMap;
-let bookingItemBookingMap;
+let itemMap = new Map();
+let bookingItemTableTopMap = new Map();
+let bookingMap = new Map();
 
 
 let booking_id = 0;
 let tableTopId = 0;
 let arrayBooking = [];
+
+function fetchBookings() {
+    api.booking.findAllByStatusNotComplete((bookings) => {
+        $.each(bookings, (i, booking) => {
+
+            bookingMap.set(booking.tableTopId, booking);
+            fetchBookingItems(booking.tableTopId, booking.id);
+        })
+    }, (jqXHR) => {
+
+    })
+}
+
+function fetchBookingItems(tableTopId, bookingId) {
+    api.bookingItem.findAllByBooking(bookingId, (bookingItems) => {
+        bookingItemTableTopMap.set(tableTopId, bookingItems);
+    }, (jqXHR) => {
+
+    })
+}
 
 function renderTabletop(tabletop) {
     let result = `<li class="tableAndRoom using" id="${tabletop.id}" data-id="${tabletop.id}" style="text-align: center;"">
@@ -55,7 +75,7 @@ function renderTabletop(tabletop) {
 function renderAllTableTop() {
     let onTabletopClick = () => {
         $(".tableAndRoom").click((event) => {
-            tableTopId = $(event.currentTarget).attr('data-id');
+            tableTopId = parseInt($(event.currentTarget).attr('data-id'));
             $('#link-menu').trigger('click');
             $('#table-room').text('Bàn ' + tableTopId)
             renderBookingTabletop(tableTopId);
@@ -70,15 +90,14 @@ function renderAllTableTop() {
     }
 
     api.tabletop.findAll((data) => {
-            tabletops = data;
-            $.each(data, (i, tabletop) => {
-                renderTabletop(tabletop);
-            });
-            onTabletopClick();
-        },
-        error => {
-
+        tabletops = data;
+        $.each(data, (i, tabletop) => {
+            renderTabletop(tabletop);
         });
+        onTabletopClick();
+    }, error => {
+
+    });
 
 
 }
@@ -86,11 +105,8 @@ function renderAllTableTop() {
 function renderCategory() {
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "GET",
-        url: "http://localhost:8080/api/category"
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "GET", url: "http://localhost:8080/api/category"
     }).done((data) => {
 
         $.each(data, (i, item) => {
@@ -131,15 +147,14 @@ function renderItem(item) {
 function renderAllItems() {
     let onItemClick = () => {
         $(".btn-add-product").click((event) => {
-            let itemId = $(event.currentTarget).attr('data-id');
+            let itemId = parseInt($(event.currentTarget).attr('data-id'));
             booking(tableTopId, itemId)
         });
     };
 
     $("#render-product li").empty();
-    let items;
-    if (itemMap !== undefined && (items = itemMap.values()) !== null) {
-        $.each(items, (i, item) => {
+    if (itemMap.size > 0) {
+        $.each(itemMap.values(), (i, item) => {
             itemMap.set(item.id, item);
             renderItem(item);
         });
@@ -148,46 +163,76 @@ function renderAllItems() {
     }
 
     api.item.findAll((data) => {
-            if (itemMap === undefined)
-                itemMap = new Map();
-            else
-                itemMap.clear();
-            $.each(data, (i, item) => {
-                itemMap.set(item.id, item);
-                renderItem(item);
-            });
-            onItemClick();
-        },
-        error => {
-
+        if (itemMap === undefined) itemMap = new Map(); else itemMap.clear();
+        $.each(data, (i, item) => {
+            itemMap.set(item.id, item);
+            renderItem(item);
         });
+        onItemClick();
+    }, error => {
+
+    });
 }
 
 function renderBookingTabletop(tabletopId) {
-    if (tabletopBookingMap !== undefined && bookingItemBookingMap !== undefined) {
-        let bookingId = tabletopBookingMap.get(tabletopId);
-        let bookingItems = bookingId != null ? bookingItemBookingMap.get(bookingId) : [];
-        if (bookingItems != null && bookingItems.length > 0) {
-            $.each(bookingItems, (i, bookingItem) => {
-                renderBookingItem(bookingItem);
-            })
-        }
+    console.log(tabletopId)
+    $("#render-tableTop").empty();
+    let bookingItems = bookingItemTableTopMap.get(tabletopId);
+    if (bookingItems !== undefined) {
+        $.each(bookingItems, (i, bookingItem) => {
+            renderBookingItem(1, bookingItem);
+        })
     }
 }
 
 function booking(tabletopId, itemId) {
+    let newBookingItem = {
+        quantity: 1,
+        itemId: itemId
+    }
+    let booking = bookingMap.get(tabletopId);
+    if (booking === undefined) {
+        let createBooking = {
+            tabletopId: tabletopId
+        }
+        api.booking.booking(createBooking, (booking) => {
+            newBookingItem.bookingId = booking.id;
+            createBookingItem(newBookingItem);
+        }, (jqXHR) => {
+        })
+        return;
+    }
+    let bookingItems = bookingItemTableTopMap.get(tabletopId);
+    for (const bookingItem of bookingItems) {
+        if (itemId === bookingItem.itemId) {
+            let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text());
+            quantity += 1;
+            $(`#${bookingItem.id} .item-quantity`).text(quantity)
 
+            return;
+        }
+    }
+    newBookingItem.bookingId = booking.id;
+    createBookingItem(tabletopId, newBookingItem);
+}
+
+function createBookingItem(tabletopId, newBookingItem) {
+    api.bookingItem.create(newBookingItem, (bookingItem) => {
+        console.log(bookingItem)
+        let bookingItems = bookingItemTableTopMap.get(tabletopId);
+        bookingItems.push(bookingItem);
+        renderBookingItem(bookingItem);
+    }, (jqXHR) => {
+
+    })
 }
 
 function renderCategoryItem() {
     $("#render-product li").empty();
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "GET",
-        url: "http://localhost:8080/api/item"
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "GET", url: "http://localhost:8080/api/item"
     }).done((data) => {
         $.each(data, (i, item) => {
             let str = `
@@ -205,7 +250,7 @@ function renderCategoryItem() {
                 `
             $("#render-product").prepend(str);
         })
-        handelRemoveEvent();
+        // handelRemoveEvent();
         // handelAll();
     }).fail(error => {
 
@@ -216,11 +261,8 @@ function handleFilterCategory(categoryId) {
     $("#render-product li").empty();
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "GET",
-        url: "http://localhost:8080/api/item/category/" + categoryId
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "GET", url: "http://localhost:8080/api/item/category/" + categoryId
     }).done((data) => {
         $.each(data, (i, item) => {
             let str = `
@@ -245,188 +287,25 @@ function handleFilterCategory(categoryId) {
     });
 }
 
-function handleEventOnClick(item_id) {
-
-    if (tableTopId == 0) {
-        return alert("vui long chon ban")
-    }
-    let booking = new Booking();
-    booking.tableTop = {
-        id: tableTopId
-    };
-    booking.user = {
-        id: 1
-    };
-    $.ajax({
-        headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "POST",
-        url: "http://localhost:8080/api/booking/create/" + tableTopId,
-        data: JSON.stringify(booking)
-    })
-        .done((booking) => {
-            let bookingItem = new BookingItemCreate();
-            bookingItem.booking_id = booking.id
-            bookingItem.item_id = item_id
-            $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "POST",
-                url: "http://localhost:8080/api/bookingItem/create",
-                data: JSON.stringify(bookingItem)
-            })
-                .done(() => {
-                    // $("#render-tableTop div").empty();
-                    $.ajax({
-                        headers: {
-                            "Accept": "application/json",
-                            "Content-type": "application/json"
-                        },
-                        type: "GET",
-                        url: "http://localhost:8080/api/booking/" + tableTopId
-                    }).done((data) => {
-                        console.log(data)
-                        $.each(data, (i, item) => {
-                            booking_id = item.id;
-                            $.ajax({
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Content-type": "application/json"
-                                },
-                                type: "GET",
-                                url: "http://localhost:8080/api/bookingItem/" + booking_id
-                            })
-                                .done((item) => {
-
-                                    let getItem = item[item.length - 1];
-                                    let str = `
-                                    <div class="product-cart-item" id="${getItem.id}">
-                                        <kv-cashier-cart-item class="row-list row-list-active active">
-                                            <div class="row-list-content">
-                                                <div class="cell-action">
-                                                    <a class="btn-icon btn-trash" href="javascript:void(0);"
-                                                       title="Xóa món">
-                                                        <i class="fa-regular fa-trash-can"
-                                                        onclick="hanldeDeletedBookingItem(${getItem.id})"
-                                                        ></i>
-                                                    </a>
-                                                </div>
-                                                <div class="cell-order"> ${getItem.id}
-                                                    <div>
-                                                        <button class="btn-icon" type="button"
-                                                                title="Món ưu tiên">
-                                                            <i class="fa-star fa-regular"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="row-product">
-                                                    <div class="cell-name full">
-                                                        <div class="wrap-name">
-                                                            <h4 title="APEROL SPRITZ">${getItem.item.title}</h4>
-                                                            <span class="wrap-icons"></span>
-                                                            <div class="attr-wrapper">
-                                                            </div>
-                                                        </div>
-                                                        <ul class="comboset-list-item">
-
-                                                        </ul>
-                                                        <div class="wrap-note" href="javascript:void(0)">
-                                                            <button class="btn btn-sm btn-light has-Update"
-                                                                    style="cursor: pointer;">
-                                                                <i class="far fa-pen"></i>
-                                                                <span class="note-hint"
-                                                                      style="cursor: pointer;">Ghi chú món</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="list-topping">
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-quatity">
-                                                        <div class="cell-quantity-inner">
-                                                            <button class="btn-icon down" type="button"
-                                                                    title="Giảm số lượng món"
-                                                                    onclick="handleReduceQuantity(${getItem.id})">
-                                                                <i class="fa-regular fa-minus"></i>
-                                                            </button>
-                                                            <button class="form-control form-control-sm item-quantity" >
-                                                                ${getItem.quantity}
-                                                            </button>
-                                                            <button class="btn-icon up" type="button"
-                                                                    title="Tăng số lượng món"
-                                                                    onclick="handleIncreaseQuantity(${getItem.id})">
-                                                                <i class="fa-regular fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-change-price">
-                                                        <div class="popup-anchor">
-                                                            <button class="form-control form-control-sm">
-                                                            ${getItem.item.price}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="cell-price">${getItem.item.price * getItem.quantity}</div>
-                                                    <div class="cell-actions">
-                                                        <div class="btn-group" dropdown="">
-                                                            <button class="dropdown-toggle" type="button"
-                                                                    title="Thêm dòng mới">
-                                                                <i class="fas fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </kv-cashier-cart-item>
-                                    </div>
-                                            `;
-
-                                    // renderBookingItem(item);
-                                    $("#render-tableTop").prepend(str);
-                                    // console.log(arrayBooking)
-
-                                })
-                        })
-
-                    })
-
-                })
-        })
-
-}
-
 function hanldeDeletedBookingItem(bookingIdItem) {
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "POST",
-        url: "http://localhost:8080/api/bookingItem/" + bookingIdItem
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "POST", url: "http://localhost:8080/api/bookingItem/" + bookingIdItem
     })
         .done(() => {
             // $("#render-tableTop div").empty();
             $.ajax({
                 headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/booking/" + tableTopId
+                    "Accept": "application/json", "Content-type": "application/json"
+                }, type: "GET", url: "http://localhost:8080/api/booking/" + tableTopId
             }).done((data) => {
                 $.each(data, (i, item) => {
                     booking_id = item.id;
                     $.ajax({
                         headers: {
-                            "Accept": "application/json",
-                            "Content-type": "application/json"
-                        },
-                        type: "GET",
-                        url: "http://localhost:8080/api/bookingItem/" + booking_id
+                            "Accept": "application/json", "Content-type": "application/json"
+                        }, type: "GET", url: "http://localhost:8080/api/bookingItem/" + booking_id
                     })
                         .done((data) => {
                             renderBookingItem(data);
@@ -439,8 +318,8 @@ function hanldeDeletedBookingItem(bookingIdItem) {
 
 }
 
-function renderBookingItem(bookingItem) {
-    let item = itemMap.get(bookingItem.item.id);
+function renderBookingItem(index, bookingItem) {
+    let item = itemMap.get(bookingItem.itemId);
     let result = `
                      <div class="product-cart-item" id="${bookingItem.id}">
                         <kv-cashier-cart-item class="row-list row-list-active active">
@@ -451,7 +330,7 @@ function renderBookingItem(bookingItem) {
                                         <i class="fa-regular fa-trash-can" onclick="hanldeDeletedBookingItem(${bookingItem.id})"></i>
                                     </a>
                                 </div>
-                                <div class="cell-order"> ${bookingItem.id}
+                                <div class="cell-order"> ${index}
                                     <div>
                                         <button class="btn-icon" type="button"
                                                 title="Món ưu tiên">
@@ -527,11 +406,8 @@ function renderBookingItem(bookingItem) {
 function handleIncreaseQuantity(bookingItem_id) {
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "PATCH",
-        url: `http://localhost:8080/api/bookingItem/${bookingItem_id}/increaseQuantity`
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "PATCH", url: `http://localhost:8080/api/bookingItem/${bookingItem_id}/increaseQuantity`
     })
         .done((bookingItem) => {
             handelTableTop(tableTopId)
@@ -545,11 +421,8 @@ function handleReduceQuantity(bookingItem_id) {
 
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "PATCH",
-        url: `http://localhost:8080/api/bookingItem/${bookingItem_id}/reduceQuantity`
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "PATCH", url: `http://localhost:8080/api/bookingItem/${bookingItem_id}/reduceQuantity`
     })
         .done(() => {
             handelTableTop(tableTopId)
@@ -560,21 +433,15 @@ function handelTableTop(tableTopId) {
     $("#render-tableTop div").empty();
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "GET",
-        url: "http://localhost:8080/api/booking?tabletopId=" + tableTopId
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "GET", url: "http://localhost:8080/api/booking?tabletopId=" + tableTopId
     })
         .done((data) => {
             booking_id = data[0].id;
             $.ajax({
                 headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/bookingItem/" + booking_id
+                    "Accept": "application/json", "Content-type": "application/json"
+                }, type: "GET", url: "http://localhost:8080/api/bookingItem/" + booking_id
             })
                 .done((data) => {
                     renderBookingItem(data)
@@ -593,11 +460,8 @@ function handelPay(tableTop, booking_id) {
         $("#renderPay div").empty();
         $.ajax({
             headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/bookingItem/" + booking_id
+                "Accept": "application/json", "Content-type": "application/json"
+            }, type: "GET", url: "http://localhost:8080/api/bookingItem/" + booking_id
         })
             .done((data) => {
                 let totalGrand = 0;
@@ -655,11 +519,8 @@ function cancelPay() {
 function handlePayAll(booking_id) {
     $.ajax({
         headers: {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        },
-        type: "DELETE",
-        url: "http://localhost:8080/api/bookingItem/deleted/" + booking_id
+            "Accept": "application/json", "Content-type": "application/json"
+        }, type: "DELETE", url: "http://localhost:8080/api/bookingItem/deleted/" + booking_id
     })
         .done((data) => {
             // alert("Thanh Toan Thanh Cong")
@@ -688,8 +549,10 @@ function handelRemoveEvent() {
 }
 
 function renderAll() {
+    fetchBookings();
+    // fetchBookingItems();
     renderAllItems();
-    renderCategory()
+    //  renderCategory()
     renderAllTableTop();
 
 }
