@@ -65,6 +65,7 @@ public class TableTopService implements ITableTopService {
     @Override
     public TableTopResult create(TableTopRegister tableTopRegister) {
         TableTop tableTop = tableTopMapper.toModelRegister(tableTopRegister);
+        tableTopRegister.setStatus(tableTop.getStatus());
         tableTopRepository.save(tableTop);
         return tableTopMapper.toDTO(tableTop);
     }

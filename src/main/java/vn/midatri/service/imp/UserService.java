@@ -58,9 +58,10 @@ public class UserService implements IUserService {
 
     @Override
     public UserResult Update(UserResult userResult,User user) {
-        user.setPassword(userResult.getPassword());
+        user.setFullName(userResult.getFullName());
         user.setId(userResult.getId());
-        UserResult userResults = userMapper.toDTOEdit(userRepository.save(user));
+        user.setPassword(userResult.getPassword());
+        UserResult userResults = userMapper.toDTO(userRepository.save(user));
         userResults.setPassword("null");
         return userResults;
     }

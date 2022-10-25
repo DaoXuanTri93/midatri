@@ -14,7 +14,6 @@ import java.time.Instant;
 @Accessors(chain = true)
 public class TableTopRegister {
     private Long id;
-    private String code;
     private TabletopStatus status;
     private Short capacity;
     private String content;

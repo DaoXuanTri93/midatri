@@ -70,7 +70,7 @@ public class UserApi {
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> editUser(@PathVariable Long id, @RequestBody User user) {
-        UserResult userResult = userMapper.toDTOEdit(userService.findUserById(id));
+        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
         UserResult userResult1 = userService.Update(userResult, user);
         return new ResponseEntity<>(userResult1, HttpStatus.ACCEPTED);
     }

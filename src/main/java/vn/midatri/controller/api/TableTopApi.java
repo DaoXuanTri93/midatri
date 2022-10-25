@@ -25,17 +25,18 @@ public class TableTopApi {
     @Autowired
     private ITableTopService tableTopService;
 
-    @GetMapping()
-    public ResponseEntity<?> renderTableTop(){
-        List<TableTopResult> tableTop = tableTopService.findAllByStatus(TabletopStatus.UNAVAILABLE);
-        return new ResponseEntity<>(tableTop, HttpStatus.OK);
-    }
+//    @GetMapping()
+//    public ResponseEntity<?> renderTableTop(){
+//        List<TableTopResult> tableTop = tableTopService.findAllByStatus(TabletopStatus.AVAILABLE);
+//        return new ResponseEntity<>(tableTop, HttpStatus.OK);
+//    }
 
 //    @GetMapping("/renderDeletedTable")
 //    public ResponseEntity<?> listTableDeleted(){
 //        List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(AVAILABLE);
 //        return new ResponseEntity<>(tableTopResults,HttpStatus.OK);
 //    }
+    @GetMapping
     public ResponseEntity<?> findAllAvailableTableTop() {
         List<TableTopResult> tableTop = tableTopService.findAllByStatus(TabletopStatus.AVAILABLE);
         return new ResponseEntity<>(tableTop, HttpStatus.OK);

@@ -13,16 +13,13 @@
                     </div>
                     <form id="frmCreateUser">
                         <div class="row">
-                            <div class="col text-center">
-                                <!--                                <label for="uploadCre" class="form-label fw-bold">Ảnh đại diện:</label>-->
-                                <!--                <img id="previewImg" width="100px" class="img-circle mb-2" src="/assets/plugins/images/users/1.jpg"/>-->
-                                <!--                <input id="uploadCre" type="file" accept="image/*" hidden />-->
-                            </div>
-                        </div>
-                        <div class="row">
                             <div class="col col-md-6">
                                 <label for="userName" class="form-label fw-bold">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="userName" name="userName">
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="fullName" class="form-label fw-bold">Tên người dùng:</label>
+                                <input type="text" class="form-control" id="fullName" name="fullName">
                             </div>
 
                         </div>
@@ -67,7 +64,8 @@
         function createUser() {
             checkPassword();
             let newUser = {
-                username: $('#userName').val(),
+                userName: $('#userName').val(),
+                fullName : $('#fullName').val(),
                 password: $('#password').val(),
                 phone: $('#phone').val(),
                 email: $('#email').val(),
@@ -81,6 +79,7 @@
                         let str = `
                     <tr id="tr_${item.id}">
                        <th>${item.userName}</th>
+                       <th>${item.fullName}</th>
                        <th>${item.password}</th>
                        <th>${item.phone}</th>
                        <th>${item.email}</th>

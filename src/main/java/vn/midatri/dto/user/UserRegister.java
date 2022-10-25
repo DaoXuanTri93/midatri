@@ -12,7 +12,8 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class UserRegister {
     @NotBlank(message = "Khong duoc bo trong Username")
-    private String username;
+    private String userName;
+    private String fullName;
     @NotBlank(message = "Khong duoc bo trong password")
     private String password;
     private String phone;

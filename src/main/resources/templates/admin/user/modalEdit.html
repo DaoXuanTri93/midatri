@@ -18,6 +18,10 @@
                                 <label for="usernameEdit" class="form-label fw-bold ">Tên đăng nhập:</label>
                                 <input type="text" class="form-control" id="usernameEdit" name="usernameEdit" required>
                             </div>
+                            <div class="col col-md-6">
+                                <label for="fullNameEdit" class="form-label fw-bold ">Tên người dùng:</label>
+                                <input type="text" class="form-control" id="fullNameEdit" name="fullNameEdit" required>
+                            </div>
 
                         </div>
                         <div class="row">
@@ -28,8 +32,8 @@
                             </div>
                             <div class="col col-md-6">
                                 <label for="emailEdit" class="form-label fw-bold">Email:</label>
-                                <input type="emailEdit" class="form-control" id="emailEdit" name="emailEdit" required>
-                                <input type="hidden" id="idUserss">
+                                <input type="email" class="form-control" id="emailEdit" name="emailEdit" required>
+                                <input type="hidden" id="idUser">
                             </div>
                         </div>
                     </form>
@@ -43,13 +47,14 @@
     </div>
     <script src="/js/App.js"></script>
     <script>
-        function editUser1() {
+        function editUser(currentRow) {
             let editUser = new User();
-            editUser.id = $("#idUserss").val();
+            editUser.id = $("#idUser").val();
             editUser.userName = $("#usernameEdit").val();
+            editUser.fullName = $("#fullNameEdit").val();
+            // editUser.password = this.password;
             editUser.phone = $("#phoneEdit").val();
             editUser.email = $("#emailEdit").val();
-            editUser.status = false;
             $.ajax({
                 headers: {
                     "accept": "application/json",
@@ -61,6 +66,15 @@
                 data: JSON.stringify(editUser)
             }).done(function (data) {
                 console.log(data)
+                let tableUser = $("#tblUser").DataTable();
+                tableUser.row(currentRow).data({
+                    "id": data.id,
+                    "email": data.email,
+                    "phone": data.phone,
+                    "fullName": data.fullName,
+                    "userName": data.userName
+                }).draw('full-hold');
+
                 $("#modalEdit").modal("hide");
             }).fail((e) => {
                 console.log(e)
@@ -68,7 +82,7 @@
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Something went wrong!',
-                    footer: '<a href="">Why do I have this issue?</a>'
+                    // footer: '<a href="">Why do I have this issue?</a>'
                 })
             })
         }
@@ -85,25 +99,27 @@
                 .done((data) => {
                     $("#idEdit").val(data.id);
                     $("#usernameEdit").val(data.userName);
+                    $("#fullNameEdit").val(data.fullName);
                     $("#phoneEdit").val(data.phone);
                     $("#emailEdit").val(data.email);
-                    $("#password").val(data.password)
+                    // $("#password").val(data.password);
                     $("#modalEdit").modal("show");
-                    $("#idUserss").val(data.id)
+                    $("#idUser").val(data.id);
                     console.log(data)
                 })
 
             $("#btnEdit").on('click', function () {
-                editUser1();
+                let currentRow = $(this).parents('tr');
+                editUser(currentRow);
                 $("#btnEdit").trigger("submit")
 
-            });
-            // .fail()
+            })
+            //     .fail()
             // Swal.fire({
             //     icon: 'error',
             //     title: 'Oops...',
             //     text: 'Something went wrong!',
-            //     footer: '<a href="">Why do I have this issue?</a>'
+                // footer: '<a href="">Why do I have this issue?</a>'
             // })
 
         }

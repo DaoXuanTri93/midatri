@@ -21,9 +21,10 @@ class Category {
     }
 }
 class User {
-    constructor(id,userName,password,phone,email,deleted) {
+    constructor(id,userName,fullName,password,phone,email,deleted) {
         this.id= id;
         this.userName = userName;
+        this.fullName = fullName;
         this.password = password;
         this.phone = phone;
         this.email = email;

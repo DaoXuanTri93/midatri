@@ -17,7 +17,14 @@
                                 <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>
                                 <input type="number" class="form-control" id="idTable" name="idTable" readonly placeholder="Số thứ tự tự động tăng">
                             </div>
-
+                            <div class="col col-md-6">
+                                <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
+                                <select class="form-select" id="statusTable">
+                                    <option selected>Chọn trạng thái  bàn</option>
+                                    <option value="AVAILABLE">Hoạt động</option>
+                                    <option value="UNAVAILABLE">Ngừng hoạt động</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col col-md-12">
@@ -25,7 +32,7 @@
                                 <select class="form-select" id="capacityTable">
                                     <option selected>Chọn sức chứa bàn</option>
                                     <option value="2">2</option>
-2                                    <option value="4">4</option>
+                                    <option value="4">4</option>
                                     <option value="6">6</option>
                                     <option value="8">8</option>
                                 </select>
@@ -57,8 +64,7 @@
             let NewTable = {
                 capacity: $('#capacityTable').find(":selected").val(),
                 content: $('#contentTable').val(),
-                // $("#thanh_pho").find(":selected").val()
-                status: false,
+                status: $('#statusTable').find(":selected").val()
             }
             console.log(NewTable);
             $.ajax({
@@ -81,7 +87,7 @@
                         `;
                     $("tblTop tbody").append(str);
                     Swal.fire({
-                        title: 'Thêm mới bàn dùng thành công !!!',
+                        title: 'Thêm mới bàn thành công !!!',
                         position: 'top-end',
                         icon: 'success',
                         showConfirmButton: false,
