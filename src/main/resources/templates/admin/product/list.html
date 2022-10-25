@@ -58,6 +58,7 @@
                                     <tr>
                                         <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
                                         <th scope="col" class="fw-bold fs-5">Giá</th>
+                                        <th scope="col" class="fw-bold fs-5">Số Lượng</th>
                                         <th scope="col" class="fw-bold fs-5">Danh mục</th>
                                         <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
                                         <th colspan="2"> Thao tác</th>
@@ -117,7 +118,20 @@
                 {
                     data: 'price',
                 },
-                {data: "category.categoryName"},
+                {data: 'quantity'},
+                {data: 'categoryId',render:function (categoryId){
+                        $.ajax({
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-type": "application/json"
+                            },
+                            type: "GET",
+                            url: "http://localhost:8080/api/category"+categoryId,
+                        }).done((data)=>{
+                            return `<td>${data.categoryName}</td>`
+                        })
+                    }
+                },
                 {
                     data: 'img',
                     render: function (img) {
@@ -341,7 +355,7 @@
                                 "Content-type": "application/json"
                             },
                             type: "GET",
-                            url: "http://localhost:8080/api/category/"+ ($("#catalogsUpdate").val()) ,
+                            url: "http://localhost:8080/api/category/" ,
                         })
                             .done(function (data) {
                                 parent = data
@@ -399,7 +413,7 @@
         } else {
             $('#groupProduct').addClass("hide");
         }
-    })}
+    })
 
 
 
