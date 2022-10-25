@@ -33,7 +33,7 @@ public class ItemApi {
     @Autowired
     private UserMapper userMapper;
 
-
+    @GetMapping("")
     public ResponseEntity<?> renderItem(){
         List<ItemResult> itemResultList = itemService.findAllByDeleted(false);
         return new ResponseEntity<>(itemResultList, HttpStatus.OK);
