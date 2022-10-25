@@ -9,7 +9,6 @@ import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.dto.category.CreateCategory;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.repository.CategoryRepository;
-import vn.midatri.repository.model.Category;
 import vn.midatri.service.ICategoryService;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CategoryService  implements ICategoryService {
+public class CategoryService implements ICategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -30,8 +29,20 @@ public class CategoryService  implements ICategoryService {
                 .map(category -> categoryMapper.toDTO(category))
                 .collect(Collectors.toList());
     }
-    public List<CategoryResult> findAllByParentId(Long parentId){
+
+    public List<CategoryResult> findAllByParentId(Long parentId) {
         return categoryRepository.findAllByParentId(parentId)
+                .stream()
+                .map(category -> categoryMapper.toDTO(category))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryResult> findAllHasParentId(boolean hasParentId) {
+        return (hasParentId ?
+                categoryRepository.findAllByParentIdIsNotNull() :
+                categoryRepository.findAllByParentIdIsNull()
+        )
                 .stream()
                 .map(category -> categoryMapper.toDTO(category))
                 .collect(Collectors.toList());

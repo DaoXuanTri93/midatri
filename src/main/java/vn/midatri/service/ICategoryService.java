@@ -9,6 +9,8 @@ import java.util.List;
 public interface ICategoryService {
     List<CategoryResult> findAll();
 
+    List<CategoryResult> findAllHasParentId(boolean hasParentId);
+
     CategoryResult findById(Long id);
     CategoryResult create(CreateCategory createCategory);
 

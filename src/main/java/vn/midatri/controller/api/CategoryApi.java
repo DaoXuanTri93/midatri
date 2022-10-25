@@ -2,6 +2,8 @@ package vn.midatri.controller.api;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,12 @@ public class CategoryApi {
     @GetMapping("parent/{parentId}")
     public ResponseEntity<?> findAllByParentId(@PathVariable Long parentId) {
         List<CategoryResult> categories = categoryService.findAllByParentId(parentId);
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
+    @GetMapping("parent")
+    public ResponseEntity<?> findAllByParentId(boolean hasParentId) {
+        List<CategoryResult> categories = categoryService.findAllHasParentId(hasParentId);
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
