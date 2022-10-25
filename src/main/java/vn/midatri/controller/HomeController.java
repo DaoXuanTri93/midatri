@@ -14,7 +14,7 @@ public class HomeController {
         return "redirect:/login";
     }
 
-    @GetMapping("")
+    @GetMapping("/dashboard")
     public ModelAndView dashboard() {
         return new ModelAndView("/admin/home");
     }
