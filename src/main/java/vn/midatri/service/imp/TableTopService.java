@@ -64,5 +64,11 @@ public class TableTopService implements ITableTopService {
         return tableTopRepository.findById(id).get();
     }
 
+    @Override
+    public TableTopResult update(TableTop tableTop) {
+        TableTopResult tableTopResult = tableTopMapper.toDTO(tableTopRepository.save(tableTop));
+        return tableTopResult;
+    }
+
 
 }

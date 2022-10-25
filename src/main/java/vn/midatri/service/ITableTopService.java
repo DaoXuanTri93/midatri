@@ -13,4 +13,5 @@ public interface ITableTopService {
     TableTopResult findTableById( Long id);
     TableTopResult create(TableTopRegister tableTopRegister);
     TableTop findById(Long id);
+    TableTopResult update(TableTop tableTop);
 }
