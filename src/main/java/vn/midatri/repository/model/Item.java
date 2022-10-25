@@ -24,13 +24,13 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 45)
+    @Column(name = "title",nullable = false, length = 45)
     private String title;
 
-    @Column(name = "price", precision = 12)
+    @Column(name = "price",nullable = false,  precision = 12)
     private BigDecimal price;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity",nullable = false)
     private Integer quantity;
 
     @Column(name = "img")
@@ -42,7 +42,7 @@ public class Item {
     @Column(name = "description", length = 45)
     private String description;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at",nullable = false)
     private Instant createAt;
 
     @Column(name = "update_at")
@@ -54,14 +54,14 @@ public class Item {
     @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     private Long userId;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "category_id", nullable = false, insertable = false, updatable = false)
     private Long categoryId;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 

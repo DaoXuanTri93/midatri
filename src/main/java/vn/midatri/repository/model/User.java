@@ -18,21 +18,23 @@ import javax.persistence.*;
 @Table(name = "user")
 public class User {
     @Id
-//    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name", length = 45)
-    private String userName;
+    @Column(name = "username", length = 45, nullable = false)
+    private String username;
+
+    @Column(name = "password", nullable = false, length = 45)
+    private String password;
+
+    @Column(name = "full_name", length = 45, nullable = false)
+    private String fullName;
 
     @Column(name = "phone", length = 45)
     private String phone;
 
     @Column(name = "email", length = 45)
     private String email;
-
-    @Column(name = "password", nullable = false, length = 45)
-    private String password;
 
     private Boolean vendor;
 
@@ -43,7 +45,7 @@ public class User {
     @Column(columnDefinition = "boolean default false")
     private Boolean deleted = false;
 
-    public User (long id ){
-     this.id = id;
+    public User(long id) {
+        this.id = id;
     }
 }

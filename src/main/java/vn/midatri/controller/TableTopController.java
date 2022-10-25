@@ -20,7 +20,7 @@ public class TableTopController {
         return modelAndView;
     }
     @GetMapping("/restoreTable")
-    public ModelAndView TableRestore(){
+    public ModelAndView TalbeRestore(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/admin/table/restoreTable");
         return modelAndView;

@@ -18,6 +18,11 @@ import java.time.Instant;
 @Entity
 @Table(name = "booking")
 public class Booking {
+    public Booking(long tableTopId, BookingStatus status) {
+        this.tableTopId = tableTopId;
+        this.status = status;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +32,8 @@ public class Booking {
     private String fullName;
 
     @Column(name = "status", nullable = false)
-    private Short status;
+    @Enumerated(EnumType.STRING)
+    private BookingStatus status;
 
     @Column(name = "phone", nullable = false, length = 45)
     private String phone;
@@ -47,14 +53,14 @@ public class Booking {
     @Column(name = "content", length = 45)
     private String content;
 
-    @Column(name = "user_id", nullable = false, insertable = false,updatable = false)
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "table_top_id", nullable = false,  insertable = false,updatable = false)
+    @Column(name = "table_top_id", nullable = false, insertable = false, updatable = false)
     private Long tableTopId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

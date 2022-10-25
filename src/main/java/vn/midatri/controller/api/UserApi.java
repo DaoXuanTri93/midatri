@@ -34,8 +34,8 @@ public class UserApi {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
-        User user = userService.findById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        UserResult userResult = userService.findById(id);
+        return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@Validated @RequestBody UserRegister userRegister, BindingResult bindingResult){
@@ -69,19 +69,6 @@ public class UserApi {
 
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @GetMapping("/renderDeletedUser")
-    public ResponseEntity<?> ListDeletedUser(){
-        List<User> users = userService.findAllByDeleted(true);
-        return new ResponseEntity<>(users,HttpStatus.OK);
-    }
-@PutMapping("/restore/{id}")
-    public ResponseEntity<?> restoreUser(@PathVariable Long id){
-        User user = userService.findById(id);
-        user.setDeleted(false);
-        userService.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

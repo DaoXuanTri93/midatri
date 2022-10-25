@@ -10,7 +10,7 @@ import java.util.List;
 public interface IUserService {
 
     List<UserResult> findAll();
-    User findById(Long id);
+    UserResult findById(Long id);
     UserResult save(UserRegister userRegister);
 
     void deletedById(Long id);

@@ -6,20 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import vn.midatri.dto.tableTop.TableTopResult;
 import vn.midatri.dto.user.UserResult;
+import vn.midatri.repository.model.BookingStatus;
 import vn.midatri.repository.model.TableTop;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
 public class BookingResult {
-    private Long id;
+    private long id;
     private String fullName;
-    private Short status;
+    private BookingStatus status;
     private String phone;
     private String email;
     private String address;
     private String content;
-    private Long user_id;
-    private Long tableTop_id;
+    private long userId;
+    private long tableTopId;
 
 }

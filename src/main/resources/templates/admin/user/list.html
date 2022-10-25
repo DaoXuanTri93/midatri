@@ -21,27 +21,14 @@
 <div class="breadcomb-area">
   <div class="container">
     <div class="row">
-      <div class="row">
-        <div class="breadcomb-list" style="background-color: #CDDC39">
-          <div class="row mb-lg-2 " >
-            <div class="col-6">
-              <h1>Quản lý người dùng</h1>
-            </div>
-            <div class="col-3">
-              <div class="col text-end" >
-                <button class="btn btn-outline-light bg-primary" id="createUser"><i class="fa fa-plus-square"></i> Thêm người dùng mới</button>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="col text-end">
-                <a class="btn btn-outline-danger " href="/user/restore">
-                  <i class="fa fa-list" aria-hidden="true"></i>
-                  Danh sách người dùng đã xóa</a>
-              </div>
-            </div>
+      <div class="breadcomb-list">
+        <div class="row mb-2" >
+          <div class="col text-end">
+            <button class="btn btn-outline-primary" id="createUser"><i class="fa fa-plus-square"></i> Tạo
+              user mới
+            </button>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -51,13 +38,12 @@
 <div class="data-table-area">
   <div class="container">
     <div class="row">
-
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="data-table-list">
           <div class="table-responsive">
             <table id="tblUser" class="table table-striped">
               <thead>
-              <tr style="background-color: #11cc9d">
+              <tr>
                 <th>#</th>
                 <th>Bartender</th>
                 <th>Admin</th>
@@ -92,7 +78,8 @@
 <th:block th:replace="/admin/user/modalCreate :: modalCreate"/>
 <th:block th:replace="/admin/user/modalEdit :: modalEdit"/>
 <th:block th:replace="/admin/user/modalDelete ::modalDelete"/>
-<th:block th:replace="/admin/user/modalRestoreUser :: modalRestoreUser"/>
+
+
 </body>
 <script>
   $(document).ready(function (){
@@ -134,12 +121,11 @@
   $("#createUser").on("click",function () {
     $("#modalCreate").modal("show")
   });
-
+  
 
 
 
 </script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
-<script src="/js/validateUser.js"></script>
 </html>
 

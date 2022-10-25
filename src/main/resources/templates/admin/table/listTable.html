@@ -4,19 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Quản lý bàn</title>
+    <title>Data Table | Notika - Notika Admin Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <th:block th:replace="/admin/layout/head :: head"/>
 </head>
 
 <body>
-<div class="preloader">
-    <div class="lds-ripple">
-        <div class="lds-pos"></div>
-        <div class="lds-pos"></div>
-    </div>
-</div>
 <!--[if lt IE 8]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 <![endif]-->
@@ -27,23 +21,16 @@
 <div class="breadcomb-area">
     <div class="container">
         <div class="row">
-            <div class="breadcomb-list" style="background-color: #8BC34A">
-                <div class="row mb-lg-2 " >
-                    <div class="col-7">
-                    <h1>Quản lý bàn</h1>
+            <div class="breadcomb-list">
+                <div class="row mb-2" >
+                    <div class="col text-end">
+                        <button class="btn btn-outline-primary" id="createNewTable"><i class="fa fa-plus-square"></i> Tạo
+                            bàn mới
+                        </button>
                     </div>
-                    <div class="col-2">
-                        <div class="col text-end" >
-                            <button class="btn btn-outline-light bg-primary" id="createNewTable"><i class="fa fa-plus-square"></i> Tạo bàn mới</button>
+                        <div class="col">
+                            <a href="/table-top/restoreTable">Danh sách bàn đã xóa</a>
                         </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="col text-end">
-                            <a class="btn btn-outline-danger " href="/table-top/restoreTable">
-                                <i class="fa fa-list" aria-hidden="true"></i>
-                                Danh sách bàn đã xóa</a>
-                        </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -60,8 +47,9 @@
                     <div class="table-responsive">
                         <table id="tblTop" class="table table-striped">
                             <thead>
-                            <tr class="bg-success">
+                            <tr>
                                 <th>#</th>
+                                <th>Status</th>
                                 <th>Capacity</th>
                                 <th>content</th>
                                 <th></th>
@@ -70,8 +58,6 @@
                             </thead>
                             <tbody>
                             </tbody>
-
-
                         </table>
                     </div>
                 </div>
@@ -107,6 +93,7 @@
             },
             columns: [
                 {data: 'id'},
+                {data: 'status'},
                 {data: 'capacity'},
                 // {data: 'create_at'},
                 // {data: 'update_at'},
@@ -133,6 +120,10 @@
     $("#createNewTable").on("click",function () {
         $("#modalCreateTable").modal("show")
     });
+
+
+
+
 </script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>

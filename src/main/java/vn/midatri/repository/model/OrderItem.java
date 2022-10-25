@@ -20,14 +20,21 @@ import java.time.Instant;
 public class OrderItem {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "item_id", nullable = false)
+    @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
+    private Long itemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
+    @Column(name = "order_id", nullable = false, insertable = false, updatable = false)
+    private Long orderId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @Column(name = "price", nullable = false, precision = 12)
@@ -36,13 +43,10 @@ public class OrderItem {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "grand_total", nullable = false, precision = 12)
-    private BigDecimal grandTotal;
-
     @Column(name = "discount")
     private Float discount;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at",nullable = false)
     private Instant createAt;
 
     @Column(name = "update_at")
@@ -50,7 +54,6 @@ public class OrderItem {
 
     @Column(name = "content")
     private String content;
-
 
 
 }

@@ -19,14 +19,13 @@ public class ItemMapper {
 
     public Item toModel(CreateItem createItem) {
         return new Item()
-                .setId(0L)
                 .setTitle(createItem.getTitle())
                 .setPrice(createItem.getPrice())
                 .setQuantity(createItem.getQuantity())
                 .setImg(createItem.getImg())
                 .setContent(createItem.getContent())
-                .setCategory(categoryMapper.toModel(createItem.getCategory()))
-                .setUser(userMapper.toModel(createItem.getUser()))
+                .setCategoryId(createItem.getCategoryId())
+                .setUserId(createItem.getUserId())
                 .setDeleted(createItem.isDeleted());
     }
 
@@ -39,7 +38,7 @@ public class ItemMapper {
                 .setImg(itemResult.getImg())
                 .setContent(itemResult.getContent())
                 .setCategoryId(itemResult.getCategoryId())
-                .setUserId(itemResult.getUser())
+                .setUserId(itemResult.getUserId())
                 .setDeleted(itemResult.isDeleted());
     }
 
@@ -52,8 +51,8 @@ public class ItemMapper {
                 .setQuantity(item.getQuantity())
                 .setImg(item.getImg())
                 .setContent(item.getContent())
-                .setCategory(categoryMapper.toDTO(item.getCategory()))
-//                .setUser(userMapper.toDTO(item.getUser()))
+                //  .setCategory(categoryMapper.toDTO(item.getCategory()))
+                //  .setUser(userMapper.toDTO(item.getUser()))
                 .setDeleted(item.isDeleted());
     }
 
@@ -65,8 +64,8 @@ public class ItemMapper {
 //                .setQuantity(item.getQuantity())
 //                .setImg(item.getImg())
 //                .setContent(item.getContent())
-//                .setCategory(item.getCategoryId())
-//                .setUser(item.getUserId())
+//                .setCategory(categoryMapper.toDTO(item.getCategory()))
+//                .setUser(userMapper.toDTO(item.getUser()))
 //                .setDeleted(item.isDeleted());
 //    }
 }

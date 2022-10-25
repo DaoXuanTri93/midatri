@@ -15,7 +15,12 @@
 
                     </div>
                     <form id="frmCreateProduct">
-
+                        <div class="row">
+                            <div class="mb-3 col text-center">
+                                <img id="previewImg" width="150px" class="img-circle mb-2" src="/assets/img/Logo.png"/>
+                                <input id="uploadCre" type="file" accept="image/*" hidden/>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="mb-3 col-8">
                                 <label for="productNameCreate" class="form-label fw-bold">Tên thức uống</label>
@@ -42,18 +47,9 @@
                                 </select>
                             </div>
                             <div class="mb-3 col-4">
-                                <label for="quantityProductCreate" class="form-label fw-bold  ">Số Lượng thức uống</label>
+                                <label for="quantityProductCreate" class="form-label fw-bold ">Số Lượng thức uống</label>
                                 <input type="text" class="form-control num-space text-right" id="quantityProductCreate"
                                        name="quantityProductCreate">
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <label class="form-label fw-bold ">Hình Ảnh</label>
-                            <div class="mb-3 text-center ">
-                                <img id="previewImg" width="150px" class="img-circle mb-2 " src="/assets/img/Logo.png"/>
-                                <input id="uploadCre" type="file" accept="image/*"  hidden/>
                             </div>
                         </div>
                         <div class="row">
@@ -97,16 +93,17 @@
 
         function createProduct() {
             let product = new Product();
+            let category = new Category();
             product.title = $("#productNameCreate").val();
             product.price = $("#imPriceProductCreate").val();
             product.quantity=$("#quantityProductCreate").val();
             product.content = $("#desProductCreate").val();
-            product.category ={
-                id:$("#catalogsCreate").val()
+            product.category = {
+                id: $("#catalogsCreate").val()
             };
             product.user = {
-                id:1
-            }  ;
+                id: 1
+            };
             product.deleted = false;
             if ($("#uploadCre")[0].files[0] != null) {
                 product.img = $("#productNameCreate").val();

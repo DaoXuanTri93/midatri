@@ -23,13 +23,18 @@ public class TableTop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", length = 45, nullable = false)
+    private String title;
+
+
     @Column(name = "status", nullable = false)
-    private Boolean status;
+    @Enumerated(value = EnumType.STRING)
+    private TabletopStatus status;
 
     @Column(name = "capacity", nullable = false)
     private Short capacity;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at", nullable = false)
     private Instant createAt;
 
     @Column(name = "update_at")
@@ -37,7 +42,6 @@ public class TableTop {
 
     @Column(name = "content", length = 45)
     private String content;
-
 
 
 }

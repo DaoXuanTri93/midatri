@@ -23,18 +23,17 @@ public class Category {
     private Long id;
 
     @Size(max = 45)
-    @Column(name = "category_name", length = 45)
+    @Column(name = "category_name", length = 45, nullable = false)
     private String categoryName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId")
     private Category parent;
 
-    @Column(name = "parentId", nullable = false, insertable = false, updatable = false)
+    @Column(name = "parentId", insertable = false, updatable = false)
     private Long parentId;
 
     public Category(Long id) {
         this.id = id;
     }
-
 }

@@ -30,11 +30,14 @@ public class BookingItem {
     @Column(name = "booking_id", nullable = false, insertable = false, updatable = false)
     private Long bookingId;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 
-    @ManyToOne(optional = false)
+    @Column(name = "item_id", nullable = false, insertable = false, updatable = false)
+    private Long itemId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
@@ -48,7 +51,8 @@ public class BookingItem {
     private Float discount;
 
     @Column(name = "status")
-    private Short status;
+    @Enumerated(EnumType.STRING)
+    private BookingItemStatus status;
 
     @Column(name = "create_at")
     private Instant createAt;
@@ -58,7 +62,4 @@ public class BookingItem {
 
     @Column(name = "content", length = 45)
     private String content;
-
-    @Column(name = "grand_total", nullable = false, precision = 12)
-    private BigDecimal grandTotal;
 }

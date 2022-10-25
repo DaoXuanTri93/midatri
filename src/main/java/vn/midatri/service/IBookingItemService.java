@@ -12,14 +12,11 @@ public interface IBookingItemService {
 
     List<BookingItemResult> findAllByBookingId(Long bookingId);
     BookingItemResult findByBookingIdAndItemId(long bookingId, long itemId);
+    void deleteAllByBookingId(long id);
     BookingItemResult create(BookingItemCreate bookingItemCreate);
-
     BookingItemResult findById(Long id);
 
     void deletedBookingItem(Long id);
-//    void deleteByBookingId(long id);
-
-//    int increaseQuantity(long id, int quantity);
     int increaseQuantity(long id);
 
     int reduceQuantity(long id);

@@ -1,21 +1,17 @@
 package vn.midatri.controller.api;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
-import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.BookingMapper;
 import vn.midatri.repository.BookingItemRepository;
-import vn.midatri.repository.model.BookingItem;
 import vn.midatri.service.IBookingItemService;
 import vn.midatri.service.IBookingService;
 import vn.midatri.service.IItemService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -64,8 +60,6 @@ public class BookingItemApi {
 
     @PostMapping("/create")
     public ResponseEntity<?> addBookingItem(@RequestBody BookingItemCreate bookingItemCreate) {
-//        bookingItemService.findByBookingIdAndItemId(bookingItemCreate.getBooking_id(), bookingItemCreate.getItem_id());
-//        bookingItemRepository.findByBookingIdAndItemId(19, 5);
         bookingItemService.create(bookingItemCreate);
         return new ResponseEntity<>(bookingItemCreate, HttpStatus.OK);
     }
@@ -75,11 +69,11 @@ public class BookingItemApi {
         bookingItemService.deletedBookingItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//    @PostMapping("/pay/{id}")
-//    public ResponseEntity<?> deletedAll(@PathVariable Long id) {
-//        bookingItemService.deleteByBookingId(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @DeleteMapping("/deleted/{id}")
+    public ResponseEntity<?> deletedAll(@PathVariable Long id) {
+        bookingItemService.deleteAllByBookingId(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }

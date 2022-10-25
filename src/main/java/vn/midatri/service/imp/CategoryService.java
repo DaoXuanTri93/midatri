@@ -39,11 +39,11 @@ public class CategoryService  implements ICategoryService {
         return categoryMapper.toDTO(categoryRepository.findById(id).get());
     }
 
-    @Override
-    public List<CategoryResult> findAllByParentIsNull() {
-        return categoryRepository.findAllByParentIsNull()
-                .stream()
-                .map(category -> categoryMapper.toDTO(category))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<CategoryResult> findCategoryByParentIsnull() {
+//        return categoryRepository.findCategoryByParentIsnull()
+//                .stream()
+//                .map(category -> categoryMapper.toDTO(category))
+//                .collect(Collectors.toList());
+//    }
 }

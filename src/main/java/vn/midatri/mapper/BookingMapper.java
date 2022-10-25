@@ -24,8 +24,8 @@ public class BookingMapper {
                 .setEmail(booking.getEmail())
                 .setAddress(booking.getAddress())
                 .setContent(booking.getContent())
-                .setUser_id(booking.getUserId())
-                .setTableTop_id(booking.getTableTopId());
+                .setUserId(booking.getUserId())
+                .setTableTopId(booking.getTableTopId());
     }
 
 //    public Booking toModel(BookingResult bookingResult){

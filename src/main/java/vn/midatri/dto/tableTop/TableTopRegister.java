@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import vn.midatri.repository.model.TabletopStatus;
 
 @Data
 @NoArgsConstructor
@@ -11,7 +12,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class TableTopRegister {
     private Long id;
-    private Boolean status;
+    private String code;
+    private TabletopStatus status;
     private Short capacity;
     private String content;
 }
