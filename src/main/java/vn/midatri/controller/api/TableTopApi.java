@@ -17,6 +17,8 @@ import vn.midatri.service.ITableTopService;
 import java.util.List;
 import java.util.Optional;
 
+import static vn.midatri.repository.model.TabletopStatus.AVAILABLE;
+
 @RestController
 @RequestMapping("/api/table-top")
 public class TableTopApi {
@@ -25,15 +27,15 @@ public class TableTopApi {
 
     @GetMapping()
     public ResponseEntity<?> renderTableTop(){
-        List<TableTopResult> tableTop = tableTopService.findAllByStatus(false);
+        List<TableTopResult> tableTop = tableTopService.findAllByStatus(TabletopStatus.UNAVAILABLE);
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
 
-    @GetMapping("/renderDeletedTable")
-    public ResponseEntity<?> listTableDeleted(){
-        List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(true);
-        return new ResponseEntity<>(tableTopResults,HttpStatus.OK);
-    }
+//    @GetMapping("/renderDeletedTable")
+//    public ResponseEntity<?> listTableDeleted(){
+//        List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(AVAILABLE);
+//        return new ResponseEntity<>(tableTopResults,HttpStatus.OK);
+//    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createNewTable(@RequestBody TableTopRegister tableTopRegister){
@@ -45,9 +47,9 @@ public class TableTopApi {
 //        tableTop.setStatus(true);
 //        tableTopService.update(tableTop);
 //
-//        TableTop tableTop = tableTopService.findById(id);
-//        tableTop.setStatus(TabletopStatus.UNAVAILABLE);
-       // tableTopService.save(tableTop);
+        TableTop tableTop = tableTopService.findById(id);
+        tableTop.setStatus(TabletopStatus.UNAVAILABLE);
+        tableTopService.save(tableTop);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
