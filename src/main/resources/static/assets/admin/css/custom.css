@@ -9,3 +9,19 @@
     color: red;
     font-size: small;
 }
+.showHideColumn {
+    cursor: pointer;
+    color: blue;
+}
+.showHide{
+    padding: 5px;
+    padding-left: 0px;
+}
+.cssAction {
+    position: relative;
+    left: 10px;
+}
+.cssDelete {
+    position: relative;
+    left: 20px;
+}

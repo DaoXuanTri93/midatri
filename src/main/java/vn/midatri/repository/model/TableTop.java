@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -29,15 +32,14 @@ public class TableTop {
     @Column(name = "capacity", nullable = false)
     private Short capacity;
 
+    @CreationTimestamp
     @Column(name = "create_at")
     private Instant createAt;
 
+    @UpdateTimestamp
     @Column(name = "update_at")
     private Instant updateAt;
 
     @Column(name = "content", length = 45)
     private String content;
-
-
-
 }

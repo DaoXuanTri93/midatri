@@ -13,7 +13,6 @@ public class UserResult {
     private Long id;
     private String userName;
     private String password;
-    private Boolean deleted;
     private String phone;
     private String email;
 

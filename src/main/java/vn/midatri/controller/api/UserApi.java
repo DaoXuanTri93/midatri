@@ -15,6 +15,7 @@ import vn.midatri.service.IUserService;
 import vn.midatri.util.AppUtils;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -29,17 +30,18 @@ public class UserApi {
     public ResponseEntity<?> renderUser() {
 
         List<User> users = userService.findAllByDeleted(false);
-        return new ResponseEntity<>(users , HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id){
+    public ResponseEntity<?> findById(@PathVariable Long id) {
         User user = userService.findById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@Validated @RequestBody UserRegister userRegister, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
+    public ResponseEntity<?> createUser(@Validated @RequestBody UserRegister userRegister, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
 
             return AppUtils.mapError(bindingResult);
         }
@@ -48,7 +50,7 @@ public class UserApi {
     }
 
     @PostMapping("/deleted/{id}")
-    public ResponseEntity<?> deletedUser(@PathVariable Long id){
+    public ResponseEntity<?> deletedUser(@PathVariable Long id) {
         User user = userService.findUserById(id);
         user.setDeleted(true);
         userService.save(user);
@@ -56,28 +58,39 @@ public class UserApi {
     }
 
 
-    @PutMapping ("/edit/{id}")
-
-// ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
+//    @PutMapping("/edit/{id}")
+//    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User user) {
+//        User userCheck = userService.findUserById(id);
 //
-//        user.setId(id);
+//        userCheck.setUserName(user.getUserName());
+//        userCheck.setPhone(user.getPhone());
+//        userCheck.setEmail(user.getEmail());
+//
+//        UserResult newUser= userService.save(userCheck);
+//        return new ResponseEntity<>(newUser, HttpStatus.OK);
 
-
-    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user) {
-        UserResult userResult = userMapper.toDTO(userService.findUserById(id));
-        user.setId(user.getId());
-
-        userService.save(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
+@PutMapping("/edit/{id}")
+public ResponseEntity editUser(@PathVariable Long id,@RequestBody User user){
+        UserResult userResult = userMapper.toDTOEdit(userService.findUserById(id));
+       UserResult userResult1 =   userService.Update(userResult,user);
+    return new ResponseEntity<>(userResult1,HttpStatus.ACCEPTED);
+}
+//    @PutMapping("/edit/{id}")
+//    public ResponseEntity<?> updateUser(@PathVariable Long id,@RequestBody User user){
+//        U user = userService.findUserById(id);
+//        user.setId(user1.getId());
+//        userService.update(user);
+//        return new ResponseEntity<>(user,HttpStatus.OK);
+//    }
 
     @GetMapping("/renderDeletedUser")
-    public ResponseEntity<?> ListDeletedUser(){
+    public ResponseEntity<?> ListDeletedUser() {
         List<User> users = userService.findAllByDeleted(true);
-        return new ResponseEntity<>(users,HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
-@PutMapping("/restore/{id}")
-    public ResponseEntity<?> restoreUser(@PathVariable Long id){
+
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<?> restoreUser(@PathVariable Long id) {
         User user = userService.findById(id);
         user.setDeleted(false);
         userService.save(user);

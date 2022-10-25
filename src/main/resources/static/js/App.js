@@ -32,10 +32,14 @@ class User {
 
 }
 class TableTop{
-    constructor(id,status,capacity,content) {
+    constructor(id,status,updateAt,createAt,capacity,content) {
         this.id = id;
         this.status = status;
+        this.updateAt = updateAt;
+        this.createAt = createAt;
         this.capacity = capacity;
         this.content = content;
     }
 }
+
+

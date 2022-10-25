@@ -16,18 +16,20 @@
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="usernameEdit" class="form-label fw-bold ">Tên đăng nhập:</label>
-                                <input type="text" class="form-control" id="usernameEdit" name="usernameEdit">
+                                <input type="text" class="form-control" id="usernameEdit" name="usernameEdit" required>
                             </div>
 
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="phoneEdit" class="form-label fw-bold">Phone:</label>
-                                <input type="phone" class="form-control text-end" id="phoneEdit" name="phoneEdit">
+                                <input type="phone" class="form-control text-end" id="phoneEdit" name="phoneEdit"
+                                       required>
                             </div>
                             <div class="col col-md-6">
                                 <label for="emailEdit" class="form-label fw-bold">Email:</label>
-                                <input type="emailEdit" class="form-control" id="emailEdit" name="emailEdit">
+                                <input type="emailEdit" class="form-control" id="emailEdit" name="emailEdit" required>
+                                <input type="hidden" id="idUserss">
                             </div>
                         </div>
                     </form>
@@ -41,13 +43,13 @@
     </div>
     <script src="/js/App.js"></script>
     <script>
-        function editUser1(id) {
+        function editUser1() {
             let editUser = new User();
-            editUser.id = id;
+            editUser.id = $("#idUserss").val();
             editUser.userName = $("#usernameEdit").val();
             editUser.phone = $("#phoneEdit").val();
             editUser.email = $("#emailEdit").val();
-            editUser.deleted = false;
+            editUser.status = false;
             $.ajax({
                 headers: {
                     "accept": "application/json",
@@ -55,10 +57,19 @@
                 },
                 type: "PUT",
 
-                url: "http://localhost:8080/api/users/edit/" + id,
+                url: "http://localhost:8080/api/users/edit/" + editUser.id,
                 data: JSON.stringify(editUser)
             }).done(function (data) {
-                window.location.href = "/user"
+                console.log(data)
+                $("#modalEdit").modal("hide");
+            }).fail((e) => {
+                console.log(e)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
             })
         }
 
@@ -72,39 +83,30 @@
                 url: "http://localhost:8080/api/users/" + id
             })
                 .done((data) => {
-                    console.log(data);
                     $("#idEdit").val(data.id);
                     $("#usernameEdit").val(data.userName);
                     $("#phoneEdit").val(data.phone);
                     $("#emailEdit").val(data.email);
+                    $("#password").val(data.password)
                     $("#modalEdit").modal("show");
-                    $("#btnEdit").on('click', function () {
-                        // checkPassword();
-                        editUser1(data.id);
-                        $("#btnEdit").trigger("submit")
-
-                    });
+                    $("#idUserss").val(data.id)
+                    console.log(data)
                 })
-                // .fail()
-                // Swal.fire({
-                //     icon: 'error',
-                //     title: 'Oops...',
-                //     text: 'Something went wrong!',
-                //     footer: '<a href="">Why do I have this issue?</a>'
-                // })
+
+            $("#btnEdit").on('click', function () {
+                editUser1();
+                $("#btnEdit").trigger("submit")
+
+            });
+            // .fail()
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Oops...',
+            //     text: 'Something went wrong!',
+            //     footer: '<a href="">Why do I have this issue?</a>'
+            // })
 
         }
-
-        // function checkPassword() {
-        //     let pas = $('#passEdit').val();
-        //     let pas1 = $('#passEdit1').val();
-        //     if (pas == pas1) {
-        //         password: $('#passEdit').val();
-        //     } else {
-        //         alert('mật khẩu không khớp');
-        //         $('#modalEdit').modal('show');
-        //     }
-        // }
     </script>
-
+    <!--    <script src="/js/validateUser.js"></script>-->
 </th:block>

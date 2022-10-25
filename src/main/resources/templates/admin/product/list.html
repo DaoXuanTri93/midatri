@@ -60,8 +60,8 @@
                                         <th scope="col" class="fw-bold fs-5">Giá</th>
                                         <th scope="col" class="fw-bold fs-5">Danh mục</th>
                                         <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
-                                        <th colspan="2"> Thao tác </th>
-<!--                                        <th></th>-->
+                                        <th colspan="2"> Thao tác</th>
+                                        <!--                                        <th></th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -113,9 +113,9 @@
                 dataSrc: '',
             },
             columns: [
-                {data: 'title'},
+                {data: 'title',},
                 {
-                    data: 'price'
+                    data: 'price',
                 },
                 {data: "category.categoryName"},
                 {
@@ -142,10 +142,9 @@
 
     });
 </script>
-<script>
 
-    function handlerShowCategory(){
-        let category;
+<script>
+        function handlerShowCategory() {
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -170,7 +169,8 @@
                 console.log("get drinks fails");
             })
     }
-    function handlerShowCategoryParent(){
+
+    function handlerShowCategoryParent() {
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -380,26 +380,27 @@
     });
 
     $('#btnShowMenuType').on("click", function () {
-        if($("#menuType").hasClass("hide")) {
+        if ($("#menuType").hasClass("hide")) {
             $("#menuType").removeClass("hide");
-        }else {
+        } else {
             $("#menuType").addClass("hide");
         }
     })
     $('#btnShowProduct').on('click', function () {
-        if($("#filterProduct").hasClass("hide")) {
+        if ($("#filterProduct").hasClass("hide")) {
             $("#filterProduct").removeClass("hide");
-        }else {
+        } else {
             $("#filterProduct").addClass("hide");
         }
     })
-    $('#btnShowGroupProduct').on('click', function (){
-        if($('#groupProduct').hasClass("hide")) {
+    $('#btnShowGroupProduct').on('click', function () {
+        if ($('#groupProduct').hasClass("hide")) {
             $('#groupProduct').removeClass("hide");
-        }else {
+        } else {
             $('#groupProduct').addClass("hide");
         }
-    })
+    })}
+
 
 
 </script>
