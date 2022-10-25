@@ -56,11 +56,11 @@
                                 <table id="tblProduct" class="table table-striped ">
                                     <thead>
                                     <tr>
-                                        <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
-                                        <th scope="col" class="fw-bold fs-5">Giá</th>
-                                        <th scope="col" class="fw-bold fs-5">Số Lượng</th>
-                                        <th scope="col" class="fw-bold fs-5">Danh mục</th>
-                                        <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
+                                        <th scope="col" class="fw-bold fs-6">Tên thức uống</th>
+                                        <th scope="col" class="fw-bold fs-6">Giá</th>
+                                        <th scope="col" class="fw-bold fs-6">Số Lượng</th>
+                                        <th scope="col" class="fw-bold fs-6">Danh mục</th>
+                                        <th scope="col" class="fw-bold fs-6">Hình ảnh</th>
                                         <th colspan="2"> Thao tác</th>
                                         <!--                                        <th></th>-->
                                     </tr>
@@ -105,54 +105,65 @@
 </body>
 <script>
     $(document).ready(function () {
-        $("#tblProduct").DataTable({
-            ajax: {
-                contentType: 'application/json',
-                url: 'http://localhost:8080/api/item',
-                type: 'GET',
-
-                dataSrc: '',
+        let category;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
             },
-            columns: [
-                {data: 'title',},
-                {
-                    data: 'price',
-                },
-                {data: 'quantity'},
-                {data: 'categoryId',render:function (categoryId){
-                        $.ajax({
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-type": "application/json"
-                            },
-                            type: "GET",
-                            url: "http://localhost:8080/api/category"+categoryId,
-                        }).done((data)=>{
-                            return `<td>${data.categoryName}</td>`
-                        })
-                    }
-                },
-                {
-                    data: 'img',
-                    render: function (img) {
-                        return `<img src="${img}" style="width: 50px ; height: 50px"/>`
-                    }
+            type: "GET",
+            url: "http://localhost:8080/api/category",
+        })
+            .done(function (data) {
+                category=data;
+                $("#tblProduct").DataTable({
+                    ajax: {
+                        contentType: 'application/json',
+                        url: 'http://localhost:8080/api/item',
+                        type: 'GET',
 
-                },
-                {
-                    data: 'id',
-                    render: function (data, type, row, meta) {
-                        return `
+                        dataSrc:''
+                    },
+
+                    columns: [
+                        {data: 'title',},
+                        {data: 'price'},
+                        {data: 'quantity'},
+                        {data:"categoryId",render:function (categoryId){
+                            for (let i=0;i<category.length;i++){
+                                if(categoryId==category[i].id){
+                                    return`<td>${category[i].categoryName}</td>`
+                                }
+                            }
+
+                            }
+                        } ,
+                        // {data: "categoryId"},
+                        {
+                            data: 'img',
+                            render: function (img) {
+                                return `<img src="${img}" style="width: 60px ; height: 60px"/>`
+                            }
+
+                        },
+                        {
+                            data: 'id',
+                            render: function (data, type, row, meta) {
+                                return `
                         <div class="d-flex">
                             <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
                             <button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
                         </div>
+                                `;
+                            }, orderable: false
+                        },
+                    ]
+                });
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            })
 
-                                    `;
-                    }, orderable: false
-                },
-            ]
-        });
 
     });
 </script>
@@ -165,16 +176,15 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category",
+            url: "http://localhost:8080/api/category/parent?hasParentId=true",
         })
             .done(function (data) {
-                category=data;
                 $("#catalogsCreate").append(`
-                             <option tabindex="-1" selected>Lựa Chọn</option>`)
-                for (let i = 0; i < category.length; i++) {
-                    let id = category[i].id;
-                    let name = category[i].categoryName;
-                    let parentId = category[i].parentId;
+                             <option tabindex="-1" selected>---Lựa Chọn---</option>`)
+                for (let i = 0; i < data.length; i++) {
+                    let id = data[i].id;
+                    let name = data[i].categoryName;
+                    let parentId = data[i].parentId;
                     $("#catalogsCreate").append(`<option value=${parentId}>${name}</option>`);
                 }
                 $("#modalCreateProduct").modal("show");
@@ -185,6 +195,7 @@
     }
 
     function handlerShowCategoryParent() {
+        $("#catalogsParentCreate option").remove();
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -194,11 +205,13 @@
             url: "http://localhost:8080/api/category/parent",
         })
             .done(function (data) {
+                $("#catalogsParentCreate").append(`<option >---Lựa Chọn---</option>`);
                 for (let i = 0; i < data.length; i++) {
                     let id = data[i].id;
                     let name = data[i].categoryName;
                     let parent = data[i].parentId
                     $("#catalogsParentCreate").append(`<option value=${id}>${name}</option>`);
+
                 }
 
             })

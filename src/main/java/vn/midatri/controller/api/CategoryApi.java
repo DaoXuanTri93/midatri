@@ -27,7 +27,7 @@ public class CategoryApi {
     }
 
     @GetMapping("parent")
-    public ResponseEntity<?> findAllHasParentId(boolean hasParentId) {
+    public ResponseEntity<?> findAllHasParentId( boolean hasParentId) {
         List<CategoryResult> categories = categoryService.findAllHasParentId(hasParentId);
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }

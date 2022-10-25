@@ -1,13 +1,13 @@
 class Product {
-    constructor(id, title, img, content, price, quantity, category_id, user_id, deleted) {
+    constructor(id, title, img, content, price, quantity, categoryId, userId, deleted) {
         this.id = id;
         this.title = title;
         this.img = img;
         this.content = content;
         this.price = price;
         this.quantity = quantity;
-        this.category_id = category_id;
-        this.user_id = user_id;
+        this.categoryId = categoryId;
+        this.userId = userId;
         this.deleted = deleted;
     }
 }

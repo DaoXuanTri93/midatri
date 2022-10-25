@@ -116,7 +116,7 @@
                         "Content-type": "application/json"
                     },
                     type: "GET",
-                    url: "http://localhost:8080/api/category/parent"
+                    url: "http://localhost:8080/api/category/parent?hasParentId=true"
                 })
                     .done(function (data) {
                             $.each(data, (i,item)=>{
