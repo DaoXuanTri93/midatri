@@ -19,14 +19,13 @@ import java.math.BigDecimal;
 
 @Accessors(chain = true)
 public class CreateItem {
-    private long id ;
     private String title;
     private BigDecimal price;
     private Integer quantity;
     private String img;
     private String content;
-    private CategoryResult category;
-    private UserResult user;
+    private long categoryId;
+    private long userId;
     private boolean deleted ;
 
 

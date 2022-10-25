@@ -564,9 +564,11 @@
                                                     <div>
                                                         <button class="btn btn-light-transparent" translate=""
                                                                 type="button"
-                                                                title="Tách ghép đơn"><i
-                                                                class="far fa-file-dashed-line"></i><span>Tách
-                                                ghép</span></button>
+                                                                title="Tách ghép đơn"
+                                                                onclick="handelSplitTable(tableTopId,booking_id)">
+                                                            <i class="far fa-file-dashed-line"></i>
+                                                            <span>Tách ghép</span>
+                                                        </button>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -587,8 +589,7 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
                                         onclick="handelPay(tableTopId,booking_id)"><i
-                                        class="fa-regular fa-circle-dollar"></i>Thanh
-                                    toán (F9)
+                                        class="fa-regular fa-circle-dollar"></i>Thanh toán (F9)
                                 </button>
                                 <button class="btn btn-alert" type="button" disabled=""><i
                                         class="fa-regular fa-bell-concierge"></i> Thông báo (F10)
@@ -641,7 +642,7 @@
         <div class="float-nav right">
             <div class="float-nav-content">
                 <button class="float-nav-close">
-                    <i class="fal fa-times" onclick="cancel()">
+                    <i class="fal fa-times" onclick="cancelPay()">
 
                     </i></button>
                 <kv-cashier-payment>
@@ -785,6 +786,11 @@
                                     <button class="btn btn-lg btn-success" onclick="handlePayAll(booking_id)"
                                             type="button">
                                         <i class="fas fa-dollar-sign"></i>
+                                        Hủy thanh toán
+                                    </button>
+                                    <button class="btn btn-lg btn-success" onclick="handlePayAll(booking_id)"
+                                            type="button">
+                                        <i class="fas fa-dollar-sign"></i>
                                         Thanh toán
                                     </button>
                                 </div>
@@ -799,48 +805,64 @@
 </div>
 
 <!--bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-->
-<modal-container class="d-none" role="dialog" tabindex="-1" aria-modal="true" style="display: block;">
+<modal-container
+        class="modal fade in d-none"
+                 id="splitTable"
+                 role="dialog"
+                 tabindex="-1"
+                 style="display: block">
     <div role="document" class="modal-dialog modal-changing-order ui-draggable">
-        <div class="modal-content">
-            <kv-modal _nghost-mum-c36="">
+        <div class="modal-content" style="width: 700px;">
+            <kv-modal _nghost-duf-c36="">
                 <!---->
-                <div class="modal-header ui-draggable-handle">
-                    <h4 class="modal-title pull-left">1-48 - Bàn 1 Lầu 2</h4>
-                    <button aria-label="Close" class="close pull-right" type="button"><i class="fa-light fa-xmark"></i>
-                    </button>
+                <div _ngcontent-duf-c36="" class="modal-header ng-star-inserted ui-draggable-handle"
+                     style=" margin: 30px auto !important ;
+">
+                    <h4 _ngcontent-duf-c36="" class="modal-title pull-left" id="tableSplit"></h4>
+                    <button _ngcontent-duf-c36=""
+                            aria-label="Close"
+                            class="close pull-right"
+                            id="closeSplitTable"
+                            onclick="closeSplitTable(tableTopId,booking_id)"
+                            skip-disable=""
+                            type="button"><i _ngcontent-duf-c36="" class="fa-light fa-xmark"></i></button>
                 </div>
                 <!---->
-                <div></div>
-                <kv-cashier-table-changing _nghost-mum-c37="">
+                <div _ngcontent-duf-c36="" class="ng-star-inserted"></div>
+                <kv-cashier-table-changing _nghost-duf-c41="" class="ng-star-inserted">
                     <!----><!---->
-                    <div class="table-changing form-wraper modal-body">
-                        <div class="form-label-80">
-                            <div class="form-group checkbox-changing">
-                                <div class="form-control-static">
-                                    <!----><label class="radio-inline"><input name="orderActions" type="radio"
-                                                                              value="merge"><span
-                                        translate="">Ghép đơn</span></label><!----><label class="radio-inline"><input
-                                        name="orderActions" type="radio" value="split"><span
-                                        translate="">Tách đơn</span></label>
+                    <div _ngcontent-duf-c41="" class="table-changing form-wraper modal-body ng-star-inserted"
+                         skip-disable="">
+                        <div _ngcontent-duf-c41="" class="form-label-80">
+                            <div _ngcontent-duf-c41="" class="form-group checkbox-changing">
+                                <div _ngcontent-duf-c41="" class="form-control-static">
+                                    <!----><label _ngcontent-duf-c41="" class="radio-inline ng-star-inserted"><input
+                                        _ngcontent-duf-c41="" name="orderActions" type="radio" value="merge"><span
+                                        _ngcontent-duf-c41="" translate="">Ghép đơn</span></label><!----><label
+                                        _ngcontent-duf-c41="" class="radio-inline ng-star-inserted"><input
+                                        _ngcontent-duf-c41="" name="orderActions" type="radio" value="split"><span
+                                        _ngcontent-duf-c41="" translate="">Tách đơn</span></label>
                                 </div>
                             </div>
                         </div>
                         <!---->
-                        <kv-cashier-merge-orders _nghost-mum-c38="">
-                            <div class="form-label-80">
-                                <div class="form-group">
-                                    <label class="form-label control-label" translate="">Ghép đến </label>
-                                    <div class="form-output" style="width: 250px;">
-                                        <kendo-dropdownlist class="form-control-custom k-widget k-dropdown k-header"
+                        <kv-cashier-merge-orders _ngcontent-duf-c41="" _nghost-duf-c42="" class="ng-star-inserted">
+                            <div _ngcontent-duf-c42="" class="form-label-80">
+                                <div _ngcontent-duf-c42="" class="form-group">
+                                    <label _ngcontent-duf-c42="" class="form-label control-label" translate="">Ghép
+                                        đến </label>
+                                    <div _ngcontent-duf-c42="" class="form-output" style="width: 250px;">
+                                        <kendo-dropdownlist _ngcontent-duf-c42=""
+                                                            class="form-control-custom k-widget k-dropdown k-header"
                                                             dir="ltr">
                                             <!---->
                                             <span aria-haspopup="listbox" role="listbox" unselectable="on"
                                                   class="k-dropdown-wrap k-state-default"
-                                                  id="k-5c36ceb6-7fce-467f-bb1e-37fa33061203" dir="ltr" readonly="false"
+                                                  id="k-1ccce708-e6f8-4a4f-8fe4-34c31b1b6340" dir="ltr" readonly="false"
                                                   tabindex="0" aria-disabled="false" aria-readonly="false"
                                                   aria-expanded="false"
-                                                  aria-describedby="b520f889-3dbe-4e57-9ca7-e19e98084520">
-                                    <span class="k-input" unselectable="on" id="b520f889-3dbe-4e57-9ca7-e19e98084520">
+                                                  aria-describedby="deacc041-93bd-458c-9231-b5d7378daaad">
+                                    <span class="k-input" unselectable="on" id="deacc041-93bd-458c-9231-b5d7378daaad">
                                        <!----><!---->Chọn phòng/bàn
                                     </span>
                                     <span class="k-select" unselectable="on"><span
@@ -851,61 +873,75 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-box">
-                                <kendo-grid class="k-grid-blue k-widget k-grid" kendogridselectby="id" dir="ltr">
+                            <div _ngcontent-duf-c42="" class="form-box">
+                                <kendo-grid _ngcontent-duf-c42="" class="k-grid-blue k-widget k-grid"
+                                            kendogridselectby="id" dir="ltr">
                                     <!----><!----><!---->
                                     <div class="k-grid-aria-root" role="grid" aria-rowcount="1" aria-colcount="5">
                                         <!----><!---->
-                                        <div class="k-grid-header" role="presentation"
+                                        <div class="k-grid-header ng-star-inserted" role="presentation"
                                              style="padding: 0px 4px 0px 0px;">
                                             <!---->
                                             <div class="k-grid-header-wrap" data-scrollable="" role="presentation">
                                                 <table role="presentation">
-                                                    <colgroup role="presentation">
+                                                    <colgroup kendogridcolgroup="" role="presentation">
                                                         <!----><!----><!----><!---->
-                                                        <col>
-                                                        <col>
-                                                        <col>
-                                                        <col>
-                                                        <col>
+                                                        <col class="ng-star-inserted">
+                                                        <col class="ng-star-inserted">
+                                                        <col class="ng-star-inserted">
+                                                        <col class="ng-star-inserted">
+                                                        <col class="ng-star-inserted">
                                                         <!---->
                                                     </colgroup>
-                                                    <thead role="presentation">
+                                                    <thead kendogridheader="" role="presentation" _nghost-duf-c40="">
                                                     <!----><!---->
-                                                    <tr role="row">
+                                                    <tr _ngcontent-duf-c40="" kendogridlogicalrow="" role="row"
+                                                        class="ng-star-inserted">
                                                         <!----><!----><!----><!---->
-                                                        <th aria-selected="false" class="k-header cell-checkbox"
-                                                            id="selectAllCheckboxId" role="columnheader" rowspan="1"
+                                                        <th _ngcontent-duf-c40="" aria-selected="false"
+                                                            class="k-header cell-checkbox ng-star-inserted"
+                                                            kendodraggable="" kendodraggablecolumn="" kendodroptarget=""
+                                                            kendogridlogicalcell="" role="columnheader" rowspan="1"
                                                             colspan="1" aria-colindex="1">
                                                             <!----><!----><!----><!----><!----><label
-                                                                class="k-checkbox-label"
-                                                                for="selectAllCheckboxId"></label><!----><!----><!---->
+                                                                _ngcontent-duf-c42=""
+                                                                class="k-checkbox-label ng-star-inserted"
+                                                                ></label><!----><!----><!---->
                                                             <!----><!---->
                                                         </th>
                                                         <!----><!----><!---->
-                                                        <th aria-selected="false" class="k-header" role="columnheader"
-                                                            rowspan="1" colspan="1" aria-colindex="2">
+                                                        <th _ngcontent-duf-c40="" aria-selected="false"
+                                                            class="k-header ng-star-inserted" kendodraggable=""
+                                                            kendodraggablecolumn="" kendodroptarget=""
+                                                            kendogridlogicalcell="" role="columnheader" rowspan="1"
+                                                            colspan="1" aria-colindex="2">
                                                             <!----><!----><!----><!----><!---->Khách hàng<!----><!---->
                                                             <!----><!---->
                                                         </th>
                                                         <!----><!----><!---->
-                                                        <th aria-selected="false" class="k-header cell-date-time"
-                                                            role="columnheader" rowspan="1" colspan="1"
-                                                            aria-colindex="3">
+                                                        <th _ngcontent-duf-c40="" aria-selected="false"
+                                                            class="k-header cell-date-time ng-star-inserted"
+                                                            kendodraggable="" kendodraggablecolumn="" kendodroptarget=""
+                                                            kendogridlogicalcell="" role="columnheader" rowspan="1"
+                                                            colspan="1" aria-colindex="3">
                                                             <!----><!----><!----><!----><!---->Mã đơn<!----><!---->
                                                             <!----><!---->
                                                         </th>
                                                         <!----><!----><!---->
-                                                        <th aria-selected="false"
-                                                            class="k-header text-right cell-quatity" role="columnheader"
-                                                            rowspan="1" colspan="1" aria-colindex="4">
+                                                        <th _ngcontent-duf-c40="" aria-selected="false"
+                                                            class="k-header text-right cell-quatity ng-star-inserted"
+                                                            kendodraggable="" kendodraggablecolumn="" kendodroptarget=""
+                                                            kendogridlogicalcell="" role="columnheader" rowspan="1"
+                                                            colspan="1" aria-colindex="4">
                                                             <!----><!----><!----><!----><!---->Số lượng hàng<!---->
                                                             <!----><!----><!---->
                                                         </th>
                                                         <!----><!----><!---->
-                                                        <th aria-selected="false" class="k-header cell-price"
-                                                            role="columnheader" rowspan="1" colspan="1"
-                                                            aria-colindex="5">
+                                                        <th _ngcontent-duf-c40="" aria-selected="false"
+                                                            class="k-header cell-price ng-star-inserted"
+                                                            kendodraggable="" kendodraggablecolumn="" kendodroptarget=""
+                                                            kendogridlogicalcell="" role="columnheader" rowspan="1"
+                                                            colspan="1" aria-colindex="5">
                                                             <!----><!----><!----><!----><!---->Tổng tiền<!----><!---->
                                                             <!----><!---->
                                                         </th>
@@ -917,24 +953,24 @@
                                                 <!---->
                                             </div>
                                         </div>
-                                        <kendo-grid-list class="k-grid-container" role="presentation">
+                                        <kendo-grid-list class="k-grid-container ng-star-inserted" role="presentation">
                                             <!---->
                                             <div class="k-grid-content k-virtual-content" role="presentation"
                                                  tabindex="-1">
                                                 <div class="k-grid-table-wrap" role="presentation">
                                                     <table class="k-grid-table" role="presentation">
-                                                        <colgroup role="presentation">
+                                                        <colgroup kendogridcolgroup="" role="presentation">
                                                             <!----><!----><!----><!---->
-                                                            <col>
-                                                            <col>
-                                                            <col>
-                                                            <col>
-                                                            <col>
+                                                            <col class="ng-star-inserted">
+                                                            <col class="ng-star-inserted">
+                                                            <col class="ng-star-inserted">
+                                                            <col class="ng-star-inserted">
+                                                            <col class="ng-star-inserted">
                                                             <!---->
                                                         </colgroup>
-                                                        <tbody role="presentation">
+                                                        <tbody kendogridtablebody="" role="presentation">
                                                         <!----><!---->
-                                                        <tr class="k-grid-norecords">
+                                                        <tr class="k-grid-norecords ng-star-inserted">
                                                             <td colspan="5">
                                                                 <!----><!----><!----> Bàn chưa có hóa đơn nào
                                                             </td>
@@ -955,7 +991,7 @@
                                         <!----><!----><!---->
                                     </div>
                                     <!---->
-                                    <kendo-pager class="k-pager-wrap k-grid-pager k-widget">
+                                    <kendo-pager class="k-pager-wrap k-grid-pager k-widget ng-star-inserted">
                                         <!----><!----><!----><!----><!----><!---->
                                     </kendo-pager>
                                     <!---->
@@ -964,10 +1000,12 @@
                         </kv-cashier-merge-orders>
                         <!---->
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary"><i class="fa fa-check-square"></i><span
-                                translate="">Thực hiện</span></button>
-                        <a class="btn btn-default"><i class="fa fa-ban"></i><span translate="">Bỏ qua</span></a></div>
+                    <div _ngcontent-duf-c41="" class="modal-footer ng-star-inserted">
+                        <button _ngcontent-duf-c41="" class="btn btn-primary"><i _ngcontent-duf-c41=""
+                                                                                 class="fa fa-check-square"></i><span
+                                _ngcontent-duf-c41="" translate="">Thực hiện</span></button>
+                        <a _ngcontent-duf-c41="" class="btn btn-default" onclick="closeSplitTable(tableTopId,booking_id)"><i _ngcontent-duf-c41="" class="fa fa-ban"></i><span
+                                _ngcontent-duf-c41="" translate="">Bỏ qua</span></a></div>
                 </kv-cashier-table-changing>
                 <!----><!---->
             </kv-modal>
@@ -976,9 +1014,11 @@
 </modal-container>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <!--<script src="/assets/order/js_1.js"></script>-->
-<script src="/assets/order/style.js"></script>
-<script src="/assets/order/pos.js"></script>
-<script src="/js/App.js"></script>
+<script defer  type="module" src="/assets/web/js/api/api.js"></script>
+<script defer src="/assets/order/style.js"></script>
+<script defer src="/assets/order/pos-new.js"></script>
+<script defer src="/js/App.js"></script>
+
 <script>
     $('#link-menu').click(function () {
 

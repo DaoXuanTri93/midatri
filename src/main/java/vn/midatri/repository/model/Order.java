@@ -21,13 +21,21 @@ import java.time.Instant;
 public class Order {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private Long userId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "grand_total", nullable = false, precision = 12)
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    @Column(name = "grand_total", nullable = false)
     private BigDecimal grandTotal;
 
     @Column(name = "discount")
@@ -45,7 +53,7 @@ public class Order {
     @Column(name = "address", length = 45)
     private String address;
 
-    @Column(name = "create_at")
+    @Column(name = "create_at",nullable = false)
     private Instant createAt;
 
     @Column(name = "update_at")
@@ -53,7 +61,6 @@ public class Order {
 
     @Column(name = "content")
     private String content;
-
 
 
 }

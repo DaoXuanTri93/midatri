@@ -21,7 +21,7 @@ public class ItemParam {
     private Integer quantity;
     private String img;
     private String content;
-    private CategoryResult category;
-    private UserResult user;
+    private long categoryId;
+    private long userId;
     private boolean deleted;
 }

@@ -35185,7 +35185,6 @@ kv-kitchen-page .header .header-right ul.header-right-ul > li.menu-bar ul, .rece
 .modal.fade {
   -ms-box-orient: horizontal;
   display: -moz-flex !important;
-  display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
@@ -35195,9 +35194,7 @@ kv-kitchen-page .header .header-right ul.header-right-ul > li.menu-bar ul, .rece
 .modal-backdrop {
   z-index: 10003;
 }
-.modal .modal-dialog {
-  margin: 0;
-}
+
 .modal .modal-dialog .modal-content {
   border-radius: 20px;
 }

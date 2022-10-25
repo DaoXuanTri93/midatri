@@ -8,9 +8,6 @@ import java.util.List;
 
 @Repository
 public interface TableTopRepository extends JpaRepository<TableTop, Long> {
-    List<TableTop> findAllByDeleted(Boolean status);
-    List<TableTop> findAll();
-
-    List<TableTop> findAllByStatus(boolean status);
+    List<TableTop> findAllByStatus(boolean deleted);
     TableTop save(TableTop tableTop);
 }

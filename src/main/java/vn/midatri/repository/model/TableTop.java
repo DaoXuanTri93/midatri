@@ -7,7 +7,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -26,14 +25,19 @@ public class TableTop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", length = 45, nullable = false)
+    private String title;
+
+
     @Column(name = "status", nullable = false)
-    private Boolean status;
+    @Enumerated(value = EnumType.STRING)
+    private TabletopStatus status;
 
     @Column(name = "capacity", nullable = false)
     private Short capacity;
 
     @CreationTimestamp
-    @Column(name = "create_at")
+    @Column(name = "create_at", nullable = false)
     private Instant createAt;
 
     @UpdateTimestamp
@@ -42,4 +46,5 @@ public class TableTop {
 
     @Column(name = "content", length = 45)
     private String content;
+
 }

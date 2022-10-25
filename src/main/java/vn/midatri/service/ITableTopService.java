@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ITableTopService {
     List<TableTopResult> findAll();
-    List<TableTopResult> findAllByStatus(boolean status);
+    List<TableTopResult> findAllByStatus(boolean deleted);
     TableTopResult save(TableTopResult tableTopResult);
     TableTopResult findTableById( Long id);
     TableTopResult create(TableTopRegister tableTopRegister);
