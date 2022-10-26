@@ -23,6 +23,7 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+
     @Override
     public List<UserResult> findAll() {
         return userRepository.findAll()
@@ -33,12 +34,12 @@ public class UserService implements IUserService {
 
     @Override
     public UserResult findById(Long id) {
-        return userMapper.toDTO(userRepository.findById(id).get()) ;
+        return userMapper.toDTO(userRepository.findById(id).get());
     }
 
     @Override
-    public UserResult save(UserRegister userRegister) {
-//         return userMapper.toDTO(userRepository.save(userMapper.toUser(userRegister)));
+    public UserResult create(UserRegister userRegister) {
+//         return userMapper.toDTO(userRepository.save(userMapper.toDTO()));
         User user = userMapper.toUserRegister(userRegister);
 
         userRepository.save(user);
@@ -57,12 +58,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResult Update(UserResult userResult,User user) {
-        user.setFullName(userResult.getFullName());
+    public UserResult Update(UserResult userResult, User user) {
         user.setId(userResult.getId());
         user.setPassword(userResult.getPassword());
         UserResult userResults = userMapper.toDTO(userRepository.save(user));
-        userResults.setPassword("null");
+        user.setPassword("null");
         return userResults;
     }
 

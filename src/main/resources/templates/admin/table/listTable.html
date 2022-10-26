@@ -65,10 +65,12 @@
                             <thead>
                             <tr class="bg-success">
                                 <th>#</th>
+                                <th>Status</th>
                                 <th>Capacity</th>
                                 <th>Create At</th>
                                 <th>Update At</th>
-                                <th>content</th>
+                                <th>Content</th>
+                                <th>Title</th>
                                 <th scope="col" class="text-center fw-bold">Action</th>
                             </tr>
                             </thead>
@@ -118,27 +120,36 @@
                 ],
                 select: true,
                 columns: [
-                    {data: 'id', "width": "5%"},
-                    {data: 'capacity', "width": "10%"},
+                    {data: 'id'},
+                    {
+                        data: 'status', render: function (status) {
+                            if (status == "AVAILABLE") {
+                                return `<td>Đang Hoạt Động</td>`
+                            }
+                        }
+                    },
+                    {data: 'capacity'},
                     {
                         data: 'createAt',
-                        "width": "20%",
+
                         render: function (createAt) {
                             return $.format.date(createAt, "dd/MM/yyyy HH:mm:ss");
                         }
                     },
                     {
-                        data: 'updateAt', "width": "20%",
+                        data: 'updateAt',
                         render: function (updateAt) {
                             return $.format.date(updateAt, "dd/MM/yyyy HH:mm:ss");
                         }
                     },
-                    {data: 'content', "width": "30%"},
+                    {data: 'content'},
+                    {data: 'title'},
+
                     {
-                        data: 'id', "width": "15%",
+                        data: 'id',
                         render: function (data, type, row, meta) {
                             return `<button class="btn btn-outline-warning editUser cssAction" onclick="handlerShowTableEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                                <button class="btn btn-outline-danger delUser cssDelete" onclick="handleShowDeleteTableForm(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>    `;
+                                   `;
                         }, orderable: false
                     },
                 ]
@@ -162,6 +173,12 @@
     //         {label: ' content', name: 'content'},
     //     ]
     // });
+    // < button
+    // className = "btn btn-outline-danger delUser cssDelete"
+    // onClick = "handleShowDeleteTableForm(${data})"
+    // data - id = "${data}" > < i
+    // className = "fa fa-archive" > < /i></
+    // button >
 </script>
 <script>
     $("#createNewTable").on("click", function () {

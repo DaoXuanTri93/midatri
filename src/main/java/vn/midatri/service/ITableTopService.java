@@ -10,6 +10,10 @@ import java.util.List;
 public interface ITableTopService {
     List<TableTopResult> findAll();
     List<TableTopResult> findAllByStatus(TabletopStatus status);
+
+
+//    List<TableTopResult> findAllByList(TabletopStatus status);
+
     TableTopResult save(TableTopResult tableTopResult);
     TableTopResult findTableById( Long id);
     TableTopResult create(TableTopRegister tableTopRegister);

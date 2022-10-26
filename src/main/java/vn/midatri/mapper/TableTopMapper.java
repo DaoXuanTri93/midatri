@@ -24,6 +24,8 @@ public class TableTopMapper {
                 .setId(tableTopRegister.getId())
                 .setStatus(tableTopRegister.getStatus())
                 .setCapacity(tableTopRegister.getCapacity())
+                .setCreateAt(tableTopRegister.getCreateAt())
+                .setTitle(tableTopRegister.getTitle())
                 .setContent(tableTopRegister.getContent());
     }
 
@@ -34,6 +36,7 @@ public class TableTopMapper {
                 .setCreateAt(tableTopResult.getCreateAt())
                 .setUpdateAt(tableTopResult.getUpdateAt())
                 .setCapacity(tableTopResult.getCapacity())
+                .setTitle(tableTopResult.getTitle())
                 .setContent(tableTopResult.getContent());
 
     }

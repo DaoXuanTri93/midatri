@@ -42,7 +42,8 @@
                                 <th>#</th>
                                 <th>Status</th>
                                 <th>Capacity</th>
-                                <th>content</th>
+                                <th>Content</th>
+                                <th>Title</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -69,18 +70,25 @@
 </body>
 <script>
     $(document).ready(function renderRestoreTable() {
-        $("#tblRestore").DataTable({
+      let restoreTable=  $("#tblRestore").DataTable({
             ajax: {
                 contentType: 'application/json',
-                url: "http://localhost:8080/api/table-top/renderDeletedTable",
+                url: "http://localhost:8080/api/table-top/renderNotUseTable",
                 type: "GET",
                 dataSrc: ''
             },
             columns: [
                 {data: 'id'},
-                {data: 'status'},
+                {
+                    data: 'status', render: function (status) {
+                        if (status == "UNAVAILABLE") {
+                            return `<td>Ngừng hoạt động</td>`
+                        }
+                    }
+                },
                 {data: 'capacity'},
                 {data: 'content'},
+                {data: 'title'},
                 {
                     data: 'id',
                     render: function (data, type, row, meta) {
@@ -88,35 +96,19 @@
                                     `;
                     }, orderable: false
                 },
-            ]
+            ],
         });
+        // setInterval(function () {
+        //     table.ajax.reload(null, false); // user paging is not reset on reload
+        // }, 1000);
+        // table.on('select.dt deselect.dt', function () {
+        //     localStorage.setItem('DataTables_selected', table.rows({selected: true}).toArray())
+        // })
     });
 
 </script>
 <script>
-    function handleShowRestoreTable(id) {
-        alert("Aaaaaaaaaaa q " )
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "POST",
-            url: "http://localhost:8080/api/table-top/restore/" + id
-        }).done((data)=>{
-                console.log(data);
-                $('#idRestore').val(data.id);
-                $('#statusTableRestore').val(data.status);
-                $('#capacityTableRestore').val(data.capacity);
-                $('#contentTableRestore').val(data.content);
-                $('#modalRestoreTable').modal('show');
-                $('#btnRestore').on('click', function () {
-                    restoreTable();
-                    $('#btnRestore').trigger("submit");
-                })
-            }
-        )
-    }
+
 </script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>

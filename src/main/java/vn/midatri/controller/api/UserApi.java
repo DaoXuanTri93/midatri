@@ -31,7 +31,11 @@ public class UserApi {
         List<User> users = userService.findAllByDeleted(false);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
-
+    @GetMapping("/renderBlockUser")
+    public ResponseEntity<?> ListDeletedUser() {
+        List<User> users = userService.findAllByDeleted(true);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         UserResult userResult = userService.findById(id);
@@ -44,7 +48,7 @@ public class UserApi {
 
             return AppUtils.mapError(bindingResult);
         }
-        UserResult userResult = userService.save(userRegister);
+        UserResult userResult = userService.create(userRegister);
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
@@ -53,7 +57,7 @@ public class UserApi {
         User user = userService.findUserById(id);
         user.setDeleted(true);
         userService.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
 
@@ -82,11 +86,7 @@ public class UserApi {
 //        return new ResponseEntity<>(user,HttpStatus.OK);
 //    }
 
-    @GetMapping("/renderDeletedUser")
-    public ResponseEntity<?> ListDeletedUser() {
-        List<User> users = userService.findAllByDeleted(true);
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
+
 
     @PutMapping("/restore/{id}")
     public ResponseEntity<?> restoreUser(@PathVariable Long id) {

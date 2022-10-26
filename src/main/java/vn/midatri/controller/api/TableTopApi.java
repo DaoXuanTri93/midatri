@@ -45,7 +45,7 @@ public class TableTopApi {
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
 
-    @GetMapping("/renderDeletedTable")
+    @GetMapping("/renderNotUseTable")
     public ResponseEntity<?> listTableDeleted() {
         List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(TabletopStatus.UNAVAILABLE);
         return new ResponseEntity<>(tableTopResults, HttpStatus.OK);
@@ -74,10 +74,11 @@ public class TableTopApi {
 
     @PostMapping("/restore/{id}")
     public ResponseEntity<?> restoreTable(@PathVariable Long id) {
-//        tableTop.setStatus(false);
-//        tableTopService.update(tableTop);
+        TableTop tableTop = tableTopService.findById(id);
+        tableTop.setStatus(TabletopStatus.AVAILABLE);
+        tableTopService.update(tableTop);
 //        tableTop.setStatus(TabletopStatus.AVAILABLE);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(tableTop,HttpStatus.OK);
     }
 
     @GetMapping("{id}")
@@ -90,6 +91,7 @@ public class TableTopApi {
     public ResponseEntity<?> editTable(@PathVariable Long id, @RequestBody TableTop tableTop) {
         TableTopResult tableTopResult = tableTopService.findTableById(id);
         tableTop.setId(tableTop.getId());
+        tableTop.setStatus(tableTop.getStatus());
         tableTopService.update(tableTop);
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
 

@@ -15,9 +15,14 @@
                         <div class="row">
                             <div class="row">
                                 <input type="hidden" id="idDelete" hidden>
-                                <div class="col col-md-12 ">
+                                <div class="col col-md-6 ">
                                     <label for="usernameDelete" class="form-label fw-bold">Tên đăng nhập:</label>
                                     <input type="text" class="form-control" id="usernameDelete" name="usernameDelete"
+                                           readonly>
+                                </div>
+                                <div class="col col-md-6 ">
+                                    <label for="fullnameDelete" class="form-label fw-bold">Tên người dùng:</label>
+                                    <input type="text" class="form-control" id="fullnameDelete" name="fullnameDelete"
                                            readonly>
                                 </div>
                             </div>
@@ -58,6 +63,7 @@
                     console.log(data);
                     $("#idDelete").val(data.id);
                     $("#usernameDelete").val(data.userName);
+                    $("#fullnameDelete").val(data.fullName);
                     $("#phoneDelete").val(data.phone);
                     $("#emailDelete").val(data.email);
                     $("#modalDelete").modal("show");

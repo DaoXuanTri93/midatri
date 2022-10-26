@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-3">
                             <div class="col text-end">
-                                <a class="btn btn-outline-danger " href="/user/restore">
+                                <a class="btn btn-outline-danger " href="/user/restoreUser">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     Danh sách người dùng đã xóa</a>
                             </div>
@@ -65,9 +65,10 @@
                         <a class="showHideColumn" data-columnindex="2">Admin</a>-
                         <a class="showHideColumn" data-columnindex="3">Email</a>-
                         <a class="showHideColumn" data-columnindex="4">Phone</a>-
-                        <a class="showHideColumn" data-columnindex="5">User Name</a>-
-                        <a class="showHideColumn" data-columnindex="6">Vendor</a>-
-                        <a class="showHideColumn" data-columnindex="7">Action</a>
+                        <a class="showHideColumn" data-columnindex="5">Full Name</a>-
+                        <a class="showHideColumn" data-columnindex="6">User Name</a>-
+                        <a class="showHideColumn" data-columnindex="7">Vendor</a>-
+                        <a class="showHideColumn" data-columnindex="8">Action</a>
                         </div>
                         <table id="tblUser" class="table table-striped display nowrap" style="width: 100%">
                             <thead>
@@ -111,12 +112,16 @@
     $(document).ready(function () {
 
      let tblUser=   $("#tblUser").DataTable({
-         buttons: [
-             {extend: "edit", text: 'Copy to clipboard'}
-         ],
-         // scrollY: 200,
-         // scrollX: true,
-         // "bDestroy": true,
+         // buttons: [
+         //     {extend: "edit", text: 'Copy to clipboard'}
+         // ],
+         scrollY: 200,
+         scrollX: true,
+         "bDestroy": true,
+             lengthMenu: [
+                 [5, 10, -1],
+                 ['5', '10', 'All']
+             ],
             ajax: {
                 contentType: 'application/json',
                 url: "http://localhost:8080/api/users",
@@ -130,7 +135,7 @@
                 {data: 'email'},
                 {data: 'phone'},
                 {data: 'fullName'},
-                {data: 'username'},
+                {data: 'userName'},
                 {data: 'vendor'},
                 {
                     data: 'id',
