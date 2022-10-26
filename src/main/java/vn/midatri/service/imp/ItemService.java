@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.item.CreateItem;
+import vn.midatri.dto.item.ItemParam;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
+import vn.midatri.repository.model.Item;
 import vn.midatri.service.IItemService;
 
 import java.util.List;
@@ -34,8 +36,13 @@ public class ItemService implements IItemService {
 
     }
 
-
-
+    @Override
+    public List<ItemResult> findAllByCategory_ParentId(long parenId) {
+        return itemRepository.findAllByCategory_ParentId(parenId)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+    }
 
 
     @Override

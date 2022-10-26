@@ -27,8 +27,8 @@
                 </div>
                 <div class="">
                     <h3 class="" >Nhóm hàng
-                        <span class="">
-                    <a onclick="handelCreateCategory()"  href="javascript:void(0)" title="Thêm nhóm hàng">
+                        <span class="" style="color:#0d6efd">
+                    <a onclick="handelCreateCategory()"  title="Thêm nhóm hàng">
                         <i class="fa fa-plus-circle"></i>
                     </a>
                     <a class="" id="btnShowGroupProduct">
@@ -153,7 +153,7 @@
                             let str = `
                                     <li  class="">
                                 <div class="blue">
-                                    <input type="checkbox" id="action" class="thucDon" data-label="${item.categoryName}" >
+                                    <input type="checkbox" id="action" class="thucDon" value=${item.id} data-label="${item.categoryName}" >
                                     <a href="javascript:void(0)" tabindex="0" class=""></a>
                                     <label  class="">${item.categoryName}</label>
                                 </div>
@@ -163,7 +163,7 @@
                             $("#menuType ul").append(str);
 
                         })
-                        handelCheckbox();
+                        // handelCheckbox();
                     })
                     .fail(function (jqXHR) {
                         console.log("get drinks fails");
@@ -171,19 +171,88 @@
             }
             getAllCategory();
             getAllCategoryParent();
-         function handelCheckbox(){
+            var checkboxtable;
+
+            function  handelCheckboxDataTable(parentId){
+                  let category;
+                  $.ajax({
+                      headers: {
+                          "Accept": "application/json",
+                          "Content-type": "application/json"
+                      },
+                      type: "GET",
+                      url: "http://localhost:8080/api/category",
+                  })
+                      .done(function (data) {
+                          category = data;
+                          checkboxtable = $("#tblProduct").DataTable({
+                              destroy:true,
+                              ajax: {
+                                  contentType: 'application/json',
+                                  url: 'http://localhost:8080/api/item/find/'+parentId,
+                                  type: 'GET',
+
+                                  dataSrc: ''
+                              },
+
+                              columns: [
+                                  {data: 'title',},
+                                  {data: 'price'},
+                                  {data: 'quantity'},
+                                  {
+                                      data: "categoryId", render: function (categoryId) {
+                                          for (let i = 0; i < category.length; i++) {
+                                              if (categoryId == category[i].id) {
+                                                  return `<td>${category[i].categoryName}</td>`
+                                              }
+                                          }
+
+                                      }
+                                  },
+                                  // {data: "categoryId"},
+                                  {
+                                      data: 'img',
+                                      render: function (img) {
+                                          return `<img src="${img}" style="width: 60px ; height: 60px"/>`
+                                      }
+
+                                  },
+                                  {
+                                      data: 'id',
+                                      render: function (data, type, row, meta) {
+                                          return `
+                                            <div class="d-flex">
+                                                <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
+                                                <button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
+                                            </div>
+                                            `;
+                                      }, orderable: false
+                                  },
+                              ]
+                          });
+                      })
+                      .fail(function (jqXHR) {
+                          console.log("get drinks fails");
+                      })
+
+          }
+
+            function handelCheckbox() {
+                $('input[type="checkbox"]').on('click', function () {
+                    if ($(this).prop("checked") === true) {
+                        console.log($(this).context.dataset.label);
+                        console.log($(this).val());
+                        datatable.destroy();
+                        $("tbody").remove();
+                        handelCheckboxDataTable($(this).val());
 
 
-             $('input[type="checkbox"]').on('click', function (){
-                 if($(this).prop("checked") === true){
-                     console.log($(this).context.dataset.label);
-
-                 }
-                 else if($(this).prop("checked") === false) {
-                     console.log("a")
-                 }
-             });
-         }
+                    } else if ($(this).prop("checked") === false) {
+                        console.log("a")
+                        handelDataTable();
+                    }
+                });
+            }
 
          function handelUpdateCategory(id){
              $("#parentCategoryUpdate option").remove();
@@ -222,7 +291,7 @@
 
                          })
                          .fail(function (jqXHR) {
-                             console.log("get drinks fails");
+                             console.log("get drinks fails update");
                          })
 
                  })
@@ -232,6 +301,7 @@
              $("#modalUpdateCategory").modal("show");
          }
          function handelCreateCategory(){
+
              $("#parentCategoryCreate option").remove();
                      $.ajax({
                          headers: {
@@ -246,13 +316,12 @@
                                  let id = data[i].id;
                                  let name = data[i].categoryName;
                                  let parent = data[i].parentId
-
                                      $("#parentCategoryCreate").append(`<option value=${id}>${name}</option>`);
                                  }
 
                          })
                          .fail(function (jqXHR) {
-                             console.log("get drinks fails");
+                             console.log("category error");
                          })
                      $("#modalCreateCategory").modal("show");
          }

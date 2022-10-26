@@ -55,7 +55,8 @@
                         <thead>
                         <tr>
                             <th scope="col" class="fw-bold fs-5">Tên thức uống</th>
-                            <th scope="col" class="fw-bold fs-5">Giá</th>
+                            <th scope="col" class="fw-bold fs-5">Giá Sản Phẩm</th>
+                            <th scope="col" class="fw-bold fs-5">Số Lượng Sản Phẩm</th>
                             <th scope="col" class="fw-bold fs-5">Danh mục</th>
                             <th scope="col" class="fw-bold fs-5">Hình ảnh</th>
                             <th scope="col" colspan="2" class="text-center fw-bold fs-5">Thao tác</th>
@@ -85,42 +86,66 @@
 </body>
 <script th:inline="javascript">
     $(document).ready(function () {
-        $("#tblProduct").DataTable({
-            ajax: {
-                contentType: 'application/json',
-                url: 'http://localhost:8080/api/item/restore',
-                type : 'GET',
-
-                dataSrc: '',
+        let category;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
             },
-            columns: [
-                {data: 'title'},
-                {
-                    data: 'price'
-                },
-                {data: 'category.categoryName'},
-                {
-                    data:  'img',
-                    render:function (img){
-                        if (img == null) {
-                            return '<img src="/assets/img/Logo.png" style="width: 50px ; height: 50px/>';
-                        } else {
-                            return `<img src="${img}" style="width: 50px ; height: 50px"/>`
+            type: "GET",
+            url: "http://localhost:8080/api/category",
+        })
+            .done(function (data) {
+                category=data;
+                $("#tblProduct").DataTable({
+                    ajax: {
+                        contentType: 'application/json',
+                        url: 'http://localhost:8080/api/item/restore',
+                        type: 'GET',
 
-                        }
-                    }
+                        dataSrc:''
+                    },
 
-                },
-                {
-                    data: 'id',
-                    render: function (data, type, row, meta) {
-                        return `<button class="btn btn-outline-warning restore" onclick="handlerShowModalRestore(${data})" data-id="${data}"><i class="fa fa-undo"></i></button>
+                    columns: [
+                        {data: 'title',},
+                        {data: 'price'},
+                        {data: 'quantity'},
+                        {data:"categoryId",render:function (categoryId){
+                                for (let i=0;i<category.length;i++){
+                                    if(categoryId==category[i].id){
+                                        return`<td>${category[i].categoryName}</td>`
+                                    }
+                                }
+
+                            }
+                        } ,
+                        // {data: "categoryId"},
+                        {
+                            data:  'img',
+                            render:function (img){
+                                if (img == null) {
+                                    return '<img src="/assets/img/Logo.png" style="width: 50px ; height: 50px/>';
+                                } else {
+                                    return `<img src="${img}" style="width: 50px ; height: 50px"/>`
+
+                                }
+                            }
+
+                        },
+                        {
+                            data: 'id',
+                            render: function (data, type, row, meta) {
+                                return `<button class="btn btn-outline-warning restore" onclick="handlerShowModalRestore(${data})" data-id="${data}"><i class="fa fa-undo"></i></button>
                                     `;
-                    }
-                },
+                            }
+                        },
+                    ]
+                });
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            })
 
-            ]
-        });
 
     });
 
@@ -156,7 +181,7 @@
                       for (let i = 0; i < category.length; i++) {
                           let id = category[i].id;
                           let name = category[i].categoryName;
-                          if (category[i].id == data.category.id) {
+                          if (category[i].id == data.categoryId) {
                               $("#catalogsRestore").append(
                                   `<option value="${id}" selected>${name}</option>`);
                           } else {

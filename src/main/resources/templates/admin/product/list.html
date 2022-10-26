@@ -104,8 +104,10 @@
 <th:block th:replace="/admin/product/modalDeleteProduct::modalDeleteProduct"/>
 </body>
 <script>
-    $(document).ready(function () {
-        let category;
+        var datatable;
+    function handelDataTable(){
+        // $(document).ready(function () {
+            let category;
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -116,7 +118,8 @@
         })
             .done(function (data) {
                 category=data;
-                $("#tblProduct").DataTable({
+                datatable =  $("#tblProduct").DataTable({
+
                     ajax: {
                         contentType: 'application/json',
                         url: 'http://localhost:8080/api/item',
@@ -130,11 +133,11 @@
                         {data: 'price'},
                         {data: 'quantity'},
                         {data:"categoryId",render:function (categoryId){
-                            for (let i=0;i<category.length;i++){
-                                if(categoryId==category[i].id){
-                                    return`<td>${category[i].categoryName}</td>`
+                                for (let i=0;i<category.length;i++){
+                                    if(categoryId==category[i].id){
+                                        return`<td>${category[i].categoryName}</td>`
+                                    }
                                 }
-                            }
 
                             }
                         } ,
@@ -165,7 +168,10 @@
             })
 
 
-    });
+        // });
+    }
+        handelDataTable();
+
 </script>
 
 <script>
@@ -240,9 +246,9 @@
 
 
     function deleteProduct() {
-        let drink = {
+        let product = {
             id: $("#idProductDelete").val(),
-            drinkName: $("#productNameDelete").val(),
+            title: $("#productNameDelete").val(),
             price: $("#priceProductDelete").val(),
             description: $("#desProductDelete").val(),
             inventory: $("#inventoryProductDelete").val()
@@ -255,8 +261,8 @@
                 "Content-type": "application/json"
             },
             type: "DELETE",
-            url: "http://localhost:8080/api/item/deleted/" + drink.id,
-            data: JSON.stringify(drink)
+            url: "http://localhost:8080/api/item/deleted/" + product.id,
+            data: JSON.stringify(product)
         })
             .done(function (data) {
                 window.location.href = '/products';
@@ -329,62 +335,77 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category",
+            url: "http://localhost:8080/api/category/parent?hasParentId=true",
         })
             .done(function (data) {
 
                 category = data;
-
+                $("#catalogsParentUpdate option").remove();
                 $.ajax({
                     headers: {
                         "Accept": "application/json",
                         "Content-type": "application/json"
                     },
                     type: "GET",
-                    url: "http://localhost:8080/api/item/" + id
+                    url: "http://localhost:8080/api/category/parent" ,
                 })
                     .done(function (data) {
-                        $("#idProductUpdate").val(data.id);
-                        $("#productNameUpdate").val(data.title);
-                        $("#priceProductUpdate").val(data.price);
-                        $("#quantityProductUpdate").val(data.quantity);
-                        $("#desProductUpdate").val(data.description);
-                        for (let i = 0; i < category.length; i++) {
-                            let id = category[i].id;
-                            let name = category[i].categoryName;
-                            let parent = category[i].parentId
-                            if (category[i].id == data.category.id) {
-                                $("#catalogsUpdate").append(
-                                    `<option value="${parent}"  selected>${name}</option>`);
-                            } else {
-                                $("#catalogsUpdate").append(
-                                    `<option value="${parent}"  >${name}</option>`);
-                            }
-                        }
-                        $("#catalogsParentUpdate option").remove();
+                        parent = data
                         $.ajax({
                             headers: {
                                 "Accept": "application/json",
                                 "Content-type": "application/json"
                             },
                             type: "GET",
-                            url: "http://localhost:8080/api/category/" ,
+                            url: "http://localhost:8080/api/item/" + id
                         })
                             .done(function (data) {
-                                parent = data
+                                $("#idProductUpdate").val(data.id);
+                                $("#productNameUpdate").val(data.title);
+                                $("#priceProductUpdate").val(data.price);
+                                $("#quantityProductUpdate").val(data.quantity);
+                                $("#desProductUpdate").val(data.description);
+                                for (let i = 0; i < category.length; i++) {
+                                    let id = category[i].id;
+                                    let name = category[i].categoryName;
+                                    let parentId = category[i].parentId
+                                    if (id == data.categoryId) {
+                                        $.each(parent,(i,item)=>{
+                                            if(parentId==item.id){
+                                                $("#catalogsParentUpdate").append(`<option value=${item.id} selected >${item.categoryName}</option>`);
+                                                $.each(category,(i,item)=>{
+                                                    if(item.parentId==$("#catalogsParentUpdate").val()){
+                                                        if(id==item.id){
+                                                            $("#catalogsUpdate").append(`<option value="${item.id}" selected>${item.categoryName}</option>`)
+                                                        }else {
+                                                            $("#catalogsUpdate").append(`<option value="${item.id}" >${item.categoryName}</option>`)
+                                                        }
+                                                    }
+                                                })
+                                            }else {
+                                                $("#catalogsParentUpdate").append(`<option value=${item.id} >${item.categoryName}</option>`);
 
-                                $("#catalogsParentUpdate").append(`<option value=${parent.id} selected>${parent.categoryName}</option>`);
+                                            }
+                                        })
+                                    }
+                                    // else {
+                                    //     $("#catalogsUpdate").append(
+                                    //         `<option value="${id}">${name}</option>`);
+                                    // }
+                                }
 
+                                $("#modalUpdateProduct").modal("show");
                             })
-                            .fail(function (jqXHR) {
-                                console.log("get drinks fails");
-                            })
+                            .fail(function (resp) {
+                                alert("Show modal update error");
+                            });
 
-                        $("#modalUpdateProduct").modal("show");
+
                     })
-                    .fail(function (resp) {
-                        alert("Show modal update error");
-                    });
+                    .fail(function (jqXHR) {
+                        console.log("get drinks fails");
+                    })
+
 
 
             })

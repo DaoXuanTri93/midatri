@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.item.CreateItem;
+import vn.midatri.dto.item.ItemParam;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.CategoryMapper;
 import vn.midatri.mapper.ItemMapper;
@@ -48,6 +49,12 @@ public class ItemApi {
     public ResponseEntity<?> findByIdItem(@PathVariable Long id){
         ItemResult itemResult = itemService.findById(id);
         return new ResponseEntity<>(itemResult, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/{parentId}")
+    public ResponseEntity<?> findAllByCategory_ParentId(@PathVariable long parentId){
+        List<ItemResult> itemResul = itemService.findAllByCategory_ParentId(parentId);
+        return new ResponseEntity<>(itemResul,HttpStatus.OK);
     }
 
 

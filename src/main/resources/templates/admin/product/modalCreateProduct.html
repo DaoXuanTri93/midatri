@@ -24,7 +24,7 @@
 
                             <div class="mb-3 col-8">
                                 <label for="catalogsParentCreate" class="form-label fw-bold">Loại Thực Đơn</label>
-                                <select class="form-select" onclick="handelCreateCategory()" id="catalogsParentCreate">
+                                <select class="form-select" onclick="handelCreateCategoryProduct()" id="catalogsParentCreate">
                                 </select>
                             </div>
 
@@ -92,7 +92,7 @@
             createProduct();
         })
 
-        function handelCreateCategory(){
+        function handelCreateCategoryProduct(){
             $("#catalogsCreate option").remove();
             $.ajax({
                 headers: {
