@@ -15,27 +15,23 @@
                         <div class="row">
                             <label for="idTableRestore" class="form-label fw-bold">Số thứ tự :</label>
                             <input type="text" class="form-control" id="idTableRestore" readonly>
-                            <div class="col col-md-6">
-                                <label for="statusTableRestore" class="form-label fw-bold"> Status:</label>
-                                <input type="" class="form-control" id="statusTableRestore"
-                                       name="statusTableRestore" readonly>
-                            </div>
-                            <div class="col col-md-6">
-                                <label for="capacityTableRestore" class="form-label fw-bold">Sức chứa bàn:</label>
+                            <div class="col col-md-12">
+                                <label for="capacityTableRestore" class="form-label fw-bold">Số ghế:</label>
                                 <input type="number" class="form-control" id="capacityTableRestore"
                                        name="capacityTable" readonly>
                             </div>
+                            <div class="col col-md-12">
+                            <label for="titleTableRestore" class="form-label fw-bold">Tên bàn  :</label>
+                            <input type="text" class="form-control" id="titleTableRestore"
+                                   name="titleTableRestore" readonly>
+                        </div>
+
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
+                            <div class="col col-md-12">
                                 <label for="contentTableRestore" class="form-label fw-bold">Ghi chú :</label>
                                 <input type="text" class="form-control" id="contentTableRestore"
                                        name="contentTableRestore" readonly>
-                            </div>
-                            <div class="col col-md-6">
-                                <label for="titleTableRestore" class="form-label fw-bold">Tên bàn  :</label>
-                                <input type="text" class="form-control" id="titleTableRestore"
-                                       name="titleTableRestore" readonly>
                             </div>
                         </div>
                     </form>
@@ -64,14 +60,12 @@
                 type: "POST"
             })
                 .done(function (data) {
-                    // $("#idTableRestore").val(data.id);
                     $("#tblRestore").DataTable().ajax.reload();
                     $('#modalRestoreTable').modal("hide");
                     $("#frmRestoreTable")[0].reset();
                 })
 
         }
-        $("#tblRestore").DataTable.ajax.reload();
         function handleShowRestoreTable(id) {
             $.ajax({
                 headers: {

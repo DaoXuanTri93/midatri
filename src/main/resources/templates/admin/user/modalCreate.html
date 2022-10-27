@@ -56,9 +56,7 @@
 
     <script>
         $("#btnCreateUser").on("click", function () {
-            // checkPassword();
             createUser();
-            $("#btnCreateUser").trigger("submit");
         });
 
         function createUser() {
@@ -87,6 +85,16 @@
                         `;
                         $("tblUser tbody").append(str);
                     })
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Tạo mới người dùng thành công',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    $('#tblUser').DataTable().ajax.reload();
+                    $('#modalCreate').modal("hide");
+                    $("#frmCreateUser")[0].reset();
                 }
                 ,
                 (jqXHR) => {

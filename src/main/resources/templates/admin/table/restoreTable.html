@@ -39,12 +39,12 @@
                         <table id="tblRestore" class="table table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Status</th>
-                                <th>Capacity</th>
-                                <th>Content</th>
-                                <th>Title</th>
-                                <th>Action</th>
+                                <th>Tên phòng/bàn</th>
+                                <th>Ghi chú</th>
+                                <th>Số lượng ghế</th>
+                                <th>Trạng thái</th>
+                                <th>Số thứ tự</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -78,7 +78,9 @@
                 dataSrc: ''
             },
             columns: [
-                {data: 'id'},
+                {data: 'title'},
+                {data: 'content'},
+                {data: 'capacity'},
                 {
                     data: 'status', render: function (status) {
                         if (status == "UNAVAILABLE") {
@@ -86,9 +88,7 @@
                         }
                     }
                 },
-                {data: 'capacity'},
-                {data: 'content'},
-                {data: 'title'},
+                {data: 'id'},
                 {
                     data: 'id',
                     render: function (data, type, row, meta) {

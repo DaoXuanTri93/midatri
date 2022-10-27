@@ -43,7 +43,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnDelete">Xóa</button>
+                    <button type="submit" class="btn btn-outline-primary" id="btnDelete">Xóa</button>
                 </div>
             </div>
         </div>
@@ -80,11 +80,20 @@
                         "accept": "application/json",
                         "content-type": "application/json"
                     },
-                    type: "POST",
+                    type: "PUT",
                     url: "http://localhost:8080/api/users/deleted/" + id,
                     data: JSON.stringify(idUserDel)
                 }).done(function (data) {
-                    window.location.href = "/user"
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Xóa người dùng thành công',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    $('#tblUser').DataTable().ajax.reload();
+                    $('#modalDelete').modal("hide");
+                    $("#frmDeleteUser")[0].reset();
                 })
             }
         }

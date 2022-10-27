@@ -14,8 +14,6 @@ public class TableTopMapper {
                 .setTitle(tableTop.getTitle())
                 .setStatus(tableTop.getStatus())
                 .setCapacity(tableTop.getCapacity())
-                .setCreateAt(tableTop.getCreateAt())
-                .setUpdateAt(tableTop.getUpdateAt())
                 .setContent(tableTop.getContent());
     }
 
@@ -24,7 +22,6 @@ public class TableTopMapper {
                 .setId(tableTopRegister.getId())
                 .setStatus(tableTopRegister.getStatus())
                 .setCapacity(tableTopRegister.getCapacity())
-                .setCreateAt(tableTopRegister.getCreateAt())
                 .setTitle(tableTopRegister.getTitle())
                 .setContent(tableTopRegister.getContent());
     }
@@ -33,8 +30,6 @@ public class TableTopMapper {
         return new TableTop()
                 .setId(tableTopResult.getId())
                 .setStatus(tableTopResult.getStatus())
-                .setCreateAt(tableTopResult.getCreateAt())
-                .setUpdateAt(tableTopResult.getUpdateAt())
                 .setCapacity(tableTopResult.getCapacity())
                 .setTitle(tableTopResult.getTitle())
                 .setContent(tableTopResult.getContent());

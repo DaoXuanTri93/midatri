@@ -68,7 +68,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserResult save(User user) {
-        return null;
+        return userMapper.toDTO(userRepository.save(user));
     }
 
     @Override

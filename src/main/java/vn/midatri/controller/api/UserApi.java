@@ -52,12 +52,12 @@ public class UserApi {
         return new ResponseEntity<>(userResult, HttpStatus.OK);
     }
 
-    @PostMapping("/deleted/{id}")
+    @PutMapping("/deleted/{id}")
     public ResponseEntity<?> deletedUser(@PathVariable Long id) {
         User user = userService.findUserById(id);
         user.setDeleted(true);
         userService.save(user);
-        return new ResponseEntity<>(user,HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
@@ -90,9 +90,9 @@ public class UserApi {
 
     @PutMapping("/restore/{id}")
     public ResponseEntity<?> restoreUser(@PathVariable Long id) {
-//        User user = userService.findById(id);
-//        user.setDeleted(false);
-//        userService.save(user);
-        return new ResponseEntity<>(HttpStatus.OK);
+        User user = userService.findUserById(id);
+        user.setDeleted(false);
+        userService.save(user);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 }

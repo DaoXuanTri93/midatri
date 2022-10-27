@@ -13,38 +13,34 @@
                     </div>
                     <form id="frmEditTable">
                         <div class="row">
-                            <div class="col col-md-6">
-                                <label class="form-label fw-bold">Số thứ tự:</label>
-                                <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" readonly>
+                            <div class="">
+                                <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" hidden>
                             </div>
-                        </div>
-                        <div class="col col-md-6">
+
+
+                        <div class="col col-md-12">
                             <label for="statusTableEdit" class="form-label fw-bold">Trạng thái:</label>
                             <select class="form-select" id="statusTableEdit">
-                                <option selected>Chọn trạng thái  bàn</option>
-                                <option value="AVAILABLE">Hoạt động</option>
-                                <option value="UNAVAILABLE">Ngừng hoạt động</option>
+                                <option value="UNAVAILABLE" selected>Ngừng hoạt động</option>
+                                <option value="AVAILABLE" selected>Hoạt động</option>
                             </select>
-                            <div class="col col-md-6">
-                                <label for="titleEdit" class="form-label fw-bold">Tiêu đề:</label>
+                        </div>
+                            <div class="col col-md-12">
+                                <label for="titleEdit" class="form-label fw-bold">Tên phòng/bàn:</label>
                                 <input type="text" class="form-control" id="titleEdit" name="titleEdit">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
-                                <label for="capacityEdit" class="form-label fw-bold">Sức chứa:</label>
-                                <select class="form-select" id="capacityEdit" >
-                                    <option selected value="2">2</option>
-                                    <option selected value="4">4</option>
-                                    <option selected value="6">6</option>
-                                    <option selected value="8">8</option>
-                                </select>
+                            <div class="col col-md-12">
+                                <label for="capacityEdit" class="form-label fw-bold">Số ghế :</label>
+                                <input type="number" class="form-control" id="capacityEdit" name="capacityEdit">
                             </div>
-                            <div class="col col-md-6">
+
+                            </div>
+                            <div class="col col-md-12">
                                 <label for="contentEdit" class="form-label fw-bold">Ghi chú:</label>
                                 <input type="text" class="form-control" id="contentEdit" name="contentEdit">
                             </div>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -59,7 +55,7 @@
         function editTable() {
             let editTable = new TableTop();
             editTable.id = $("#idTableEdit").val();
-            editTable.capacity = $("#capacityEdit").find(":selected").val();
+            editTable.capacity = $("#capacityEdit").val();
             editTable.title = $("#titleEdit").val();
             editTable.status = $("#statusTableEdit").find(":selected").val();
             editTable.content = $("#contentEdit").val();
@@ -69,7 +65,6 @@
                     "content-type": "application/json"
                 },
                 type: "PUT",
-
                 url: "http://localhost:8080/api/table-top/edit/" + editTable.id,
                 data: JSON.stringify(editTable)
             }).done(function (data) {
@@ -77,7 +72,6 @@
                     $('#tblTop').DataTable().ajax.reload();
                     $('#modalEditTable').modal("hide");
                     $("#frmEditTable")[0].reset();
-                // window.location.href = "/table-top"
             }
             )
         }

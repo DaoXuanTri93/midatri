@@ -42,6 +42,7 @@
                     <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -60,7 +61,6 @@
                     "content-type": "application/json"
                 },
                 type: "PUT",
-
                 url: "http://localhost:8080/api/users/edit/" + editUser.id,
                 data: JSON.stringify(editUser)
             }).done(function (data) {
@@ -73,14 +73,13 @@
                     "fullName": data.fullName,
                     "username": data.userName
                 }).draw('full-hold');
-
                 $("#modalEdit").modal("hide");
             }).fail((e) => {
                 console.log(e)
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!',
+                    text: "Dữ liệu bạn nhập không chính xác!!",
                     // footer: '<a href="">Why do I have this issue?</a>'
                 })
             })
@@ -109,7 +108,6 @@
             $("#btnEdit").on('click', function () {
                 // let currentRow = $(this).parents('tr');
                 editUser();
-                $("#btnEdit").trigger("submit")
 
             })
             // $("#btnEdit").on('click', function () {

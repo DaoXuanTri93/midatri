@@ -31,12 +31,12 @@
             <div class="breadcomb-list" style="background-color: #8BC34A">
                 <div class="row mb-lg-2 ">
                     <div class="col-7">
-                        <h1>Quản lý bàn</h1>
+                        <h1>Phòng/Bàn</h1>
                     </div>
                     <div class="col-2">
                         <div class="col text-end">
                             <button class="btn btn-outline-light bg-primary" id="createNewTable">
-                                <i class="fa fa-plus-square"></i> Tạo bàn mới
+                                <i class="fa fa-plus-square"></i> Thêm phòng/bàn
                             </button>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                         <div class="col text-end">
                             <a class="btn btn-outline-danger " href="/table-top/restoreTable">
                                 <i class="fa fa-list" aria-hidden="true"></i>
-                                Danh sách bàn đã xóa</a>
+                                Danh sách bàn không hoạt động</a>
                         </div>
                     </div>
                 </div>
@@ -64,13 +64,11 @@
                         <table id="tblTop" class="table table-striped">
                             <thead>
                             <tr class="bg-success">
-                                <th>#</th>
-                                <th>Status</th>
-                                <th>Capacity</th>
-                                <th>Create At</th>
-                                <th>Update At</th>
-                                <th>Content</th>
-                                <th>Title</th>
+                                <th>Tên phòng/bàn</th>
+                                <th>Ghi chú </th>
+                                <th>Số ghế</th>
+                                <th>Trạng thái</th>
+                                <th>Số thứ tự</th>
                                 <th scope="col" class="text-center fw-bold">Action</th>
                             </tr>
                             </thead>
@@ -120,7 +118,9 @@
                 ],
                 select: true,
                 columns: [
-                    {data: 'id'},
+                    {data: 'title'},
+                    {data: 'content'},
+                    {data: 'capacity'},
                     {
                         data: 'status', render: function (status) {
                             if (status == "AVAILABLE") {
@@ -128,23 +128,7 @@
                             }
                         }
                     },
-                    {data: 'capacity'},
-                    {
-                        data: 'createAt',
-
-                        render: function (createAt) {
-                            return $.format.date(createAt, "dd/MM/yyyy HH:mm:ss");
-                        }
-                    },
-                    {
-                        data: 'updateAt',
-                        render: function (updateAt) {
-                            return $.format.date(updateAt, "dd/MM/yyyy HH:mm:ss");
-                        }
-                    },
-                    {data: 'content'},
-                    {data: 'title'},
-
+                    {data: "id"},
                     {
                         data: 'id',
                         render: function (data, type, row, meta) {

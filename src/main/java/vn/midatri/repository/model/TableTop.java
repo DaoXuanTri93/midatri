@@ -40,12 +40,6 @@ public class TableTop {
     @Column(name = "capacity", nullable = false)
     private Short capacity;
 
-    @Column(name = "create_at")
-    private Instant createAt;
-
-    @Column(name = "update_at")
-    private Instant updateAt;
-
     @Column(name = "content", length = 45)
     private String content;
 
