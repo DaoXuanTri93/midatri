@@ -94,6 +94,13 @@
                     $('#tblUser').DataTable().ajax.reload();
                     $('#modalDelete').modal("hide");
                     $("#frmDeleteUser")[0].reset();
+                }).fail(function (resp){
+                    console.log(resp);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                 })
             }
         }
