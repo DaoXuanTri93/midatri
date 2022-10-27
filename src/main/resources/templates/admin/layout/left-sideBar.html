@@ -12,7 +12,7 @@
                             <i class="fa fa-chevron-circle-up"></i>
                         </a>
                     </h3>
-                    <div class="" id="menuType">
+                    <div class="form-check " id="menuType">
                         <ul class="">
 <!--                            <li  class="">-->
 <!--                                <div class="blue">-->
@@ -75,27 +75,27 @@
                         Lựa chọn hiển thị
                     </h3>
 
-                    <div class=" ">
-                        <ul class="">
+                    <div class="form-check" >
+                        <ul class="" >
                             <li class="">
                                 <div class="">
-                                    <input type="radio"  data-label="Hàng đang Kinh doanh" >
+                                    <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio" data-label="Hàng đang Kinh doanh" checked>
                                     <a href="javascript:void(0)" tabindex="0" class="checked"></a>
-                                    <label  class="checked">Hàng đang Kinh doanh</label>
+                                    <label  class="form-check-label" for="ActiveRadio">Hàng đang Kinh doanh</label>
                                 </div>
                             </li>
                             <li class="">
                                 <div class="blue">
-                                    <input type="radio"  name="ActiveRadio"  data-label="Hàng ngừng Kinh doanh" >
+                                    <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio1" data-label="Hàng ngừng Kinh doanh" >
                                     <a href="javascript:void(0)" tabindex="0" class=""></a>
-                                    <label  class="">Hàng ngừng Kinh doanh</label>
+                                    <label  class="form-check-label" for="ActiveRadio1">Hàng ngừng Kinh doanh</label>
                                 </div>
                             </li>
                             <li class="">
                                 <div class="">
-                                    <input type="radio"  data-label="Tất cả" >
+                                    <input type="radio" class="form-check-input" id="ActiveRadio2" name="ActiveRadio" data-label="Tất cả" >
                                     <a href="javascript:void(0)" tabindex="0" class=""></a>
-                                    <label  class="">Tất cả</label></div>
+                                    <label  class="form-check-label" for="ActiveRadio2">Tất cả</label></div>
                             </li>
                         </ul>
                     </div>
@@ -109,6 +109,35 @@
 
 
         <script>
+            let category= new Map();
+
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category"
+            })
+                .done((data)=>{
+                    $.each(data,(i,item)=>{
+
+                        $.ajax({
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-type": "application/json"
+                            },
+                            type: "GET",
+                            url: "http://localhost:8080/api/item/find/"+ item.id
+                        }).done((data)=>{
+                            category.set(item.id,data)
+                        })
+
+                    })
+                })
+
+            console.log(category)
+
             function getAllCategory(){
                 $.ajax({
                     headers: {
@@ -123,7 +152,7 @@
                                let str = `<li role="treeitem" class="" data-uid="">
                                             <div class="" >
                                             <span class="k-in">
-                                            <span id="" data-label="${item.categoryName}">${item.categoryName}</span>
+                                            <span id="" onclick="handleFilterCategoryById(${item.id})" data-label="${item.categoryName}">${item.categoryName}</span>
                                             <a class="" id="" onclick="handelUpdateCategory(${item.id})" title="Sửa nhóm hàng">
                                             <i class="fa fa-pencil"></i>
                                         </a>
@@ -153,9 +182,9 @@
                             let str = `
                                     <li  class="">
                                 <div class="blue">
-                                    <input type="checkbox" id="action" class="thucDon" value=${item.id} data-label="${item.categoryName}" >
+                                    <input type="checkbox" id="action${item.id}" class="thucDon form-check-input" value=${item.id} data-label="${item.categoryName}" >
                                     <a href="javascript:void(0)" tabindex="0" class=""></a>
-                                    <label  class="">${item.categoryName}</label>
+                                    <label  class="form-check-label" for="action${item.id}">${item.categoryName}</label>
                                 </div>
                             </li>
                             `
@@ -253,6 +282,12 @@
                     }
                 });
             }
+
+
+
+          function handleFilterCategoryById(id) {
+               alert(id)
+          }
 
          function handelUpdateCategory(id){
              $("#parentCategoryUpdate option").remove();

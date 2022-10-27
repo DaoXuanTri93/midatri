@@ -38,6 +38,11 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
+    public void remove(Long categoryId) {
+        categoryRepository.deleteById(categoryId);
+    }
+
+    @Override
     public List<CategoryResult> findAllHasParentId(boolean hasParentId) {
         return (hasParentId ?
                 categoryRepository.findAllByParentIdIsNotNull() :
