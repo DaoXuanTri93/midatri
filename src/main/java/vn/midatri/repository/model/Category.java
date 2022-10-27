@@ -21,6 +21,11 @@ public class Category {
         this.id = id;
     }
 
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+        this.parent = new Category(parentId);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -37,9 +42,6 @@ public class Category {
     @Column(name = "parentId", insertable = false, updatable = false)
     private Long parentId;
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-        this.parent = new Category(parentId);
-    }
+
 }
 

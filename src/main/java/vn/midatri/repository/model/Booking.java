@@ -35,7 +35,7 @@ public class Booking {
     @Column(name = "full_name", length = 45)
     private String fullName;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 

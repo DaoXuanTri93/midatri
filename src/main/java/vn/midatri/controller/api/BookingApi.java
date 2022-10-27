@@ -31,8 +31,7 @@ public class BookingApi {
 
     @PostMapping
     public ResponseEntity<?> booking(@RequestBody CreateBookingParam createBookingParam) {
-        BookingResult booking = bookingService.booking(createBookingParam);
-        return new ResponseEntity<>(booking, HttpStatus.OK);
+        return new ResponseEntity<>(bookingService.booking(createBookingParam), HttpStatus.OK);
     }
 
 

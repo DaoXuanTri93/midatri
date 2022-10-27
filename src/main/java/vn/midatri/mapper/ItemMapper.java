@@ -27,15 +27,15 @@ public class ItemMapper {
     }
 
     public Item toModel(ItemResult itemResult) {
-        return new Item()
+        return new Item(itemResult.getUserId(),itemResult.getCategoryId() )
                 .setId(itemResult.getId())
                 .setTitle(itemResult.getTitle())
                 .setPrice(itemResult.getPrice())
                 .setQuantity(itemResult.getQuantity())
                 .setImg(itemResult.getImg())
                 .setContent(itemResult.getContent())
-                .setCategoryId(itemResult.getCategoryId())
-                .setUserId(itemResult.getUserId())
+//                .setCategoryId(itemResult.getCategoryId())
+//                .setUserId(itemResult.getUserId())
                 .setDeleted(itemResult.isDeleted());
     }
 
