@@ -11,7 +11,7 @@ public interface IUserService {
 
     List<UserResult> findAll();
     UserResult findById(Long id);
-    UserResult save(UserRegister userRegister);
+    UserResult create(UserRegister userRegister);
 
     void deletedById(Long id);
     List<User> findAllByDeleted(boolean deleted);

@@ -12,57 +12,66 @@
                     <div class="modal-alert-danger hide">
                     </div>
                     <form id="frmEditTable">
-                        <!--                        <input type="hidden" id="idEdit">-->
                         <div class="row">
-                            <div class="col col-md-6">
-                                <label class="form-label fw-bold">Số thứ tự:</label>
-                                <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" readonly>
+                            <div class="">
+                                <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" hidden>
+                            </div>
+
+
+                        <div class="col col-md-12">
+                            <label for="statusTableEdit" class="form-label fw-bold">Trạng thái:</label>
+                            <select class="form-select" id="statusTableEdit">
+                                <option value="UNAVAILABLE" selected>Ngừng hoạt động</option>
+                                <option value="AVAILABLE" selected>Hoạt động</option>
+                            </select>
+                        </div>
+                            <div class="col col-md-12">
+                                <label for="titleEdit" class="form-label fw-bold">Tên phòng/bàn:</label>
+                                <input type="text" class="form-control" id="titleEdit" name="titleEdit">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col col-md-6">
-                                <label for="capacityEdit" class="form-label fw-bold">Sức chứa:</label>
-                                <select class="form-select" id="capacityEdit" required>
-                                    <option selected >Chọn sức chứa bàn</option>
-                                    <option value="2">2</option>
-                                    <option value="4">4</option>
-                                    <option value="6">6</option>
-                                    <option value="8">8</option>
-                                </select>
+                            <div class="col col-md-12">
+                                <label for="capacityEdit" class="form-label fw-bold">Số ghế :</label>
+                                <input type="number" class="form-control" id="capacityEdit" name="capacityEdit">
                             </div>
-                            <div class="col col-md-6">
+
+                            </div>
+                            <div class="col col-md-12">
                                 <label for="contentEdit" class="form-label fw-bold">Ghi chú:</label>
                                 <input type="text" class="form-control" id="contentEdit" name="contentEdit">
                             </div>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEditTable" data-bs-dismiss="modal">Cập nhật</button>
                 </div>
             </div>
         </div>
     </div>
     <script src="/js/App.js"></script>
     <script>
-        function editTable(id) {
+        function editTable() {
             let editTable = new TableTop();
-            editTable.id = id;
-            editTable.capacity = $("#capacityEdit").find(":selected").val();
+            editTable.id = $("#idTableEdit").val();
+            editTable.capacity = $("#capacityEdit").val();
+            editTable.title = $("#titleEdit").val();
+            editTable.status = $("#statusTableEdit").find(":selected").val();
             editTable.content = $("#contentEdit").val();
-            editTable.status =0;
             $.ajax({
                 headers: {
                     "accept": "application/json",
                     "content-type": "application/json"
                 },
                 type: "PUT",
-
-                url: "http://localhost:8080/api/table-top/edit/" + id,
+                url: "http://localhost:8080/api/table-top/edit/" + editTable.id,
                 data: JSON.stringify(editTable)
             }).done(function (data) {
-                window.location.href = "/table-top"
+                    console.log(data);
+                    $('#tblTop').DataTable().ajax.reload();
+                    $('#modalEditTable').modal("hide");
+                    $("#frmEditTable")[0].reset();
             }
             )
         }
@@ -77,12 +86,17 @@
                 url: "http://localhost:8080/api/table-top/" + id
             })
                 .done((data) => {
-                    console.log(data);
                     $("#idTableEdit").val(data.id);
                     $("#capacityEdit").find(":selected").val(data.capacity);
+                    $("#statusTableEdit").find(":selected").val(data.status);
+                    $("#titleEdit").val(data.title);
                     $("#contentEdit").val(data.content);
                     $("#modalEditTable").modal("show");
-                    $("#btnEdit").on('click', function () {
+                    $("#btnEditTable").on('click', function () {
+                        editTable(data.id);
+                        $("#btnEditTable").trigger("submit");
+                        $("#modalEditTable").modal("hide");
+
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -92,17 +106,18 @@
 
                         })
                         {
-                            $('#modalEditTable').DataTable().ajax.reload();
+
                         }
-                        setTimeout(() => {
-                            // window.location.href = "/table-top"
-                        }, 3000)
-                        editTable(data.id);
-                        $("#btnEdit").trigger("submit")
+                        // setTimeout(() => {
+                        //     // window.location.href = "/table-top"
+                        // }, 3000)
+
 
                     });
-                })
+                }
+                )
+
         }
+        $("#tblRestore").DataTable();
     </script>
-    <script src="/js/validateTable.js"></script>
 </th:block>

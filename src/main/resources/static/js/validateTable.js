@@ -1,4 +1,4 @@
-// $(document).ready(function () {
+    // $(document).ready(function () {
 //     $("#modalCreate").on('hidden.bs.modal', () => {
 //         $("#modalCreateTable .modal-alert-danger").removeClass("show").addClass("hide");
 //         $("#frmCreateTable").validate().resetForm();

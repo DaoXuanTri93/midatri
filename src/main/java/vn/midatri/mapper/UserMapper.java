@@ -10,7 +10,7 @@ public class UserMapper {
 
     public User toUserRegister(UserRegister userRegister) {
         return new User()
-                .setUsername(userRegister.getUserName())
+                .setUserName(userRegister.getUserName())
                 .setFullName(userRegister.getFullName())
                 .setPassword(userRegister.getPassword())
                 .setEmail(userRegister.getEmail())
@@ -20,10 +20,11 @@ public class UserMapper {
     public UserResult toDTO(User user) {
         return new UserResult()
                 .setId(user.getId())
-                .setUserName(user.getUsername())
+                .setUserName(user.getUserName())
                 .setPassword(user.getPassword())
                 .setFullName(user.getFullName())
                 .setPhone(user.getPhone())
+                .setDeleted(user.getDeleted())
                 .setEmail(user.getEmail());
 
     }

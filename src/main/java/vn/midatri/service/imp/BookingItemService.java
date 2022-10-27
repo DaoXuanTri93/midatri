@@ -10,10 +10,14 @@ import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.exceptions.NumberFormatException;
 import vn.midatri.mapper.BookingItemMapper;
 import vn.midatri.repository.BookingItemRepository;
+import vn.midatri.repository.BookingRepository;
 import vn.midatri.repository.ItemRepository;
+import vn.midatri.repository.model.Booking;
 import vn.midatri.repository.model.BookingItem;
+import vn.midatri.repository.model.BookingItemStatus;
 import vn.midatri.repository.model.Item;
 import vn.midatri.service.IBookingItemService;
+import vn.midatri.service.IBookingService;
 import vn.midatri.service.IItemService;
 
 import java.math.BigDecimal;
@@ -33,7 +37,7 @@ public class BookingItemService implements IBookingItemService {
     private BookingItemMapper bookingItemMapper;
 
     @Autowired
-    private IItemService itemService;
+    private BookingRepository bookingRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -60,8 +64,9 @@ public class BookingItemService implements IBookingItemService {
 
     @Override
     @Transactional
-    public void deleteAllByBookingId(long id) {
-        bookingItemRepository.deleteAllByBookingId(id);
+    public void deleteAllByBookingId(long bookingId) {
+        bookingItemRepository.deleteAllByBookingId(bookingId);
+//        bookingRepository.deleteById(bookingId);
     }
 
     @Override
@@ -74,21 +79,21 @@ public class BookingItemService implements IBookingItemService {
         BookingItem bookingItem
                 = bookingItemRepository.findByBookingIdAndItemId(param.getBookingId(), param.getItemId());
         if (bookingItem != null) {
-            BookingItem bookingItemParam = bookingItemMapper.toModel(param);
-            int oldQuantity = bookingItem.getQuantity();
-            int newQuantity = oldQuantity + 1;
-            bookingItem.setId(bookingItem.getId());
-            BigDecimal price = bookingItem.getPrice();
-            bookingItem.setPrice(price);
-            bookingItem.setQuantity(newQuantity);
-            return bookingItemMapper.toDTO(bookingItemParam);
+            throw new NotFoundException("NOT FOUND BookingItem !!!");
+//            BookingItem bookingItemParam = bookingItemMapper.toModel(param);
+//            int oldQuantity = bookingItem.getQuantity();
+//            int newQuantity = oldQuantity + 1;
+//            bookingItem.setId(bookingItem.getId());
+//            BigDecimal price = bookingItem.getPrice();
+//            bookingItem.setPrice(price);
+//            bookingItem.setQuantity(newQuantity);
+//            return bookingItemMapper.toDTO(bookingItemParam);
         }
 
         Item item = itemOption.get();
-        param.setQuantity(1);
         BookingItem newBookingItem = bookingItemMapper.toModel(param);
+        newBookingItem.setStatus(BookingItemStatus.NEW);
         newBookingItem.setPrice(item.getPrice());
-        BigDecimal price = newBookingItem.getPrice();
         bookingItem = bookingItemRepository.save(newBookingItem);
         return bookingItemMapper.toDTO(bookingItem);
     }
@@ -104,21 +109,10 @@ public class BookingItemService implements IBookingItemService {
     public void deletedBookingItem(Long id) {
         bookingItemRepository.deleteById(id);
     }
-    @Override
-    @Transactional
-    public int increaseQuantity(long id) {
-        Optional<BookingItem> optional = bookingItemRepository.findById(id);
-        if (optional.isEmpty())
-            throw new NotFoundException("BookingItem not found");
-        BookingItem bookingItem = optional.get();
-        bookingItem.setQuantity(bookingItem.getQuantity() + 1);
-        bookingItemRepository.save(bookingItem);
-        return bookingItem.getQuantity();
-    }
 
     @Override
     @Transactional
-    public int reduceQuantity(long id) {
+    public int increaseQuantity(long id) {
         Optional<BookingItem> optional = bookingItemRepository.findById(id);
 
         if (optional.isEmpty())
@@ -126,10 +120,37 @@ public class BookingItemService implements IBookingItemService {
 
         BookingItem bookingItem = optional.get();
         int quantity = bookingItem.getQuantity();
-        if (quantity <= 0) {
+        bookingItem.setQuantity(quantity + 1);
+        bookingItemRepository.save(bookingItem);
+        return bookingItem.getQuantity();
+    }
+
+    @Override
+    @Transactional
+    public int decreaseQuantity(long id) {
+        Optional<BookingItem> optional = bookingItemRepository.findById(id);
+
+        if (optional.isEmpty())
+            throw new NotFoundException("BookingItem not found");
+
+        BookingItem bookingItem = optional.get();
+        int quantity = bookingItem.getQuantity();
+        bookingItem.setQuantity(quantity - 1);
+        if (quantity <= 1) {
+//            bookingItemRepository.deleteById(id);
             throw new NumberFormatException("Quantity cannot be lower");
         }
-        bookingItem.setQuantity(quantity - 1);
+        bookingItemRepository.save(bookingItem);
+        return bookingItem.getQuantity();
+    }
+
+    @Override
+    public int updateQuantity(Long id, int quantity) {
+        Optional<BookingItem> optional = bookingItemRepository.findById(id);
+        if (optional.isEmpty())
+            throw new NotFoundException("BookingItem not found");
+        BookingItem bookingItem = optional.get();
+        bookingItem.setQuantity(quantity);
         bookingItemRepository.save(bookingItem);
         return bookingItem.getQuantity();
     }

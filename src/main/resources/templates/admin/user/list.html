@@ -20,7 +20,7 @@
 <!-- Main Menu area End-->
 <!-- Breadcomb area Start-->
 <div class="breadcomb-area">
-    <div class="container-fluid">
+    <div class="container-fluid" style="width: 100%">
         <div class="row">
             <div class="row">
                 <div class="breadcomb-list" style="background-color: #CDDC39">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-3">
                             <div class="col text-end">
-                                <a class="btn btn-outline-danger " href="/user/restore">
+                                <a class="btn btn-outline-danger " href="/user/restoreUser">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     Danh sách người dùng đã xóa</a>
                             </div>
@@ -59,32 +59,44 @@
                 <div class="data-table-list">
                     <div class="table-responsive">
                         <div class="showHide">
-                        <b>Show/Hide Column</b>
-                        <a class="showHideColumn" data-columnindex="0">#</a>-
-                        <a class="showHideColumn" data-columnindex="1">Bartender</a>-
-                        <a class="showHideColumn" data-columnindex="2">Admin</a>-
-                        <a class="showHideColumn" data-columnindex="3">Email</a>-
-                        <a class="showHideColumn" data-columnindex="4">Phone</a>-
-                        <a class="showHideColumn" data-columnindex="5">User Name</a>-
-                        <a class="showHideColumn" data-columnindex="6">Vendor</a>-
-                        <a class="showHideColumn" data-columnindex="7">Action</a>
+                            <b>Show/Hide Column</b>
+                            <a class="showHideColumn" data-columnindex="0">#</a>-
+                            <a class="showHideColumn" data-columnindex="1">Full Name</a>-
+                            <a class="showHideColumn" data-columnindex="2">User Name</a>-
+                            <a class="showHideColumn" data-columnindex="3">Email</a>-
+                            <a class="showHideColumn" data-columnindex="4">Phone</a>-
+                            <a class="showHideColumn" data-columnindex="5">Admin</a>-
+                            <a class="showHideColumn" data-columnindex="6">Bartender</a>-
+                            <a class="showHideColumn" data-columnindex="7">Vendor</a>-
+                            <a class="showHideColumn" data-columnindex="8">Action</a>
                         </div>
                         <table id="tblUser" class="table table-striped display nowrap" style="width: 100%">
                             <thead>
                             <tr style="background-color: #11cc9d">
                                 <th>#</th>
-                                <th>Bartender</th>
-                                <th>Admin</th>
-                                <th>Email</th>
-                                <th>Phone</th>
                                 <th>Full Name</th>
                                 <th>User Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Bartender</th>
+                                <th>Admin</th>
                                 <th>Vendor</th>
                                 <th scope="col" class="text-center fw-bold">Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+                            <th>#</th>
+                            <th>Full Name</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Bartender</th>
+                            <th>Admin</th>
+                            <th>Vendor</th>
+                            </tfoot>
+
                         </table>
                     </div>
                 </div>
@@ -109,46 +121,54 @@
 </body>
 <script>
     $(document).ready(function () {
+            var tableUser = $("#tblUser").DataTable({
+                    ajax: {
+                        contentType: 'application/json',
+                        url: "http://localhost:8080/api/users",
+                        type: "GET",
+                        dataSrc: ''
+                    },
+                    paging: true,
+                    sort: true,
+                    searching: true,
+                    lengthMenu: [
+                        [5, 10, 15, -1],
+                        ['5', '10', '15', 'All']
+                    ],
+                    order: [0, "desc"],
+                    select: true,
 
-     let tblUser=   $("#tblUser").DataTable({
-         buttons: [
-             {extend: "edit", text: 'Copy to clipboard'}
-         ],
-         // scrollY: 200,
-         // scrollX: true,
-         // "bDestroy": true,
-            ajax: {
-                contentType: 'application/json',
-                url: "http://localhost:8080/api/users",
-                type: "GET",
-                dataSrc: ''
-            },
-            columns: [
-                {data: 'id'},
-                {data: 'bartender'},
-                {data: 'admin'},
-                {data: 'email'},
-                {data: 'phone'},
-                {data: 'fullName'},
-                {data: 'username'},
-                {data: 'vendor'},
-                {
-                    data: 'id',
-                    render: function (data, type, row, meta) {
-                        return `<button  class="btn btn-outline-warning editUser cssAction" onclick="handlerShowUserEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                    <button  class="btn btn-outline-danger delUser cssDelete" onclick="handleShowDeleteForm(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                                    `;
-                    }, orderable: false
-                }
-            ]
+                    columns: [
+                        {data: 'id'},
+                        {data: 'fullName'},
+                        {data: 'userName'},
+                        {data: 'email'},
+                        {data: 'phone'},
+                        {data: 'admin'},
+                        {data: 'bartender'},
+                        {data: 'vendor'},
+                        {
+                            data: 'id',searchable : true,
+                            render: function (data, type, row, meta) {
+                                return `<button  class="btn btn-outline-warning editUser cssAction" onclick="handlerShowUserEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
+                                    <button  class="btn btn-outline-danger delUser cssDelete" onclick="handleShowDeleteForm(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
+                                                    `;
+                            }, orderable: false
+                        },
+                    ],
+                },
+                $('.showHideColumn').on('click', function (e) {
+                    e.preventDefault();
+                    let tableColumn = tableUser.column($(this).attr('data-columnindex'));
+                    tableColumn.visible(!tableColumn.visible());
+                }),
+            )
         }
-        );
-        $('.showHideColumn').on('click',function (e){
-            e.preventDefault();
-            let tableColumn = tblUser.column($(this).attr('data-columnindex'));
-            tableColumn.visible(!tableColumn.visible());
-        })
-    });
+
+    )
+
+
+
 </script>
 <script>
     $("#createUser").on("click", function () {

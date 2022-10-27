@@ -4,6 +4,7 @@ package vn.midatri.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.midatri.dto.booking.BookingResult;
+import vn.midatri.dto.booking.CreateBookingParam;
 import vn.midatri.repository.model.Booking;
 
 @Component
@@ -28,16 +29,9 @@ public class BookingMapper {
                 .setTableTopId(booking.getTableTopId());
     }
 
-//    public Booking toModel(BookingResult bookingResult){
-//        return new Booking()
-//                .setId(bookingResult.getId())
-//                .setFullName(bookingResult.getFullName())
-//                .setStatus(bookingResult.getStatus())
-//                .setPhone(bookingResult.getPhone())
-//                .setEmail(bookingResult.getEmail())
-//                .setAddress(bookingResult.getAddress())
-//                .setContent(bookingResult.getContent())
-//                .setUser(bookingResult.getUser_id())
-//                .setTableTop_id(bookingResult.getTableTop().getId());
-//    }
+    public Booking toModel(CreateBookingParam bookingParam){
+        return new Booking()
+                .setTableTopId(bookingParam.getTabletopId());
+    }
+
 }

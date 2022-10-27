@@ -11,31 +11,29 @@
                 <div class="modal-body">
                     <div class="modal-alert-danger hide">
                     </div>
-                    <form id="frmCreateTable">
+                    <form id="frmCreateTable" class="createTable">
                         <div class="row">
                             <div class="col col-md-6">
-                                <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>
-                                <input type="number" class="form-control" id="idTable" name="idTable" readonly placeholder="Số thứ tự tự động tăng">
+<!--                                <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>-->
+                                <input type="number" class="form-control" id="idTable" name="idTable" readonly hidden>
                             </div>
-                            <div class="col col-md-6">
+                            <div class="col col-md-12">
                                 <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
                                 <select class="form-select" id="statusTable">
-                                    <option selected>Chọn trạng thái  bàn</option>
-                                    <option value="AVAILABLE">Hoạt động</option>
-                                    <option value="UNAVAILABLE">Ngừng hoạt động</option>
+                                    <option value="UNAVAILABLE" selected>Ngừng hoạt động</option>
+                                    <option value="AVAILABLE" selected>Hoạt động</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col col-md-12">
-                                <label for="capacityTable" class="form-label fw-bold">Sức chứa:</label>
-                                <select class="form-select" id="capacityTable">
-                                    <option selected>Chọn sức chứa bàn</option>
-                                    <option value="2">2</option>
-                                    <option value="4">4</option>
-                                    <option value="6">6</option>
-                                    <option value="8">8</option>
+                            <div class="col col-md-6">
+                                <label for="capacityTable" class="form-label fw-bold">số ghế:</label>
+                                    <input type="number" class="form-control" id="capacityTable" name="capacityTable" >
                                 </select>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="titleTable" class="form-label fw-bold">Tên phòng/bàn:</label>
+                                <input type="text" class="form-control" id="titleTable" name="titleTable" >
                             </div>
                         </div>
                         <div class="row">
@@ -62,9 +60,10 @@
 
         function CreateTable() {
             let NewTable = {
-                capacity: $('#capacityTable').find(":selected").val(),
+                capacity: $('#capacityTable').val(),
                 content: $('#contentTable').val(),
-                status: $('#statusTable').find(":selected").val()
+                status: $('#statusTable').find(":selected").val(),
+                title:  $("#titleTable").val()
             }
             console.log(NewTable);
             $.ajax({
@@ -80,9 +79,10 @@
                 $.each(data, (i, item) => {
                     let str = `
                     <tr id="tr_${item.id}">
-                        <th>${item.id}</th>
+                     <th>${item.title}</th>
                        <th>${item.capacity}</th>
                        <th>${item.content}</th>
+                      <th>${item.id}</th>
                     </tr>
                         `;
                     $("tblTop tbody").append(str);
@@ -98,7 +98,7 @@
                     }, 3000)
                 })
                     .fail(function (jqXHR) {
-                        let str = ``;
+                        console.log(jqXHR)
                     })
             })
         }

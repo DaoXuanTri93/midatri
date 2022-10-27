@@ -14,12 +14,21 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-@Autowired
+    @Autowired
     UserRepository userRepository;
+
     @GetMapping()
-    public ModelAndView UserPage(){
+    public ModelAndView UserPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/user/list");
+        return modelAndView;
+    }
+
+    @GetMapping("/restoreUser")
+    public ModelAndView RestoreUser() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/admin/user/restoreUser");
+
         return modelAndView;
     }
 }

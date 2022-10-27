@@ -28,11 +28,10 @@ public class BookingItemMapper {
     }
 
     public BookingItem toModel(BookingItemCreate createParam) {
-        return new BookingItem()
+        return new BookingItem(createParam.getBookingId(),createParam.getItemId())
                 .setContent(createParam.getContent())
-                .setQuantity(createParam.getQuantity())
-                .setBookingId(createParam.getBookingId())
-                .setItemId(createParam.getItemId());
+                .setStatus(createParam.getStatus())
+                .setQuantity(createParam.getQuantity());
     }
 
 

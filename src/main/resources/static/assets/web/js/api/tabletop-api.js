@@ -1,4 +1,5 @@
 export const tabletopAPI = new TabletopAPI();
+
 function TabletopAPI() {
     this.findAll = (done, fail) => {
         $.ajax({
@@ -12,6 +13,8 @@ function TabletopAPI() {
                 fail(jqXHR);
             })
     }
+
+
     this.create = (data, done, fail) => {
         $.ajax({
             url: `${location.origin}/api/booking/create`,
@@ -27,3 +30,6 @@ function TabletopAPI() {
             })
     }
 }
+
+
+

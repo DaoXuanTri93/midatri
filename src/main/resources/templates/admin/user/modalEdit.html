@@ -42,17 +42,17 @@
                     <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
                 </div>
+
             </div>
         </div>
     </div>
     <script src="/js/App.js"></script>
     <script>
-        function editUser(currentRow) {
+        function editUser() {
             let editUser = new User();
             editUser.id = $("#idUser").val();
             editUser.userName = $("#usernameEdit").val();
             editUser.fullName = $("#fullNameEdit").val();
-            // editUser.password = this.password;
             editUser.phone = $("#phoneEdit").val();
             editUser.email = $("#emailEdit").val();
             $.ajax({
@@ -61,27 +61,25 @@
                     "content-type": "application/json"
                 },
                 type: "PUT",
-
                 url: "http://localhost:8080/api/users/edit/" + editUser.id,
                 data: JSON.stringify(editUser)
             }).done(function (data) {
                 console.log(data)
                 let tableUser = $("#tblUser").DataTable();
-                tableUser.row(currentRow).data({
+                tableUser.row().data({
                     "id": data.id,
                     "email": data.email,
                     "phone": data.phone,
                     "fullName": data.fullName,
-                    "userName": data.userName
+                    "username": data.userName
                 }).draw('full-hold');
-
                 $("#modalEdit").modal("hide");
             }).fail((e) => {
                 console.log(e)
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!',
+                    text: "Dữ liệu bạn nhập không chính xác!!",
                     // footer: '<a href="">Why do I have this issue?</a>'
                 })
             })
@@ -102,18 +100,22 @@
                     $("#fullNameEdit").val(data.fullName);
                     $("#phoneEdit").val(data.phone);
                     $("#emailEdit").val(data.email);
-                    // $("#password").val(data.password);
                     $("#modalEdit").modal("show");
                     $("#idUser").val(data.id);
                     console.log(data)
                 })
 
             $("#btnEdit").on('click', function () {
-                let currentRow = $(this).parents('tr');
-                editUser(currentRow);
-                $("#btnEdit").trigger("submit")
+                // let currentRow = $(this).parents('tr');
+                editUser();
 
             })
+            // $("#btnEdit").on('click', function () {
+            //     let currentRow = $(this).parents('tr');
+            //     editUser(currentRow);
+            //     $("#btnEdit").trigger("submit")
+            //
+            // })
             //     .fail()
             // Swal.fire({
             //     icon: 'error',

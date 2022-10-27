@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import vn.midatri.repository.model.BookingItemStatus;
 
 import java.math.BigDecimal;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 public class BookingItemCreate {
     private Integer quantity;
     private String content;
+    private BookingItemStatus status;
     private long bookingId;
     private long itemId;
 }

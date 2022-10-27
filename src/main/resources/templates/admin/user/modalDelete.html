@@ -15,9 +15,14 @@
                         <div class="row">
                             <div class="row">
                                 <input type="hidden" id="idDelete" hidden>
-                                <div class="col col-md-12 ">
+                                <div class="col col-md-6 ">
                                     <label for="usernameDelete" class="form-label fw-bold">Tên đăng nhập:</label>
                                     <input type="text" class="form-control" id="usernameDelete" name="usernameDelete"
+                                           readonly>
+                                </div>
+                                <div class="col col-md-6 ">
+                                    <label for="fullnameDelete" class="form-label fw-bold">Tên người dùng:</label>
+                                    <input type="text" class="form-control" id="fullnameDelete" name="fullnameDelete"
                                            readonly>
                                 </div>
                             </div>
@@ -38,7 +43,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnDelete">Xóa</button>
+                    <button type="submit" class="btn btn-outline-primary" id="btnDelete">Xóa</button>
                 </div>
             </div>
         </div>
@@ -58,6 +63,7 @@
                     console.log(data);
                     $("#idDelete").val(data.id);
                     $("#usernameDelete").val(data.userName);
+                    $("#fullnameDelete").val(data.fullName);
                     $("#phoneDelete").val(data.phone);
                     $("#emailDelete").val(data.email);
                     $("#modalDelete").modal("show");
@@ -74,11 +80,27 @@
                         "accept": "application/json",
                         "content-type": "application/json"
                     },
-                    type: "POST",
+                    type: "PUT",
                     url: "http://localhost:8080/api/users/deleted/" + id,
                     data: JSON.stringify(idUserDel)
                 }).done(function (data) {
-                    window.location.href = "/user"
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Xóa người dùng thành công',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    $('#tblUser').DataTable().ajax.reload();
+                    $('#modalDelete').modal("hide");
+                    $("#frmDeleteUser")[0].reset();
+                }).fail(function (resp){
+                    console.log(resp);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                 })
             }
         }
