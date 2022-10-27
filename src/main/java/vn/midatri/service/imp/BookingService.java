@@ -65,22 +65,24 @@ public class BookingService implements IBookingService {
     public BookingResult booking(CreateBookingParam param) {
         Optional<TableTop> tableTopOptional = tableTopRepository.findById(param.getTabletopId());
         if (tableTopOptional.isEmpty())
-            throw new NotFoundException("NotFound tabletop " + param.getTabletopId());
+            throw new NotFoundException("Bàn  " + param.getTabletopId() + " không tìm thấy !!!");
         tableTopOptional.ifPresent(tableTop -> {
             if (tableTop.getStatus() != TabletopStatus.AVAILABLE)
-                throw new IllegalArgumentException("tabletop" + param.getTabletopId() + " Not availalbe");
+                throw new IllegalArgumentException("Bàn " + param.getTabletopId() + " đang sữa chữa !!!");
         });
 
 
         TableTop tabletop = tableTopOptional.get();
         List<Booking> bookings = bookingRepository.findAllByTableTopIdAndStatusNot(param.getTabletopId(), BookingStatus.COMPLETE);
         if (bookings.isEmpty()) {
+
             Booking newBooking = new Booking(param.getTabletopId(), 1L);
             newBooking.setStatus(BookingStatus.NEW);
             Booking booking = bookingRepository.save(newBooking);
 
             tabletop.setStatus(TabletopStatus.ACTIVE);
             tableTopRepository.save(tabletop);
+
             return bookingMapper.toDTO(booking);
         }
         throw new RuntimeException("Tabletop exists Booking");

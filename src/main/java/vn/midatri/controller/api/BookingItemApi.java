@@ -1,6 +1,7 @@
 package vn.midatri.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,35 +46,34 @@ public class BookingItemApi {
         return new ResponseEntity<>(bookingItemResult, HttpStatus.OK);
     }
 
-    //    @PatchMapping("/{id}/increaseQuantity")
-//    public ResponseEntity<Integer> increaseQuantity(@PathVariable Long id, @RequestBody int quantity) {
-//        return new ResponseEntity<>(bookingItemService.increaseQuantity(id, quantity), HttpStatus.OK);
-//    }
+        @PatchMapping("/{id}/quantity")
+    public ResponseEntity<Integer> updateQuantity(@PathVariable Long id, @RequestBody int quantity) {
+        return new ResponseEntity<>(bookingItemService.updateQuantity(id, quantity), HttpStatus.OK);
+    }
     @PatchMapping("/{id}/increaseQuantity")
     public ResponseEntity<Integer> increaseQuantity(@PathVariable Long id) {
         return new ResponseEntity<>(bookingItemService.increaseQuantity(id), HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}/reduceQuantity")
-    public ResponseEntity<Integer> reduceQuantity(@PathVariable Long id) {
-        return new ResponseEntity<>(bookingItemService.reduceQuantity(id), HttpStatus.OK);
+    @PatchMapping("/{id}/decreaseQuantity")
+    public ResponseEntity<Integer> decreaseQuantity(@PathVariable Long id) {
+        return new ResponseEntity<>(bookingItemService.decreaseQuantity(id), HttpStatus.OK);
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> addBookingItem(@RequestBody BookingItemCreate bookingItemCreate) {
-        bookingItemService.create(bookingItemCreate);
-        return new ResponseEntity<>(bookingItemCreate, HttpStatus.OK);
+        return new ResponseEntity<>( bookingItemService.create(bookingItemCreate), HttpStatus.OK);
     }
 
-    @PostMapping("/{id}")
+    @DeleteMapping("/deleted/{id}")
     public ResponseEntity<?> deletedBookingItem(@PathVariable Long id) {
         bookingItemService.deletedBookingItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleted/{id}")
-    public ResponseEntity<?> deletedAll(@PathVariable Long id) {
-        bookingItemService.deleteAllByBookingId(id);
+    @DeleteMapping("/deletedByBooking")
+    public ResponseEntity<?> deletedAllByBookingId(long bookingId) {
+        bookingItemService.deleteAllByBookingId(bookingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

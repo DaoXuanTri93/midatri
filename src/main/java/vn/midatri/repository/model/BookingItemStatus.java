@@ -21,7 +21,8 @@ public enum BookingItemStatus {
     public String getValue() {
         return value;
     }
-@JsonCreator
+
+    @JsonCreator
     public static BookingItemStatus parseBookingStatus(String value) {
         BookingItemStatus[] values = values();
         for (BookingItemStatus bookingStatus : values) {

@@ -39,4 +39,70 @@ function BookingItemAPI() {
                 fail(jqXHR);
             })
     }
+    this.updateQuantity = (bookingItemId, data, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/${bookingItemId}/quantity`,
+            type: "PATCH",
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.increaseQuantity = (bookingItemId, data, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/${bookingItemId}/increaseQuantity`,
+            type: "PATCH",
+            contentType: 'application/json'
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.decreaseQuantity = (bookingItemId, data, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/${bookingItemId}/decreaseQuantity`,
+            type: "PATCH",
+            contentType: 'application/json'
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.removeBookingItem = (bookingItemId, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/deleted/${bookingItemId}`,
+            type: "DELETE",
+            contentType: 'application/json'
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.removeBookingItemByBooking = (bookingId, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/deletedByBooking?bookingId=${bookingId}`,
+            type: "DELETE",
+            contentType: 'application/json'
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
 }

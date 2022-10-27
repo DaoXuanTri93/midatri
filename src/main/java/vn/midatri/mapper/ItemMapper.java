@@ -27,13 +27,14 @@ public class ItemMapper {
     }
 
     public Item toModel(ItemResult itemResult) {
-        return new Item(itemResult.getCategoryId(),itemResult.getUserId())
+        return new Item(itemResult.getUserId(),itemResult.getCategoryId() )
                 .setId(itemResult.getId())
                 .setTitle(itemResult.getTitle())
                 .setPrice(itemResult.getPrice())
                 .setQuantity(itemResult.getQuantity())
                 .setImg(itemResult.getImg())
                 .setContent(itemResult.getContent())
+
                 .setDeleted(itemResult.isDeleted());
     }
 
