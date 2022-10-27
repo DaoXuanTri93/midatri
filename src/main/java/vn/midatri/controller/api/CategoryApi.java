@@ -57,4 +57,10 @@ public class CategoryApi {
         CategoryResult categoryResult = categoryService.create(createCategory);
         return new ResponseEntity<>(categoryResult, HttpStatus.OK);
     }
+
+    @DeleteMapping("/remove/{categoryId}")
+    public ResponseEntity<?> removeCategory(@PathVariable Long categoryId) {
+         categoryService.remove(categoryId);
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
 }

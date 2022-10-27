@@ -15,4 +15,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findAllByCategoryId(Long id);
     Optional<Item> findById(Long id);
 
+    List<Item> findAllByCategory_ParentId(long parenId);
+
 }

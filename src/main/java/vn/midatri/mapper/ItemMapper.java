@@ -4,6 +4,7 @@ package vn.midatri.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.midatri.dto.item.CreateItem;
+import vn.midatri.dto.item.ItemParam;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.repository.model.Item;
 
@@ -15,28 +16,36 @@ public class ItemMapper {
     UserMapper userMapper;
 
     public Item toModel(CreateItem createItem) {
-        return new Item()
+       return new Item(createItem.getCategoryId(),createItem.getCategoryId())
                 .setTitle(createItem.getTitle())
                 .setPrice(createItem.getPrice())
                 .setQuantity(createItem.getQuantity())
                 .setImg(createItem.getImg())
                 .setContent(createItem.getContent())
-                .setCategoryId(createItem.getCategoryId())
-                .setUserId(createItem.getUserId())
                 .setDeleted(createItem.isDeleted());
+
     }
 
     public Item toModel(ItemResult itemResult) {
-        return new Item()
+        return new Item(itemResult.getCategoryId(),itemResult.getUserId())
                 .setId(itemResult.getId())
                 .setTitle(itemResult.getTitle())
                 .setPrice(itemResult.getPrice())
                 .setQuantity(itemResult.getQuantity())
                 .setImg(itemResult.getImg())
                 .setContent(itemResult.getContent())
-                .setCategoryId(itemResult.getCategoryId())
-                .setUserId(itemResult.getUserId())
                 .setDeleted(itemResult.isDeleted());
+    }
+
+    public Item toModel(ItemParam itemParam){
+        return new Item(itemParam.getCategoryId(),itemParam.getUserId())
+                .setId(itemParam.getId())
+                .setTitle(itemParam.getTitle())
+                .setPrice(itemParam.getPrice())
+                .setQuantity(itemParam.getQuantity())
+                .setImg(itemParam.getImg())
+                .setContent(itemParam.getContent())
+                .setDeleted(itemParam.isDeleted());
     }
 
 

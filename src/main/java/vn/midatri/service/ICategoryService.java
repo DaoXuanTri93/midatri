@@ -17,4 +17,6 @@ public interface ICategoryService {
     CategoryResult update(CategoryParam categoryParam);
 
     List<CategoryResult> findAllByParentId(Long parentId);
+
+    void remove(Long categoryId);
 }

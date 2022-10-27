@@ -19,7 +19,7 @@
                        </div>
                        <div class="mb-3 col-12">
                            <label for="parentCategoryUpdate" class="form-label fw-bold">Loại Thực Đơn</label>
-                           <select class="form-control" id="parentCategoryUpdate" name="parentCategoryUpdate">
+                           <select class="form-select" id="parentCategoryUpdate" name="parentCategoryUpdate">
                            </select>
                        </div>
                    </div>
@@ -27,7 +27,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     <button type="button" class="btn btn-primary" id="btnUpdateCategory">Cập Nhập</button>
-                    <button type="button" class="btn btn-danger">Xóa</button>
+                    <button type="button" class="btn btn-danger" id="btnDeleteCategory">Xóa</button>
                 </div>
             </div>
         </div>
@@ -57,8 +57,55 @@
                     alert("error");
                 })
         }
+
+        function deleteCategory(){
+            let category = new Category()
+            category.id = $("#idCategoryUpdate").val();
+            category.categoryName = $("#nameCategoryUpdate").val();
+            category.parentId = $("#parentCategoryUpdate").val();
+            Swal.fire({
+                title: 'Bạn Có Chắc Chắn?',
+                text: "Xóa Nhóm Hàng "+`${category.categoryName}`+" Ra Khỏi Danh Sách Không ???",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Tôi Chắc Chắn !!!',
+                cancelButtonText: "Tôi Không Chắc "
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log(category.id)
+
+                    $.ajax({
+                        headers : {
+                            "Accept": "application/json",
+                            "Content-type": "application/json"
+                        },
+                        type: "DELETE",
+                        url: 'http://localhost:8080/api/category/remove/'+ category.id,
+
+                    }).done(()=>{
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        window.location.href="/products"
+                    }).fail(()=>{
+                        alert("error")
+                    })
+
+
+                }
+            })
+        }
+
         $("#btnUpdateCategory").on('click',()=>{
             updateCategory();
+        })
+
+        $("#btnDeleteCategory").on('click',()=>{
+            deleteCategory();
         })
     </script>
 </th:block>

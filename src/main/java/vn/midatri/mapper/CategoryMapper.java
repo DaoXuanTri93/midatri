@@ -25,6 +25,7 @@ public class CategoryMapper {
 
     public Category toModel(CategoryParam categoryParam) {
         Category category = new Category()
+                .setId(categoryParam.getId())
                 .setCategoryName(categoryParam.getCategoryName());
         category.setParentId(categoryParam.getParentId());
         return category;
