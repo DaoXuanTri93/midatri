@@ -1,23 +1,3 @@
-class Booking {
-    constructor(id, tableTop, user) {
-        this.id = id;
-        this.tableTop = tableTop;
-        this.user = user;
-    }
-}
-
-class BookingItemCreate {
-    constructor(id, discount, grandTotal, price, quantity, booking_id, item_id) {
-        this.id = id;
-        this.discount = discount;
-        this.grandTotal = grandTotal;
-        this.price = price;
-        this.quantity = quantity;
-        this.booking_id = booking_id;
-        this.item_id = item_id;
-    }
-}
-
 let index = "*"
 let tabletops;
 let itemMap = new Map();
@@ -25,9 +5,15 @@ let bookingItemTableTopMap = new Map();
 let bookingMap = new Map();
 let categoryMap = new Map();
 
-let grandTotal = 0;
 let booking_id = 0;
 let tableTopId = 0;
+
+let onItemClick = () => {
+    $(".btn-add-product").click((event) => {
+        let itemId = parseInt($(event.currentTarget).attr('data-id'));
+        booking(tableTopId, itemId);
+    });
+};
 
 function fetchCategory() {
     let onCategoryClick = () => {
@@ -93,15 +79,25 @@ function renderTabletop(tabletop) {
 function renderAllTableTop() {
     let onTabletopClick = () => {
         $(".tableAndRoom").click((event) => {
-            $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(grandTotal));
+            console.log("3 lan")
             tableTopId = parseInt($(event.currentTarget).attr('data-id'));
             $('#link-menu').trigger('click');
-            $('#table-room').text(tabletops[tableTopId - 1].title)
+            let a = tabletops;
+            let titleTable = "";
+            for (const b of a) {
+                if (tableTopId === b.id) {
+                    titleTable = b.title
+                }
+            }
+            $('#table-room').text(titleTable)
+            $('#payAllMoney').off();
+            $('#payAllMoney').on('click', () => {
+                handlePay(tableTopId);
+            })
+
             renderBookingTabletop(tableTopId);
         });
+
     };
     if (tabletops !== undefined) {
         for (let tabletop of tabletops) {
@@ -139,7 +135,13 @@ function renderItem(item) {
                         <a title=${item.title}>
                             <div class="product-img" >
                                 <img src=${item.img}>
-                                <div class="product-price">${item.price}</div>
+                                <div class="product-price">
+                                
+                    ${new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    }).format(item.price)}
+                    </div>
                             </div>
                             <div class="product-info">
                                 <div class="product-name">${item.title}</div>
@@ -150,19 +152,7 @@ function renderItem(item) {
     $("#render-product").prepend(result);
 }
 
-let onItemClick = () => {
-    $(".btn-add-product").click((event) => {
-        $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND'
-        }).format(grandTotal));
-        let itemId = parseInt($(event.currentTarget).attr('data-id'));
-        booking(tableTopId, itemId)
-    });
-};
-
 function renderAllItems() {
-
     $("#render-product li").empty();
     if (itemMap.size > 0) {
         $.each(itemMap.values(), (i, item) => {
@@ -173,13 +163,12 @@ function renderAllItems() {
         return;
     }
 
-
     api.item.findAll((data) => {
-        if (itemMap === undefined) {
-            itemMap = new Map();
-        } else {
-            itemMap.clear()
-        }
+        // if (itemMap === undefined) {
+        //     itemMap = new Map();
+        // } else {
+        //     itemMap.clear()
+        // }
 
         $.each(data, (i, item) => {
             itemMap.set(item.id, item);
@@ -199,6 +188,7 @@ function renderBookingTabletop(tabletopId) {
             renderBookingItem(index, bookingItem);
         })
     }
+    handleGrandTotal(tabletopId);
 
 }
 
@@ -208,42 +198,43 @@ function booking(tabletopId, itemId) {
         quantity: 1,
         itemId: itemId
     }
-
     let booking = bookingMap.get(tabletopId);
     if (booking === undefined) {
         let createBooking = {
             tabletopId: tabletopId
         }
+
         api.booking.booking(createBooking, (booking) => {
+            bookingMap.set(tabletopId, booking);
             newBookingItem.bookingId = booking.id;
             createBookingItem(tabletopId, newBookingItem);
+
         }, (jqXHR) => {
 
         })
         return;
     }
-
     let bookingItems = bookingItemTableTopMap.get(tabletopId);
+
     for (const bookingItem of bookingItems) {
         if (itemId === bookingItem.itemId) {
             let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text().trim());
             let price = parseInt($(`#${bookingItem.id} .item-price`).text().trim());
-
             quantity += 1;
+
             $(`#${bookingItem.id} .item-quantity`).text(quantity)
             $(`#${bookingItem.id} .cell-price`).text(new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND'
             }).format(quantity * price))
+
             api.bookingItem.updateQuantity(bookingItem.id, quantity, (data) => {
-                $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND'
-                }).format(grandTotal));
             }, (jqXHR) => {
+
             });
             return;
         }
+        console.log("item " + itemId + " not found")
     }
 
     newBookingItem.bookingId = booking.id;
@@ -252,9 +243,12 @@ function booking(tabletopId, itemId) {
 
 function createBookingItem(tabletopId, newBookingItem) {
     api.bookingItem.create(newBookingItem, (bookingItem) => {
-        console.log(newBookingItem)
         let bookingItems = bookingItemTableTopMap.get(tabletopId);
-        bookingItems.push(bookingItem);
+        if (bookingItems === undefined) {
+            bookingItems = [bookingItem];
+            bookingItemTableTopMap.set(tabletopId, bookingItems)
+        } else
+            bookingItems.push(bookingItem);
         renderBookingItem(index, bookingItem);
     }, (jqXHR) => {
 
@@ -307,8 +301,8 @@ function hanldeDeletedBookingItem(bookingIdItem) {
 }
 
 function renderBookingItem(index, bookingItem) {
+
     let item = itemMap.get(bookingItem.itemId);
-    grandTotal += (item.price * bookingItem.quantity)
     let result = `
                      <div class="product-cart-item" id="${bookingItem.id}">
                         <kv-cashier-cart-item class="row-list row-list-active active">
@@ -343,7 +337,8 @@ function renderBookingItem(index, bookingItem) {
                                                     style="cursor: pointer;">
                                                 <i class="far fa-pen"></i>
                                                 <span class="note-hint"
-                                                      style="cursor: pointer;">Ghi chú món</span>
+                                                onclick="handleNoteItem(${item.id})"
+                                                style="cursor: pointer;">${(item.content != null) ? item.content : 'Ghi chú món ăn'}</span>
                                             </button>
                                         </div>
                                         <div class="list-topping">
@@ -381,9 +376,7 @@ function renderBookingItem(index, bookingItem) {
         style: 'currency',
         currency: 'VND'
     }).format(item.price * bookingItem.quantity)}                  
-
-
-</div>
+                                                </div>
                                     <div class="cell-actions">
                                         <div class="btn-group" dropdown="">
                                             <button class="dropdown-toggle" type="button"
@@ -396,6 +389,41 @@ function renderBookingItem(index, bookingItem) {
                             </div>
                         </kv-cashier-cart-item>
                      </div>
+                     
+                     <modal-container class="modal fade in d-none" role="dialog" id="noteItemUpdate" tabindex="-1" aria-modal="true" style="display: block;">
+                            <div role="document" class="modal-dialog modal-note ui-draggable">
+                                <div class="modal-content">
+                                    <kv-modal _nghost-bwu-c36="">
+                                        <!---->
+                                        <div ="" class="modal-header ng-star-inserted ui-draggable-handle">
+                                            <h4 ="" class="modal-title pull-left">Ghi chú / Món thêm</h4>
+                                            <button ="" aria-label="Close" class="close pull-right" skip-disable="" type="button"><i ="" class="fa-light fa-xmark"></i></button>
+                                        </div>
+                                        <!---->
+                                        <div ="" class="ng-star-inserted"></div>
+                                        <kv-cashier-cart-item-note-and-toping class="ng-star-inserted">
+                                            <div ="" class="modal-body">
+                                                <!---->
+                                                <div ="" class="form-group form-note">
+                                                    <input ="" id="${bookingItem.id}"  class="form-control ng-valid ng-dirty ng-touched getNodeInput" value="" maxlength="300" style="height: 32px;"></input></div>
+                                                <!---->
+                                                <div ="" class="product-cart-list product-cart-list--addMoreTopping">
+                                                    <!---->
+                                                </div>
+                                            </div>
+                                            <div ="" class="modal-footer"><a ="" class="btn btn-primary" href="javascript:void(0);"><i ="" class="fa fa-check-square"></i><span ="" translate="">Xong</span>
+                                            </a>
+                                            <a ="" class="btn btn-default" href="javascript:void(0);" onclick="onCancelClick(${item.id})">>
+                                            <i ="" class="fa fa-ban"></i>
+                                            <span ="" translate="">Bỏ qua</span>
+                                            </a>
+                                            </div>
+                                        </kv-cashier-cart-item-note-and-toping>
+                                        <!----><!---->
+                                    </kv-modal>
+                                </div>
+                            </div>
+                    </modal-container>
                 `;
 
 
@@ -451,7 +479,27 @@ function handleDecreaseQuantity(itemId) {
     }
 }
 
-function handelTableTop(tableTopId) {
+function handleNoteItem(itemId) {
+    $("#noteItemUpdate").removeClass('d-none')
+    let bookingItems = bookingItemTableTopMap.get(tableTopId);
+    for (const bookingItem of bookingItems) {
+        if (itemId === bookingItem.itemId) {
+            let noteItem = $(`#${bookingItem.id} .getNodeInput`).val();
+
+            api.bookingItem.updateNote(bookingItem.id, noteItem, (data) => {
+                alert("ok")
+            }, (jqXHR) => {
+
+            })
+
+            $(`#${bookingItem.id} .getNodeInput`).val(noteItem);
+
+            return;
+        }
+    }
+}
+
+function handleTableTop(tableTopId) {
     $("#render-tableTop div").empty();
     $.ajax({
         headers: {
@@ -473,24 +521,32 @@ function handelTableTop(tableTopId) {
 
 }
 
-function handelPay(tableTopId) {
-    let onPayAllOffClick = () => {
-        $("#payAllOffClick").click((e) => {
-            cancelPay();
-        })
-    }
+let grandTotalAll = new Map();
+let grandTotal = 0;
+
+function handleGrandTotal(tableId) {
+    let bookingItem = bookingItemTableTopMap.get(tableId);
+    $.each(bookingItem, (i, item) => {
+        grandTotal += (item.quantity * item.price)
+    })
+    $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    }).format(grandTotal));
+}
+
+function handlePay(tableTopId) {
     let onPayAllClick = (bookingId) => {
-        $("#payAllClick").click((e) => {
-            api.bookingItem.removeBookingItemByBooking(bookingId, (data) => {
-                iziToast.success(
-                    {
-                        timeout: 1500,
-                        position: 'topRight',
-                        title: 'OK',
-                        message: "thanh toan thanh cong"
-                    });
+        $("#payAllClick").click((event, c = bookingId) => {
+            api.bookingItem.removeBookingItemByBooking(c, (data) => {
+                // success("Xóa Thành Công")
                 $("#render-tableTop div").remove();
-                fetchBookings();
+                $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(0));
+                bookingMap.clear()
+                bookingItemTableTopMap.clear()
                 cancelPay();
 
             }, (jqXHR) => {
@@ -501,12 +557,26 @@ function handelPay(tableTopId) {
     if (tableTopId === 0) {
         Swal.fire('Vui lòng chọn bàn đặt !!!')
     } else {
-        // tableTopId = parseInt($(event.currentTarget).attr('data-id'));
-        let tableTop = tabletops;
-        $(".table-payment").text(`Bàn - ${tableTop[tableTopId - 1].title}`);
-        $("#paypal").removeClass("d-none")
+        let a = tabletops;
+        let titleTable = "";
+        for (const b of a) {
+            if (tableTopId === b.id) {
+                titleTable = b.title
+            }
+        }
+        $(".table-payment").text(`Bàn - ${titleTable}`);
+
+        if (tableTopId === 0) {
+            alert()
+        }
         let bookingItems = bookingItemTableTopMap.get(tableTopId);
+        if (bookingItems === undefined) {
+            alert()
+        }
+        console.log(bookingMap)
         let bookingId = bookingMap.get(tableTopId).id;
+        console.log(bookingId)
+        $("#paypal").removeClass("d-none")
         $("#renderPay div").remove();
         api.bookingItem.findAllByBooking(bookingId, (bookingItems) => {
                 $.each(bookingItems, (i, bookingItem) => {
@@ -515,7 +585,7 @@ function handelPay(tableTopId) {
                                             <div  class="cell-order"> ${i + 1} </div>
                                             <div  class="cell-name">
                                                 <h4 >
-                                                    ${null}
+                                                    ${itemMap.get(bookingItem.itemId).title}
                                                     <span  class="attr-wrapper">
                                            </span>
                                                 </h4>
@@ -541,73 +611,17 @@ function handelPay(tableTopId) {
                     $('#renderPay').append(str);
 
                 })
-                onPayAllClick(bookingId);
-                onPayAllOffClick(bookingId);
             },
             (jqXHR) => {
 
             })
-        // api.bookingItem.findAllByBooking(tableTopId, (data) => {
-        //     console.log(data)
-        //     renderBookingItem(1, data)
-        //
-        // }, (jqXHR) => {
-        //
-        // })
-        // $.ajax({
-        //     headers: {
-        //         "Accept": "application/json", "Content-type": "application/json"
-        //     }, type: "GET", url: "http://localhost:8080/api/bookingItem/" + booking_id
-        // })
-        //     .done((data) => {
-        //                 let totalGrand = 0;
-        //                 $.each(data, (i, item) => {
-        //                     let str = `
-        //                                  <div  class="row-list row-list-active">
-        //                                     <div  class="cell-order"> 1 </div>
-        //                                     <div  class="cell-name">
-        //                                         <h4 >
-        //                                             ${item.item.title}
-        //                                             <span  class="attr-wrapper">
-        //                                    </span>
-        //                                         </h4>
-        //                                         <ul  class="comboset-list-item">
-        //                                         </ul>
-        //                                         <div  class="list-topping">
-        //                                         </div>
-        //                                     </div>
-        //                                     <div  class="cell-quatity-static">
-        //                                         <div  class="cell-quantity-inner">
-        //                                             <span >${item.quantity}</span>
-        //                                         </div>
-        //                                     </div>
-        //                                     <div  class="cell-change-price">
-        //                                         <div  class="popup-anchor">
-        //                                            ${item.item.price}
-        //                                         </div>
-        //                                     </div>
-        //                                     <div  class="cell-price"> ${item.grandTotal} </div>
-        //                                 </div>
-        //                                 `
-        //                     $('#renderPay').append(str);
-        //                     totalGrand += item.grandTotal;
-        //                 })
-        //         $('#totalGrand').text(totalGrand);
-        //         let total = $('#totalGrand').text();
-        //         let priceSale = $('#priceSale').val();
-        //         $('#customerPay').text(total - priceSale);
-        //
-        //         let payingAmountTxt = $('#payingAmountTxt').val();
-        //         let customerPay = $('#customerPay').text();
-        //         $('#moneySuperfluous').text(payingAmountTxt - customerPay);
-        //
-        //
-        //     })
+        onPayAllClick(bookingId);
     }
+
 
 }
 
-function handelNotification(tableTopId, booking_id) {
+function handleNotification(tableTopId, booking_id) {
     if (tableTopId === 0) {
         return alert("ko co don hang")
     } else {
@@ -617,11 +631,15 @@ function handelNotification(tableTopId, booking_id) {
 
 }
 
+function onCancelClick(){
+    $("#noteItemUpdate").addClass('d-none')
+}
 function cancelPay() {
     $("#paypal").addClass("d-none")
+    $("#payAllClick").off();
 }
 
-function handelSplitTable(tableTop, booking_id) {
+function handleSplitTable(tableTop, booking_id) {
     if (tableTop == 0 || booking_id == 0) {
         alert("Chưa chon ban can tach")
     } else {

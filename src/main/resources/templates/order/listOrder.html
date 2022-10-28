@@ -590,7 +590,8 @@
                                         type="button" class="btn btn-success"
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
-                                        onclick="handelPay(tableTopId,booking_id)"><i
+                                        id="payAllMoney"
+                                        ><i
                                         class="fa-regular fa-circle-dollar"></i>Thanh toán (F9)
                                 </button>
                                 <button class="btn btn-alert" id="notification"
@@ -789,6 +790,7 @@
                                     <!---->
                                     <button class="btn btn-lg btn-success"
                                             id="payAllOffClick"
+                                            onclick="cancelPay()"
                                             type="button">
                                         <i class="fas fa-dollar-sign"></i>
                                         Hủy thanh toán
@@ -1019,6 +1021,8 @@
     </div>
 </modal-container>
 
+<!--node modalllllllllllllllllllllllllllllllllllllll-->
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>-->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"></script>-->
@@ -1029,6 +1033,7 @@
 <script defer src="/js/App.js"></script>
 <script defer src="/toast/iziToast.min.js"></script>
 <script defer src="/sweet_alert/sweetalert.min.js"></script>
+<script defer src="/toast/appToast/toastAlert.js"></script>
 
 <script>
     $('#link-menu').click(function () {

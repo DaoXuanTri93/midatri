@@ -514,7 +514,7 @@
 //                                             </div>
 //                                         </div>
 //                                         <ul class="comboset-list-item">
-//        
+//
 //                                         </ul>
 //                                         <div class="wrap-note" href="javascript:void(0)">
 //                                             <button class="btn btn-sm btn-light has-Update"
@@ -525,7 +525,7 @@
 //                                             </button>
 //                                         </div>
 //                                         <div class="list-topping">
-//        
+//
 //                                         </div>
 //                                     </div>
 //                                     <div class="cell-quatity">
@@ -565,7 +565,7 @@
 //                             </div>
 //                         </kv-cashier-cart-item>
 //                      </div>
-//                     
+//
 //                 `;
 //         $("#render-tableTop").prepend(str);
 //         totalBookingItem += item.grandTotal;
