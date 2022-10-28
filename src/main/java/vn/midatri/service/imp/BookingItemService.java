@@ -15,6 +15,8 @@ import vn.midatri.repository.ItemRepository;
 import vn.midatri.repository.model.BookingItem;
 import vn.midatri.repository.model.BookingItemStatus;
 import vn.midatri.repository.model.Item;
+import vn.midatri.repository.TableTopRepository;
+import vn.midatri.repository.model.*;
 import vn.midatri.service.IBookingItemService;
 
 import java.util.List;
@@ -34,6 +36,9 @@ public class BookingItemService implements IBookingItemService {
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private TableTopRepository tableTopRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -61,8 +66,21 @@ public class BookingItemService implements IBookingItemService {
     @Override
     @Transactional
     public void deleteAllByBookingId(long bookingId) {
+        Optional<Booking> bookingOptional = bookingRepository.findById(bookingId);
+        if (bookingOptional.isEmpty()){
+            throw new NotFoundException("Not Found");
+        }
+        Booking booking = bookingOptional.get();
+
+        Optional<TableTop> tableTopOptional = tableTopRepository.findById(booking.getTableTopId());
+        if (tableTopOptional.isEmpty()){
+            throw new NotFoundException("Not Found");
+        }
+        TableTop tableTop = tableTopOptional.get();
+        tableTop.setStatus(TabletopStatus.AVAILABLE);
         bookingItemRepository.deleteAllByBookingId(bookingId);
-//        bookingRepository.deleteById(bookingId);
+        bookingRepository.deleteById(bookingId);
+
     }
 
     @Override
@@ -97,7 +115,12 @@ public class BookingItemService implements IBookingItemService {
     @Override
     @Transactional(readOnly = true)
     public BookingItemResult findById(Long id) {
-        return bookingItemMapper.toDTO(bookingItemRepository.findById(id).get());
+        Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
+        if (bookingItemOptional.isEmpty()){
+            throw new NotFoundException("khong tim thay ID : " + id);
+        }
+        BookingItem bookingItem = bookingItemOptional.get();
+        return bookingItemMapper.toDTO(bookingItem);
     }
 
     @Override
@@ -133,7 +156,6 @@ public class BookingItemService implements IBookingItemService {
         int quantity = bookingItem.getQuantity();
         bookingItem.setQuantity(quantity - 1);
         if (quantity <= 1) {
-//            bookingItemRepository.deleteById(id);
             throw new NumberFormatException("Quantity cannot be lower");
         }
         bookingItemRepository.save(bookingItem);
@@ -141,6 +163,7 @@ public class BookingItemService implements IBookingItemService {
     }
 
     @Override
+    @Transactional
     public int updateQuantity(Long id, int quantity) {
         Optional<BookingItem> optional = bookingItemRepository.findById(id);
         if (optional.isEmpty())
@@ -149,6 +172,19 @@ public class BookingItemService implements IBookingItemService {
         bookingItem.setQuantity(quantity);
         bookingItemRepository.save(bookingItem);
         return bookingItem.getQuantity();
+    }
+
+    @Override
+    @Transactional
+    public String updateNote(Long id, String content) {
+        Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
+        if (bookingItemOptional.isEmpty()){
+            throw new NotFoundException("Node ko thành công");
+        }
+        BookingItem bookingItem = bookingItemOptional.get();
+        bookingItem.setContent(content);
+        bookingItemRepository.save(bookingItem);
+        return bookingItem.getContent();
     }
 
 

@@ -21,4 +21,6 @@ public interface IBookingItemService {
     int decreaseQuantity(long id);
 
     int updateQuantity(Long id, int quantity);
+
+    String updateNote(Long id, String content);
 }

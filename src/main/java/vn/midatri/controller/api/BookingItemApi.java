@@ -22,12 +22,6 @@ public class BookingItemApi {
 
     @Autowired
     BookingItemRepository bookingItemRepository;
-//    @GetMapping
-//    public ResponseEntity<?> findAll() {
-//        List<BookingItemResult> bookingItemResults = bookingItemService.findAll();
-//        return new ResponseEntity<>(bookingItemResults, HttpStatus.OK);
-//    }
-
     @GetMapping
     public ResponseEntity<?> findAllByBookingId(Long bookingId) {
         List<BookingItemResult> bookingItems = bookingItemService.findAllByBookingId(bookingId);
@@ -59,17 +53,23 @@ public class BookingItemApi {
         return new ResponseEntity<>( bookingItemService.create(bookingItemCreate), HttpStatus.OK);
     }
 
+    @PatchMapping("/updateNote/{id}")
+    public ResponseEntity<String> updateNote(@PathVariable Long id, @RequestBody String content) {
+        return new ResponseEntity<>(bookingItemService.updateNote(id, content), HttpStatus.OK);
+    }
+
     @DeleteMapping("/deleted/{id}")
     public ResponseEntity<?> deletedBookingItem(@PathVariable Long id) {
         bookingItemService.deletedBookingItem(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(id,HttpStatus.OK);
     }
 
-    @DeleteMapping("/deletedByBooking")
-    public ResponseEntity<?> deletedAllByBookingId(long bookingId) {
+    @DeleteMapping("/deletedByBooking/{bookingId}")
+    public ResponseEntity<?> deletedAllByBookingId(@PathVariable long bookingId) {
         bookingItemService.deleteAllByBookingId(bookingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
 
 }

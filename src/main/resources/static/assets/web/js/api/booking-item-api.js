@@ -94,8 +94,21 @@ function BookingItemAPI() {
     }
     this.removeBookingItemByBooking = (bookingId, done, fail) => {
         $.ajax({
-            url: `${location.origin}/api/bookingItem/deletedByBooking?bookingId=${bookingId}`,
+            url: `${location.origin}/api/bookingItem/deletedByBooking/${bookingId}`,
             type: "DELETE",
+            contentType: 'application/json'
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.updateNote = (bookingItemId, data, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/updateNote/${bookingItemId}`,
+            type: "PATCH",
             contentType: 'application/json'
         })
             .done((data) => {
