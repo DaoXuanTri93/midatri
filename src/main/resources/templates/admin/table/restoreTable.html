@@ -20,11 +20,11 @@
     <div class="container">
         <div class="row">
             <div class="breadcomb-list">
-                <div class="row mb-2">
-                    <div class="col text-end">
-                        <a href="/table-top"> Quay lại trang
-                        </a><i class="fa fa-plus-square"></i>
+                <div class="row mb-lg-2 ">
+                    <div class="col-12 text-center">
+                        <h1>Phòng/Bàn ngưng hoạt động</h1>
                     </div>
+                    <th:block th:replace="/admin/layout/menuTable ::menuTable"/>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
                 {
                     data: 'status', render: function (status) {
                         if (status == "UNAVAILABLE") {
-                            return `<td>Ngừng hoạt động</td>`
+                            return `<p style="color: orange">NGỪNG HOẠT ĐỘNG</p>`
                         }
                     }
                 },
@@ -105,11 +105,8 @@
         //     localStorage.setItem('DataTables_selected', table.rows({selected: true}).toArray())
         // })
     });
-
 </script>
-<script>
 
-</script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>
 

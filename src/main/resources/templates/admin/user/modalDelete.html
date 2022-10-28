@@ -68,8 +68,20 @@
                     $("#emailDelete").val(data.email);
                     $("#modalDelete").modal("show");
                     $("#btnDelete").on("click", function () {
-                        deleteUser(data.id);
-                        $("#btnDelete").trigger("submit");
+                        Swal.fire({
+                            title: 'Bạn có chắc muốn xóa người dùng này ',
+                            showDenyButton: true,
+                            confirmButtonText: 'Dứt',
+                            denyButtonText: `Không nhé!!!`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                Swal.fire('Ô cê bạn ei!', '', 'success')
+                                deleteUser(data.id);
+                            } else if (result.isDenied) {
+                                Swal.fire('Không bạn ơi', '', 'info')
+                            }
+                        })
                     });
                 })
 
@@ -84,13 +96,7 @@
                     url: "http://localhost:8080/api/users/deleted/" + id,
                     data: JSON.stringify(idUserDel)
                 }).done(function (data) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Xóa người dùng thành công',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
+
                     $('#tblUser').DataTable().ajax.reload();
                     $('#modalDelete').modal("hide");
                     $("#frmDeleteUser")[0].reset();
@@ -104,6 +110,8 @@
                 })
             }
         }
+
+
     </script>
 
 </th:block>

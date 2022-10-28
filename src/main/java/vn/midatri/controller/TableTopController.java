@@ -25,4 +25,10 @@ public class TableTopController {
         modelAndView.setViewName("/admin/table/restoreTable");
         return modelAndView;
     }
+    @GetMapping("/showWaitTable")
+    public ModelAndView TableUse(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/admin/table/listTableUse");
+        return modelAndView;
+    }
 }

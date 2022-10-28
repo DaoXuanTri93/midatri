@@ -43,6 +43,14 @@ public class TableTopService implements ITableTopService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<TableTopResult> findAllByStatusNot(TabletopStatus status) {
+        return tableTopRepository.findAllByStatusNot(status)
+                .stream()
+                .map(tableTop -> tableTopMapper.toDTO(tableTop))
+                .collect(Collectors.toList());
+    }
+
 //    @Override
 //    public List<TableTopResult> findAllByDeleted(TabletopStatus status) {
 //        return tableTopRepository.findAllByDeleted(TabletopStatus.UNAVAILABLE)

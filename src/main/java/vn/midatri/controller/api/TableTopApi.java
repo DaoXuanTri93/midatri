@@ -17,6 +17,7 @@ import vn.midatri.service.ITableTopService;
 import java.util.List;
 import java.util.Optional;
 
+import static vn.midatri.repository.model.TabletopStatus.ACTIVE;
 import static vn.midatri.repository.model.TabletopStatus.AVAILABLE;
 
 @RestController
@@ -30,9 +31,23 @@ public class TableTopApi {
         List<TableTopResult> tableTop = tableTopService.findAll();
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
-    @GetMapping("/renderNotUseTable")
-//    @GetMapping("/renderDeletedTable")
+    @GetMapping(("/unavaliable"))
+    public ResponseEntity<?> findAllNotUnavaliable() {
+        List<TableTopResult> tableTop = tableTopService.findAllByStatusNot(TabletopStatus.UNAVAILABLE);
+        return new ResponseEntity<>(tableTop, HttpStatus.OK);
+    }
+    @GetMapping("/renderTableUse")
+    public ResponseEntity<?> listTableUse() {
+        List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(ACTIVE);
+        return new ResponseEntity<>(tableTopResults, HttpStatus.OK);
+    }
+    @GetMapping("/renderWaitTable")
     public ResponseEntity<?> listTableDeleted() {
+        List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(TabletopStatus.AVAILABLE);
+        return new ResponseEntity<>(tableTopResults, HttpStatus.OK);
+    }
+    @GetMapping("/renderNotUseTable")
+    public ResponseEntity<?> listTable() {
         List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(TabletopStatus.UNAVAILABLE);
         return new ResponseEntity<>(tableTopResults, HttpStatus.OK);
     }
@@ -45,9 +60,7 @@ public class TableTopApi {
 
     @PostMapping("/deleted/{id}")
     public ResponseEntity<?> deletedTable(@PathVariable Long id) {
-//        tableTop.setStatus(true);
-//        tableTopService.update(tableTop);
-//
+
         TableTop tableTop = tableTopService.findById(id);
         tableTop.setStatus(TabletopStatus.UNAVAILABLE);
 //        tableTopService.save(tableTop);
@@ -78,8 +91,8 @@ public class TableTopApi {
         TableTopResult tableTopResult = tableTopService.findTableById(id);
         tableTop.setId(tableTop.getId());
         tableTop.setStatus(tableTop.getStatus());
-        tableTopService.update(tableTop);
-        return new ResponseEntity<>(tableTop, HttpStatus.OK);
+
+        return new ResponseEntity<>(tableTopService.update(tableTop), HttpStatus.OK);
 
     }
 

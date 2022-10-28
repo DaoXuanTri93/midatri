@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 
@@ -29,6 +30,7 @@ public class TableTop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Tên bàn bắt buộc phải có")
     @Column(name = "title", length = 45, nullable = false)
     private String title;
 
@@ -37,6 +39,7 @@ public class TableTop {
     @Enumerated(value = EnumType.STRING)
     private TabletopStatus status;
 
+    @NotNull(message = "Bạn phải nhập số ghế cho bàn")
     @Column(name = "capacity", nullable = false)
     private Short capacity;
 
