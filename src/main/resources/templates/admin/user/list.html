@@ -86,17 +86,6 @@
                             </thead>
                             <tbody>
                             </tbody>
-                            <tfoot>
-                            <th>#</th>
-                            <th>Full Name</th>
-                            <th>User Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Bartender</th>
-                            <th>Admin</th>
-                            <th>Vendor</th>
-                            </tfoot>
-
                         </table>
                     </div>
                 </div>
@@ -147,16 +136,22 @@
                         {data: 'admin'},
                         {data: 'bartender'},
                         {data: 'vendor'},
-                        {
-                            data: 'id',searchable : true,
-                            render: function (data, type, row, meta) {
-                                return `<button  class="btn btn-outline-warning editUser cssAction" onclick="handlerShowUserEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                                    <button  class="btn btn-outline-danger delUser cssDelete" onclick="handleShowDeleteForm(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                                                    `;
-                            }, orderable: false
-                        },
+                        {data: null},
                     ],
+                    columnDefs: [
+                        {
+                            targets: -1,
+                            className: "text-center",
+                            orderable: false,
+                            render: function (data, type, row, meta) {
+                                return `<button  class="btn btn-outline-warning editUser cssAction" onclick="handlerShowUserEdit(${data.id})" data-id="${data.id}"><i class="fa fa-edit"></i></button>
+                                    <button  class="btn btn-outline-danger delUser cssDelete" onclick="handleShowDeleteForm(${data.id})" data-id="${data.id}"><i class="fa fa-archive"></i></button>
+                                                    `;
+                            }
+                        }
+                    ]
                 },
+
                 $('.showHideColumn').on('click', function (e) {
                     e.preventDefault();
                     let tableColumn = tableUser.column($(this).attr('data-columnindex'));
@@ -164,16 +159,12 @@
                 }),
             )
         }
-
     )
 
-
-
-</script>
-<script>
     $("#createUser").on("click", function () {
         $("#modalCreate").modal("show")
     });
+
 </script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 <!--<script src="/js/validateUser.js"></script>-->

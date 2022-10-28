@@ -11,4 +11,5 @@ import java.util.List;
 public interface TableTopRepository extends JpaRepository<TableTop, Long> {
     List<TableTop> findAllByStatus(TabletopStatus status);
     TableTop save(TableTop tableTop);
+    List<TableTop> findAllByStatusNot(TabletopStatus status);
 }

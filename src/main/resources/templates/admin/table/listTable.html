@@ -30,23 +30,18 @@
         <div class="row">
             <div class="breadcomb-list" style="background-color: #8BC34A">
                 <div class="row mb-lg-2 ">
-                    <div class="col-7">
+                    <div class="col-12 text-center">
                         <h1>Phòng/Bàn</h1>
                     </div>
-                    <div class="col-2">
-                        <div class="col text-end">
-                            <button class="btn btn-outline-light bg-primary" id="createNewTable">
-                                <i class="fa fa-plus-square"></i> Thêm phòng/bàn
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="col text-end">
-                            <a class="btn btn-outline-danger " href="/table-top/restoreTable">
-                                <i class="fa fa-list" aria-hidden="true"></i>
-                                Danh sách bàn không hoạt động</a>
-                        </div>
-                    </div>
+                    <th:block th:replace="/admin/layout/menuTable ::menuTable"/>
+                </div>
+
+                </div>
+            <div class="col text-end">
+                <button class="btn btn-outline-light bg-primary" id="createTable"><i
+                        class="fa fa-plus-square"></i> Thêm bàn mới
+                </button>
+            </div>
                 </div>
             </div>
         </div>
@@ -97,21 +92,16 @@
 <th:block th:replace="/admin/table/modalEditTable :: modalEditTable"/>
 <th:block th:replace="/admin/table/modalDeleteTable ::modalDeleteTable"/>
 <!--<th:block th:replace="/admin/table/restoreTable :: restoreTable"/>-->
-
-
 </body>
 <script>
     $(document).ready(function () {
         $("#tblTop").DataTable({
                 ajax: {
                     contentType: 'application/json',
-                    url: "http://localhost:8080/api/table-top",
+                    url: "http://localhost:8080/api/table-top/unavaliable",
                     type: "GET",
                     dataSrc: ''
                 },
-                // searching: false,
-                //    paging: false,
-
                 lengthMenu: [
                     [5, 10, 15, -1],
                     ['5', '10', '15', 'All']
@@ -121,13 +111,12 @@
                     {data: 'title'},
                     {data: 'content'},
                     {data: 'capacity'},
-                    {
-                        data: 'status', render: function (status) {
-                            if (status == "AVAILABLE") {
-                                return `<td>Đang Hoạt Động</td>`
-                            }
+                    {data: 'status',
+                    render : function (data){
+                        if(data != "UNAVAILABLE"){
+                            return `<p style="color: #0B792F">ĐANG SỬ DỤNG </p>`
                         }
-                    },
+                    }},
                     {data: "id"},
                     {
                         data: 'id',
@@ -141,33 +130,11 @@
             }
         )
     })
-    // var editor = new $.fn.dataTable.Editor({
-    //     ajax: {
-    //         contentType: 'application/json',
-    //         url: "http://localhost:8080/api/table-top",
-    //         type: "GET",
-    //         dataSrc: ''
-    //     },
-    //     table: '#tblTop',
-    //     fields: [
-    //         {label: 'id ', name: 'id'},
-    //         {label: ' capacity', name: 'capacity'},
-    //         {label: ' createAt', name: 'createAt'},
-    //         {label: ' updateAt', name: 'updateAt'},
-    //         {label: ' content', name: 'content'},
-    //     ]
-    // });
-    // < button
-    // className = "btn btn-outline-danger delUser cssDelete"
-    // onClick = "handleShowDeleteTableForm(${data})"
-    // data - id = "${data}" > < i
-    // className = "fa fa-archive" > < /i></
-    // button >
-</script>
-<script>
-    $("#createNewTable").on("click", function () {
+    $("#createTable").on("click", function () {
         $("#modalCreateTable").modal("show")
     });
+
+
 </script>
 </html>
 

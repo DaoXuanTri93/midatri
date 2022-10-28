@@ -1,0 +1,139 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Quản lý bàn</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <th:block th:replace="/admin/layout/head :: head"/>
+</head>
+
+<body>
+<div class="preloader">
+  <div class="lds-ripple">
+    <div class="lds-pos"></div>
+    <div class="lds-pos"></div>
+  </div>
+</div>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+  your browser</a> to improve your experience.</p>
+<![endif]-->
+<!-- Start Header Top Area -->
+<th:block th:replace="/admin/layout/navBar :: navBar"/>
+<!-- Main Menu area End-->
+<!-- Breadcomb area Start-->
+<div class="breadcomb-area">
+  <div class="container">
+    <div class="row">
+      <div class="breadcomb-list" style="background-color: #8BC34A">
+        <div class="row mb-lg-2 ">
+          <div class="col-12 text-center">
+            <h1>Phòng/Bàn đang sử dụng</h1>
+          </div>
+          <th:block th:replace="/admin/layout/menuTable ::menuTable"/>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- Breadcomb area End-->
+<!-- Data Table area Start-->
+<div class="data-table-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="data-table-list">
+          <div class="table-responsive">
+            <table id="tblTopAct" class="table table-striped">
+              <thead>
+              <tr class="bg-success">
+                <th>Tên phòng/bàn</th>
+                <th>Ghi chú </th>
+                <th>Số ghế</th>
+                <th>Trạng thái</th>
+                <th>Số thứ tự</th>
+<!--                <th scope="col" class="text-center fw-bold">Action</th>-->
+              </tr>
+              </thead>
+              <tbody>
+              </tbody>
+
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Data Table area End-->
+<!-- Start Footer area-->
+<div class="footer-copyright-area">
+  <div class="container">
+    <div class="row">
+      <th:block th:replace="/admin/layout/footer :: footer"/>
+    </div>
+  </div>
+</div>
+<th:block th:replace="/admin/layout/script :: script"/>
+<!--<th:block th:replace="/admin/table/modalCreateTable :: modalCreateTable"/>-->
+<!--<th:block th:replace="/admin/table/modalEditTable :: modalEditTable"/>-->
+<!--<th:block th:replace="/admin/table/modalDeleteTable ::modalDeleteTable"/>-->
+<!--<th:block th:replace="/admin/table/restoreTable :: restoreTable"/>-->
+
+
+</body>
+<script>
+  $(document).ready(function () {
+    $("#tblTopAct").DataTable({
+              ajax: {
+                contentType: 'application/json',
+                url: "http://localhost:8080/api/table-top/renderTableUse",
+                type: "GET",
+                dataSrc: ''
+              },
+              lengthMenu: [
+                [5, 10, 15, -1],
+                ['5', '10', '15', 'All']
+              ],
+              select: true,
+              columns: [
+                {data: 'title'},
+                {data: 'content'},
+                {data: 'capacity'},
+                {
+                  data: 'status',
+                  render: function (status) {
+                    if (status == "ACTIVE") {
+                      return `<p style="color: red">ĐANG HOẠT ĐỘNG</p>`
+                    }
+                  }
+                },
+                {data: "id"},
+                // {
+                //   data: 'id',
+                //   render: function (data, type, row, meta) {
+                //     return `<select class="form-select" id="editStatusTbl">
+                //                 <option value="AVAILABLE" selected>Chưa sử dụng</option>
+                //                 <option value="ACTIVE" selected>Đang sử dụng</option>
+                //             </select> `;
+                //   }, orderable: false
+                // },
+              ]
+              ,
+            }
+    )
+  });
+
+
+</script>
+
+</html>
+

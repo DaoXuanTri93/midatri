@@ -14,12 +14,12 @@
                     <form id="frmCreateTable" class="createTable">
                         <div class="row">
                             <div class="col col-md-6">
-<!--                                <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>-->
+                                <!--                                <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>-->
                                 <input type="number" class="form-control" id="idTable" name="idTable" readonly hidden>
                             </div>
                             <div class="col col-md-12">
-                                <label for="statusTable" class="form-label fw-bold">Trạng thái:</label>
-                                <select class="form-select" id="statusTable">
+                                <label for="statusTable" class="form-label fw-bold" >Trạng thái:</label>
+                                <select class="form-select" id="statusTable" required>
                                     <option value="UNAVAILABLE" selected>Ngừng hoạt động</option>
                                     <option value="AVAILABLE" selected>Hoạt động</option>
                                 </select>
@@ -28,18 +28,19 @@
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="capacityTable" class="form-label fw-bold">số ghế:</label>
-                                    <input type="number" class="form-control" id="capacityTable" name="capacityTable" >
+                                <input type="number" class="form-control" id="capacityTable" name="capacityTable" required>
                                 </select>
                             </div>
                             <div class="col col-md-6">
                                 <label for="titleTable" class="form-label fw-bold">Tên phòng/bàn:</label>
-                                <input type="text" class="form-control" id="titleTable" name="titleTable" >
+                                <input type="text" class="form-control" id="titleTable" name="titleTable" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col col-lg-12">
                                 <label for="contentTable" class="form-label fw-bold">Ghi chú:</label>
-                                <textarea rows="4" cols="100%" type="text" class="form-control" id="contentTable" name="contentTable" ></textarea>
+                                <textarea rows="4" cols="100%" type="text" class="form-control" id="contentTable"
+                                          name="contentTable" required></textarea>
                             </div>
                         </div>
                     </form>
@@ -63,9 +64,8 @@
                 capacity: $('#capacityTable').val(),
                 content: $('#contentTable').val(),
                 status: $('#statusTable').find(":selected").val(),
-                title:  $("#titleTable").val()
+                title: $("#titleTable").val()
             }
-            console.log(NewTable);
             $.ajax({
                 headers: {
                     "accept": "application/json",
@@ -105,5 +105,5 @@
 
 
     </script>
-<!--    <script src="/js/validateTable.js"></script>-->
+    <script src="/js/validateTable.js"></script>
 </th:block>

@@ -21,8 +21,9 @@
                         <div class="col col-md-12">
                             <label for="statusTableEdit" class="form-label fw-bold">Trạng thái:</label>
                             <select class="form-select" id="statusTableEdit">
-                                <option value="UNAVAILABLE" selected>Ngừng hoạt động</option>
-                                <option value="AVAILABLE" selected>Hoạt động</option>
+                                <option value="ACTIVE" selected>Đang hoạt động</option>
+                                <option value="AVAILABLE" selected>Chưa hoạt  động</option>
+                                <option value="UNAVAILABLE" selected style="background-color: red">Ngừng hoạt động</option>
                             </select>
                         </div>
                             <div class="col col-md-12">
@@ -87,7 +88,7 @@
             })
                 .done((data) => {
                     $("#idTableEdit").val(data.id);
-                    $("#capacityEdit").find(":selected").val(data.capacity);
+                    $("#capacityEdit").val(data.capacity);
                     $("#statusTableEdit").find(":selected").val(data.status);
                     $("#titleEdit").val(data.title);
                     $("#contentEdit").val(data.content);
@@ -100,14 +101,12 @@
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: 'Chỉnh sửa thông tin thành công',
+                            title: 'Cập nhập thông tin thành công',
                             showConfirmButton: false,
                             timer: 2000
 
                         })
-                        {
-
-                        }
+                        editTable.ajax.reload(null,false);
                         // setTimeout(() => {
                         //     // window.location.href = "/table-top"
                         // }, 3000)

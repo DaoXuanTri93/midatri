@@ -63,17 +63,29 @@
                 type: "PUT",
                 url: "http://localhost:8080/api/users/edit/" + editUser.id,
                 data: JSON.stringify(editUser)
+
             }).done(function (data) {
-                console.log(data)
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Thay đổi thông tin người dùng thành công',
+                    showConfirmButton: false,
+                    timer: 4000
+                })
                 let tableUser = $("#tblUser").DataTable();
-                tableUser.row().data({
-                    "id": data.id,
-                    "email": data.email,
-                    "phone": data.phone,
-                    "fullName": data.fullName,
-                    "username": data.userName
-                }).draw('full-hold');
+                // console.log(tableUser.row(editUser.id));
+                // tableUser.row().data({
+                //     "id": data.id,
+                //     "email": data.email,
+                //     "phone": data.phone,
+                //     "fullName": data.fullName,
+                //     "username": data.userName
+                // }).draw('full-hold');
+
+                tableUser.ajax.reload(null, false);
+
                 $("#modalEdit").modal("hide");
+
             }).fail((e) => {
                 console.log(e)
                 Swal.fire({
@@ -102,11 +114,9 @@
                     $("#emailEdit").val(data.email);
                     $("#modalEdit").modal("show");
                     $("#idUser").val(data.id);
-                    console.log(data)
                 })
 
             $("#btnEdit").on('click', function () {
-                // let currentRow = $(this).parents('tr');
                 editUser();
 
             })
