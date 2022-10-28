@@ -100,7 +100,7 @@
                 $("#tblProduct").DataTable({
                     ajax: {
                         contentType: 'application/json',
-                        url: 'http://localhost:8080/api/item/restore',
+                        url: 'http://localhost:8080/api/item?deleted=true',
                         type: 'GET',
 
                         dataSrc:''

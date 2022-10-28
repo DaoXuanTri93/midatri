@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.item.CreateItem;
-import vn.midatri.dto.item.ItemParam;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
-import vn.midatri.repository.model.Item;
-import vn.midatri.service.IItemService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Service
 
-public class ItemService implements IItemService {
+public class ItemService implements vn.midatri.service.ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
@@ -27,7 +24,7 @@ public class ItemService implements IItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ItemResult> findAllByDeleted(Boolean deleted) {
+    public List<ItemResult> findAllByDeleted(boolean deleted) {
         return itemRepository.findAllByDeleted(deleted)
                 .stream()
                 .map(item -> itemMapper.toDTO(item))
@@ -62,6 +59,14 @@ public class ItemService implements IItemService {
     @Transactional
     public ItemResult update(ItemResult itemResult) {
         return itemMapper.toDTO(itemRepository.save(itemMapper.toModel(itemResult)));
+    }
+
+    @Override
+    public List<ItemResult> filter(List<Long> parentIds, Long childId, boolean status) {
+        return itemRepository.findAllByCategory(parentIds,childId,status)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
     }
 
 }

@@ -1,155 +1,156 @@
 <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <th:block th:fragment="leftTable">
-        <link rel="stylesheet" href="/assets/admin/css/style-sidebar.css">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="leftTable">
+    <link rel="stylesheet" href="/assets/admin/css/style-sidebar.css">
 
-        <div class=" ">
-            <div class="">
-                <div class=" ">
-                    <h3 class="" id="btnShowMenuType">
-                        Loại thực đơn
-                        <a class="">
-                            <i class="fa fa-chevron-circle-up"></i>
-                        </a>
-                    </h3>
-                    <div class="form-check " id="menuType">
-                        <ul class="">
-<!--                            <li  class="">-->
-<!--                                <div class="blue">-->
-<!--                                    <input type="checkbox" id="action" class="thucDon" data-label="Đồ ăn" >-->
-<!--                                    <a href="javascript:void(0)" tabindex="0" class=""></a>-->
-<!--                                    <label  class="">Đồ ăn</label>-->
-<!--                                </div>-->
-<!--                            </li>-->
+    <div class=" ">
+        <div class="">
+            <div class=" ">
+                <h3 class="" id="btnShowMenuType">
+                    Loại thực đơn
+                    <a class="">
+                        <i class="fa fa-chevron-circle-up"></i>
+                    </a>
+                </h3>
+                <div class="form-check " id="menuType">
+                    <ul class="">
+                        <!--                            <li  class="">-->
+                        <!--                                <div class="blue">-->
+                        <!--                                    <input type="checkbox" id="action" class="thucDon" data-label="Đồ ăn" >-->
+                        <!--                                    <a href="javascript:void(0)" tabindex="0" class=""></a>-->
+                        <!--                                    <label  class="">Đồ ăn</label>-->
+                        <!--                                </div>-->
+                        <!--                            </li>-->
 
-                        </ul>
-                    </div>
+                    </ul>
                 </div>
-                <div class="">
-                    <h3 class="" >Nhóm hàng
-                        <span class="" style="color:#0d6efd">
-                    <a onclick="handelCreateCategory()"  title="Thêm nhóm hàng">
+            </div>
+            <div class="">
+                <h3 class="">Nhóm hàng
+                    <span class="" style="color:#0d6efd">
+                    <a onclick="handelCreateCategory()" title="Thêm nhóm hàng">
                         <i class="fa fa-plus-circle"></i>
                     </a>
                     <a class="" id="btnShowGroupProduct">
                         <i class="fa fa-chevron-circle-up"></i>
                     </a>
                 </span>
-                    </h3>
-                    <div class="" id="groupProduct">
-                        <div >
-                            <div class="">
-                                <div class=""><i class="fa fa-search"></i>
-                                    <input type="text"  placeholder="Tìm kiếm nhóm hàng">
-                                </div>
+                </h3>
+                <div class="" id="groupProduct">
+                    <div>
+                        <div class="">
+                            <div class=""><i class="fa fa-search"></i>
+                                <input type="text" placeholder="Tìm kiếm nhóm hàng">
                             </div>
-                            <div class="">
-                                <div id="idProductCatTreeAll" onclick="`${alert('mmm')}`"
-                                     class="fw-bold">
-                                    Tất cả
-                                    <a class="" title="Sửa nhóm hàng">
-                                        <i class="fa fa-pen">
-                                        </i>
-                                    </a>
-                                </div>
-                                <div id="productCatTreeView">
-                                    <ul class="" role="tree" >
-<!--                                        <li role="treeitem" class="" data-uid="">-->
-<!--                                            <div class="" >-->
-<!--                                            <span class="k-in">-->
-<!--                                            <span id="bia"  onclick="`${alert('aaa')}`" >BIA &amp; THUỐC LÁ</span>-->
-<!--                                            <a class="" onclick="`${alert('bb')}`" title="Sửa nhóm hàng">-->
-<!--                                            <i class="fa fa-pencil"></i>-->
-<!--                                        </a>-->
-<!--                                        </span>-->
-<!--                                            </div>-->
-<!--                                        </li>-->
-                                    </ul>
-                                </div>
+                        </div>
+                        <div class="">
+                            <div id="idProductCatTreeAll" onclick="`${alert('mmm')}`"
+                                 class="fw-bold">
+                                Tất cả
+                                <a class="" title="Sửa nhóm hàng">
+                                    <i class="fa fa-pen">
+                                    </i>
+                                </a>
+                            </div>
+                            <div id="productCatTreeView">
+                                <ul class="" role="tree">
+                                    <!--                                        <li role="treeitem" class="" data-uid="">-->
+                                    <!--                                            <div class="" >-->
+                                    <!--                                            <span class="k-in">-->
+                                    <!--                                            <span id="bia"  onclick="`${alert('aaa')}`" >BIA &amp; THUỐC LÁ</span>-->
+                                    <!--                                            <a class="" onclick="`${alert('bb')}`" title="Sửa nhóm hàng">-->
+                                    <!--                                            <i class="fa fa-pencil"></i>-->
+                                    <!--                                        </a>-->
+                                    <!--                                        </span>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </li>-->
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="">
-                    <h3 class="" >
-                        Lựa chọn hiển thị
-                    </h3>
+            </div>
+            <div class="">
+                <h3 class="">
+                    Lựa chọn hiển thị
+                </h3>
 
-                    <div class="form-check" >
-                        <ul class="" >
-                            <li class="">
-                                <div class="">
-                                    <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio" data-label="Hàng đang Kinh doanh" checked>
-                                    <a href="javascript:void(0)" tabindex="0" class="checked"></a>
-                                    <label  class="form-check-label" for="ActiveRadio">Hàng đang Kinh doanh</label>
-                                </div>
-                            </li>
-                            <li class="">
-                                <div class="blue">
-                                    <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio1" data-label="Hàng ngừng Kinh doanh" >
-                                    <a href="javascript:void(0)" tabindex="0" class=""></a>
-                                    <label  class="form-check-label" for="ActiveRadio1">Hàng ngừng Kinh doanh</label>
-                                </div>
-                            </li>
-                            <li class="">
-                                <div class="">
-                                    <input type="radio" class="form-check-input" id="ActiveRadio2" name="ActiveRadio" data-label="Tất cả" >
-                                    <a href="javascript:void(0)" tabindex="0" class=""></a>
-                                    <label  class="form-check-label" for="ActiveRadio2">Tất cả</label></div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="form-check">
+                    <ul class="">
+                        <li class="">
+                            <div class="">
+                                <input type="radio" class="form-check-input ActiveRadio" value="0" name="ActiveRadio"
+                                       id="ActiveRadio" data-label="Hàng đang Kinh doanh" checked>
+                                <a href="javascript:void(0)" tabindex="0" class="checked"></a>
+                                <label class="form-check-label" for="ActiveRadio">Hàng đang Kinh doanh</label>
+                            </div>
+                        </li>
+                        <li class="">
+                            <div class="blue">
+                                <input type="radio" class="form-check-input ActiveRadio" value="1" name="ActiveRadio"
+                                       id="ActiveRadio1" data-label="Hàng ngừng Kinh doanh">
+                                <a href="javascript:void(0)" tabindex="0" class=""></a>
+                                <label class="form-check-label" for="ActiveRadio1">Hàng ngừng Kinh doanh</label>
+                            </div>
+                        </li>
+                        <!--                            <li class="">-->
+                        <!--                                <div class="">-->
+                        <!--                                    <input type="radio" class="form-check-input" id="ActiveRadio2" name="ActiveRadio" data-label="Tất cả" >-->
+                        <!--                                    <a href="javascript:void(0)" tabindex="0" class=""></a>-->
+                        <!--                                    <label  class="form-check-label" for="ActiveRadio2">Tất cả</label></div>-->
+                        <!--                            </li>-->
+                    </ul>
                 </div>
             </div>
-
         </div>
-        <th:block th:replace="/admin/layout/script::script"/>
-        <th:block th:replace="/admin/category/modalUpdateCategory::modalUpdateCategory"/>
-        <th:block th:replace="/admin/category/modalCreateCategory::modalCreateCategory"/>
+
+    </div>
+    <th:block th:replace="/admin/layout/script::script"/>
+    <th:block th:replace="/admin/category/modalUpdateCategory::modalUpdateCategory"/>
+    <th:block th:replace="/admin/category/modalCreateCategory::modalCreateCategory"/>
 
 
-        <script>
-            let category= new Map();
+    <script>
+        let categoryMap = new Map();
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category"
+        })
+            .done((data) => {
+                $.each(data, (i, item) => {
 
+                    $.ajax({
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: "http://localhost:8080/api/item/find/" + item.id
+                    }).done((data) => {
+                        categoryMap.set(item.id, data)
+                    })
+
+                })
+            })
+
+        console.log(categoryMap)
+
+        function getAllCategory() {
             $.ajax({
                 headers: {
                     "Accept": "application/json",
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category"
+                url: "http://localhost:8080/api/category/parent?hasParentId=true"
             })
-                .done((data)=>{
-                    $.each(data,(i,item)=>{
-
-                        $.ajax({
-                            headers: {
-                                "Accept": "application/json",
-                                "Content-type": "application/json"
-                            },
-                            type: "GET",
-                            url: "http://localhost:8080/api/item/find/"+ item.id
-                        }).done((data)=>{
-                            category.set(item.id,data)
-                        })
-
-                    })
-                })
-
-            console.log(category)
-
-            function getAllCategory(){
-                $.ajax({
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-type": "application/json"
-                    },
-                    type: "GET",
-                    url: "http://localhost:8080/api/category/parent?hasParentId=true"
-                })
-                    .done(function (data) {
-                            $.each(data, (i,item)=>{
-                               let str = `<li role="treeitem" class="" data-uid="">
+                .done(function (data) {
+                    $.each(data, (i, item) => {
+                        let str = `<li role="treeitem" class="" data-uid="">
                                             <div class="" >
                                             <span class="k-in">
                                             <span id="" onclick="handleFilterCategoryById(${item.id})" data-label="${item.categoryName}">${item.categoryName}</span>
@@ -160,26 +161,26 @@
                                             </div>
                                         </li>`
 
-                                $("#productCatTreeView ul").append(str);
-                            })
+                        $("#productCatTreeView ul").append(str);
                     })
-                    .fail(function (jqXHR) {
-                        console.log("get drinks fails");
-                    })
-            }
-
-            function getAllCategoryParent(){
-                $.ajax({
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-type": "application/json"
-                    },
-                    type: "GET",
-                    url: "http://localhost:8080/api/category/parent",
                 })
-                    .done(function (data) {
-                        $.each(data, (i,item)=>{
-                            let str = `
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                })
+        }
+
+        function getAllCategoryParent() {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category/parent",
+            })
+                .done(function (data) {
+                    $.each(data, (i, item) => {
+                        let str = `
                                     <li  class="">
                                 <div class="blue">
                                     <input type="checkbox" id="action${item.id}" class="thucDon form-check-input" value=${item.id} data-label="${item.categoryName}" >
@@ -189,182 +190,183 @@
                             </li>
                             `
 
-                            $("#menuType ul").append(str);
+                        $("#menuType ul").append(str);
 
-                        })
-                        // handelCheckbox();
                     })
-                    .fail(function (jqXHR) {
-                        console.log("get drinks fails");
-                    })
-            }
-            getAllCategory();
-            getAllCategoryParent();
-            var checkboxtable;
+                    // handelCheckbox();
+                })
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                })
+        }
 
-            function  handelCheckboxDataTable(parentId){
-                  let category;
-                  $.ajax({
-                      headers: {
-                          "Accept": "application/json",
-                          "Content-type": "application/json"
-                      },
-                      type: "GET",
-                      url: "http://localhost:8080/api/category",
-                  })
-                      .done(function (data) {
-                          category = data;
-                          checkboxtable = $("#tblProduct").DataTable({
-                              destroy:true,
-                              ajax: {
-                                  contentType: 'application/json',
-                                  url: 'http://localhost:8080/api/item/find/'+parentId,
-                                  type: 'GET',
+        getAllCategory();
+        getAllCategoryParent();
+        var checkboxtable;
 
-                                  dataSrc: ''
-                              },
+        function handelCheckboxDataTable(parentId) {
+            let category;
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category",
+            })
+                .done(function (data) {
+                    category = data;
+                    checkboxtable = $("#tblProduct").DataTable({
+                        destroy: true,
+                        ajax: {
+                            contentType: 'application/json',
+                            url: 'http://localhost:8080/api/item/find/' + parentId,
+                            type: 'GET',
 
-                              columns: [
-                                  {data: 'title',},
-                                  {data: 'price'},
-                                  {data: 'quantity'},
-                                  {
-                                      data: "categoryId", render: function (categoryId) {
-                                          for (let i = 0; i < category.length; i++) {
-                                              if (categoryId == category[i].id) {
-                                                  return `<td>${category[i].categoryName}</td>`
-                                              }
-                                          }
+                            dataSrc: ''
+                        },
 
-                                      }
-                                  },
-                                  // {data: "categoryId"},
-                                  {
-                                      data: 'img',
-                                      render: function (img) {
-                                          return `<img src="${img}" style="width: 60px ; height: 60px"/>`
-                                      }
+                        columns: [
+                            {data: 'title',},
+                            {data: 'price'},
+                            {data: 'quantity'},
+                            {
+                                data: "categoryId", render: function (categoryId) {
+                                    for (let i = 0; i < category.length; i++) {
+                                        if (categoryId == category[i].id) {
+                                            return `<td>${category[i].categoryName}</td>`
+                                        }
+                                    }
 
-                                  },
-                                  {
-                                      data: 'id',
-                                      render: function (data, type, row, meta) {
-                                          return `
+                                }
+                            },
+                            // {data: "categoryId"},
+                            {
+                                data: 'img',
+                                render: function (img) {
+                                    return `<img src="${img}" style="width: 60px ; height: 60px"/>`
+                                }
+
+                            },
+                            {
+                                data: 'id',
+                                render: function (data, type, row, meta) {
+                                    return `
                                             <div class="d-flex">
                                                 <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
                                                 <button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
                                             </div>
                                             `;
-                                      }, orderable: false
-                                  },
-                              ]
-                          });
-                      })
-                      .fail(function (jqXHR) {
-                          console.log("get drinks fails");
-                      })
+                                }, orderable: false
+                            },
+                        ]
+                    });
+                })
+                .fail(function (jqXHR) {
+                    console.log("get drinks fails");
+                })
 
-          }
+        }
 
-            function handelCheckbox() {
-                $('input[type="checkbox"]').on('click', function () {
-                    if ($(this).prop("checked") === true) {
-                        console.log($(this).context.dataset.label);
-                        console.log($(this).val());
-                        datatable.destroy();
-                        $("tbody").remove();
-                        handelCheckboxDataTable($(this).val());
+        function handelCheckbox() {
+            $('input[type="checkbox"]').on('click', function () {
+                if ($(this).prop("checked") === true) {
+                    console.log($(this).context.dataset.label);
+                    console.log($(this).val());
+                    datatable.destroy();
+                    $("tbody").remove();
+                    handelCheckboxDataTable($(this).val());
 
 
-                    } else if ($(this).prop("checked") === false) {
-                        console.log("a")
-                        handelDataTable();
+                } else if ($(this).prop("checked") === false) {
+                    console.log("a")
+                    handelDataTable();
+                }
+            });
+        }
+
+
+        function handleFilterCategoryById(id) {
+            alert(id)
+        }
+
+        function handelUpdateCategory(id) {
+            $("#parentCategoryUpdate option").remove();
+            let category;
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category/" + id
+            })
+                .done((data) => {
+                    category = data;
+                    $("#idCategoryUpdate").val(category.id);
+                    $("#nameCategoryUpdate").val(category.categoryName);
+                    $.ajax({
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-type": "application/json"
+                        },
+                        type: "GET",
+                        url: "http://localhost:8080/api/category/parent",
+                    })
+                        .done(function (data) {
+                            for (let i = 0; i < data.length; i++) {
+                                let id = data[i].id;
+                                let name = data[i].categoryName;
+                                let parent = data[i].parentId
+                                if (category.parentId == id) {
+                                    $("#parentCategoryUpdate").append(`<option value=${id} selected>${name}</option>`);
+                                } else {
+                                    $("#parentCategoryUpdate").append(`<option value=${id}>${name}</option>`);
+                                }
+                            }
+
+                        })
+                        .fail(function (jqXHR) {
+                            console.log("get drinks fails update");
+                        })
+
+                })
+                .fail(() => {
+                    console.log("error");
+                })
+            $("#modalUpdateCategory").modal("show");
+        }
+
+        function handelCreateCategory() {
+
+            $("#parentCategoryCreate option").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category/parent",
+            })
+                .done(function (data) {
+                    for (let i = 0; i < data.length; i++) {
+                        let id = data[i].id;
+                        let name = data[i].categoryName;
+                        let parent = data[i].parentId
+                        $("#parentCategoryCreate").append(`<option value=${id}>${name}</option>`);
                     }
-                });
-            }
 
+                })
+                .fail(function (jqXHR) {
+                    console.log("category error");
+                })
+            $("#modalCreateCategory").modal("show");
+        }
 
+    </script>
 
-          function handleFilterCategoryById(id) {
-               alert(id)
-          }
+</th:block>
 
-         function handelUpdateCategory(id){
-             $("#parentCategoryUpdate option").remove();
-             let category;
-             $.ajax({
-                 headers: {
-                     "Accept": "application/json",
-                     "Content-type": "application/json"
-                 },
-                 type: "GET",
-                 url: "http://localhost:8080/api/category/"+id
-             })
-                 .done((data) =>{
-                     category=data;
-                     $("#idCategoryUpdate").val(category.id);
-                     $("#nameCategoryUpdate").val(category.categoryName);
-                     $.ajax({
-                         headers: {
-                             "Accept": "application/json",
-                             "Content-type": "application/json"
-                         },
-                         type: "GET",
-                         url: "http://localhost:8080/api/category/parent",
-                     })
-                         .done(function (data) {
-                             for (let i = 0; i < data.length; i++) {
-                                 let id = data[i].id;
-                                 let name = data[i].categoryName;
-                                 let parent = data[i].parentId
-                                 if(category.parentId==id){
-                                     $("#parentCategoryUpdate").append(`<option value=${id} selected>${name}</option>`);
-                                 }else {
-                                     $("#parentCategoryUpdate").append(`<option value=${id}>${name}</option>`);
-                                 }
-                             }
-
-                         })
-                         .fail(function (jqXHR) {
-                             console.log("get drinks fails update");
-                         })
-
-                 })
-                 .fail(()=>{
-                     console.log("error");
-                 })
-             $("#modalUpdateCategory").modal("show");
-         }
-         function handelCreateCategory(){
-
-             $("#parentCategoryCreate option").remove();
-                     $.ajax({
-                         headers: {
-                             "Accept": "application/json",
-                             "Content-type": "application/json"
-                         },
-                         type: "GET",
-                         url: "http://localhost:8080/api/category/parent",
-                     })
-                         .done(function (data) {
-                             for (let i = 0; i < data.length; i++) {
-                                 let id = data[i].id;
-                                 let name = data[i].categoryName;
-                                 let parent = data[i].parentId
-                                     $("#parentCategoryCreate").append(`<option value=${id}>${name}</option>`);
-                                 }
-
-                         })
-                         .fail(function (jqXHR) {
-                             console.log("category error");
-                         })
-                     $("#modalCreateCategory").modal("show");
-         }
-
-        </script>
-
-    </th:block>
-
-    </html>
+</html>
 
 

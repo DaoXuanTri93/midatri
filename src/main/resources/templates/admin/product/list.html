@@ -104,23 +104,58 @@
 <th:block th:replace="/admin/product/modalDeleteProduct::modalDeleteProduct"/>
 </body>
 <script>
-    function renderAll(){
-        let arrCheckbox =[];
+    let cParent = [1, 2, 3];
+
+    function renderAll() {
+        $("input[type='radio']").on("click", function () {
+            if ($("input[type='radio']").is(':checked')) {
+                if ($("input[type='radio']:checked").val() == 0) {
+
+                    $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item").load()
+                }
+                if ($("input[type='radio']:checked").val() == 1) {
+                    $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item?deleted=true").load().draw()
+                }
+
+            }
+        })
+        if ($("input[type='radio']:checked").val() == 0) {
+            handelDataTable();
+        }
+
+
+        let arrCheckbox = [];
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category/parent",
+        }).done((data) => {
+            $.each(data, (i, item) => {
+                arrCheckbox[i] = item.id;
+            })
+        })
+
+
         $('input[type="checkbox"]').on('click', function () {
             if ($(this).prop("checked") === true) {
-                console.log($(this).val());
-                
+                $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item/find/" + ($(this).val())).load().draw()
+
             } else if ($(this).prop("checked") === false) {
-                console.log("a")
+                $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item").load()
             }
         });
     }
+
     renderAll();
 
-        var datatable;
-    function handelDataTable(){
+    var datatable;
+
+    function handelDataTable() {
         // $(document).ready(function () {
-            let category;
+        let category;
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -130,30 +165,30 @@
             url: "http://localhost:8080/api/category",
         })
             .done(function (data) {
-                category=data;
-                datatable =  $("#tblProduct").DataTable({
-
+                category = data;
+                datatable = $("#tblProduct").DataTable({
                     ajax: {
                         contentType: 'application/json',
                         url: 'http://localhost:8080/api/item',
                         type: 'GET',
 
-                        dataSrc:''
+                        dataSrc: ''
                     },
 
                     columns: [
                         {data: 'title',},
                         {data: 'price'},
                         {data: 'quantity'},
-                        {data:"categoryId",render:function (categoryId){
-                                for (let i=0;i<category.length;i++){
-                                    if(categoryId==category[i].id){
-                                        return`<td>${category[i].categoryName}</td>`
+                        {
+                            data: "categoryId", render: function (categoryId) {
+                                for (let i = 0; i < category.length; i++) {
+                                    if (categoryId == category[i].id) {
+                                        return `<td>${category[i].categoryName}</td>`
                                     }
                                 }
 
                             }
-                        } ,
+                        },
                         // {data: "categoryId"},
                         {
                             data: 'img',
@@ -183,12 +218,33 @@
 
         // });
     }
-        handelDataTable();
+
+    function query(parameters, categoryId, status) {
+        let query = "";
+        if (parameters.length > 0) {
+            query = "cp="
+            for (param of parameters) {
+                query += param;
+            }
+        }
+
+        if (categoryId !== undefined){
+            if (query.length > 0)
+                query += "&";
+            query += `cc=${categoryId}`;
+        }
+
+        if (query.length > 0)
+            query += "&";
+        query += `s=${status}`;
+        console.log(query);
+        $("#tblProduct").DataTable().ajax.url(`http://localhost:8080/api/item?${query}`).load()
+    }
 
 </script>
 
 <script>
-        function handlerShowCategory() {
+    function handlerShowCategory() {
         $.ajax({
             headers: {
                 "Accept": "application/json",
@@ -360,7 +416,7 @@
                         "Content-type": "application/json"
                     },
                     type: "GET",
-                    url: "http://localhost:8080/api/category/parent" ,
+                    url: "http://localhost:8080/api/category/parent",
                 })
                     .done(function (data) {
                         parent = data
@@ -383,19 +439,19 @@
                                     let name = category[i].categoryName;
                                     let parentId = category[i].parentId
                                     if (id == data.categoryId) {
-                                        $.each(parent,(i,item)=>{
-                                            if(parentId==item.id){
+                                        $.each(parent, (i, item) => {
+                                            if (parentId == item.id) {
                                                 $("#catalogsParentUpdate").append(`<option value=${item.id} selected >${item.categoryName}</option>`);
-                                                $.each(category,(i,item)=>{
-                                                    if(item.parentId==$("#catalogsParentUpdate").val()){
-                                                        if(id==item.id){
+                                                $.each(category, (i, item) => {
+                                                    if (item.parentId == $("#catalogsParentUpdate").val()) {
+                                                        if (id == item.id) {
                                                             $("#catalogsUpdate").append(`<option value="${item.id}" selected>${item.categoryName}</option>`)
-                                                        }else {
+                                                        } else {
                                                             $("#catalogsUpdate").append(`<option value="${item.id}" >${item.categoryName}</option>`)
                                                         }
                                                     }
                                                 })
-                                            }else {
+                                            } else {
                                                 $("#catalogsParentUpdate").append(`<option value=${item.id} >${item.categoryName}</option>`);
 
                                             }
@@ -420,7 +476,6 @@
                     })
 
 
-
             })
             .fail(function (jqXHR) {
                 console.log("get drinks fails");
@@ -428,8 +483,6 @@
 
 
     }
-
-
 
 
     $("#modalUpdateProduct").on('hidden.bs.modal', function () {
@@ -461,7 +514,6 @@
             $('#groupProduct').addClass("hide");
         }
     })
-
 
 
 </script>

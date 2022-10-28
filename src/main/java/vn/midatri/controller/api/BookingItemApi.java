@@ -1,7 +1,6 @@
 package vn.midatri.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,7 @@ import vn.midatri.mapper.BookingMapper;
 import vn.midatri.repository.BookingItemRepository;
 import vn.midatri.service.IBookingItemService;
 import vn.midatri.service.IBookingService;
-import vn.midatri.service.IItemService;
+import vn.midatri.service.ItemService;
 
 import java.util.List;
 
@@ -20,12 +19,7 @@ import java.util.List;
 public class BookingItemApi {
     @Autowired
     private IBookingItemService bookingItemService;
-    @Autowired
-    private BookingMapper bookingMapper;
-    @Autowired
-    private IItemService itemService;
-    @Autowired
-    private IBookingService bookingService;
+
     @Autowired
     BookingItemRepository bookingItemRepository;
 //    @GetMapping
