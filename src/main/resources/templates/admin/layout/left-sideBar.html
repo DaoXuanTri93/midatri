@@ -44,7 +44,7 @@
                             </div>
                         </div>
                         <div class="">
-                            <div id="idProductCatTreeAll" onclick="`${alert('mmm')}`"
+                            <div id="idProductCatTreeAll" onclick="handleFilterAllCategory()"
                                  class="fw-bold">
                                 Tất cả
                                 <a class="" title="Sửa nhóm hàng">
@@ -268,6 +268,12 @@
 
         }
 
+        function handleFilterCategoryById(id){
+            categoryId= id ;
+
+            renderAll();
+        }
+
         function handelCheckbox() {
             $('input[type="checkbox"]').on('click', function () {
                 if ($(this).prop("checked") === true) {
@@ -286,9 +292,6 @@
         }
 
 
-        function handleFilterCategoryById(id) {
-            alert(id)
-        }
 
         function handelUpdateCategory(id) {
             $("#parentCategoryUpdate option").remove();

@@ -105,56 +105,50 @@
 </body>
 <script>
     let cParent = [1, 2, 3];
-
-    function renderAll() {
-        $("input[type='radio']").on("click", function () {
-            if ($("input[type='radio']").is(':checked')) {
-                if ($("input[type='radio']:checked").val() == 0) {
-
-                    $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item").load()
-                }
-                if ($("input[type='radio']:checked").val() == 1) {
-                    $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item?deleted=true").load().draw()
-                }
-
-            }
-        })
+    let parameters = [];
+    let categoryId;
+    let status =0;
+    let allCategory=[];
+    $("input[type='radio']").on("click",function () {
         if ($("input[type='radio']:checked").val() == 0) {
-            handelDataTable();
+            status = 0;
         }
+        if ($("input[type='radio']:checked").val() == 1) {
+            status = 1;
+        }
+            renderAll();
 
-
-        let arrCheckbox = [];
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/category/parent",
-        }).done((data) => {
-            $.each(data, (i, item) => {
-                arrCheckbox[i] = item.id;
-            })
-        })
-
-
-        $('input[type="checkbox"]').on('click', function () {
-            if ($(this).prop("checked") === true) {
-                $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item/find/" + ($(this).val())).load().draw()
-
-            } else if ($(this).prop("checked") === false) {
-                $("#tblProduct").DataTable().ajax.url("http://localhost:8080/api/item").load()
-            }
-        });
     }
+    )
+    $('input[type="checkbox"]').on('click', function () {
+        if ($(this).prop("checked") === true) {
+            parameters.push($(this).val()) ;
+
+        } else if ($(this).prop("checked") === false) {
+            for (let i = 0 ; i < parameters.length;i++){
+                if(parameters[i]==$(this).val()){
+                    parameters.splice(i,1)
+                }
+            }
+        }
+        renderAll();
+    });
 
     renderAll();
 
-    var datatable;
 
-    function handelDataTable() {
-        // $(document).ready(function () {
+    function renderAll() {
+        if (parameters.length===0&&categoryId===undefined&&($("input[type='radio']:checked").val() == 0)) {
+                handelDataTable()
+
+        }else {
+            console.log("cp="+parameters,"cc="+categoryId,"s="+status)
+            query(parameters,categoryId,status)
+        }
+
+    }
+
+    function handleFilterAllCategory(){
         let category;
         $.ajax({
             headers: {
@@ -162,22 +156,46 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category",
+            url: "http://localhost:8080/api/category/parent?hasParentId=1",
+        }).done((data)=>{
+            $.each(data,(c,cate)=>{
+                allCategory.push(cate.id);
+            })
+        })
+       queryFindCategory(parameters,allCategory,status);
+    }
+
+    function handelDataTable() {
+        let category;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category/parent?hasParentId=1",
         })
             .done(function (data) {
                 category = data;
-                datatable = $("#tblProduct").DataTable({
+
+           $("#tblProduct").DataTable({
                     ajax: {
                         contentType: 'application/json',
-                        url: 'http://localhost:8080/api/item',
+                        url: 'http://localhost:8080/api/item/filter?s=0',
                         type: 'GET',
 
                         dataSrc: ''
                     },
-
+                    searching : false,
                     columns: [
                         {data: 'title',},
-                        {data: 'price'},
+                        {data: 'price', render : function (price){
+                            return new Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }).format(price)
+                            }
+                            },
                         {data: 'quantity'},
                         {
                             data: "categoryId", render: function (categoryId) {
@@ -203,11 +221,39 @@
                                 return `
                         <div class="d-flex">
                             <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
+                            <button type="button" class="btn btn-outline-danger delete " onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
                         </div>
                                 `;
                             }, orderable: false
                         },
+                    ],
+                    columnDefs:[
+                        {
+                            targets : 1,
+                            className:"text-right"
+                        },
+                        {
+                            targets : 2,
+                            className:"text-right"
+                        },
+                        // {
+                        //     targets : -1,
+                        //     render:(data)=>{
+                        //         if (data.deleted==0){
+                        //             return `
+                        //                 <div class="d-flex">
+                        //                     <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
+                        //                     <button type="button" class="btn btn-outline-danger delete " onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
+                        //                 </div>
+                        //         `;
+                        //         }else{
+                        //             return `<button class="btn btn-outline-warning restore" onclick="handlerShowModalRestore(${data})" data-id="${data}"><i class="fa fa-undo"></i></button>
+                        //             `;
+                        //         }
+                        //
+                        // }
+                        //
+                        // }
                     ]
                 });
             })
@@ -224,7 +270,7 @@
         if (parameters.length > 0) {
             query = "cp="
             for (param of parameters) {
-                query += param;
+                query += param+",";
             }
         }
 
@@ -237,8 +283,36 @@
         if (query.length > 0)
             query += "&";
         query += `s=${status}`;
-        console.log(query);
-        $("#tblProduct").DataTable().ajax.url(`http://localhost:8080/api/item?${query}`).load()
+        console.log(query)
+        $("#tblProduct").DataTable().ajax.url(`http://localhost:8080/api/item/filter?${query}`).load().draw();
+    }
+    function queryFindCategory(parameters, categoryId, status) {
+        let query = "";
+        if (parameters.length > 0) {
+            query = "cp="
+            for (param of parameters) {
+                query += param+",";
+            }
+        }
+
+        if (categoryId !== undefined){
+            if (query.length > 0){
+                query += "&";
+            }
+
+            query += `cc=`;
+            if(categoryId.length>0){
+                for (cate of categoryId) {
+                    query += cate+",";
+                }
+            }
+        }
+
+        if (query.length > 0)
+            query += "&";
+        query += `s=${status}`;
+        console.log(query)
+        $("#tblProduct").DataTable().ajax.url(`http://localhost:8080/api/item/allCategory?${query}`).load().draw();
     }
 
 </script>
