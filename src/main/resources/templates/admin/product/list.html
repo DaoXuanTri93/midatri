@@ -53,9 +53,11 @@
                                 </div>
                             </div>
                             <div class="table-responsive ">
-                                <table id="tblProduct" class="table table-striped ">
+                                <table id="tblProduct" class="table table-striped tb-padding-lg">
                                     <thead>
                                     <tr>
+<!--                                        <th style="visibility: hidden">#</th>-->
+                                        <th scope="col" class="fw-bold fs-6">#</th>
                                         <th scope="col" class="fw-bold fs-6">Tên thức uống</th>
                                         <th scope="col" class="fw-bold fs-6">Giá</th>
                                         <th scope="col" class="fw-bold fs-6">Số Lượng</th>
@@ -102,67 +104,72 @@
 <th:block th:replace="/admin/product/modalCreateProduct::modalCreateProduct"/>
 <th:block th:replace="/admin/product/modalUpdateProduct::modalUpdateProduct"/>
 <th:block th:replace="/admin/product/modalDeleteProduct::modalDeleteProduct"/>
+<th:block th:replace="/admin/product/modalRestoreProduct::modalRestoreProduct"/>
 </body>
 <script>
-    let cParent = [1, 2, 3];
     let parameters = [];
     let categoryId;
-    let status =0;
-    let allCategory=[];
-    $("input[type='radio']").on("click",function () {
+    let status = 0;
+    let allCategory = [];
+    $("input[type='radio']").on("click", function () {
         if ($("input[type='radio']:checked").val() == 0) {
             status = 0;
         }
         if ($("input[type='radio']:checked").val() == 1) {
             status = 1;
         }
-            renderAll();
+        query(parameters, categoryId, status);
 
-    }
-    )
+    })
     $('input[type="checkbox"]').on('click', function () {
-        if ($(this).prop("checked") === true) {
-            parameters.push($(this).val()) ;
+        if ($('input[type="checkbox"]').is(":checked") === true) {
+            parameters.push($(this).val());
+            console.log(parameters)
 
-        } else if ($(this).prop("checked") === false) {
-            for (let i = 0 ; i < parameters.length;i++){
-                if(parameters[i]==$(this).val()){
-                    parameters.splice(i,1)
+
+        }
+        if ($(this).prop("checked") === false) {
+            for (let i = 0; i < parameters.length; i++) {
+                if (parameters[i] == $(this).val()) {
+                    parameters.splice(i, 1)
                 }
             }
+            console.log(parameters)
+
         }
-        renderAll();
+        query(parameters, categoryId, status);
     });
+
 
     renderAll();
 
-
     function renderAll() {
-        if (parameters.length===0&&categoryId===undefined&&($("input[type='radio']:checked").val() == 0)) {
-                handelDataTable()
+        if (parameters.length === 0 && categoryId === undefined && ($("input[type='radio']:checked").val() == 0)) {
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/category/parent?hasParentId=1",
+            }).done((data) => {
+                $.each(data, (c, cate) => {
+                    allCategory.push(cate.id);
+                })
+            })
+            handelDataTable();
 
-        }else {
-            console.log("cp="+parameters,"cc="+categoryId,"s="+status)
-            query(parameters,categoryId,status)
+        } else {
+            console.log("cp=" + parameters, "cc=" + categoryId, "s=" + status)
+            query(parameters, categoryId, status);
         }
 
     }
 
-    function handleFilterAllCategory(){
-        let category;
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/category/parent?hasParentId=1",
-        }).done((data)=>{
-            $.each(data,(c,cate)=>{
-                allCategory.push(cate.id);
-            })
-        })
-       queryFindCategory(parameters,allCategory,status);
+    function handleFilterAllCategory() {
+        $(`.category`).removeClass("fw-bold");
+        $("#idProductCatTreeAll").addClass("fw-bold");
+        queryFindCategory(parameters, allCategory, status);
     }
 
     function handelDataTable() {
@@ -178,24 +185,26 @@
             .done(function (data) {
                 category = data;
 
-           $("#tblProduct").DataTable({
+                $("#tblProduct").DataTable({
                     ajax: {
                         contentType: 'application/json',
-                        url: 'http://localhost:8080/api/item/filter?s=0',
+                        url: 'http://localhost:8080/api/item?deleted=0',
                         type: 'GET',
 
                         dataSrc: ''
                     },
-                    searching : false,
+                    searching: false,
                     columns: [
+                        {data: 'id'},
                         {data: 'title',},
-                        {data: 'price', render : function (price){
-                            return new Intl.NumberFormat('vi-VN', {
+                        {
+                            data: 'price', render: function (price) {
+                                return new Intl.NumberFormat('vi-VN', {
                                     style: 'currency',
                                     currency: 'VND'
                                 }).format(price)
                             }
-                            },
+                        },
                         {data: 'quantity'},
                         {
                             data: "categoryId", render: function (categoryId) {
@@ -207,7 +216,6 @@
 
                             }
                         },
-                        // {data: "categoryId"},
                         {
                             data: 'img',
                             render: function (img) {
@@ -216,44 +224,46 @@
 
                         },
                         {
-                            data: 'id',
+                            data: 'deleted',
                             render: function (data, type, row, meta) {
                                 return `
-                        <div class="d-flex">
-                            <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                            <button type="button" class="btn btn-outline-danger delete " onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                        </div>
-                                `;
+                                            <div class="d-flex">
+                                                <button class="btn btn-outline-warning edit me-2"
+                                                        onclick="handlerShowModalEdit(${row.id})"
+                                                        data-id="${row.id}">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                   ${data ? (`<button class="btn btn-outline-primary restore"
+                                                                     onClick="handlerShowModalRestore(${row.id})"
+                                                                     data-id="${row.id}">
+                                        <i class="fa fa-undo"></i>
+                                    </button>`) :
+                                    (`<button type="button"
+                                             class="btn btn-outline-danger delete "
+                                             onClick="handlerShowModalDelete(${row.id})"
+                                             data-id="${row.id}">
+                                        <i class="fa fa-archive"></i>
+                                    </button>`)
+                                }
+                                            </div>
+                                        `;
                             }, orderable: false
                         },
                     ],
-                    columnDefs:[
-                        {
-                            targets : 1,
-                            className:"text-right"
-                        },
-                        {
-                            targets : 2,
-                            className:"text-right"
-                        },
+                    columnDefs: [
                         // {
-                        //     targets : -1,
-                        //     render:(data)=>{
-                        //         if (data.deleted==0){
-                        //             return `
-                        //                 <div class="d-flex">
-                        //                     <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                        //                     <button type="button" class="btn btn-outline-danger delete " onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                        //                 </div>
-                        //         `;
-                        //         }else{
-                        //             return `<button class="btn btn-outline-warning restore" onclick="handlerShowModalRestore(${data})" data-id="${data}"><i class="fa fa-undo"></i></button>
-                        //             `;
-                        //         }
+                        //     targets: 0 ,
+                        //     visible: false
                         //
-                        // }
-                        //
-                        // }
+                        // },
+                        {
+                            targets: 2,
+                            className: "text-right"
+                        },
+                        {
+                            targets: 3,
+                            className: "text-right"
+                        },
                     ]
                 });
             })
@@ -270,11 +280,11 @@
         if (parameters.length > 0) {
             query = "cp="
             for (param of parameters) {
-                query += param+",";
+                query += param + ",";
             }
         }
 
-        if (categoryId !== undefined){
+        if (categoryId !== undefined) {
             if (query.length > 0)
                 query += "&";
             query += `cc=${categoryId}`;
@@ -286,24 +296,25 @@
         console.log(query)
         $("#tblProduct").DataTable().ajax.url(`http://localhost:8080/api/item/filter?${query}`).load().draw();
     }
+
     function queryFindCategory(parameters, categoryId, status) {
         let query = "";
         if (parameters.length > 0) {
             query = "cp="
             for (param of parameters) {
-                query += param+",";
+                query += param + ",";
             }
         }
 
-        if (categoryId !== undefined){
-            if (query.length > 0){
+        if (categoryId !== undefined) {
+            if (query.length > 0) {
                 query += "&";
             }
 
             query += `cc=`;
-            if(categoryId.length>0){
+            if (categoryId.length > 0) {
                 for (cate of categoryId) {
-                    query += cate+",";
+                    query += cate + ",";
                 }
             }
         }
@@ -318,6 +329,56 @@
 </script>
 
 <script>
+    function handlerShowModalRestore(id){
+        let category;
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/category",
+        })
+            .done(function (data) {
+
+                category = data;
+                $.ajax({
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-type": "application/json"
+                    },
+                    type: "GET",
+                    url: "http://localhost:8080/api/item/" + id
+                })
+                    .done(function (data) {
+                        $("#idProductRestore").val(data.id);
+                        $("#productNameRestore").val(data.title);
+                        $("#priceProductRestore").val(data.price);
+                        $("#quantityProductRestore").val(data.quantity);
+                        $("#desProductRestore").val(data.description);
+                        for (let i = 0; i < category.length; i++) {
+                            let id = category[i].id;
+                            let name = category[i].categoryName;
+                            if (category[i].id == data.categoryId) {
+                                $("#catalogsRestore").append(
+                                    `<option value="${id}" selected>${name}</option>`);
+                            } else {
+                                $("#catalogsRestore").append(
+                                    `<option value="${id}">${name}</option>`);
+                            }
+                        }
+
+                        $("#modalRestoreProduct").modal("show");
+                    })
+                    .fail(function (resp) {
+                        alert("Show modal restore error");
+                    });
+
+            })
+            .fail(function (jqXHR) {
+                console.log("get drinks fails");
+            });
+    }
     function handlerShowCategory() {
         $.ajax({
             headers: {
@@ -408,6 +469,7 @@
             data: JSON.stringify(product)
         })
             .done(function (data) {
+                Toast.success('Đã Xóa Thành Công')
                 window.location.href = '/products';
                 console.log(data);
             })

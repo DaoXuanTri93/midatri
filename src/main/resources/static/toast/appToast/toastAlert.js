@@ -1,12 +1,11 @@
-// export default class Toast {
-//     static success(message) {
-//         iziToast.success(
-//             {
-//                 timeout: 1500,
-//                 position: 'topRight',
-//                 title: 'OK',
-//                 message: "message"
-//             });
-//     }
-//
-// }
+class Toast{
+    static success(message){
+        iziToast.success(
+            {
+                timeout: 1500,
+                position: 'topRight',
+                title: 'OK',
+                message: message
+            });
+    };
+}

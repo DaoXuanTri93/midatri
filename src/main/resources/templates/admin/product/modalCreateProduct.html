@@ -5,7 +5,7 @@
 
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content ">
-                <div class="modal-header bg-primary">
+                <div class="modal-header bg-success">
                     <h1 class="modal-title ">Thêm mới thức uống</h1>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
@@ -140,8 +140,10 @@
                 url: "http://localhost:8080/api/item/create",
                 data: JSON.stringify(product)
             }).done(() => {
-                alert(" Thành Công");
-                window.location.href = '/products';
+               Toast.success("Thành Công")
+                setTimeout(()=>{
+                    window.location.href = '/products';
+                },500)
             }).fail(function (jqXHR) {
                                 let str = ``;
                                 if (jqXHR.responseJSON) {
