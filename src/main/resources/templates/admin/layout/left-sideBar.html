@@ -38,13 +38,22 @@
                 </h3>
                 <div class="" id="groupProduct">
                     <div>
+<!--                        <div class="">-->
+<!--                            <div class=""><i class="fa fa-search"></i>-->
+<!--                                <input type="text" placeholder="Tìm kiếm nhóm hàng">-->
+<!--                            </div>-->
+<!--                        </div>-->
                         <div class="">
+<<<<<<< HEAD
                             <div class=""><i class="fa fa-search"></i>
                                 <input type="text" placeholder="Tìm kiếm nhóm hàng" id="example">
                             </div>
                         </div>
                         <div class="">
                             <div id="idProductCatTreeAll" onclick="`${alert('mmm')}`"
+=======
+                            <div id="idProductCatTreeAll" onclick="handleFilterAllCategory()"
+>>>>>>> f5116a793fc17ed78a6224827e1d515de48a948f
                                  class="fw-bold">
                                 Tất cả
                                 <a class="" title="Sửa nhóm hàng">
@@ -150,11 +159,11 @@
             })
                 .done(function (data) {
                     $.each(data, (i, item) => {
-                        let str = `<li role="treeitem" class="" data-uid="">
+                        let str = `<li role="treeitem" class="category" id="category${item.id}"  data-uid="">
                                             <div class="" >
                                             <span class="k-in">
                                             <span id="" onclick="handleFilterCategoryById(${item.id})" data-label="${item.categoryName}">${item.categoryName}</span>
-                                            <a class="" id="" onclick="handelUpdateCategory(${item.id})" title="Sửa nhóm hàng">
+                                            <a class=""  onclick="handelUpdateCategory(${item.id})" title="Sửa nhóm hàng">
                                             <i class="fa fa-pencil"></i>
                                         </a>
                                         </span>
@@ -185,7 +194,7 @@
                                 <div class="blue">
                                     <input type="checkbox" id="action${item.id}" class="thucDon form-check-input" value=${item.id} data-label="${item.categoryName}" >
                                     <a href="javascript:void(0)" tabindex="0" class=""></a>
-                                    <label  class="form-check-label" for="action${item.id}">${item.categoryName}</label>
+                                    <label  class="form-check-label"  for="action${item.id}">${item.categoryName}</label>
                                 </div>
                             </li>
                             `
@@ -202,93 +211,20 @@
 
         getAllCategory();
         getAllCategoryParent();
-        var checkboxtable;
-
-        function handelCheckboxDataTable(parentId) {
-            let category;
-            $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/category",
-            })
-                .done(function (data) {
-                    category = data;
-                    checkboxtable = $("#tblProduct").DataTable({
-                        destroy: true,
-                        ajax: {
-                            contentType: 'application/json',
-                            url: 'http://localhost:8080/api/item/find/' + parentId,
-                            type: 'GET',
-
-                            dataSrc: ''
-                        },
-
-                        columns: [
-                            {data: 'title',},
-                            {data: 'price'},
-                            {data: 'quantity'},
-                            {
-                                data: "categoryId", render: function (categoryId) {
-                                    for (let i = 0; i < category.length; i++) {
-                                        if (categoryId == category[i].id) {
-                                            return `<td>${category[i].categoryName}</td>`
-                                        }
-                                    }
-
-                                }
-                            },
-                            // {data: "categoryId"},
-                            {
-                                data: 'img',
-                                render: function (img) {
-                                    return `<img src="${img}" style="width: 60px ; height: 60px"/>`
-                                }
-
-                            },
-                            {
-                                data: 'id',
-                                render: function (data, type, row, meta) {
-                                    return `
-                                            <div class="d-flex">
-                                                <button class="btn btn-outline-warning edit me-2" onclick="handlerShowModalEdit(${data})" data-id="${data}"><i class="fa fa-edit"></i></button>
-                                                <button type="button" class="btn btn-outline-danger delete" onclick="handlerShowModalDelete(${data})" data-id="${data}"><i class="fa fa-archive"></i></button>
-                                            </div>
-                                            `;
-                                }, orderable: false
-                            },
-                        ]
-                    });
-                })
-                .fail(function (jqXHR) {
-                    console.log("get drinks fails");
-                })
-
-        }
-
-        function handelCheckbox() {
-            $('input[type="checkbox"]').on('click', function () {
-                if ($(this).prop("checked") === true) {
-                    console.log($(this).context.dataset.label);
-                    console.log($(this).val());
-                    datatable.destroy();
-                    $("tbody").remove();
-                    handelCheckboxDataTable($(this).val());
 
 
-                } else if ($(this).prop("checked") === false) {
-                    console.log("a")
-                    handelDataTable();
-                }
-            });
+
+        function handleFilterCategoryById(id){
+            categoryId= id ;
+            $("#idProductCatTreeAll").removeClass("fw-bold")
+            $(`.category`).removeClass("fw-bold")
+            $(`#category${id}`).addClass("fw-bold")
+            query(parameters,categoryId,status)
         }
 
 
-        function handleFilterCategoryById(id) {
-            alert(id)
-        }
+
+
 
         function handelUpdateCategory(id) {
             $("#parentCategoryUpdate option").remove();

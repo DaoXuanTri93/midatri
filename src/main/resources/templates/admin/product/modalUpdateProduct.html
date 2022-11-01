@@ -4,8 +4,8 @@
     <div class="modal" tabindex="-1" id="modalUpdateProduct">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cập nhật thức uống</h5>
+                <div class="modal-header bg-warning">
+                    <h1 class="modal-title ">Cập nhật thức uống</h1>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
                 </div>
@@ -135,7 +135,7 @@
                 data: JSON.stringify(product)
             })
                 .done(function (data) {
-                    alert( "Thức uống đã được cập nhật")
+                    Toast.success("Thức uống đã được cập nhật")
                     window.location.href="/products"
                 })
                 .fail(function (jqXHR) {
@@ -148,8 +148,8 @@
                     } else {
                         str += `<label id= "message-error" class= "error" for= "message">ERROR_400</label>`;
                     }
-                    $("#modalUpdateDrink .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
-                    $("#modalUpdateDrink .modal-body .modal-alert-danger").html(str);
+                    $("#modalUpdateProduct .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+                    $("#modalUpdateProduct .modal-body .modal-alert-danger").html(str);
                 })
                 .always(function () {
                     $(".loader").addClass('hide');

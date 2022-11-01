@@ -9,7 +9,9 @@ import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.service.ItemService;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/item")
@@ -73,9 +75,26 @@ public class ItemApi {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<?> findAllByCategory( List<Long> cp,Long cc,boolean s){
-        List<ItemResult> itemResults = itemService.filter(cp,cc,s);
+    public ResponseEntity<?> findAllByCategory(String cp,Long cc,boolean s){
+        System.out.println(cp);
+        if (cp==null){
+           return new ResponseEntity<>( itemService.filter(cc,s),HttpStatus.OK);
+        }
+        String[] cps = cp.split(",");
+        List<Long> parentIds = Arrays.stream(cps).map(Long::parseLong).collect(Collectors.toList());
+        List<ItemResult> itemResults = itemService.filter(parentIds,cc,s);
         return new ResponseEntity<>(itemResults,HttpStatus.OK);
     }
-
+    @GetMapping("/allCategory")
+    public ResponseEntity<?> findAllByAllCategory(String cp,String cc,boolean s){
+        String[] ccs= cc.split(",");
+        List<Long>childId = Arrays.stream(ccs).map(Long::parseLong).collect(Collectors.toList());
+        if (cp==null){
+            return new ResponseEntity<>( itemService.findItemsByAllCategoryNotParentIds(childId,s),HttpStatus.OK);
+        }
+        String[] cps = cp.split(",");
+        List<Long> parentIds = Arrays.stream(cps).map(Long::parseLong).collect(Collectors.toList());
+        List<ItemResult> itemResults = itemService.findItemsByAllCategory(parentIds,childId,s);
+        return new ResponseEntity<>(itemResults,HttpStatus.OK);
+    }
 }

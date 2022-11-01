@@ -151,55 +151,6 @@
 
 </script>
 <script>
-  function handlerShowModalRestore(id){
-      let category;
-      $.ajax({
-          headers: {
-              "Accept": "application/json",
-              "Content-type": "application/json"
-          },
-          type: "GET",
-          url: "http://localhost:8080/api/category",
-      })
-          .done(function (data) {
 
-              category = data;
-              $.ajax({
-                  headers: {
-                      "Accept": "application/json",
-                      "Content-type": "application/json"
-                  },
-                  type: "GET",
-                  url: "http://localhost:8080/api/item/" + id
-              })
-                  .done(function (data) {
-                      $("#idProductRestore").val(data.id);
-                      $("#productNameRestore").val(data.title);
-                      $("#priceProductRestore").val(data.price);
-                      $("#quantityProductRestore").val(data.quantity);
-                      $("#desProductRestore").val(data.description);
-                      for (let i = 0; i < category.length; i++) {
-                          let id = category[i].id;
-                          let name = category[i].categoryName;
-                          if (category[i].id == data.categoryId) {
-                              $("#catalogsRestore").append(
-                                  `<option value="${id}" selected>${name}</option>`);
-                          } else {
-                              $("#catalogsRestore").append(
-                                  `<option value="${id}">${name}</option>`);
-                          }
-                      }
-
-                      $("#modalRestoreDrink").modal("show");
-                  })
-                  .fail(function (resp) {
-                      alert("Show modal restore error");
-                  });
-
-          })
-          .fail(function (jqXHR) {
-              console.log("get drinks fails");
-          });
-    }
 </script>
 </html>
