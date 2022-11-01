@@ -66,17 +66,16 @@ public class ItemService implements vn.midatri.service.ItemService {
     public List<ItemResult> filter(List<Long> parentIds, Long childId, boolean status) {
 //
         return
-                itemRepository.findAllByCategory(parentIds,childId,status)
-                .stream()
-                .map(item -> itemMapper.toDTO(item))
-                .collect(Collectors.toList());
+                itemRepository.findAllByCategory(parentIds, childId, status)
+                        .stream()
+                        .map(item -> itemMapper.toDTO(item))
+                        .collect(Collectors.toList());
     }
 
     @Override
-<<<<<<< HEAD
     public List<ItemResult> filter(Long childId, boolean status) {
         return
-                itemRepository.findAllByCategoryNotParentIds(childId,status)
+                itemRepository.findAllByCategoryNotParentIds(childId, status)
                         .stream()
                         .map(item -> itemMapper.toDTO(item))
                         .collect(Collectors.toList());
@@ -84,25 +83,26 @@ public class ItemService implements vn.midatri.service.ItemService {
 
     @Override
     public List<ItemResult> findItemsByAllCategory(List<Long> parentIds, List<Long> childId, boolean status) {
-        return itemRepository.findItemsByAllCategory(parentIds,childId,status)
-                            .stream()
-                            .map(item -> itemMapper.toDTO(item))
-                            .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ItemResult> findItemsByAllCategoryNotParentIds(List<Long> childId, boolean status) {
-       return itemRepository.findItemsByAllCategoryNotParentIds(childId,status)
-=======
-    public List<ItemResult> findAllByCategoryId(long id) {
-        return itemRepository.findAllByCategoryId(id)
->>>>>>> triDao
+        return itemRepository.findItemsByAllCategory(parentIds, childId, status)
                 .stream()
                 .map(item -> itemMapper.toDTO(item))
                 .collect(Collectors.toList());
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> triDao
+    @Override
+    public List<ItemResult> findItemsByAllCategoryNotParentIds(List<Long> childId, boolean status) {
+        return itemRepository.findItemsByAllCategoryNotParentIds(childId, status)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ItemResult> findAllByCategoryId(long id) {
+        return itemRepository.findAllByCategoryId(id)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+    }
+
 }
