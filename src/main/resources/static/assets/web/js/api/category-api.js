@@ -4,7 +4,7 @@ function CategoryAPI() {
     this.findAll = (done, fail) => {
         $.ajax({
             type: "GET",
-            url: `${location.origin}/api/category`,
+            url: `${location.origin}/api/category/parent?hasParentId=true`,
         })
             .done((data) => {
                 done(data);

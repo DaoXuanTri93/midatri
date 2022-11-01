@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 
@@ -23,7 +24,7 @@ public class Order {
         this.id = id;
     }
 
-    public Order(long userId, long categoryId) {
+    public Order(long userId) {
         this.user = new User(this.userId = userId);
     }
 
@@ -60,6 +61,7 @@ public class Order {
 
     @Column(name = "address", length = 45)
     private String address;
+
 
     @Column(name = "create_at", nullable = false)
     private Instant createAt;

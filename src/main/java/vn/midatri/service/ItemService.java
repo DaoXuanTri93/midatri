@@ -21,8 +21,10 @@ public interface ItemService {
 
     List<ItemResult> filter(List<Long> parentIds, Long childId, boolean status);
 
+
     List<ItemResult> filter(Long childId, boolean status);
 
     List<ItemResult> findItemsByAllCategory(List<Long> parentIds, List<Long> childId, boolean status);
     List<ItemResult> findItemsByAllCategoryNotParentIds(List<Long> childId, boolean status);
+    List<ItemResult> findAllByCategoryId(long id);
 }

@@ -16,22 +16,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/item")
 public class ItemApi {
-
     @Autowired
     private ItemService itemService;
-
-
 
     @GetMapping
     public ResponseEntity<?> renderItem( boolean deleted){
         List<ItemResult> items = itemService.findAllByDeleted(deleted);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
-//    @GetMapping("/restore")
-//    public ResponseEntity<?> restoreItem(){
-//        List<ItemResult> itemList = itemService.findAllByDeleted(true);
-//        return new ResponseEntity<>(itemList, HttpStatus.OK);
-//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdItem(@PathVariable Long id){
         ItemResult itemResult = itemService.findById(id);
@@ -97,4 +90,10 @@ public class ItemApi {
         List<ItemResult> itemResults = itemService.findItemsByAllCategory(parentIds,childId,s);
         return new ResponseEntity<>(itemResults,HttpStatus.OK);
     }
+    @GetMapping("/filterItem/{id}")
+    public ResponseEntity<?> findAllByCategoryId(@PathVariable long id){
+        List<ItemResult> itemResults = itemService.findAllByCategoryId(id);
+        return new ResponseEntity<>(itemResults,HttpStatus.OK);
+    }
+
 }

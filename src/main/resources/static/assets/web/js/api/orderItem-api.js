@@ -1,10 +1,10 @@
-export const orderAPI = new OrderAPI();
+export const orderItemAPI = new OrderItemAPI();
 
-function OrderAPI() {
+function OrderItemAPI() {
     this.create = (data,done, fail) => {
         $.ajax({
             type: "POST",
-            url: `${location.origin}/api/order/create`,
+            url: `${location.origin}/api/orderItem/create`,
             contentType: 'application/json',
             data : JSON.stringify(data)
         })

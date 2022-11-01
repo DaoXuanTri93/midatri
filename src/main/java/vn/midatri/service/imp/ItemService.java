@@ -73,6 +73,7 @@ public class ItemService implements vn.midatri.service.ItemService {
     }
 
     @Override
+<<<<<<< HEAD
     public List<ItemResult> filter(Long childId, boolean status) {
         return
                 itemRepository.findAllByCategoryNotParentIds(childId,status)
@@ -92,8 +93,16 @@ public class ItemService implements vn.midatri.service.ItemService {
     @Override
     public List<ItemResult> findItemsByAllCategoryNotParentIds(List<Long> childId, boolean status) {
        return itemRepository.findItemsByAllCategoryNotParentIds(childId,status)
+=======
+    public List<ItemResult> findAllByCategoryId(long id) {
+        return itemRepository.findAllByCategoryId(id)
+>>>>>>> triDao
                 .stream()
                 .map(item -> itemMapper.toDTO(item))
                 .collect(Collectors.toList());
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> triDao
 }
