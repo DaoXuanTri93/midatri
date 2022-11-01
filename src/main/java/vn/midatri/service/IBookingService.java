@@ -1,5 +1,6 @@
 package vn.midatri.service;
 
+import vn.midatri.dto.booking.BookingCustomerParam;
 import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.dto.booking.CreateBookingParam;
 import vn.midatri.repository.model.Booking;
@@ -16,4 +17,6 @@ public interface IBookingService {
     BookingResult booking(CreateBookingParam createBookingParam);
 
     List<BookingResult> findAllByStatusNotComplete();
+
+    void saveCustomer(long id, BookingCustomerParam bookingCustomerParam);
 }

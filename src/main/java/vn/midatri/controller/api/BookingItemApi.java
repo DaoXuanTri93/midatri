@@ -6,13 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
-import vn.midatri.mapper.BookingMapper;
+import vn.midatri.dto.bookingItem.BookingItemUpdateStatus;
+import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.repository.BookingItemRepository;
+import vn.midatri.repository.model.BookingItem;
 import vn.midatri.service.IBookingItemService;
-import vn.midatri.service.IBookingService;
-import vn.midatri.service.ItemService;
 
 import java.util.List;
+import java.util.Optional;
+
+import static vn.midatri.repository.model.BookingItemStatus.KITCHEN;
 
 @RestController
 @RequestMapping("/api/bookingItem")
@@ -22,6 +25,7 @@ public class BookingItemApi {
 
     @Autowired
     BookingItemRepository bookingItemRepository;
+
     @GetMapping
     public ResponseEntity<?> findAllByBookingId(Long bookingId) {
         List<BookingItemResult> bookingItems = bookingItemService.findAllByBookingId(bookingId);
@@ -34,10 +38,16 @@ public class BookingItemApi {
         return new ResponseEntity<>(bookingItemResult, HttpStatus.OK);
     }
 
-        @PatchMapping("/{id}/quantity")
+    @GetMapping("/findAllBookingItemStatus")
+    public ResponseEntity<?> findAllBookingItemStatus() {
+        List<BookingItemResult> bookingItems = bookingItemService.findAllByStatus(KITCHEN);
+        return new ResponseEntity<>(bookingItems, HttpStatus.OK);
+    }
+    @PatchMapping("/{id}/quantity")
     public ResponseEntity<Integer> updateQuantity(@PathVariable Long id, @RequestBody int quantity) {
         return new ResponseEntity<>(bookingItemService.updateQuantity(id, quantity), HttpStatus.OK);
     }
+
     @PatchMapping("/{id}/increaseQuantity")
     public ResponseEntity<Integer> increaseQuantity(@PathVariable Long id) {
         return new ResponseEntity<>(bookingItemService.increaseQuantity(id), HttpStatus.OK);
@@ -50,7 +60,7 @@ public class BookingItemApi {
 
     @PostMapping("/create")
     public ResponseEntity<?> addBookingItem(@RequestBody BookingItemCreate bookingItemCreate) {
-        return new ResponseEntity<>( bookingItemService.create(bookingItemCreate), HttpStatus.OK);
+        return new ResponseEntity<>(bookingItemService.create(bookingItemCreate), HttpStatus.OK);
     }
 
     @PatchMapping("/updateNote/{id}")
@@ -58,10 +68,24 @@ public class BookingItemApi {
         return new ResponseEntity<>(bookingItemService.updateNote(id, content), HttpStatus.OK);
     }
 
+    @PostMapping("/updateStatus")
+    public ResponseEntity<String> updateStatus(@RequestBody BookingItemUpdateStatus[] bookingItemUpdateStatusArr) {
+
+        for (BookingItemUpdateStatus bookingItemResult : bookingItemUpdateStatusArr){
+            Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(bookingItemResult.getId());
+            if (bookingItemOptional.isEmpty()){
+                throw new NotFoundException("Not found " + bookingItemResult.getId());
+            }
+            bookingItemOptional.get().setId(bookingItemResult.getId());
+            bookingItemOptional.get().setStatus(KITCHEN);
+            bookingItemRepository.save(bookingItemOptional.get());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @DeleteMapping("/deleted/{id}")
     public ResponseEntity<?> deletedBookingItem(@PathVariable Long id) {
         bookingItemService.deletedBookingItem(id);
-        return new ResponseEntity<>(id,HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @DeleteMapping("/deletedByBooking/{bookingId}")
@@ -69,7 +93,6 @@ public class BookingItemApi {
         bookingItemService.deleteAllByBookingId(bookingId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 
 }

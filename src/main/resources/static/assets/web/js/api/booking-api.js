@@ -48,4 +48,18 @@ function BookingAPI() {
                 })
             })
     }
+    this.savingCustomer = (bookingId,data, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/booking/savingCustomer/${bookingId}`,
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(data)
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR)
+            })
+    }
 }

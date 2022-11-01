@@ -3,6 +3,7 @@ package vn.midatri.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.midatri.dto.booking.BookingCustomerParam;
 import vn.midatri.dto.booking.CreateBookingParam;
 import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.exceptions.NotFoundException;
@@ -42,11 +43,6 @@ public class BookingService implements IBookingService {
                 .collect(Collectors.toList());
     }
 
-
-//    @Override
-//    public Booking booking(Booking booking) {
-//        return bookingRepository.save(booking);
-//    }
 
     @Override
     @Transactional(readOnly = true)
@@ -89,11 +85,29 @@ public class BookingService implements IBookingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BookingResult> findAllByStatusNotComplete() {
         return bookingRepository.findAllByStatusNot(BookingStatus.COMPLETE)
                 .stream()
                 .map(booking -> bookingMapper.toDTO(booking))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void saveCustomer(long id, BookingCustomerParam bookingCustomerParam) {
+        Optional<Booking> bookingOptional = bookingRepository.findById(id);
+        if (bookingOptional.isEmpty()) {
+            throw new NotFoundException("Not found id");
+        }
+        Booking booking = bookingOptional.get();
+        booking.setId(id);
+        booking.setFullName(bookingCustomerParam.getFullName());
+        booking.setPhone(bookingCustomerParam.getPhone());
+        booking.setEmail(bookingCustomerParam.getEmail());
+        booking.setAddress(bookingCustomerParam.getAddress());
+        booking.setContent(bookingCustomerParam.getContent());
+        bookingRepository.save(booking);
     }
 }
 

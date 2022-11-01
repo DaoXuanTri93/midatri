@@ -1,5 +1,6 @@
 export const bookingItemAPI = new BookingItemAPI();
 
+
 function BookingItemAPI() {
     this.findAll = (done, fail) => {
         $.ajax({
@@ -17,6 +18,18 @@ function BookingItemAPI() {
         $.ajax({
             type: "GET",
             url: `${location.origin}/api/bookingItem?bookingId=${bookingId}`
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.findAllBookingItemStatus = (done, fail) => {
+        $.ajax({
+            type: "GET",
+            url: `${location.origin}/api/bookingItem/findAllBookingItemStatus`
         })
             .done((data) => {
                 done(data);
@@ -109,7 +122,22 @@ function BookingItemAPI() {
         $.ajax({
             url: `${location.origin}/api/bookingItem/updateNote/${bookingItemId}`,
             type: "PATCH",
-            contentType: 'application/json'
+            contentType: 'application/json',
+            data : JSON.stringify(data)
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.updateStatus = (data, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/updateStatus`,
+            type: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(data)
         })
             .done((data) => {
                 done(data);

@@ -94,14 +94,6 @@ public class BookingItemService implements IBookingItemService {
                 = bookingItemRepository.findByBookingIdAndItemId(param.getBookingId(), param.getItemId());
         if (bookingItem != null) {
             throw new NotFoundException("NOT FOUND BookingItem !!!");
-//            BookingItem bookingItemParam = bookingItemMapper.toModel(param);
-//            int oldQuantity = bookingItem.getQuantity();
-//            int newQuantity = oldQuantity + 1;
-//            bookingItem.setId(bookingItem.getId());
-//            BigDecimal price = bookingItem.getPrice();
-//            bookingItem.setPrice(price);
-//            bookingItem.setQuantity(newQuantity);
-//            return bookingItemMapper.toDTO(bookingItemParam);
         }
 
         Item item = itemOption.get();
@@ -179,12 +171,21 @@ public class BookingItemService implements IBookingItemService {
     public String updateNote(Long id, String content) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
         if (bookingItemOptional.isEmpty()){
-            throw new NotFoundException("Node ko thành công");
+            throw new NotFoundException("Note ko thành công");
         }
         BookingItem bookingItem = bookingItemOptional.get();
         bookingItem.setContent(content);
         bookingItemRepository.save(bookingItem);
         return bookingItem.getContent();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BookingItemResult> findAllByStatus(BookingItemStatus status) {
+        return bookingItemRepository.findAllByStatus(status)
+                .stream()
+                .map(bookingItem -> bookingItemMapper.toDTO(bookingItem))
+                .collect(Collectors.toList());
     }
 
 

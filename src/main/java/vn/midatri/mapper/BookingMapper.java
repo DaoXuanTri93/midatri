@@ -3,9 +3,12 @@ package vn.midatri.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import vn.midatri.dto.booking.BookingCustomerParam;
 import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.dto.booking.CreateBookingParam;
 import vn.midatri.repository.model.Booking;
+
+import java.time.Instant;
 
 @Component
 public class BookingMapper {
@@ -32,6 +35,17 @@ public class BookingMapper {
     public Booking toModel(CreateBookingParam bookingParam){
         return new Booking()
                 .setTableTopId(bookingParam.getTabletopId());
+    }
+
+    public Booking toCustomer(BookingCustomerParam bookingCustomerParam){
+        return new Booking()
+                .setId(bookingCustomerParam.getId())
+                .setFullName(bookingCustomerParam.getFullName())
+                .setPhone(bookingCustomerParam.getPhone())
+                .setEmail(bookingCustomerParam.getEmail())
+                .setAddress(bookingCustomerParam.getAddress())
+                .setUpdateAt(Instant.now())
+                .setContent(bookingCustomerParam.getContent());
     }
 
 }

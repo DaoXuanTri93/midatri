@@ -7,6 +7,7 @@ import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
+import vn.midatri.repository.model.Item;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,6 +65,14 @@ public class ItemService implements vn.midatri.service.ItemService {
     @Override
     public List<ItemResult> filter(List<Long> parentIds, Long childId, boolean status) {
         return itemRepository.findAllByCategory(parentIds,childId,status)
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ItemResult> findAllByCategoryId(long id) {
+        return itemRepository.findAllByCategoryId(id)
                 .stream()
                 .map(item -> itemMapper.toDTO(item))
                 .collect(Collectors.toList());

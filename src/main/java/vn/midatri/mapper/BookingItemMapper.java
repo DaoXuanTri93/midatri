@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
+import vn.midatri.dto.bookingItem.BookingItemUpdateStatus;
 import vn.midatri.repository.model.BookingItem;
 
 @Component
@@ -33,6 +34,9 @@ public class BookingItemMapper {
                 .setStatus(createParam.getStatus())
                 .setQuantity(createParam.getQuantity());
     }
-
-
+    public BookingItem toModel(BookingItemUpdateStatus bookingItemUpdateStatus) {
+        return new BookingItem()
+                .setId(bookingItemUpdateStatus.getId())
+                .setStatus(bookingItemUpdateStatus.getStatus());
+    }
 }

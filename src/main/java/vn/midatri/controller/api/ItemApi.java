@@ -78,4 +78,10 @@ public class ItemApi {
         return new ResponseEntity<>(itemResults,HttpStatus.OK);
     }
 
+    @GetMapping("/filterItem/{id}")
+    public ResponseEntity<?> findAllByCategoryId(@PathVariable long id){
+        List<ItemResult> itemResults = itemService.findAllByCategoryId(id);
+        return new ResponseEntity<>(itemResults,HttpStatus.OK);
+    }
+
 }

@@ -4,15 +4,34 @@ let itemMap = new Map();
 let bookingItemTableTopMap = new Map();
 let bookingMap = new Map();
 let categoryMap = new Map();
+const getDate = new Date();
 
 let booking_id = 0;
 let tableTopId = 0;
+
+class OrderParam {
+
+    constructor(id, userId, grandTotal, status, discount, fullName, phone, email, address, content) {
+        this.id = id;
+        this.userId = userId;
+        this.grandTotal = grandTotal;
+        this.status = status;
+        this.discount = discount;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.content = content;
+
+    }
+}
 
 let onItemClick = () => {
     $(".btn-add-product").click((event) => {
         let itemId = parseInt($(event.currentTarget).attr('data-id'));
         booking(tableTopId, itemId);
     });
+
 };
 
 function fetchCategory() {
@@ -39,6 +58,7 @@ function fetchBookings() {
             bookingMap.set(booking.tableTopId, booking);
             fetchBookingItems(booking.tableTopId, booking.id);
         })
+
     }, (jqXHR) => {
 
     })
@@ -79,7 +99,6 @@ function renderTabletop(tabletop) {
 function renderAllTableTop() {
     let onTabletopClick = () => {
         $(".tableAndRoom").click((event) => {
-            console.log("3 lan")
             tableTopId = parseInt($(event.currentTarget).attr('data-id'));
             $('#link-menu').trigger('click');
             let a = tabletops;
@@ -94,7 +113,6 @@ function renderAllTableTop() {
             $('#payAllMoney').on('click', () => {
                 handlePay(tableTopId);
             })
-
             renderBookingTabletop(tableTopId);
         });
 
@@ -112,6 +130,7 @@ function renderAllTableTop() {
         $.each(data, (i, tabletop) => {
             renderTabletop(tabletop);
         });
+        setLocal(tabletops);
         onTabletopClick();
     }, error => {
 
@@ -154,27 +173,31 @@ function renderItem(item) {
 
 function renderAllItems() {
     $("#render-product li").empty();
+    let TATCA = () => $(".TATCA").on('click', () => {
+        itemMap.forEach(item => {
+            renderItem(item)
+        })
+
+        onItemClick();
+    })
     if (itemMap.size > 0) {
         $.each(itemMap.values(), (i, item) => {
             itemMap.set(item.id, item);
             renderItem(item);
         });
         onItemClick();
+        TATCA();
         return;
     }
 
     api.item.findAll((data) => {
-        // if (itemMap === undefined) {
-        //     itemMap = new Map();
-        // } else {
-        //     itemMap.clear()
-        // }
-
         $.each(data, (i, item) => {
             itemMap.set(item.id, item);
+            setLocal(i, item);
             renderItem(item);
         });
         onItemClick();
+        TATCA();
     }, error => {
 
     });
@@ -198,6 +221,7 @@ function booking(tabletopId, itemId) {
         quantity: 1,
         itemId: itemId
     }
+
     let booking = bookingMap.get(tabletopId);
     if (booking === undefined) {
         let createBooking = {
@@ -208,14 +232,14 @@ function booking(tabletopId, itemId) {
             bookingMap.set(tabletopId, booking);
             newBookingItem.bookingId = booking.id;
             createBookingItem(tabletopId, newBookingItem);
-
+            handleGrandTotal(tableTopId)
         }, (jqXHR) => {
 
         })
         return;
     }
-    let bookingItems = bookingItemTableTopMap.get(tabletopId);
 
+    let bookingItems = bookingItemTableTopMap.get(tabletopId);
     for (const bookingItem of bookingItems) {
         if (itemId === bookingItem.itemId) {
             let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text().trim());
@@ -228,7 +252,16 @@ function booking(tabletopId, itemId) {
                 currency: 'VND'
             }).format(quantity * price))
 
+
             api.bookingItem.updateQuantity(bookingItem.id, quantity, (data) => {
+                bookingItems.map((item) => {
+                    if (bookingItem.id === item.id) {
+                        item.quantity = quantity
+                    }
+                    return item
+                })
+                bookingItemTableTopMap.set(tableTopId, bookingItems)
+                handleGrandTotal(tableTopId)
             }, (jqXHR) => {
 
             });
@@ -239,6 +272,7 @@ function booking(tabletopId, itemId) {
 
     newBookingItem.bookingId = booking.id;
     createBookingItem(tabletopId, newBookingItem);
+
 }
 
 function createBookingItem(tabletopId, newBookingItem) {
@@ -250,54 +284,68 @@ function createBookingItem(tabletopId, newBookingItem) {
         } else
             bookingItems.push(bookingItem);
         renderBookingItem(index, bookingItem);
+        handleGrandTotal(tableTopId)
     }, (jqXHR) => {
 
     })
 }
 
-function renderCategoryItem() {
 
-}
-
-function handleFilterCategory(categoryId) {
+function handleFilterCategory(idCategory) {
     $("#render-product li").empty();
-    for (let i = 1; i <= itemMap.size; i++) {
-        if (categoryId === itemMap.get(i).categoryId) {
-            renderItem(itemMap.get(i));
+    itemMap.forEach((item) => {
+        if (idCategory === item.categoryId) {
+            renderItem(item)
         }
-    }
+    })
     onItemClick();
 }
 
 function hanldeDeletedBookingItem(bookingIdItem) {
-    // $.ajax({
-    //     headers: {
-    //         "Accept": "application/json", "Content-type": "application/json"
-    //     }, type: "POST", url: "http://localhost:8080/api/bookingItem/" + bookingIdItem
-    // })
-    //     .done(() => {
-    //         // $("#render-tableTop div").empty();
-    //         $.ajax({
-    //             headers: {
-    //                 "Accept": "application/json", "Content-type": "application/json"
-    //             }, type: "GET", url: "http://localhost:8080/api/booking/" + tableTopId
-    //         }).done((data) => {
-    //             $.each(data, (i, item) => {
-    //                 booking_id = item.id;
-    //                 $.ajax({
-    //                     headers: {
-    //                         "Accept": "application/json", "Content-type": "application/json"
-    //                     }, type: "GET", url: "http://localhost:8080/api/bookingItem/" + booking_id
-    //                 })
-    //                     .done((data) => {
-    //                         renderBookingItem(data);
-    //                     })
-    //             })
-    //
-    //         })
-    //
-    //     })
+}
 
+let total = 0;
+
+function renderItemCooking(bookingItem) {
+    console.log(bookingItem.bookingId)
+    console.log(bookingMap.get)
+    // let a = tabletops;
+    // let titleTable = "";
+    // for (const b of a) {
+    //     if (tableTopId === b.id) {
+    //         titleTable = b.title
+    //     }
+    // }
+    let item = itemMap.get(bookingItem.itemId);
+    let result = `
+            <div class="billItem">
+                <div  class="row-list">
+                    <div  class="cell-kc-name">
+                        <h4  class="name">
+                            ${item.title}<a  class="notify-no-dish" title="Gửi thông báo"><i  class="fas fa-volume-high"></i></a>
+                        </h4>
+                        <div  class="topping-note">
+                            <!----><!----><!---->
+                        </div>
+                        <!----><span  class="code-time">2-36 - 30/10/2022 09:26 - Bởi Lê Minh Trí </span>
+                    </div>
+                    <div  class="cell-kc-favorite">
+                        <!---->
+                    </div>
+                    <div  class="cell-kc-quantity">
+                        11 <!---->
+                    </div>
+                    <!---->
+                    <div  class="cell-kc-table">
+                        <h4  class="ng-binding">Bàn 1111</h4>
+                        <span  class="time">một giờ trước</span><!---->
+                    </div>
+                    <!----><!---->
+                    <div  class="cell-kc-button"><button  class="btn btn-one-part" type="button" title="Chế biến xong một"><i  class="far fa-angle-right"></i></button><button  class="btn btn-all-order" type="button" title="Chế biến xong tất cả"><i  class="far fa-angle-double-right"></i></button></div>
+                </div>
+            </div>
+    `
+    $("#renderItemBar").append(result)
 }
 
 function renderBookingItem(index, bookingItem) {
@@ -334,11 +382,14 @@ function renderBookingItem(index, bookingItem) {
                                         </ul>
                                         <div class="wrap-note" href="javascript:void(0)">
                                             <button class="btn btn-sm btn-light has-Update"
+                                             onclick="handleNoteItem(${bookingItem.id})"
                                                     style="cursor: pointer;">
                                                 <i class="far fa-pen"></i>
                                                 <span class="note-hint"
-                                                onclick="handleNoteItem(${item.id})"
-                                                style="cursor: pointer;">${(item.content != null) ? item.content : 'Ghi chú món ăn'}</span>
+                                                id="${item.id}"
+                                               
+                                                style="cursor: pointer;">
+            ${(bookingItem.content != null) ? bookingItem.content.split("\"").join('') : 'Ghi chú món ăn'}</span>
                                             </button>
                                         </div>
                                         <div class="list-topping">
@@ -378,7 +429,7 @@ function renderBookingItem(index, bookingItem) {
     }).format(item.price * bookingItem.quantity)}                  
                                                 </div>
                                     <div class="cell-actions">
-                                        <div class="btn-group" dropdown="">
+                                        <div class="btn-group" dropdown>
                                             <button class="dropdown-toggle" type="button"
                                                     title="Thêm dòng mới">
                                                 <i class="fas fa-plus"></i>
@@ -390,45 +441,52 @@ function renderBookingItem(index, bookingItem) {
                         </kv-cashier-cart-item>
                      </div>
                      
-                     <modal-container class="modal fade in d-none" role="dialog" id="noteItemUpdate" tabindex="-1" aria-modal="true" style="display: block;">
-                            <div role="document" class="modal-dialog modal-note ui-draggable">
-                                <div class="modal-content">
-                                    <kv-modal _nghost-bwu-c36="">
-                                        <!---->
-                                        <div ="" class="modal-header ng-star-inserted ui-draggable-handle">
-                                            <h4 ="" class="modal-title pull-left">Ghi chú / Món thêm</h4>
-                                            <button ="" aria-label="Close" class="close pull-right" skip-disable="" type="button"><i ="" class="fa-light fa-xmark"></i></button>
-                                        </div>
-                                        <!---->
-                                        <div ="" class="ng-star-inserted"></div>
-                                        <kv-cashier-cart-item-note-and-toping class="ng-star-inserted">
-                                            <div ="" class="modal-body">
-                                                <!---->
-                                                <div ="" class="form-group form-note">
-                                                    <input ="" id="${bookingItem.id}"  class="form-control ng-valid ng-dirty ng-touched getNodeInput" value="" maxlength="300" style="height: 32px;"></input></div>
-                                                <!---->
-                                                <div ="" class="product-cart-list product-cart-list--addMoreTopping">
-                                                    <!---->
-                                                </div>
-                                            </div>
-                                            <div ="" class="modal-footer"><a ="" class="btn btn-primary" href="javascript:void(0);"><i ="" class="fa fa-check-square"></i><span ="" translate="">Xong</span>
-                                            </a>
-                                            <a ="" class="btn btn-default" href="javascript:void(0);" onclick="onCancelClick(${item.id})">>
-                                            <i ="" class="fa fa-ban"></i>
-                                            <span ="" translate="">Bỏ qua</span>
-                                            </a>
-                                            </div>
-                                        </kv-cashier-cart-item-note-and-toping>
-                                        <!----><!---->
-                                    </kv-modal>
-                                </div>
-                            </div>
-                    </modal-container>
                 `;
 
 
+    total += bookingItem.quantity * item.price
     $("#render-tableTop").prepend(result);
 
+}
+
+function updateQuantityBookingItem(bookingItemId, quantity) {
+    let bookingItems = bookingItemTableTopMap.get(tableTopId);
+    bookingItems.map((item) => {
+        if (bookingItemId === item.id) {
+            item.quantity = quantity
+        }
+        return item
+    })
+}
+
+function updateStatusBookingItem(bookingItemId, status) {
+    let bookingItems = bookingItemTableTopMap.get(tableTopId);
+    bookingItems.map((item) => {
+        if (bookingItemId === item.id) {
+            item.status = status
+        }
+        return item
+    })
+}
+
+function updateNoteBookingItem(bookingItemId, note) {
+    let bookingItems = bookingItemTableTopMap.get(tableTopId);
+    bookingItems.map((item) => {
+        if (bookingItemId === item.id) {
+            item.content = note
+        }
+        return item
+    })
+}
+
+function deletedItemBookingItem(bookingItemId) {
+    let bookingItems = bookingItemTableTopMap.get(tableTopId);
+    bookingItems.map((item, i) => {
+        if (bookingItemId === item.id) {
+            bookingItems.splice(i, 1)
+        }
+        return bookingItems
+    })
 }
 
 function handleIncreaseQuantity(ItemId) {
@@ -439,9 +497,13 @@ function handleIncreaseQuantity(ItemId) {
             let price = parseInt($(`#${bookingItem.id} .item-price`).text());
             quantity += 1;
             $(`#${bookingItem.id} .item-quantity`).text(quantity)
-            $(`#${bookingItem.id} .cell-price`).text(quantity * price)
+            $(`#${bookingItem.id} .cell-price`).text(new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(quantity * price))
             api.bookingItem.increaseQuantity(bookingItem.id, quantity, (data) => {
-
+                updateQuantityBookingItem(bookingItem.id, quantity)
+                handleGrandTotal(tableTopId);
             }, (jqXHR) => {
             });
             return;
@@ -457,78 +519,66 @@ function handleDecreaseQuantity(itemId) {
             let quantity = $(`#${bookingItem.id} .item-quantity`).text();
             let price = parseInt($(`#${bookingItem.id} .item-price`).text());
             quantity -= 1;
-            if (quantity <= 0) {
+            if (quantity < 1) {
                 api.bookingItem.removeBookingItem(bookingItem.id, (data) => {
+                    updateQuantityBookingItem(bookingItem.id, quantity)
+                    deletedItemBookingItem(bookingItem.id)
+                    handleGrandTotal(tableTopId);
                     $(`#render-tableTop #${bookingItem.id}`).remove();
-                    fetchBookings();
+                    // fetchBookings();
                 }, (jqXHR) => {
 
                 })
+            } else {
+                $(`#${bookingItem.id} .item-quantity`).text(quantity);
+                $(`#${bookingItem.id} .cell-price`).text(new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(quantity * price))
+                api.bookingItem.decreaseQuantity(bookingItem.id, quantity, (data) => {
+                    updateQuantityBookingItem(bookingItem.id, quantity)
+                    handleGrandTotal(tableTopId);
+                }, (jqXHR) => {
 
+                });
             }
-            $(`#${bookingItem.id} .item-quantity`).text(quantity);
-            $(`#${bookingItem.id} .cell-price`).text(quantity * price)
 
-            api.bookingItem.decreaseQuantity(bookingItem.id, quantity, (data) => {
-
-            }, (jqXHR) => {
-
-            });
             return;
         }
     }
 }
 
-function handleNoteItem(itemId) {
+function handleNoteItem(bookingItemId) {
     $("#noteItemUpdate").removeClass('d-none')
-    let bookingItems = bookingItemTableTopMap.get(tableTopId);
-    for (const bookingItem of bookingItems) {
-        if (itemId === bookingItem.itemId) {
-            let noteItem = $(`#${bookingItem.id} .getNodeInput`).val();
-
-            api.bookingItem.updateNote(bookingItem.id, noteItem, (data) => {
-                alert("ok")
+    $(`.form-note textarea`).val("");
+    let onDoneClick = (bookingItemId) => {
+        $("#onDoneClick").off();
+        $("#onDoneClick").on('click', () => {
+            let bookingItems = bookingItemTableTopMap.get(tableTopId);
+            let noteItem = $(`.getNoteInput textarea`).val();
+            $(`#${bookingItemId} .note-hint`).text(noteItem);
+            api.bookingItem.updateNote(bookingItemId, noteItem, () => {
+                updateNoteBookingItem(bookingItemId, noteItem)
+                $("#noteItemUpdate").addClass('d-none')
             }, (jqXHR) => {
 
             })
-
-            $(`#${bookingItem.id} .getNodeInput`).val(noteItem);
-
-            return;
-        }
-    }
-}
-
-function handleTableTop(tableTopId) {
-    $("#render-tableTop div").empty();
-    $.ajax({
-        headers: {
-            "Accept": "application/json", "Content-type": "application/json"
-        }, type: "GET", url: "http://localhost:8080/api/booking?tabletopId=" + tableTopId
-    })
-        .done((data) => {
-            booking_id = data[0].id;
-            $.ajax({
-                headers: {
-                    "Accept": "application/json", "Content-type": "application/json"
-                }, type: "GET", url: "http://localhost:8080/api/bookingItem/" + booking_id
-            })
-                .done((data) => {
-                    renderBookingItem(data)
-                })
         })
-
+    }
+    onDoneClick(bookingItemId);
 
 }
 
-let grandTotalAll = new Map();
-let grandTotal = 0;
 
 function handleGrandTotal(tableId) {
+    let grandTotal = 0;
     let bookingItem = bookingItemTableTopMap.get(tableId);
-    $.each(bookingItem, (i, item) => {
-        grandTotal += (item.quantity * item.price)
-    })
+    if (bookingItem !== undefined) {
+        $.each(bookingItem, (i, item) => {
+            grandTotal += (item.quantity * item.price)
+        })
+    }
+
     $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND'
@@ -538,20 +588,38 @@ function handleGrandTotal(tableId) {
 function handlePay(tableTopId) {
     let onPayAllClick = (bookingId) => {
         $("#payAllClick").click((event, c = bookingId) => {
-            api.bookingItem.removeBookingItemByBooking(c, (data) => {
-                // success("Xóa Thành Công")
-                $("#render-tableTop div").remove();
-                $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
-                    style: 'currency',
-                    currency: 'VND'
-                }).format(0));
-                bookingMap.clear()
-                bookingItemTableTopMap.clear()
-                cancelPay();
+            let orderParam = bookingMap.get(tableTopId);
+            let orderItemParam = bookingItemTableTopMap.get(tableTopId);
+            api.order.create(orderParam, (data) => {
+                api.orderItem.create(orderItemParam, (data) => {
+                    api.bookingItem.removeBookingItemByBooking(c, (data) => {
+                        iziToast.success(
+                            {
+                                timeout: 2000,
+                                position: 'topRight',
+                                title: 'OK',
+                                message: "Thanh toán thành công !!!"
+                            });
+                        $("#render-tableTop div").remove();
+                        $(".badge-total-quantity").text(new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(0));
+                        bookingMap.clear()
+                        bookingItemTableTopMap.clear()
+                        cancelPay();
+
+                    }, (jqXHR) => {
+
+                    })
+                }, (jqXHR) => {
+
+                })
 
             }, (jqXHR) => {
 
             })
+
         })
     }
     if (tableTopId === 0) {
@@ -567,18 +635,30 @@ function handlePay(tableTopId) {
         $(".table-payment").text(`Bàn - ${titleTable}`);
 
         if (tableTopId === 0) {
-            alert()
+            return iziToast.warning(
+                {
+                    timeout: 2000,
+                    position: 'topRight',
+                    title: 'Warning',
+                    message: "Vui lòng chọn Bàn."
+                });
         }
         let bookingItems = bookingItemTableTopMap.get(tableTopId);
         if (bookingItems === undefined) {
-            alert()
+            return iziToast.warning(
+                {
+                    timeout: 2000,
+                    position: 'topRight',
+                    title: 'Warning',
+                    message: "Vui lòng chọn món ăn."
+                });
         }
-        console.log(bookingMap)
+        $("#getDateCurrent").attr('placeholder', `${getDate.getDate()}/${getDate.getMonth() + 1}/${getDate.getFullYear()} ${getDate.getHours()}:${getDate.getMinutes()}`)
         let bookingId = bookingMap.get(tableTopId).id;
-        console.log(bookingId)
         $("#paypal").removeClass("d-none")
         $("#renderPay div").remove();
         api.bookingItem.findAllByBooking(bookingId, (bookingItems) => {
+                let total = 0;
                 $.each(bookingItems, (i, bookingItem) => {
                     let str = `
                                          <div  class="row-list row-list-active">
@@ -609,8 +689,21 @@ function handlePay(tableTopId) {
                                         </div>
                                         `
                     $('#renderPay').append(str);
-
+                    total += (bookingItem.quantity * bookingItem.price)
                 })
+
+                $("#totalGrand").text(total);
+                $("#customerPay").text(total);
+                $('#payingAmountTxt').on('input', function () {
+                    khachThanhToan = $('#payingAmountTxt').val();
+                    $("#moneySuperfluous").text(new Intl.NumberFormat('vi-VI', {
+                        style: 'currency',
+                        currency: 'VND',
+                        maximumFractionDigits: 9
+                    }).format(khachThanhToan - $("#customerPay").text()))
+                });
+
+
             },
             (jqXHR) => {
 
@@ -618,22 +711,47 @@ function handlePay(tableTopId) {
         onPayAllClick(bookingId);
     }
 
-
-}
-
-function handleNotification(tableTopId, booking_id) {
-    if (tableTopId === 0) {
-        return alert("ko co don hang")
-    } else {
-        $("#notification").addClass("disabled")
+    function khachThanhToan() {
 
     }
 
 }
 
-function onCancelClick(){
-    $("#noteItemUpdate").addClass('d-none')
+function handleNotification(tableTopId) {
+    if (tableTopId === 0) {
+        return iziToast.warning(
+            {
+                timeout: 2000,
+                position: 'topRight',
+                title: 'Nhắc Nhở',
+                message: "Chưa chọn món !!!"
+            });
+    } else {
+        iziToast.success(
+            {
+                timeout: 2000,
+                position: 'topRight',
+                title: 'OK',
+                message: "Bếp đã nhận được thông báo !!!"
+            });
+        let bookingItems = bookingItemTableTopMap.get(tableTopId);
+        api.bookingItem.updateStatus(bookingItems, (data) => {
+            // updateStatusBookingItem();
+
+        }, (jqXHR) => {
+
+        })
+
+    }
+
 }
+
+function onCancelClick() {
+    $("#noteItemUpdate").addClass('d-none')
+    $(`#bookingItemId .note-hint`).text("");
+
+}
+
 function cancelPay() {
     $("#paypal").addClass("d-none")
     $("#payAllClick").off();
@@ -653,11 +771,54 @@ function closeSplitTable() {
     $("#splitTable").addClass('d-none')
 }
 
+function setLocal(itemMap) {
+    let itemMapLocal = JSON.stringify(itemMap);
+    localStorage.setItem("tabletops", itemMapLocal);
+
+}
+
+function openBookingCooking(tableTopId) {
+    if (tableTopId === 0) {
+        alert("vui long chon ban")
+    } else {
+
+        $("#addCustomer").modal('show')
+    }
+}
+
+class BookingCustomer {
+
+    constructor(fullName, phone, email, address, content) {
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.content = content;
+    }
+}
+
+function savingCustomer(tableTopId) {
+    let bookingId = bookingMap.get(tableTopId).id
+    console.log(bookingId)
+    let savingCustomer = {
+        fullName: "triDao",
+        phone: "111111",
+        email: "22222@gmail.com",
+        address: "232323",
+        content: "khong co ghi chu"
+    }
+    api.booking.savingCustomer(bookingId,savingCustomer, (done) => {
+        console.log(done)
+    }, (jqXHR) => {
+
+    })
+}
+
+// window.history.pushState(bookingMap,"","http://localhost:8080/orders/bill")
 function renderAll() {
     fetchBookings();
     fetchCategory();
     renderAllItems();
-    //  renderCategory()
     renderAllTableTop();
 
 }
