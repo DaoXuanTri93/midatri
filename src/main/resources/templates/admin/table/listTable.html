@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Quản lý bàn</title>
+    <title>MIDATRI COFFE TABLE</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <th:block th:replace="/admin/layout/head :: head"/>
@@ -36,16 +36,16 @@
                     <th:block th:replace="/admin/layout/menuTable ::menuTable"/>
                 </div>
 
-                </div>
+            </div>
             <div class="col text-end">
                 <button class="btn btn-outline-light bg-primary" id="createTable"><i
                         class="fa fa-plus-square"></i> Thêm bàn mới
                 </button>
             </div>
-                </div>
-            </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 </div>
 <!-- Breadcomb area End-->
@@ -60,11 +60,11 @@
                             <thead>
                             <tr class="bg-success">
                                 <th>Tên phòng/bàn</th>
-                                <th>Ghi chú </th>
+                                <th>Ghi chú</th>
                                 <th>Số ghế</th>
                                 <th>Trạng thái</th>
                                 <th>Số thứ tự</th>
-                                <th scope="col" class="text-center fw-bold">Action</th>
+                                <th scope="col" class="text-center fw-bold"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -94,6 +94,8 @@
 <!--<th:block th:replace="/admin/table/restoreTable :: restoreTable"/>-->
 </body>
 <script>
+
+    // render list table
     $(document).ready(function () {
         $("#tblTop").DataTable({
                 ajax: {
@@ -106,17 +108,24 @@
                     [5, 10, 15, -1],
                     ['5', '10', '15', 'All']
                 ],
+                // dom: 'Bfrtip',
+                // buttons: [
+                //     'copy', 'csv', 'excel', 'pdf', 'print'
+                // ],
+                searching: false,
                 select: true,
                 columns: [
                     {data: 'title'},
                     {data: 'content'},
                     {data: 'capacity'},
-                    {data: 'status',
-                    render : function (data){
-                        if(data != "UNAVAILABLE"){
-                            return `<p style="color: #0B792F">ĐANG SỬ DỤNG </p>`
+                    {
+                        data: 'status',
+                        render: function (data) {
+                            if (data != "UNAVAILABLE") {
+                                return `<p style="color: #0B792F">ĐANG SỬ DỤNG </p>`
+                            }
                         }
-                    }},
+                    },
                     {data: "id"},
                     {
                         data: 'id',
@@ -129,12 +138,88 @@
                 ,
             }
         )
+
     })
+    // end render list table
+
+
+    // edit table
+    function updateTable() {
+        let editTable = new TableTop();
+        editTable.id = $("#idTableEdit").val();
+        editTable.capacity = $("#capacityEdit").val();
+        editTable.title = $("#titleEdit").val();
+        editTable.status = $("#statusTableEdit :selected").val();
+        editTable.content = $("#contentEdit").val();
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "PUT",
+            url: "http://localhost:8080/api/table-top/edit/",
+            data: JSON.stringify(editTable)
+        }).done(function (data) {
+                console.log("data", data);
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Cập nhập thông tin thành công',
+                    showConfirmButton: false,
+                    timer: 4000
+
+                })
+                $('#tblTop').DataTable().ajax.reload();
+                $('#modalEditTable').modal("hide");
+                $("#frmEditTable")[0].reset();
+
+            }
+        ).fail(function (jqXHR) {
+            console.log(jqXHR);
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Oops...',
+            //         text: "Dữ liệu bạn nhập không chính xác!!",
+            //     })
+        })
+    }
+
+    function handlerShowTableEdit(id) {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/table-top/" + id
+        })
+            .done((data) => {
+                $("#idTableEdit").val(data.id);
+                $("#capacityEdit").val(data.capacity);
+                $("#statusTableEdit").find(":selected").val(data.status);
+                $("#titleEdit").val(data.title);
+                $("#contentEdit").val(data.content);
+                $("#modalEditTable").modal("show");
+            })
+    }
+
+    // end edit table
+
+
     $("#createTable").on("click", function () {
         $("#modalCreateTable").modal("show")
     });
-
-
+    $("#btnEditTable").on("click", function () {
+        $("#frmEditTable").submit();
+    });
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#tblTop tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
 </script>
 </html>
 

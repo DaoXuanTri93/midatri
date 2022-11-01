@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Data Table | Notika - Notika Admin Template</title>
+    <title>MIDATRI COFFE USER</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <th:block th:replace="/admin/layout/head :: head"/>
@@ -78,8 +78,8 @@
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-                                <th>Bartender</th>
                                 <th>Admin</th>
+                                <th>Bartender</th>
                                 <th>Vendor</th>
                                 <th scope="col" class="text-center fw-bold">Action</th>
                             </tr>
@@ -133,9 +133,27 @@
                         {data: 'userName'},
                         {data: 'email'},
                         {data: 'phone'},
-                        {data: 'admin'},
-                        {data: 'bartender'},
-                        {data: 'vendor'},
+                        {data: 'admin',
+                        render : function (data) {
+                            if(data === true   ){
+                                return `<p STYLE="color: #0a53be">ADMIN</p>`
+                            }else
+                                return `<p style="color: #CC6600">USER</p>`
+                        }},
+                        {data: 'bartender',
+                        render : function (data) {
+                            if(data === true) {
+                                return `<td><i class="fa fa-check" aria-hidden="true"></i></td>`
+                            }else
+                                return ``
+                        }},
+                        {data: 'vendor',
+                        render: function (data){
+                            if(data === true) {
+                                return `<td><i class="fa fa-check" aria-hidden="true"></i></td>`
+                            }else
+                                return ``
+                        }},
                         {data: null},
                     ],
                     columnDefs: [
@@ -167,7 +185,7 @@
 
 </script>
 <script type="module" src="/assets/admin/js/api/api.js"></script>
-<!--<script src="/js/validateUser.js"></script>-->
+<script src="/js/validateUser.js"></script>
 
 </html>
 

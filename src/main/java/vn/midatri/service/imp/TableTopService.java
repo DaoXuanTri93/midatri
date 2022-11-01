@@ -95,8 +95,7 @@ public class TableTopService implements ITableTopService {
 
     @Override
     public TableTopResult update(TableTop tableTop) {
-        TableTopResult tableTopResult = tableTopMapper.toDTO(tableTopRepository.save(tableTop));
-        return tableTopResult;
+        return tableTopMapper.toDTO(tableTopRepository.save(tableTop));
     }
 
 

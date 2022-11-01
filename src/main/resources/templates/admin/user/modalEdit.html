@@ -26,14 +26,31 @@
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
-                                <label for="phoneEdit" class="form-label fw-bold">Phone:</label>
+                                <label for="phoneEdit" class="form-label fw-bold">Số điện thoại:</label>
                                 <input type="phone" class="form-control text-end" id="phoneEdit" name="phoneEdit"
                                        required>
                             </div>
                             <div class="col col-md-6">
                                 <label for="emailEdit" class="form-label fw-bold">Email:</label>
                                 <input type="email" class="form-control" id="emailEdit" name="emailEdit" required>
-                                <input type="hidden" id="idUser">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-6">
+                                <label for="bartenderEdit" class="form-label fw-bold"> Người chế biến:</label>
+<!--                                <input type="radio" name="check" id="true">Có</input>-->
+<!--                                <input type="radio" name="check" id="false">Không</input>-->
+                                <select class="form-select" id="bartenderEdit">
+                                    <option value="true">Có</option>
+                                    <option value="false">Không</option>
+                                </select>
+                            </div>
+                            <div class="col col-md-6">
+                                <label for="vendorEdit" class="form-label fw-bold"> Người bán:</label>
+                                <select class="form-select" id="vendorEdit">
+                                    <option value="true">Có</option>
+                                    <option value="false">Không</option>
+                                </select>
                             </div>
                         </div>
                     </form>
@@ -50,11 +67,13 @@
     <script>
         function editUser() {
             let editUser = new User();
-            editUser.id = $("#idUser").val();
+            editUser.id = $("#idEdit").val();
             editUser.userName = $("#usernameEdit").val();
             editUser.fullName = $("#fullNameEdit").val();
             editUser.phone = $("#phoneEdit").val();
             editUser.email = $("#emailEdit").val();
+            editUser.vendor =$('#vendorEdit').val();
+            editUser.bartender=$("#bartenderEdit").val();
             $.ajax({
                 headers: {
                     "accept": "application/json",
@@ -65,6 +84,7 @@
                 data: JSON.stringify(editUser)
 
             }).done(function (data) {
+                console.log(data.vendor);
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -112,8 +132,11 @@
                     $("#fullNameEdit").val(data.fullName);
                     $("#phoneEdit").val(data.phone);
                     $("#emailEdit").val(data.email);
+                    $("#vendorEdit").val(data.vendor);
+                    $("#bartenderEdit").val(data.bartender);
                     $("#modalEdit").modal("show");
-                    $("#idUser").val(data.id);
+                    // $("#idEdit").val(data.id);
+                    console.log(data);
                 })
 
             $("#btnEdit").on('click', function () {

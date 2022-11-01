@@ -13,6 +13,7 @@ import vn.midatri.dto.tableTop.TableTopResult;
 import vn.midatri.repository.model.TableTop;
 import vn.midatri.repository.model.TabletopStatus;
 import vn.midatri.service.ITableTopService;
+import vn.midatri.util.AppUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -86,14 +87,13 @@ public class TableTopApi {
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
 
-    @PutMapping("edit/{id}")
-    public ResponseEntity<?> editTable(@PathVariable Long id, @RequestBody TableTop tableTop) {
-        TableTopResult tableTopResult = tableTopService.findTableById(id);
-        tableTop.setId(tableTop.getId());
-        tableTop.setStatus(tableTop.getStatus());
-
-        return new ResponseEntity<>(tableTopService.update(tableTop), HttpStatus.OK);
-
+    @PutMapping("edit/")
+    public ResponseEntity<?> editTable( @RequestBody TableTop tableTop) {
+        try {
+            return new ResponseEntity<>(tableTopService.update(tableTop), HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            throw new RuntimeException("false");
+        }
     }
 
 }

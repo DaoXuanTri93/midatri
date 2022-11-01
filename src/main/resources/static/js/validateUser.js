@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#modalCreate").on('hidden.bs.modal', () => {
-        $("#mdCreate .modal-alert-danger").removeClass("show").addClass("hide");
+        $("#modalCreate .modal-alert-danger").removeClass("show").addClass("hide");
         $("#frmCreateUser").validate().resetForm();
     })
 
@@ -63,6 +63,10 @@ $(document).ready(function () {
             }
 
         },
+        // errorLabelContainer: "#modalCreate .modal-alert-danger",
+        // errorPlacement: function (error, element) {
+        //     error.appendTo("#modalCreate .modal-alert-danger");
+        // },
         showErrors: function (errorMap, errorList) {
             if (this.numberOfInvalids() > 0) {
                 $("#modalCreate .modal-alert-danger").removeClass("hide").addClass("show");
@@ -130,7 +134,7 @@ $(document).ready(function () {
             this.defaultShowErrors();
         },
         submitHandler: function () {
-            editUser1(data.id);
+            editUser(data.id);
         }
     })
 })

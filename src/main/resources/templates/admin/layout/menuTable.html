@@ -2,49 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <th:block th:fragment="menuTable">
   <th:block th:replace="/admin/layout/head :: head"/>
-<!--  <div class="">-->
-<!--    <div class="">-->
-<!--      <h3 class="" >-->
-<!--        Lựa chọn hiển thị-->
-<!--      </h3>-->
-<!--      <div class="form-check " >-->
-<!--        <ul class="" >-->
-<!--          <li class="switchPageAll">-->
-<!--            <div class="">-->
-<!--              <input type="radio" class="form-check-input" id="ActiveRadio2" name="ActiveRadio" data-label="Tất cả phòng/bàn" >-->
-<!--              <a href="http://localhost:8080/table-top" tabindex="0" ></a>-->
-<!--              <label  class="form-check-label" for="ActiveRadio2">Phòng/Bàn có thể sử dụng</label></div>-->
-<!--          </li>-->
-<!--          <li class="">-->
-<!--            <div class="switchPageUse">-->
-<!--              <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio" data-label="Phòng/Bàn đang hoạt động" >-->
-<!--              <a href="http://localhost:8080/table-top/showWaitTable" tabindex="0" class=""></a>-->
-<!--              <label  class="form-check-label" for="ActiveRadio">Phòng/Bàn đang hoạt động</label>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li class="switchPageRes">-->
-<!--            <div class="blue">-->
-<!--              <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio1" data-label="Phòng/Bàn ngừng hoạt động" >-->
-<!--              <a href="http://localhost:8080/table-top/restoreTable" tabindex="0" class=""></a>-->
-<!--              <label  class="form-check-label" for="ActiveRadio1">Phòng/Bàn ngừng hoạt động</label>-->
-<!--            </div>-->
-<!--          </li>-->
+  <div class="">
+    <div class="">
+      <h3 class="" >
+        Lựa chọn hiển thị
+      </h3>
+      <div class="form-check " >
+        <ul class="" >
+          <li class="switchPageAll">
+            <div class="">
+              <input type="radio" class="form-check-input" id="ActiveRadio2" name="ActiveRadio" data-label="Tất cả phòng/bàn" >
+              <a href="http://localhost:8080/table-top" tabindex="0" ></a>
+              <label  class="form-check-label" for="ActiveRadio2">Phòng/Bàn có thể sử dụng</label></div>
+          </li>
+          <li class="">
+            <div class="switchPageUse">
+              <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio" data-label="Phòng/Bàn đang hoạt động" >
+              <a href="http://localhost:8080/table-top/showWaitTable" tabindex="0" class=""></a>
+              <label  class="form-check-label" for="ActiveRadio">Phòng/Bàn đang hoạt động</label>
+            </div>
+          </li>
+          <li class="switchPageRes">
+            <div class="blue">
+              <input type="radio" class="form-check-input" name="ActiveRadio" id="ActiveRadio1" data-label="Phòng/Bàn ngừng hoạt động" >
+              <a href="http://localhost:8080/table-top/restoreTable" tabindex="0" class=""></a>
+              <label  class="form-check-label" for="ActiveRadio1">Phòng/Bàn ngừng hoạt động</label>
+            </div>
+          </li>
 
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-  <div class="dropdown">
-    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-      Bàn
-    </a>
-
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="http://localhost:8080/table-top">Phòng/Bàn có thể sử dụng</a></li>
-      <li><a class="dropdown-item" href="http://localhost:8080/table-top/showWaitTable">Phòng/Bàn đang hoạt động</a></li>
-      <li><a class="dropdown-item" href="http://localhost:8080/table-top/restoreTable">Phòng/Bàn ngừng hoạt động</a></li>
-    </ul>
+        </ul>
+      </div>
+    </div>
+    <div >
+      <input id="myInput" placeholder="search">
+    </div>
   </div>
+<!--  <div>-->
+<!--    <a class="btn btn-secondary"  role="button">-->
+<!--      Bàn-->
+<!--    </a>-->
+
+<!--    <ul class="dropdown-menu">-->
+<!--      <li><a class="dropdown-item" href="http://localhost:8080/table-top">Phòng/Bàn có thể sử dụng</a></li>-->
+<!--      <li><a class="dropdown-item" href="http://localhost:8080/table-top/showWaitTable">Phòng/Bàn đang hoạt động</a></li>-->
+<!--      <li><a class="dropdown-item" href="http://localhost:8080/table-top/restoreTable">Phòng/Bàn ngừng hoạt động</a></li>-->
+<!--    </ul>-->
+<!--  </div>-->
   <th:block th:replace="/admin/layout/script::script"/>
 <script>
 

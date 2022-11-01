@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="userName" class="form-label fw-bold">Tên đăng nhập:</label>
-                                <input type="text" class="form-control" id="userName" name="userName">
+                                <input type="text" class="form-control" id="userName" name="userName" required>
                             </div>
                             <div class="col col-md-6">
                                 <label for="fullName" class="form-label fw-bold">Tên người dùng:</label>
@@ -31,7 +31,7 @@
 
                             <div class="col col-md-6">
                                 <label for="email" class="form-label fw-bold">Email:</label>
-                                <input type="email" class="form-control" id="email" name="password">
+                                <input type="email" class="form-control" id="email" name="email">
                             </div>
                         </div>
                         <div class="row">
@@ -41,9 +41,10 @@
                             </div>
                             <div class="col col-md-6">
                                 <label for="phone" class="form-label fw-bold">Phone:</label>
-                                <input type="phone" class="form-control" id="phone" name="password">
+                                <input type="tel" class="form-control" id="phone" name="phone">
                             </div>
                         </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -56,25 +57,26 @@
 
     <script>
         $("#btnCreateUser").on("click", function () {
-            createUser();
+            $("#frmCreateUser").submit();
         });
 
         function createUser() {
-            checkPassword();
+            // checkPassword();
             let newUser = {
                 userName: $('#userName').val(),
-                fullName : $('#fullName').val(),
+                fullName: $('#fullName').val(),
                 password: $('#password').val(),
                 phone: $('#phone').val(),
                 email: $('#email').val(),
+                admin: false
             }
             console.log(newUser);
             api.user.create(
                 newUser,
                 (data) => {
-                    // console.log(data + "data");
-                    $.each(data, (i, item) => {
-                        let str = `
+                    console.log(data, "data");
+                    let item = data;
+                    let str = `
                     <tr id="tr_${item.id}">
                        <th>${item.userName}</th>
                        <th>${item.fullName}</th>
@@ -83,8 +85,8 @@
                        <th>${item.email}</th>
                     </tr>
                         `;
-                        $("tblUser tbody").append(str);
-                    })
+                    $("tblUser tbody").append(str);
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -95,25 +97,24 @@
                     $('#tblUser').DataTable().ajax.reload();
                     $('#modalCreate').modal("hide");
                     $("#frmCreateUser")[0].reset();
-                }
-                ,
+                },
                 (jqXHR) => {
 
-                    console.log(jqXHR.error);
+                    console.log(jqXHR);
                 }
             )
         }
 
-       function checkPassword() {
-      let     pas = $('#password').val();
-      let pas1 = $('#password1').val();
-      if(pas===pas1){
-          return true;
-      }else {
-          $('#modalCreate').modal('show');
-          return false;
-      }
-       }
+        //  function checkPassword() {
+        // let     pas = $('#password').val();
+        // let pas1 = $('#password1').val();
+        // if(pas===pas1){
+        //     return true;
+        // }else {
+        //     $('#modalCreate').modal('show');
+        //     return false;
+        // }
+        //  }
 
 
     </script>

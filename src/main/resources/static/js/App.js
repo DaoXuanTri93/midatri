@@ -21,7 +21,7 @@ class Category {
     }
 }
 class User {
-    constructor(id,userName,fullName,password,phone,email,deleted) {
+    constructor(id,userName,fullName,password,phone,email,deleted,vendor,bartender) {
         this.id= id;
         this.userName = userName;
         this.fullName = fullName;
@@ -29,15 +29,15 @@ class User {
         this.phone = phone;
         this.email = email;
         this.deleted = deleted;
+        this.vendor = vendor;
+        this.bartender = bartender;
     }
 
 }
 class TableTop{
-    constructor(id,status,updateAt,createAt,capacity,content,title) {
+    constructor(id,status,capacity,content,title) {
         this.id = id;
         this.status = status;
-        this.updateAt = updateAt;
-        this.createAt = createAt;
         this.capacity = capacity;
         this.content = content;
         this.title = title;

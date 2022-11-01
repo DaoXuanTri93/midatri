@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 
 
@@ -41,6 +42,7 @@ public class TableTop {
 
     @NotNull(message = "Bạn phải nhập số ghế cho bàn")
     @Column(name = "capacity", nullable = false)
+//    @Size(min = 2,max = 16)
     private Short capacity;
 
     @Column(name = "content", length = 45)

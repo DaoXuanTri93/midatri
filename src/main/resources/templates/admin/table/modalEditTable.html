@@ -16,16 +16,14 @@
                             <div class="">
                                 <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" hidden>
                             </div>
-
-
-                        <div class="col col-md-12">
-                            <label for="statusTableEdit" class="form-label fw-bold">Trạng thái:</label>
-                            <select class="form-select" id="statusTableEdit">
-                                <option value="ACTIVE" selected>Đang hoạt động</option>
-                                <option value="AVAILABLE" selected>Chưa hoạt  động</option>
-                                <option value="UNAVAILABLE" selected style="background-color: red">Ngừng hoạt động</option>
-                            </select>
-                        </div>
+                            <div class="col col-md-12">
+                                <label for="statusTableEdit" class="form-label fw-bold">Trạng thái:</label>
+                                <select class="form-select" id="statusTableEdit" required>
+                                    <option value="ACTIVE">Đang hoạt động</option>
+                                    <option value="AVAILABLE">Chưa hoạt động</option>
+                                    <option value="UNAVAILABLE" style="background-color: red">Ngừng hoạt động</option>
+                                </select>
+                            </div>
                             <div class="col col-md-12">
                                 <label for="titleEdit" class="form-label fw-bold">Tên phòng/bàn:</label>
                                 <input type="text" class="form-control" id="titleEdit" name="titleEdit">
@@ -37,86 +35,26 @@
                                 <input type="number" class="form-control" id="capacityEdit" name="capacityEdit">
                             </div>
 
-                            </div>
-                            <div class="col col-md-12">
-                                <label for="contentEdit" class="form-label fw-bold">Ghi chú:</label>
-                                <input type="text" class="form-control" id="contentEdit" name="contentEdit">
-                            </div>
+                        </div>
+                        <div class="col col-md-12">
+                            <label for="contentEdit" class="form-label fw-bold">Ghi chú:</label>
+                            <input type="text" class="form-control" id="contentEdit" name="contentEdit">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" id="btnEditTable" data-bs-dismiss="modal">Cập nhật</button>
+                    <button type="button" class="btn btn-outline-primary" id="btnEditTable" data-bs-dismiss="modal">Cập
+                        nhật
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <script src="/js/App.js"></script>
     <script>
-        function editTable() {
-            let editTable = new TableTop();
-            editTable.id = $("#idTableEdit").val();
-            editTable.capacity = $("#capacityEdit").val();
-            editTable.title = $("#titleEdit").val();
-            editTable.status = $("#statusTableEdit").find(":selected").val();
-            editTable.content = $("#contentEdit").val();
-            $.ajax({
-                headers: {
-                    "accept": "application/json",
-                    "content-type": "application/json"
-                },
-                type: "PUT",
-                url: "http://localhost:8080/api/table-top/edit/" + editTable.id,
-                data: JSON.stringify(editTable)
-            }).done(function (data) {
-                    console.log(data);
-                    $('#tblTop').DataTable().ajax.reload();
-                    $('#modalEditTable').modal("hide");
-                    $("#frmEditTable")[0].reset();
-            }
-            )
-        }
-
-        function handlerShowTableEdit(id) {
-            $.ajax({
-                headers: {
-                    "Accept": "application/json",
-                    "Content-type": "application/json"
-                },
-                type: "GET",
-                url: "http://localhost:8080/api/table-top/" + id
-            })
-                .done((data) => {
-                    $("#idTableEdit").val(data.id);
-                    $("#capacityEdit").val(data.capacity);
-                    $("#statusTableEdit").find(":selected").val(data.status);
-                    $("#titleEdit").val(data.title);
-                    $("#contentEdit").val(data.content);
-                    $("#modalEditTable").modal("show");
-                    $("#btnEditTable").on('click', function () {
-                        editTable(data.id);
-                        $("#btnEditTable").trigger("submit");
-                        $("#modalEditTable").modal("hide");
-
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Cập nhập thông tin thành công',
-                            showConfirmButton: false,
-                            timer: 2000
-
-                        })
-                        editTable.ajax.reload(null,false);
-                        // setTimeout(() => {
-                        //     // window.location.href = "/table-top"
-                        // }, 3000)
-
-
-                    });
-                }
-                )
-
-        }
-        $("#tblRestore").DataTable();
+        // $("#btnEditTable").on("click", function () {
+        //     $("#frmEditTable").submit();
+        // });
     </script>
 </th:block>

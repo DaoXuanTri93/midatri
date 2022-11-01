@@ -16,6 +16,8 @@ public class UserResult {
     private String password;
     private String phone;
     private String email;
+    private Boolean vendor;
+    private Boolean bartender;
     private Boolean deleted;
 
 }

@@ -16,6 +16,6 @@ public class HomeController {
 
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
-        return new ModelAndView("/admin/home");
+        return new ModelAndView("/admin/home1");
     }
 }

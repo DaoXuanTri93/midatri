@@ -16,7 +16,6 @@ public class TableTopRegister {
     private Long id;
     private TabletopStatus status;
     private String title;
-    private Instant createAt;
     private Short capacity;
     private String content;
 }

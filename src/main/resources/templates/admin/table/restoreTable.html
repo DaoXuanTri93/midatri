@@ -105,7 +105,58 @@
         //     localStorage.setItem('DataTables_selected', table.rows({selected: true}).toArray())
         // })
     });
+
+    // restore table
+    function restoreTable() {
+        let id = $("#idTableRestore").val();
+
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            url: "http://localhost:8080/api/table-top/restore/" + id,
+            type: "POST"
+        })
+            .done(function (data) {
+                $("#tblRestore").DataTable().ajax.reload();
+                $('#modalRestoreTable').modal("hide");
+                $("#frmRestoreTable")[0].reset();
+            })
+
+    }
+    function handleShowRestoreTable(id) {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/table-top/restore/" + id
+        }).done((data)=>{
+                $('#idTableRestore').val(data.id);
+                $('#statusTableRestore').val(data.status);
+                $('#capacityTableRestore').val(data.capacity);
+                $('#contentTableRestore').val(data.content);
+                $('#titleTableRestore').val(data.title);
+                $('#modalRestoreTable').modal('show');
+                $('#btnRestore').on('click', function () {
+                    restoreTable();
+                    $('#btnRestore').removeClass("show");
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Đưa bàn này quay lại sử dụng thành công',
+                        showConfirmButton: false,
+                        timer: 2000
+
+                    })
+                })
+            }
+        )
+    }
 </script>
+
 
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>

@@ -25,6 +25,8 @@ public class UserMapper {
                 .setFullName(user.getFullName())
                 .setPhone(user.getPhone())
                 .setDeleted(user.getDeleted())
+                .setVendor(user.getVendor())
+                .setBartender(user.getBartender())
                 .setEmail(user.getEmail());
 
     }
