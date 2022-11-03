@@ -44,8 +44,11 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @Column(name = "grand_total", nullable = false)
+    @Column(name = "grand_total")
     private BigDecimal grandTotal;
+
+    @Column(name = "total_quantity")
+    private Integer totalQuantity;
 
     @Column(name = "discount")
     private Float discount;

@@ -21,35 +21,26 @@
             <div class="normal-table-list mg-t-30">
                 <div class="basic-tb-hd text-center">
                     <h1>Báo Cáo Ngày</h1>
-                    <h6 class="fw-light">Ngày Bán : 18/10/2022</h6>
+                    <h6 class="fw-light">Ngày Bán : <input type="date"/>></h6>
 
                 </div>
                 <div class="bsc-tbl-hvr table-responsive ">
-                    <table class="table table-hover table-striped" id="tblReport" >
+                    <table class="table table-hover table-striped" id="tblReport">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>Thời gian</th>
                             <th>Nhân Viên</th>
                             <th>Số Lượng</th>
-                            <th >Doanh thu </th>
+                            <th>Doanh thu</th>
                         </tr>
                         </thead>
-                        <tbody>
-<!--                        <tr>-->
-<!--                            <td>1</td>-->
-<!--                            <td>Christopher</td>-->
-<!--                            <td>Alexandra</td>-->
-<!--                            <td>@makinton</td>-->
-<!--                            <td class="text-right">1000</td>-->
-<!--                            <td class="text-right">1000</td>-->
-<!--                            <td class="text-right">1000</td>-->
-<!--                        </tr>-->
-<!--                       <tr class="text-right">-->
-<!--                           <th  colspan="6" class="fw-bold">Tổng Doanh Thu : </th>-->
-<!--                           <th>10000</th>-->
-<!--                       </tr>-->
-                        </tbody>
+                        <tfoot class="text-right">
+                        <tr class="text-right">
+                            <th colspan="4" class="fw-bold">Tổng Doanh Thu :</th>
+                            <th>10000</th>
+                        </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -61,51 +52,80 @@
 <th:block th:replace="/admin/layout/script :: script"/>
 </body>
 <script>
-    $('#tblReport').dataTable({
-        ajax: {
-            contentType: 'application/json',
-            url: 'http://localhost:8080/api/order?createAt=02-11-2022',
-            type: 'GET',
+    let orderItem;
+    // renderAllOrderItem();
+    renderDataTableReport();
 
-            dataSrc: ''
-        },
-        searching:false,
-        columns :[
-            {data: "id" , render:function (id){
-
-                return `<td>${"O-"+id}</td>`
-               }
+    function renderAllOrderItem() {
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
             },
-            {data: "createAt", render : function (createAt){
-                    return `<td>${moment(createAt).format('h:mm:ss a')}</td>`
+            type: "GET",
+            url: "http://localhost:8080/api/orderItem",
+        }).done((data) => {
+            orderItem = data;
+        })
+    }
 
+    function renderDataTableReport() {
+
+        console.log("bbb")
+        $('#tblReport').dataTable({
+            ajax: {
+                contentType: 'application/json',
+                url: 'http://localhost:8080/api/order?createAt=02-11-2022',
+                type: 'GET',
+
+                dataSrc: ''
+            },
+            searching: false,
+            columns: [
+                {
+                    data: "id", render: function (id) {
+
+                        return `<td>${"O-" + id}</td>`
+                    }
+                },
+                {
+                    data: "createAt", render: function (createAt) {
+                        return `<td>${moment(createAt).format('h:mm:ss a')}</td>`
+
+                    }
+                },
+                {data: "userId"},
+                {
+                    data: "id"
+                        
+
+                },
+                {
+                    data: "grandTotal", render: function (grandTotal) {
+                        return new Intl.NumberFormat('vi-VN', {
+                            style: 'currency',
+                            currency: 'VND'
+                        }).format(grandTotal)
+                    }
                 }
-            },
-            {data: "userId"},
-            {data: "", render:function (data, type, row, meta){
-                    console.log(row.id);
-                    return;
-                    // `$.ajax({
-                    //     headers: {
-                    //         "Accept": "application/json",
-                    //         "Content-type": "application/json"
-                    //     },
-                    //     type: "GET",
-                    //     url: "http://localhost:8080/api/orderItem/"+ row.id,
-                    // })
-                    //     .done((data)=>{
-                    //         console.log(data)
-                    //         $.each(data,(i,item)=>{
-                    //             console.log(item)
-                    //         })
-                    //     })`
 
+            ],
+            columnDefs: [
+                {
+                    targets: 3,
+                    className: "text-right"
+                },
+                {
+                    targets: -1,
+                    className: "text-right"
                 }
-            },
-            {data: "grandTotal"}
+            ]
 
-        ]
-    })
+        })
+
+    }
+
+
 </script>
 
 </html>

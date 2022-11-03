@@ -46,4 +46,12 @@ public class OrderItemService implements IOrderItemService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<OrderItemResult> findAll() {
+        return orderItemRepository.findAll()
+                .stream()
+                .map(orderItem -> orderItemMapper.toDTO(orderItem))
+                .collect(Collectors.toList());
+    }
+
 }

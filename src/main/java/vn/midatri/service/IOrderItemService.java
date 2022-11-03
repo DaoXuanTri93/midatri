@@ -9,4 +9,6 @@ public interface IOrderItemService {
     OrderItemResult create(OrderItemParam orderItemParam);
     long findMaxId();
     List<OrderItemResult> findAllByOrderId ( Long id);
+
+    List<OrderItemResult> findAll();
 }

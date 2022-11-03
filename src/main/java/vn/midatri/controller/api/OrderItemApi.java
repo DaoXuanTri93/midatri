@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.dto.orderItem.OrderItemParam;
 import vn.midatri.dto.orderItem.OrderItemResult;
 import vn.midatri.exceptions.NotFoundException;
@@ -28,6 +29,12 @@ public class OrderItemApi {
     @Autowired
     private OrderRepository orderRepository;
 
+
+    @GetMapping("")
+    public ResponseEntity<?> findAll() {
+        List<OrderItemResult> orderItemResults = orderItemService.findAll();
+        return new ResponseEntity<>(orderItemResults, HttpStatus.OK);
+    }
     @GetMapping("/{orderId}")
     public ResponseEntity<?> findAllByOrderId(@PathVariable Long orderId ){
         List<OrderItemResult> orderItemResults = orderItemService.findAllByOrderId(orderId);
