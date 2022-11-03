@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.item.CreateItem;
 import vn.midatri.dto.item.ItemResult;
+import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.mapper.ItemMapper;
 import vn.midatri.repository.ItemRepository;
 import vn.midatri.repository.model.Item;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -46,13 +48,16 @@ public class ItemService implements vn.midatri.service.ItemService {
     @Override
     @Transactional(readOnly = true)
     public ItemResult findById(Long id) {
-        return itemMapper.toDTO(itemRepository.findById(id).get());
+        Optional<Item> itemOptional = itemRepository.findById(id);
+        if (itemOptional.isEmpty()){
+            throw new NotFoundException("Not Found id "+id);
+        }
+        return itemMapper.toDTO(itemOptional.get());
     }
 
     @Override
     @Transactional
     public ItemResult create(CreateItem createItem) {
-
         return itemMapper.toDTO(itemRepository.save(itemMapper.toModel(createItem)));
     }
 

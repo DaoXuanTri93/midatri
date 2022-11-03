@@ -24,6 +24,7 @@ public class OrderMapper {
 
     public OrderResult toDTO(Order order) {
         return new OrderResult()
+                .setId(order.getId())
                 .setStatus(order.getStatus())
                 .setGrandTotal(order.getGrandTotal())
                 .setDiscount(order.getDiscount())
@@ -32,7 +33,8 @@ public class OrderMapper {
                 .setEmail(order.getEmail())
                 .setAddress(order.getAddress())
                 .setContent(order.getContent())
-                .setCreateAt(order.getCreateAt());
+                .setCreateAt(order.getCreateAt().toString())
+                .setUserId(order.getUserId());
     }
 
     public Order toModel(OrderParam orderParam) {

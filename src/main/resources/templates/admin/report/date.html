@@ -31,26 +31,24 @@
                             <th>#</th>
                             <th>Thời gian</th>
                             <th>Nhân Viên</th>
-                            <th>Tên Sản Phẩm</th>
                             <th>Số Lượng</th>
-                            <th>Giá Sản Phẩm</th>
                             <th >Doanh thu </th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Christopher</td>
-                            <td>Alexandra</td>
-                            <td>@makinton</td>
-                            <td class="text-right">1000</td>
-                            <td class="text-right">1000</td>
-                            <td class="text-right">1000</td>
-                        </tr>
-                       <tr class="text-right">
-                           <th  colspan="6" class="fw-bold">Tổng Doanh Thu : </th>
-                           <th>10000</th>
-                       </tr>
+<!--                        <tr>-->
+<!--                            <td>1</td>-->
+<!--                            <td>Christopher</td>-->
+<!--                            <td>Alexandra</td>-->
+<!--                            <td>@makinton</td>-->
+<!--                            <td class="text-right">1000</td>-->
+<!--                            <td class="text-right">1000</td>-->
+<!--                            <td class="text-right">1000</td>-->
+<!--                        </tr>-->
+<!--                       <tr class="text-right">-->
+<!--                           <th  colspan="6" class="fw-bold">Tổng Doanh Thu : </th>-->
+<!--                           <th>10000</th>-->
+<!--                       </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -66,12 +64,45 @@
     $('#tblReport').dataTable({
         ajax: {
             contentType: 'application/json',
-            url: 'http://localhost:8080/api/item?deleted=0',
+            url: 'http://localhost:8080/api/order?createAt=02-11-2022',
             type: 'GET',
 
             dataSrc: ''
         },
+        searching:false,
         columns :[
+            {data: "id" , render:function (id){
+
+                return `<td>${"O-"+id}</td>`
+               }
+            },
+            {data: "createAt", render : function (createAt){
+                    return `<td>${moment(createAt).format('h:mm:ss a')}</td>`
+
+                }
+            },
+            {data: "userId"},
+            {data: "", render:function (data, type, row, meta){
+                    console.log(row.id);
+                    return;
+                    // `$.ajax({
+                    //     headers: {
+                    //         "Accept": "application/json",
+                    //         "Content-type": "application/json"
+                    //     },
+                    //     type: "GET",
+                    //     url: "http://localhost:8080/api/orderItem/"+ row.id,
+                    // })
+                    //     .done((data)=>{
+                    //         console.log(data)
+                    //         $.each(data,(i,item)=>{
+                    //             console.log(item)
+                    //         })
+                    //     })`
+
+                }
+            },
+            {data: "grandTotal"}
 
         ]
     })

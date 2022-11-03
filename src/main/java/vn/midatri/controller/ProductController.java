@@ -21,7 +21,7 @@ public class ProductController {
         return modelAndView;
     }
 
-//
+
     @GetMapping("/restore")
     public  ModelAndView restoreProduct(){
         return new ModelAndView("/admin/product/restore");

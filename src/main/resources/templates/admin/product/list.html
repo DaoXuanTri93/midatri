@@ -44,7 +44,6 @@
 
                                 <div class="col mb-2">
                                     <div class="d-flex justify-content-end">
-
                                         <button type="button" class="btn btn-outline-success create">
                                             <i class="fa fa-plus-square"></i>
                                             Thêm thức uống mới
@@ -134,8 +133,6 @@
                     parameters.splice(i, 1)
                 }
             }
-            console.log(parameters)
-
         }
         query(parameters, categoryId, status);
     });
@@ -169,6 +166,7 @@
     function handleFilterAllCategory() {
         $(`.category`).removeClass("fw-bold");
         $("#idProductCatTreeAll").addClass("fw-bold");
+        categoryId=undefined;
         queryFindCategory(parameters, allCategory, status);
     }
 
@@ -236,14 +234,14 @@
                                                    ${data ? (`<button class="btn btn-outline-primary restore"
                                                                      onClick="handlerShowModalRestore(${row.id})"
                                                                      data-id="${row.id}">
-                                        <i class="fa fa-undo"></i>
-                                    </button>`) :
-                                    (`<button type="button"
-                                             class="btn btn-outline-danger delete "
-                                             onClick="handlerShowModalDelete(${row.id})"
-                                             data-id="${row.id}">
-                                        <i class="fa fa-archive"></i>
-                                    </button>`)
+                                                                    <i class="fa fa-undo"></i>
+                                                                </button>`) :
+                                                                (`<button type="button"
+                                                                         class="btn btn-outline-danger delete "
+                                                                         onClick="handlerShowModalDelete(${row.id})"
+                                                                         data-id="${row.id}">
+                                                                    <i class="fa fa-archive"></i>
+                                                                </button>`)
                                 }
                                             </div>
                                         `;
@@ -532,6 +530,7 @@
 
     // show modal Edit
     function handlerShowModalEdit(id) {
+        console.log("eee")
         let category;
         let parent;
         $.ajax({
@@ -593,10 +592,7 @@
                                             }
                                         })
                                     }
-                                    // else {
-                                    //     $("#catalogsUpdate").append(
-                                    //         `<option value="${id}">${name}</option>`);
-                                    // }
+
                                 }
 
                                 $("#modalUpdateProduct").modal("show");

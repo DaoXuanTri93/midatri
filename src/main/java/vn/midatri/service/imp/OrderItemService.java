@@ -16,6 +16,7 @@ import vn.midatri.service.IOrderService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,6 +36,14 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public long findMaxId(){
         return orderItemRepository.findMaxId();
+    }
+
+    @Override
+    public List<OrderItemResult> findAllByOrderId(Long id) {
+        return orderItemRepository.findAllByOrderId(id)
+                .stream()
+                .map(orderItem -> orderItemMapper.toDTO(orderItem))
+                .collect(Collectors.toList());
     }
 
 }

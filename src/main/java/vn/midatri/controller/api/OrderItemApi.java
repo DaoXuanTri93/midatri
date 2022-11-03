@@ -6,14 +6,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.orderItem.OrderItemParam;
+import vn.midatri.dto.orderItem.OrderItemResult;
 import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.repository.OrderRepository;
 import vn.midatri.repository.model.Order;
+import vn.midatri.repository.model.OrderItem;
 import vn.midatri.service.IOrderItemService;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,6 +27,12 @@ public class OrderItemApi {
     private IOrderItemService orderItemService;
     @Autowired
     private OrderRepository orderRepository;
+
+    @GetMapping("/{orderId}")
+    public ResponseEntity<?> findAllByOrderId(@PathVariable Long orderId ){
+        List<OrderItemResult> orderItemResults = orderItemService.findAllByOrderId(orderId);
+        return new ResponseEntity<>(orderItemResults,HttpStatus.OK);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody OrderItemParam[] orderItemParamArr) {

@@ -14,6 +14,7 @@ import java.time.Instant;
 @Data
 @Accessors(chain = true)
 public class OrderResult {
+    private Long id;
     private OrderStatus status;
     private BigDecimal grandTotal;
     private Float discount;
@@ -22,7 +23,7 @@ public class OrderResult {
     private String email;
     private String address;
     private String content;
-    private Instant createAt;
+    private String createAt;
     private long userId;
 
 }
