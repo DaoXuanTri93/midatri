@@ -9,6 +9,7 @@ import vn.midatri.dto.item.ItemResult;
 import vn.midatri.repository.model.BookingItemStatus;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +22,7 @@ public class BookingItemResult {
     private Float discount;
     private BookingItemStatus status;
     private String content;
+    private Instant createAt;
     private long itemId;
     private long bookingId;
 }

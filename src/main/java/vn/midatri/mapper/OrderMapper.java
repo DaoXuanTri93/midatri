@@ -32,6 +32,7 @@ public class OrderMapper {
                 .setEmail(order.getEmail())
                 .setAddress(order.getAddress())
                 .setContent(order.getContent())
+                .setTotalQuantity(order.getTotalQuantity())
                 .setCreateAt(order.getCreateAt());
     }
 
@@ -45,6 +46,7 @@ public class OrderMapper {
                 .setEmail(orderParam.getEmail())
                 .setAddress(orderParam.getAddress())
                 .setContent(orderParam.getContent())
+                .setTotalQuantity(orderParam.getTotalQuantity())
                 .setCreateAt(orderParam.getCreateAt());
     }
 }

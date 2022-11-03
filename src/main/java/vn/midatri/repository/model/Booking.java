@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -49,6 +50,7 @@ public class Booking {
     private String address;
 
     @Column(name = "create_at")
+    @CreationTimestamp
     private Instant createAt;
 
     @Column(name = "update_at")

@@ -47,6 +47,9 @@ public class Order {
     @Column(name = "grand_total", nullable = false)
     private BigDecimal grandTotal;
 
+    @Column(name = "total_quantity", nullable = false)
+    private Integer totalQuantity;
+
     @Column(name = "discount")
     private Float discount;
 

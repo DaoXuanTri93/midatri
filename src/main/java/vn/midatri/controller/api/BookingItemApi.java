@@ -15,7 +15,7 @@ import vn.midatri.service.IBookingItemService;
 import java.util.List;
 import java.util.Optional;
 
-import static vn.midatri.repository.model.BookingItemStatus.KITCHEN;
+import static vn.midatri.repository.model.BookingItemStatus.*;
 
 @RestController
 @RequestMapping("/api/bookingItem")
@@ -25,6 +25,11 @@ public class BookingItemApi {
 
     @Autowired
     BookingItemRepository bookingItemRepository;
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAllBookingItem() {
+        List<BookingItemResult> bookingItems = bookingItemService.findAll();
+        return new ResponseEntity<>(bookingItems, HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<?> findAllByBookingId(Long bookingId) {
@@ -38,11 +43,17 @@ public class BookingItemApi {
         return new ResponseEntity<>(bookingItemResult, HttpStatus.OK);
     }
 
-    @GetMapping("/findAllBookingItemStatus")
+    @GetMapping("/findAllBookingItemStatusKitchen")
     public ResponseEntity<?> findAllBookingItemStatus() {
         List<BookingItemResult> bookingItems = bookingItemService.findAllByStatus(KITCHEN);
         return new ResponseEntity<>(bookingItems, HttpStatus.OK);
     }
+    @GetMapping("/findAllBookingItemStatusCooking")
+    public ResponseEntity<?> findAllBookingItemStatusCooked() {
+        List<BookingItemResult> bookingItems = bookingItemService.findAllByStatus(COOKING);
+        return new ResponseEntity<>(bookingItems, HttpStatus.OK);
+    }
+
     @PatchMapping("/{id}/quantity")
     public ResponseEntity<Integer> updateQuantity(@PathVariable Long id, @RequestBody int quantity) {
         return new ResponseEntity<>(bookingItemService.updateQuantity(id, quantity), HttpStatus.OK);
@@ -68,20 +79,18 @@ public class BookingItemApi {
         return new ResponseEntity<>(bookingItemService.updateNote(id, content), HttpStatus.OK);
     }
 
-    @PostMapping("/updateStatus")
-    public ResponseEntity<String> updateStatus(@RequestBody BookingItemUpdateStatus[] bookingItemUpdateStatusArr) {
-
-        for (BookingItemUpdateStatus bookingItemResult : bookingItemUpdateStatusArr){
-            Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(bookingItemResult.getId());
-            if (bookingItemOptional.isEmpty()){
-                throw new NotFoundException("Not found " + bookingItemResult.getId());
-            }
-            bookingItemOptional.get().setId(bookingItemResult.getId());
-            bookingItemOptional.get().setStatus(KITCHEN);
-            bookingItemRepository.save(bookingItemOptional.get());
-        }
+    @PostMapping("/updateStatusCooking/{id}")
+    public ResponseEntity<String> updateStatusCooking(@PathVariable Long id) {
+        bookingItemService.updateStatus(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping("/updateStatus")
+    public ResponseEntity<String> updateStatus(@RequestBody BookingItemUpdateStatus[] bookingItemUpdateStatusArr) {
+        bookingItemService.updateAllStatus(bookingItemUpdateStatusArr);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/deleted/{id}")
     public ResponseEntity<?> deletedBookingItem(@PathVariable Long id) {
         bookingItemService.deletedBookingItem(id);

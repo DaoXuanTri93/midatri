@@ -3,6 +3,7 @@ package vn.midatri.service;
 
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
+import vn.midatri.dto.bookingItem.BookingItemUpdateStatus;
 import vn.midatri.repository.model.BookingItemStatus;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public interface IBookingItemService {
     int updateQuantity(Long id, int quantity);
 
     String updateNote(Long id, String content);
+
+    void updateStatus(Long id);
+
+    void updateAllStatus(BookingItemUpdateStatus[] bookingItemUpdateStatusArr);
 
     List<BookingItemResult> findAllByStatus(BookingItemStatus status);
 }
