@@ -5,16 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.order.OrderParam;
 import vn.midatri.dto.order.OrderResult;
-import vn.midatri.dto.orderItem.OrderItemResult;
 import vn.midatri.mapper.OrderMapper;
-import vn.midatri.repository.OrderItemRepository;
 import vn.midatri.repository.OrderRepository;
 import vn.midatri.repository.model.Chart;
-import vn.midatri.repository.model.Order;
-import vn.midatri.repository.model.OrderItem;
 import vn.midatri.service.IOrderService;
 
 import java.util.List;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,5 +33,12 @@ public class OrderService implements IOrderService {
     @Override
     public List<Chart> chartBar() {
         return orderRepository.chartBar();
+    }
+    public List<OrderResult> findAllByCreateAt(Date createAt) {
+        return orderRepository.findAllByCreateAt(createAt)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+
     }
 }

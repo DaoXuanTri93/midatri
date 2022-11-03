@@ -1,5 +1,5 @@
-class Toast {
-    static success(message) {
+class Toast{
+    static success(message){
         iziToast.success(
             {
                 timeout: 1500,
