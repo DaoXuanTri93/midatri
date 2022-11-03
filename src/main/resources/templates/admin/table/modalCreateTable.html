@@ -55,10 +55,8 @@
     </div>
 
     <script>
-        // import Toast from "../../../static/toast/appToast/toastAlert";
-
         $("#btnCreateTable").on("click", function () {
-            $("#frmCreateTable").submit();
+            $("#frmCreateTable").trigger("submit");
         });
 
         function CreateTable() {
@@ -88,18 +86,18 @@
                     </tr>
                         `;
                     $("tblTop tbody").append(str);
-                    // Toast.success("heyyy");
-                    Swal.fire({
-                        title: 'Thêm mới bàn thành công !!!',
-                        position: 'top-end',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
+                    Toast.success("Thành công");
+                    // Swal.fire({
+                    //     title: 'Thêm mới bàn thành công !!!',
+                    //     position: 'top-end',
+                    //     icon: 'success',
+                    //     showConfirmButton: false,
+                    //     timer: 3000
+                    // })
                     $('#tblTop').DataTable().ajax.reload();
+                    $("#modalCreateTable").modal("hide");
                     $("#frmCreateTable")[0].reset();
                 })
-
             }).fail(function (jqXHR) {
                 console.log(jqXHR)
             }
@@ -108,6 +106,5 @@
 
 
     </script>
-    <script src="/js/validateTable.js"></script>
 
 </th:block>

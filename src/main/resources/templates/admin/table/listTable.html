@@ -161,14 +161,15 @@
             data: JSON.stringify(editTable)
         }).done(function (data) {
                 console.log("data", data);
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Cập nhập thông tin thành công',
-                    showConfirmButton: false,
-                    timer: 4000
-
-                })
+                // Swal.fire({
+                //     position: 'top-end',
+                //     icon: 'success',
+                //     title: 'Cập nhập thông tin thành công',
+                //     showConfirmButton: false,
+                //     timer: 4000
+                //
+                // })
+                Toast.success("Thay đổi thông tin thành công");
                 $('#tblTop').DataTable().ajax.reload();
                 $('#modalEditTable').modal("hide");
                 $("#frmEditTable")[0].reset();
@@ -176,6 +177,7 @@
             }
         ).fail(function (jqXHR) {
             console.log(jqXHR);
+            // Toast.warning("Dữ liệu bạn nhập không chính xác");
             //     Swal.fire({
             //         icon: 'error',
             //         title: 'Oops...',

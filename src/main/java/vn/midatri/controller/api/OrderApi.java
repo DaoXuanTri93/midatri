@@ -4,10 +4,7 @@ package vn.midatri.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.order.OrderParam;
 import vn.midatri.dto.order.OrderResult;
 import vn.midatri.repository.model.Order;
@@ -30,4 +27,9 @@ public class OrderApi {
         orderParam.setStatus(OrderStatus.NEW);
         return new ResponseEntity<>(orderService.create(orderParam), HttpStatus.OK);
     }
+    @GetMapping("/chart")
+    public ResponseEntity<?> orderBarchart(){
+        return new ResponseEntity<>(orderService.chartBar(), HttpStatus.OK);
+    }
+
 }

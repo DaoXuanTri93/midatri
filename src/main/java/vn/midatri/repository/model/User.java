@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 @NoArgsConstructor
@@ -16,6 +17,24 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Entity
 @Table(name = "user")
+
+@NamedNativeQuery(
+        name = "sp_chart",
+        query =
+                "call midatri.sp_barchart();",
+        resultSetMapping = "result_chartdto"
+)
+@SqlResultSetMapping(
+        name = "result_chartdto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+//                        @ColumnResult(name = "id", type = Long.class),
+                        @ColumnResult(name = "title", type = String.class),
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+                }
+        )
+)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

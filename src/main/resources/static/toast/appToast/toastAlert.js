@@ -1,15 +1,5 @@
-<<<<<<< HEAD
-  class Toast {
+class Toast {
     static success(message) {
-     return iziToast.success({
-             title: 'OK',
-             message: message
-         });
-    }
-}
-=======
-class Toast{
-    static success(message){
         iziToast.success(
             {
                 timeout: 1500,
@@ -18,5 +8,12 @@ class Toast{
                 message: message
             });
     };
+    static warning(message) {
+        iziToast.warning({
+            title: 'Caution',
+            position: 'topRight',
+            message: message,
+            timeout : 1500
+        });
+    }
 }
->>>>>>> f5116a793fc17ed78a6224827e1d515de48a948f

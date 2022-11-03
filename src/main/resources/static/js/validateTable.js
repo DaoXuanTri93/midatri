@@ -55,7 +55,7 @@ $(document).ready(function () {
             },
             capacityEdit: {
                 required: true,
-                range: [2,16],
+                range: [5,16],
                 // min: 2
             }
         },
