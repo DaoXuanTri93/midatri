@@ -17,6 +17,7 @@ public class OrderResult {
     private Long id;
     private OrderStatus status;
     private BigDecimal grandTotal;
+    private int totalQuantity;
     private Float discount;
     private String fullName;
     private String phone;

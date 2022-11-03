@@ -15,6 +15,7 @@ import vn.midatri.repository.TableTopRepository;
 import vn.midatri.repository.model.*;
 import vn.midatri.service.IBookingService;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -73,6 +74,7 @@ public class BookingService implements IBookingService {
         if (bookings.isEmpty()) {
 
             Booking newBooking = new Booking(param.getTabletopId(), 1L);
+            newBooking.setCreateAt(Instant.now());
             newBooking.setStatus(BookingStatus.NEW);
             Booking booking = bookingRepository.save(newBooking);
 

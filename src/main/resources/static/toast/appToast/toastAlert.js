@@ -1,3 +1,4 @@
+
 class Toast{
     static success(message){
         iziToast.success(
@@ -17,3 +18,4 @@ class Toast{
         });
     }
 }
+

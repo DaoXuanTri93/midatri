@@ -5,6 +5,7 @@ import {itemAPI} from "./item-api.js";
 import {categoryAPI} from "./category-api.js";
 import {orderAPI} from "./order-api.js";
 import {orderItemAPI} from "./orderItem-api.js";
+import {userAPI} from "./user-api.js";
 
 window.api = {
     bookingItem: bookingItemAPI,
@@ -13,5 +14,6 @@ window.api = {
     booking: bookingAPI,
     category: categoryAPI,
     order: orderAPI,
-    orderItem: orderItemAPI
+    orderItem: orderItemAPI,
+    user: userAPI
 }

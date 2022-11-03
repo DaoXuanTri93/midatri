@@ -16,6 +16,7 @@ import java.time.Instant;
 public class OrderParam {
     private OrderStatus status;
     private BigDecimal grandTotal;
+    private int totalQuantity;
     private Float discount;
     private String fullName;
     private String phone;

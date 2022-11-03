@@ -9,6 +9,8 @@ import vn.midatri.dto.user.UserResult;
 import vn.midatri.repository.model.BookingStatus;
 import vn.midatri.repository.model.TableTop;
 
+import java.time.Instant;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -21,6 +23,8 @@ public class BookingResult {
     private String email;
     private String address;
     private String content;
+    private Instant createAt;
+    private Instant updateAt;
     private long userId;
     private long tableTopId;
 

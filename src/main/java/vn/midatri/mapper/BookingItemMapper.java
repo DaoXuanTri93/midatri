@@ -25,6 +25,7 @@ public class BookingItemMapper {
                 .setQuantity(bookingItem.getQuantity())
                 .setDiscount(bookingItem.getDiscount())
                 .setStatus(bookingItem.getStatus())
+                .setCreateAt(bookingItem.getCreateAt())
                 .setContent(bookingItem.getContent());
     }
 

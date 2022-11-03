@@ -29,6 +29,7 @@ public class BookingMapper {
                 .setAddress(booking.getAddress())
                 .setContent(booking.getContent())
                 .setUserId(booking.getUserId())
+                .setCreateAt(booking.getCreateAt())
                 .setTableTopId(booking.getTableTopId());
     }
 
@@ -44,7 +45,6 @@ public class BookingMapper {
                 .setPhone(bookingCustomerParam.getPhone())
                 .setEmail(bookingCustomerParam.getEmail())
                 .setAddress(bookingCustomerParam.getAddress())
-                .setUpdateAt(Instant.now())
                 .setContent(bookingCustomerParam.getContent());
     }
 

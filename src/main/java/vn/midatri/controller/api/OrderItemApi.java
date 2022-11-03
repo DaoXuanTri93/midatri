@@ -51,6 +51,7 @@ public class OrderItemApi {
         }
         Order order = orderOptional.get();
         BigDecimal total_amount = new BigDecimal(0);
+        int total_quantity = 0;
 
         for (OrderItemParam itemParam : orderItemParamArr) {
             orderItemParam.setOrderId(orderId);
@@ -61,9 +62,11 @@ public class OrderItemApi {
             orderItemParam.setQuantity(itemParam.getQuantity());
             orderItemParam.setDiscount(itemParam.getDiscount());
             total_amount = total_amount.add(new BigDecimal(itemParam.getQuantity()).multiply(itemParam.getPrice()));
+            total_quantity += itemParam.getQuantity();
             orderItemService.create(orderItemParam);
         }
         order.setGrandTotal(total_amount);
+        order.setTotalQuantity(total_quantity);
         orderRepository.save(order);
         return new ResponseEntity<>(HttpStatus.OK);
     }

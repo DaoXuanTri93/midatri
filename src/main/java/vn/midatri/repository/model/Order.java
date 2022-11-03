@@ -65,7 +65,6 @@ public class Order {
     @Column(name = "address", length = 45)
     private String address;
 
-
     @Column(name = "create_at", nullable = false)
     private Instant createAt;
 

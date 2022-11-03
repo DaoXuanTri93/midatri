@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
+import vn.midatri.dto.bookingItem.BookingItemUpdateStatus;
 import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.exceptions.NumberFormatException;
 import vn.midatri.mapper.BookingItemMapper;
@@ -22,6 +23,8 @@ import vn.midatri.service.IBookingItemService;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static vn.midatri.repository.model.BookingItemStatus.*;
 
 @Service
 
@@ -67,13 +70,13 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public void deleteAllByBookingId(long bookingId) {
         Optional<Booking> bookingOptional = bookingRepository.findById(bookingId);
-        if (bookingOptional.isEmpty()){
+        if (bookingOptional.isEmpty()) {
             throw new NotFoundException("Not Found");
         }
         Booking booking = bookingOptional.get();
 
         Optional<TableTop> tableTopOptional = tableTopRepository.findById(booking.getTableTopId());
-        if (tableTopOptional.isEmpty()){
+        if (tableTopOptional.isEmpty()) {
             throw new NotFoundException("Not Found");
         }
         TableTop tableTop = tableTopOptional.get();
@@ -108,7 +111,7 @@ public class BookingItemService implements IBookingItemService {
     @Transactional(readOnly = true)
     public BookingItemResult findById(Long id) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
-        if (bookingItemOptional.isEmpty()){
+        if (bookingItemOptional.isEmpty()) {
             throw new NotFoundException("khong tim thay ID : " + id);
         }
         BookingItem bookingItem = bookingItemOptional.get();
@@ -170,13 +173,43 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public String updateNote(Long id, String content) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
-        if (bookingItemOptional.isEmpty()){
+        if (bookingItemOptional.isEmpty()) {
             throw new NotFoundException("Note ko thành công");
         }
         BookingItem bookingItem = bookingItemOptional.get();
         bookingItem.setContent(content);
         bookingItemRepository.save(bookingItem);
         return bookingItem.getContent();
+    }
+
+    @Override
+    public void updateStatus(Long id) {
+        Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
+        if (bookingItemOptional.isEmpty()) {
+            throw new NotFoundException("not found");
+        }
+        BookingItem bookingItem = bookingItemOptional.get();
+        bookingItem.setId(id);
+        if (bookingItem.getStatus() == KITCHEN) {
+            bookingItem.setStatus(COOKING);
+            bookingItemRepository.save(bookingItem);
+        } else if (bookingItem.getStatus() == COOKING) {
+            bookingItem.setStatus(COOKED);
+            bookingItemRepository.save(bookingItem);
+        }
+    }
+
+    @Override
+    public void updateAllStatus(BookingItemUpdateStatus[] bookingItemUpdateStatusArr) {
+        for (BookingItemUpdateStatus bookingItemResult : bookingItemUpdateStatusArr) {
+            Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(bookingItemResult.getId());
+            if (bookingItemOptional.isEmpty()) {
+                throw new NotFoundException("Not found " + bookingItemResult.getId());
+            }
+            bookingItemOptional.get().setId(bookingItemResult.getId());
+            bookingItemOptional.get().setStatus(KITCHEN);
+            bookingItemRepository.save(bookingItemOptional.get());
+        }
     }
 
     @Override

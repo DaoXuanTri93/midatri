@@ -5,7 +5,7 @@ function BookingItemAPI() {
     this.findAll = (done, fail) => {
         $.ajax({
             type: "GET",
-            url: `${location.origin}/api/bookingItem`,
+            url: `${location.origin}/api/bookingItem/findAll`,
         })
             .done((data) => {
                 done(data);
@@ -26,10 +26,22 @@ function BookingItemAPI() {
                 fail(jqXHR);
             })
     }
-    this.findAllBookingItemStatus = (done, fail) => {
+    this.findAllBookingItemStatusKitchen = (done, fail) => {
         $.ajax({
             type: "GET",
-            url: `${location.origin}/api/bookingItem/findAllBookingItemStatus`
+            url: `${location.origin}/api/bookingItem/findAllBookingItemStatusKitchen`
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.findAllBookingItemStatusCooking = (done, fail) => {
+        $.ajax({
+            type: "GET",
+            url: `${location.origin}/api/bookingItem/findAllBookingItemStatusCooking`
         })
             .done((data) => {
                 done(data);
@@ -123,7 +135,7 @@ function BookingItemAPI() {
             url: `${location.origin}/api/bookingItem/updateNote/${bookingItemId}`,
             type: "PATCH",
             contentType: 'application/json',
-            data : JSON.stringify(data)
+            data: JSON.stringify(data)
         })
             .done((data) => {
                 done(data);
@@ -138,6 +150,19 @@ function BookingItemAPI() {
             type: "POST",
             contentType: 'application/json',
             data: JSON.stringify(data)
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.updateStatusCooking = (bookingItemId, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/updateStatusCooking/${bookingItemId}`,
+            type: "POST",
+            contentType: 'application/json'
         })
             .done((data) => {
                 done(data);

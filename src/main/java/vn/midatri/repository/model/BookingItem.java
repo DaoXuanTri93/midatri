@@ -60,6 +60,7 @@ public class BookingItem {
     private BookingItemStatus status;
 
     @Column(name = "create_at")
+    @CreationTimestamp
     private Instant createAt;
 
     @Column(name = "update_at")

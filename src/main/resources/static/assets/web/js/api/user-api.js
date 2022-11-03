@@ -1,4 +1,5 @@
-export const userAPI=new UserAPI();
+export const userAPI = new UserAPI();
+
 function UserAPI() {
     this.findAll = (done, fail) => {
         $.ajax({
@@ -12,7 +13,7 @@ function UserAPI() {
                 fail(jqXHR);
             })
     }
-    this.create = (data,done, fail) => {
+    this.create = (data, done, fail) => {
         $.ajax({
             url: `${location.origin}/api/users/create`,
             type: "POST",
@@ -21,7 +22,7 @@ function UserAPI() {
         })
             .done((data) => {
                 done(data);
-                window.location.href="/user";
+                window.location.href = "/user";
             })
             .fail((jqXHR) => {
                 fail(jqXHR);

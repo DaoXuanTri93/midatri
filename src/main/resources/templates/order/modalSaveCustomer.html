@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="saveCustomer">
+
+  <modal-container class="modal " role="dialog" tabindex="-1" id="addCustomer" aria-modal="true">
+    <div role="document" class="modal-dialog modal-customer modal-cashier ui-draggable">
+      <div class="modal-content" style="width: 600px;right: 0px;">
+        <kv-modal >
+
+          <div  class="modal-header ui-draggable-handle">
+            <h4  class="modal-title pull-left">Thêm khách hàng</h4>
+            <button  aria-label="Close" class="close pull-right"
+                     data-bs-dismiss="modal"
+                     type="button"><i  class="fa-light fa-xmark"></i></button>
+          </div>
+
+          <div ></div>
+          <kv-customer-form >
+
+            <div  class="modal-body" >
+              <div  class="img-profile">
+
+                <div  class="upload-error" id="overSizeFile"
+                      style="display: none;"></div>
+              </div>
+              <div  class="customer-info-form">
+                <div  class="row row-padding-26">
+                  <div  class="col-md-12">
+                    <div  class="form-group">
+                      <label  class="form-label control-label" >Tên
+                        khách hàng</label>
+                      <div  class="form-output"><input
+                              class="form-control ng-pristine ng-valid ng-touched"
+                              id="customerName"
+                              placeholder="Trần Quốc Toản"
+                              kvfocuscontrolonready=""
+                              maxlength="255"
+                              type="text"></div>
+                    </div>
+                    <div  class="form-group">
+                      <label  class="form-label control-label" >Điện
+                        thoại</label>
+                      <div  class="form-output"><input
+                              class="form-control ng-untouched ng-pristine ng-valid"
+                              maxlength="255"
+                              type="tel"
+                              id="telephone"
+                              placeholder="Ví dụ: 0794512184">
+                      </div>
+                    </div>
+                    <div  class="form-group">
+                      <label  class="form-label control-label" >Địa Chỉ </label>
+                      <div  class="form-output">
+                        <kendo-autocomplete
+                                class="form-control k-widget k-autocomplete k-header ng-untouched ng-pristine ng-valid"
+                                 dir="ltr">
+
+                          <kendo-searchbar class="k-searchbar"><input aria-haspopup="listbox"
+                                                                      autocomplete="off" size="25"
+                                                                      id="address"
+                                                                      placeholder="Số 28 Nguyễn Tri Phương"
+                                                                      class="k-input" tabindex="0"
+                                                                      dir="ltr" role="combobox"
+                                                                      aria-disabled="false"
+                                                                      aria-readonly="false"
+                                                                      aria-expanded="false"
+                                                                      aria-owns="cff7a5d1-a6de-48df-a6a1-532332c59a25"
+                                                                      aria-label="NO DATA FOUND">
+                          </kendo-searchbar>
+
+                        </kendo-autocomplete>
+                      </div>
+                    </div>
+                    <div  class="form-group">
+                      <label  class="form-label control-label">Email</label>
+                      <div  class="form-output"><input
+                              class="form-control ng-untouched ng-pristine ng-valid"
+                              maxlength="255"
+                              ng-trim="false"
+                              id="email"
+                              placeholder="tranquoctoan@gmail.com"
+                              type="email"></div>
+                    </div>
+                    <div  class="form-note-wrap">
+                      <div  class="form-output form-note"><textarea
+
+                              class="form-control ng-untouched ng-pristine ng-valid" id="note"
+                              kvautoexpandinput="" maxlength="45" placeholder="Ghi chú"
+                              style="height: 33px;"></textarea></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div  class="modal-footer" >
+              <a  class="btn btn-primary"
+                  href="javascript:void(0);"
+                  ng-disabled="savingCustomer"
+                  onclick="savingCustomer(tableTopId)"
+              >
+                <i class="fa fa-save"></i>
+                <span>Lưu</span></a>
+              <a class="btn btn-default" href="javascript:void(0);" id="btn_cancel" data-bs-dismiss="modal">
+                <i class="fa fa-ban"></i>
+                <span>Bỏ qua</span></a>
+            </div>
+          </kv-customer-form>
+
+        </kv-modal>
+      </div>
+    </div>
+  </modal-container>
+
+</th:block>
