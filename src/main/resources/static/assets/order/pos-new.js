@@ -10,11 +10,6 @@ const getDate = new Date();
 let booking_id = 0;
 let tableTopId = 0;
 
-// $(document).ready(function () {
-//     
-//     
-//
-// });
 
 class OrderParam {
 
@@ -87,8 +82,11 @@ function fetchBookings() {
 }
 
 function fetchBookingItems(tableTopId, bookingId) {
+    $("#spinner-div").show();
     api.bookingItem.findAllByBooking(bookingId, (bookingItems) => {
         bookingItemTableTopMap.set(tableTopId, bookingItems);
+        $("#spinner-div").hide();
+
     }, (jqXHR) => {
 
     })
@@ -217,7 +215,7 @@ function renderAllItems() {
     }
 
     api.item.findAll((data) => {
-        $("#spinner-div").hide();
+
         $.each(data, (i, item) => {
             itemMap.set(item.id, item);
             setLocal(i, item);
@@ -225,7 +223,7 @@ function renderAllItems() {
         });
         onItemClick();
         TATCA();
-
+        $("#spinner-div").hide();
     }, error => {
 
     });
@@ -244,7 +242,6 @@ function renderBookingTabletop(tabletopId) {
 }
 
 function booking(tabletopId, itemId) {
-    $("#spinner-div").show();
     let newBookingItem = {
         quantity: 1,
         itemId: itemId
@@ -252,6 +249,7 @@ function booking(tabletopId, itemId) {
 
     let booking = bookingMap.get(tabletopId);
     if (booking === undefined) {
+        $("#spinner-div").show();
         let createBooking = {
             tabletopId: tabletopId
         }
@@ -270,6 +268,9 @@ function booking(tabletopId, itemId) {
     }
 
     let bookingItems = bookingItemTableTopMap.get(tabletopId);
+    console.log("tabletopId",tabletopId)
+    console.log("bookingItemTableTopMap",bookingItemTableTopMap)
+    console.log("bookingItems",bookingItems)
     for (const bookingItem of bookingItems) {
         if (itemId === bookingItem.itemId) {
             let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text());
