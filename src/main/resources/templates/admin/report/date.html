@@ -21,7 +21,9 @@
             <div class="normal-table-list mg-t-30">
                 <div class="basic-tb-hd text-center">
                     <h1>Báo Cáo Ngày</h1>
-                    <h6 class="fw-light">Ngày Bán : <input type="date"/>></h6>
+                    <h6 class="fw-light">Ngày Bán :
+                        <input id="dateReport" type="date" value="" min="01-10-2011" max="31-12-2042" placeholder="dd-mm-yyyy"/>
+                    </h6>
 
                 </div>
                 <div class="bsc-tbl-hvr table-responsive ">
@@ -35,10 +37,10 @@
                             <th>Doanh thu</th>
                         </tr>
                         </thead>
-                        <tfoot class="text-right">
-                        <tr class="text-right">
-                            <th colspan="4" class="fw-bold">Tổng Doanh Thu :</th>
-                            <th>10000</th>
+                        <tfoot >
+                        <tr>
+                            <th colspan="4" class="fw-bold" style="text-align:right">Tổng Doanh Thu :</th>
+                            <th style="text-align:right"></th>
                         </tr>
                         </tfoot>
                     </table>
@@ -52,30 +54,21 @@
 <th:block th:replace="/admin/layout/script :: script"/>
 </body>
 <script>
-    let orderItem;
-    // renderAllOrderItem();
+    let dateReport = new Date();
+    let day = dateReport.getDate();
+    let month= (dateReport.getMonth())+1;
+    let year=dateReport.getFullYear();
+    $("#dateReport").val(`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`)
+
+    let getDate = moment($("#dateReport").val()).format('DD-MM-yyyy')
+    console.log(getDate)
     renderDataTableReport();
 
-    function renderAllOrderItem() {
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/orderItem",
-        }).done((data) => {
-            orderItem = data;
-        })
-    }
-
     function renderDataTableReport() {
-
-        console.log("bbb")
         $('#tblReport').dataTable({
             ajax: {
                 contentType: 'application/json',
-                url: 'http://localhost:8080/api/order?createAt=02-11-2022',
+                url: `http://localhost:8080/api/order?createAt=${getDate}`,
                 type: 'GET',
 
                 dataSrc: ''
@@ -96,9 +89,7 @@
                 },
                 {data: "userId"},
                 {
-                    data: "id"
-                        
-
+                    data: "totalQuantity"
                 },
                 {
                     data: "grandTotal", render: function (grandTotal) {
@@ -119,12 +110,39 @@
                     targets: -1,
                     className: "text-right"
                 }
-            ]
+            ],
+            footerCallback:function (row, data, start, end, display){
+                var api = this.api();
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function (i) {
+                    return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                };
+                total = api
+                    .column(4)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                pageTotal = api
+                    .column(4, { page: 'current' })
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+                $(api.column(4).footer()).html(new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(pageTotal)  );
+            }
 
         })
 
     }
-
+$("#dateReport").on('input', function (){
+    let newDate = moment($("#dateReport").val()).format('DD-MM-yyyy');
+    $('#tblReport').DataTable().ajax.url(`http://localhost:8080/api/order?createAt=${newDate}`).load().draw()
+})
 
 </script>
 
