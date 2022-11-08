@@ -11,9 +11,78 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.Instant;
 
+@NamedNativeQuery(
+        name = "sp_chartlastday",
+        query =
+                "call midatri.sp_chartlastday();",
+        resultSetMapping = "result_chartLastDayDto"
+)
+@SqlResultSetMapping(
+        name = "result_chartLastDayDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "total", type = BigDecimal.class),
+                        @ColumnResult(name = "dates", type = Instant.class)
 
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "sp_last7day",
+        query =
+                "call midatri.sp_last7day();",
+        resultSetMapping = "result_chartLast7DayDto"
+)
+@SqlResultSetMapping(
+        name = "result_chartLast7DayDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "total", type = BigDecimal.class),
+                        @ColumnResult(name = "dates", type = Instant.class)
+
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "sp_chartbymonth",
+        query =
+                "call midatri.sp_chartbymonth();",
+        resultSetMapping = "result_chartByMonthDto"
+)
+@SqlResultSetMapping(
+        name = "result_chartByMonthDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "total", type = BigDecimal.class),
+                        @ColumnResult(name = "dates", type = Instant.class)
+
+                }
+        )
+)
+//chart by last month
+@NamedNativeQuery(
+        name = "sp_last1monht",
+        query =
+                "call midatri.sp_last1monht();",
+        resultSetMapping = "result_chartByLastMonthDto"
+)
+@SqlResultSetMapping(
+        name = "result_chartByLastMonthDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "total", type = BigDecimal.class),
+                        @ColumnResult(name = "dates", type = Instant.class)
+
+                }
+        )
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -49,3 +118,4 @@ public class TableTop {
     private String content;
 
 }
+//chart last day

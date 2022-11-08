@@ -5,6 +5,21 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dashboard</title>
+    <script>
+        window.Promise ||
+        document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+        )
+        window.Promise ||
+        document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+        )
+        window.Promise ||
+        document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+        )
+    </script>
+
     <!--  <meta name="description" content="">-->
     <!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
     <!--  &lt;!&ndash; favicon-->
@@ -282,7 +297,9 @@
         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
             <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
                 <div class="white-box analytics-info">
-                    <h3 class="box-title">Doanh thu hôm nay</h3>
+                    <h3 class="box-title">Kết quả bán hàng hôm nay</h3>
+                    <div id="dateInput">
+                    </div>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li>
                             <i class="fa fa-dollar-sign text-success" style="font-size: 50px"></i>
@@ -337,9 +354,7 @@
     </div>
 </div>
 </div>
-<!-- End Status area-->
-<!-- Start Sale Statistic area-->
-<!-- <div class="sale-statistic-area"> -->
+
 <div class="container">
     <div class="row">
         <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
@@ -347,26 +362,26 @@
                 <div class="curved-inner-pro">
                     <div class="curved-ctn row">
                         <div class="col-lg-9">
-                            <h2>Top 7 hàng hóa bán chạy 7 ngày qua</h2>
+                            <h2>Top 7 hàng hóa bán chạy trong tuần qua</h2>
+
                         </div>
                         <div class="col-lg-3">
                             <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Theo doanh thu
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown button
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                                    <a class="dropdown-item" href="#">Theo doanh thu
-                                    </a>
-                                    <a class="dropdown-item" href="#">Theo số lượng</a>
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="curved-line-chart 1" class="flot-chart-sts flot-chart">
-                    <div>
-                        <canvas id="myChart"></canvas>
+                    <div id="myChart">
+                        <!--                        <canvas id="myChart"></canvas>-->
                     </div>
                 </div>
             </div>
@@ -374,34 +389,18 @@
         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
             <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
                 <div class="past-day-statis">
-                    <h2>Số voucher đang áp dụng</h2>
+                    <h2 style="color: #0a53be">Top 7 hàng hóa bán chạy trong tuần qua</h2>
+                    <table id="bar-chart">
+                        <tr>
+                            <td>Tên sản phẩm</td>
+                            <td>Số doanh thu</td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="dash-widget-visits"></div>
                 <div class="past-statistic-an">
-                    <div class="past-statistic-ctn">
-                        <h3><span class="counter">3,20,000</span></h3>
-                        <p>Page Views</p>
-                    </div>
                     <div class="past-statistic-graph">
                         <div class="stats-bar"></div>
-                    </div>
-                </div>
-                <div class="past-statistic-an">
-                    <div class="past-statistic-ctn">
-                        <h3><span class="counter">1,03,000</span></h3>
-                        <p>Total Clicks</p>
-                    </div>
-                    <div class="past-statistic-graph">
-                        <div class="stats-line"></div>
-                    </div>
-                </div>
-                <div class="past-statistic-an">
-                    <div class="past-statistic-ctn">
-                        <h3><span class="counter">24,00,000</span></h3>
-                        <p>Site Visitors</p>
-                    </div>
-                    <div class="past-statistic-graph">
-                        <div class="stats-bar-2"></div>
                     </div>
                 </div>
             </div>
@@ -409,14 +408,10 @@
     </div>
 </div>
 </div>
-<!-- End Sale Statistic area-->
-<!-- Start Email Statistic area-->
-<!-- <div class="notika-email-post-area"> -->
+
 
 </div>
-<!-- End Email Statistic area-->
-<!-- Start Realtime sts area-->
-<!-- <div class="realtime-statistic-area"> -->
+
 <div class="container">
     <div class="row">
         <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
@@ -425,6 +420,9 @@
                     <div class="curved-ctn row">
                         <div class="col-lg-10">
                             <h2>Số nhân viên hiện tại</h2>
+                            <div id="chartLastDay">
+
+                            </div>
                         </div>
                         <div class="col-lg-2">
                             <div>
@@ -447,6 +445,8 @@
             <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
                 <div class="past-day-statis">
                     <h2>Top 5 thức uống bán chạy nhất</h2>
+
+                    </div>
                 </div>
                 <div class="dash-widget-visits"></div>
                 <div class="past-statistic-an">
@@ -478,125 +478,544 @@
                 </div>
             </div>
         </div>
+    <div class="row">
+        <h1>San pham 7 ngay qua</h1>
+        <div id="char7day">
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <h1>So tien ban dc trong 1 thang</h1>
+        <div id="chart1month">
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <h1>So tien ban dc trong  thang truoc</h1>
+        <div id="chartlastmonth">
+
+        </div>
 
 
     </div>
 </div>
+
 </div>
 <th:block th:replace="/admin/layout/script :: script"/>
-<!-- End Realtime sts area-->
-<!-- Start Footer area-->
-<!-- End Footer area-->
-<!-- jquery
-    ============================================ -->
-<!--<script src="js/vendor/jquery-1.12.4.min.js"></script>-->
-<!--&lt;!&ndash; bootstrap JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/bootstrap.min.js"></script>-->
-<!--&lt;!&ndash; wow JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/wow.min.js"></script>-->
-<!--&lt;!&ndash; price-slider JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/jquery-price-slider.js"></script>-->
-<!--&lt;!&ndash; owl.carousel JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/owl.carousel.min.js"></script>-->
-<!--&lt;!&ndash; scrollUp JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/jquery.scrollUp.min.js"></script>-->
-<!--&lt;!&ndash; meanmenu JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/meanmenu/jquery.meanmenu.js"></script>-->
-<!--&lt;!&ndash; counterup JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/counterup/jquery.counterup.min.js"></script>-->
-<!--<script src="js/counterup/waypoints.min.js"></script>-->
-<!--<script src="js/counterup/counterup-active.js"></script>-->
-<!--&lt;!&ndash; mCustomScrollbar JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>-->
-<!--&lt;!&ndash; jvectormap JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>-->
-<!--<script src="js/jvectormap/jquery-jvectormap-world-mill-en.js"></script>-->
-<!--<script src="js/jvectormap/jvectormap-active.js"></script>-->
-<!--&lt;!&ndash; sparkline JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/sparkline/jquery.sparkline.min.js"></script>-->
-<!--<script src="js/sparkline/sparkline-active.js"></script>-->
-<!--&lt;!&ndash; sparkline JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/flot/jquery.flot.js"></script>-->
-<!--<script src="js/flot/jquery.flot.resize.js"></script>-->
-<!--<script src="js/flot/curvedLines.js"></script>-->
-<!--<script src="js/flot/flot-active.js"></script>-->
-<!--&lt;!&ndash; knob JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/knob/jquery.knob.js"></script>-->
-<!--<script src="js/knob/jquery.appear.js"></script>-->
-<!--<script src="js/knob/knob-active.js"></script>-->
-<!--&lt;!&ndash;  wave JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/wave/waves.min.js"></script>-->
-<!--<script src="js/wave/wave-active.js"></script>-->
-<!--&lt;!&ndash;  todo JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/todo/jquery.todo.js"></script>-->
-<!--&lt;!&ndash; plugins JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/plugins.js"></script>-->
-<!--&lt;!&ndash;  Chat JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/chat/moment.min.js"></script>-->
-<!--<script src="js/chat/jquery.chat.js"></script>-->
-<!--&lt;!&ndash; main JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/main.js"></script>-->
-<!--&lt;!&ndash; tawk chat JS-->
-<!--    ============================================ &ndash;&gt;-->
-<!--<script src="js/tawk-chat.js"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <th:block th:replace="/admin/layout/footer :: footer"/>
-<script>
-    let chartTitle = [];
-    let chartTotal = [];
-    const labels = [
-        'Thứ hai',
-        'Thứ ba',
-        'Thứ tư',
-        'Thứ năm',
-        'Thứ sáu',
-        'Thứ bảy',
-        'Chủ nhật'
-    ];
-
-    const data = {
-        labels: labels,
-        datasets: [{
-            label: 'Top hàng hóa bán nhanh nhất',
-            backgroundColor: 'rgb(0, 255, 0, 0.4)',
-            borderColor: 'rgb(0, 0, 0,1)',
-            data: [],
-            borderWidth: 2
-        }]
-    };
-
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {},
-    };
-</script>
-<script>
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
-
-
-</script>
-
 </body>
+<script>
+    var _seed = 42;
+    Math.random = function () {
+        _seed = _seed * 16807 % 2147483647;
+        return (_seed - 1) / 2147483646;
+    };
 
+    function render() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/order/chart",
+        }).done((data) => {
+            console.log(data)
+            let sl = [];
+            let name = [];
+            $.each(data, (i, item) => {
+                sl.push(item.total);
+                name.push(item.title);
+
+            })
+            console.log(sl)
+            console.log(name)
+            var options = {
+                series: [{
+                    data: sl
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 380
+                },
+                plotOptions: {
+                    bar: {
+                        barHeight: '100%',
+                        distributed: true,
+                        horizontal: true,
+                        dataLabels: {
+                            position: 'bottom'
+                        },
+                    }
+                },
+                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+                    '#f48024', '#69d2e7'
+                ],
+                dataLabels: {
+                    enabled: true,
+                    textAnchor: 'start',
+                    style: {
+                        colors: ['#fff']
+                    },
+                    formatter: function (val, opt) {
+                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    },
+                    offsetX: 0,
+                    dropShadow: {
+                        enabled: true
+                    }
+                },
+                stroke: {
+                    width: 1,
+                    colors: ['#fff']
+                },
+                xaxis: {
+                    categories: name,
+                },
+                yaxis: {
+                    labels: {
+                        show: false
+                    }
+                },
+                title: {
+                    text: 'Hàng hóa bán chạy nhất',
+                    align: 'center',
+                    floating: true
+                },
+                subtitle: {
+                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
+                    align: 'center',
+                },
+                tooltip: {
+                    theme: 'dark',
+                    x: {
+                        show: false
+                    },
+                    y: {
+                        title: {
+                            formatter: function () {
+                                return ''
+                            }
+                        }
+                    }
+                }
+            };
+
+            var myChart = new ApexCharts(document.querySelector("#myChart"), options);
+            myChart.render();
+        })
+    }
+
+    render();
+    // ------------------------
+
+    function totalByDay() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/order/chartByDay",
+        }).done((data) => {
+            console.log(data)
+            let totals = [];
+            let day = [];
+            // let ds = "7";
+            $.each(data, (i, item) => {
+                ds = moment(item.dates).format('L');
+                // console.log("item.dates")
+                // console.log(item.dates)
+
+                totals.push(item.total);
+                // day.push(item.dates);
+                console.log(totals)
+                // console.log(date)
+            })
+                var options = {
+                    series: [{
+                        data: totals
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350
+                    },
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 4,
+                            horizontal: false,
+                        }
+                    },
+                    title: {
+                        text: 'Hàng hóa bán chạy nhất',
+                        align: 'center',
+                        floating: true
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    xaxis: {
+                        categories: [ds],
+                    }
+                };
+                var myChart = new ApexCharts(document.querySelector("#dateInput"), options);
+                myChart.render();
+
+        })
+    }
+    totalByDay();
+    // chart last day
+    function totalLastDay() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/order/chartLastDay",
+        }).done((data) => {
+            console.log(data)
+            let totals = [];
+            let day = [];
+            $.each(data, (i, item) => {
+                ds = moment(item.dates).format('L');
+
+                totals.push(item.total);
+                // day.push(item.dates);
+                console.log(totals)
+                // console.log(date)
+            })
+            var options = {
+                series: [{
+                    data: totals
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 4,
+                        horizontal: false,
+                    }
+                },
+                title: {
+                    text: 'Doanh thu ngày hôm qua',
+                    align: 'center',
+                    floating: true
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                xaxis: {
+                    categories: [ds],
+                }
+            };
+            var myChart = new ApexCharts(document.querySelector("#chartLastDay"), options);
+            myChart.render();
+
+        })
+    }
+    totalLastDay();
+
+    // chart 7 day
+
+    function renderchart7day() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/order/chartLast7Day",
+        }).done((data) => {
+            let sl = [];
+            let ds = [];
+            $.each(data, (i, item) => {
+                // ds = moment(item.dates).format('L');
+                console.log('ds: ', ds)
+
+                ds.push(moment(item.dates).format("L"));
+                sl.push(item.total);
+            })
+            console.log(sl)
+            console.log(name)
+            var options = {
+                series: [{
+                    data: sl,ds
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 450
+                },
+                plotOptions: {
+                    bar: {
+                        barHeight: '100%',
+                        distributed: true,
+                        horizontal: true,
+                        dataLabels: {
+                            position: 'bottom'
+                        },
+                    }
+                },
+                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+                    '#f48024', '#69d2e7'
+                ],
+                dataLabels: {
+                    enabled: true,
+                    textAnchor: 'start',
+                    style: {
+                        colors: ['#0000EE']
+                    },
+                    formatter: function (val, opt) {
+                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    },
+                    offsetX: 0,
+                    dropShadow: {
+                        enabled: false
+                    }
+                },
+                stroke: {
+                    width: 1,
+                    colors: ['#fff']
+                },
+                xaxis: {
+                    categories: [...ds],
+                },
+                yaxis: {
+                    labels: {
+                        show: false,
+                    }
+                },
+                title: {
+                    text: 'Hàng hóa bán chạy nhất',
+                    align: 'center',
+                    floating: true
+                },
+                subtitle: {
+                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
+                    align: 'center',
+                },
+                tooltip: {
+                    theme: 'dark',
+                    x: {
+                        show: false
+                    },
+                    y: {
+                        title: {
+                            formatter: function () {
+                                return ''
+                            }
+                        }
+                    }
+                }
+            };
+
+            var myChart = new ApexCharts(document.querySelector("#char7day"), options);
+            myChart.render();
+        })
+    }
+    renderchart7day();
+
+    // chart this mounth
+    function renderChartMonth() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/order/chartByMonth",
+        }).done((data) => {
+            let sl = [];
+            let ds = [];
+            $.each(data, (i, item) => {
+                // ds = moment(item.dates).format('L');
+                console.log('ds: ', ds)
+
+                ds.push(moment(item.dates).format("L"));
+                sl.push(item.total);
+            })
+            console.log(sl)
+            console.log(name)
+            var options = {
+                series: [{
+                    data: sl
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 700
+                },
+                plotOptions: {
+                    bar: {
+                        barHeight: '100%',
+                        distributed: true,
+                        horizontal: false,
+                        dataLabels: {
+                            position: 'bottom'
+                        },
+                    }
+                },
+                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+                    '#f48024', '#69d2e7'
+                ],
+                dataLabels: {
+                    enabled: false,
+                    textAnchor: 'start',
+                    style: {
+                        colors: ['#0000EE']
+                    },
+                    formatter: function (val, opt) {
+                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    },
+                    offsetX: 0,
+                    dropShadow: {
+                        enabled: false
+                    }
+                },
+                stroke: {
+                    width: 1,
+                    colors: ['#fff']
+                },
+                xaxis: {
+                    categories: [...ds],
+                },
+                yaxis: {
+                    labels: {
+                        show: false,
+                    }
+                },
+                title: {
+                    text: 'Hàng hóa bán chạy nhất',
+                    align: 'center',
+                    floating: true
+                },
+                subtitle: {
+                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
+                    align: 'center',
+                },
+                tooltip: {
+                    theme: 'dark',
+                    x: {
+                        show: false
+                    },
+                    y: {
+                        title: {
+                            formatter: function () {
+                                return ''
+                            }
+                        }
+                    }
+                }
+            };
+
+            var myChart = new ApexCharts(document.querySelector("#chart1month"), options);
+            myChart.render();
+        })
+    }
+    renderChartMonth();
+
+    // chart last mounth
+    function renderChartLastMonth() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: "http://localhost:8080/api/order/chartByLastMonth",
+        }).done((data) => {
+            let sl = [];
+            let ds = [];
+            $.each(data, (i, item) => {
+                // ds = moment(item.dates).format('L');
+                console.log('ds: ', ds)
+
+                ds.push(moment(item.dates).format("L"));
+                sl.push(item.total);
+            })
+            console.log(sl)
+            console.log(name)
+            var options = {
+                series: [{
+                    data: sl
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 700
+                },
+                plotOptions: {
+                    bar: {
+                        barHeight: '100%',
+                        distributed: true,
+                        horizontal: false,
+                        dataLabels: {
+                            position: 'bottom'
+                        },
+                    }
+                },
+                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
+                    '#f48024', '#69d2e7'
+                ],
+                dataLabels: {
+                    enabled: false,
+                    textAnchor: 'start',
+                    style: {
+                        colors: ['#0000EE']
+                    },
+                    formatter: function (val, opt) {
+                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                    },
+                    offsetX: 0,
+                    dropShadow: {
+                        enabled: false
+                    }
+                },
+                stroke: {
+                    width: 1,
+                    colors: ['#fff']
+                },
+                xaxis: {
+                    categories: [...ds],
+                },
+                yaxis: {
+                    labels: {
+                        show: false,
+                    }
+                },
+                title: {
+                    text: 'Hàng hóa bán chạy nhất',
+                    align: 'center',
+                    floating: true
+                },
+                subtitle: {
+                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
+                    align: 'center',
+                },
+                tooltip: {
+                    theme: 'dark',
+                    x: {
+                        show: false
+                    },
+                    y: {
+                        title: {
+                            formatter: function () {
+                                return ''
+                            }
+                        }
+                    }
+                }
+            };
+
+            var myChart = new ApexCharts(document.querySelector("#chartlastmonth"), options);
+            myChart.render();
+        })
+    }
+    renderChartLastMonth();
+</script>
 </html>

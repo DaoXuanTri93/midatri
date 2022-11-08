@@ -12,4 +12,17 @@ public interface IOrderService {
 
     List<Chart> chartBar();
     List<OrderResult> findAllByCreateAt(Date createAt);
+
+    List<Chart> chartDay();
+
+    List<Chart> chartMonth();
+
+    List<Chart> chartLastDay();
+
+    List<Chart> chartLast7Day();
+
+    List<Chart> chartByMonth();
+    List<Chart> chartByLastMonth();
+
+
 }
