@@ -8,6 +8,7 @@ import vn.midatri.repository.model.Item;
 import java.util.List;
 
 public interface ItemService {
+    List<ItemResult> findAll();
 
     List<ItemResult> findAllByDeleted(boolean deleted);
 

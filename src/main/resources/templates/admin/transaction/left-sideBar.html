@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="sidebarTransaction">
+    <link rel="stylesheet" href="/assets/admin/css/style-sidebar.css">
+
+    <div class=" ">
+        <div class="">
+            <div class="">
+                <h3 class="">
+                    Thời Gian
+                </h3>
+                <div class="">
+                   <div>
+                       <select class="form-select" aria-label="Default select example" id="dateReceipt">
+                           <option selected>Hôm Nay</option>
+                           <option value="1">Hôm Qua</option>
+                           <option value="2">Tuần Này</option>
+                           <option value="3">Tuần Trước</option>
+                           <option value="4">7 Ngày Qua</option>
+                       </select>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="/admin/layout/script::script"/>
+
+</th:block>
+
 </html>

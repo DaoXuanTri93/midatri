@@ -26,6 +26,14 @@ public class ItemService implements vn.midatri.service.ItemService {
     private ItemMapper itemMapper;
 
     @Override
+    public List<ItemResult> findAll() {
+        return itemRepository.findAll()
+                .stream()
+                .map(item -> itemMapper.toDTO(item))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<ItemResult> findAllByDeleted(boolean deleted) {
         return itemRepository.findAllByDeleted(deleted)

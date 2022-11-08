@@ -16,8 +16,9 @@
      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <th:block th:replace="/admin/layout/navBar :: navBar"/>
 
-    <div class="row">
-        <div class="col-xs-10 ">
+    <div class="row ">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" >
             <div class="normal-table-list mg-t-30">
                 <div class="basic-tb-hd text-center">
                     <h1>Báo Cáo Ngày</h1>
@@ -27,13 +28,13 @@
 
                 </div>
                 <div class="bsc-tbl-hvr table-responsive ">
-                    <table class="table table-hover table-striped" id="tblReport">
+                    <table class="table table-hover table-striped" id="tblReport" >
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>Thời gian</th>
                             <th>Nhân Viên</th>
-                            <th>Số Lượng</th>
+                            <th style="width: 120px">Số Lượng</th>
                             <th>Doanh thu</th>
                         </tr>
                         </thead>
@@ -47,6 +48,7 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-1"></div>
     </div>
 
     <th:block th:replace="/admin/layout/footer :: footer"/>
@@ -61,82 +63,105 @@
     $("#dateReport").val(`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`)
 
     let getDate = moment($("#dateReport").val()).format('DD-MM-yyyy')
-    console.log(getDate)
     renderDataTableReport();
 
+    function renderShowUser(){
+
+    }
+    renderShowUser();
     function renderDataTableReport() {
-        $('#tblReport').dataTable({
-            ajax: {
-                contentType: 'application/json',
-                url: `http://localhost:8080/api/order?createAt=${getDate}`,
-                type: 'GET',
-
-                dataSrc: ''
+        let userName
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
             },
-            searching: false,
-            columns: [
-                {
-                    data: "id", render: function (id) {
+            type: "GET",
+            url: "http://localhost:8080/api/users/findAll",
+        })
+            .done(function (data){
+                userName=data;
+                $('#tblReport').dataTable({
+                    ajax: {
+                        contentType: 'application/json',
+                        url: `http://localhost:8080/api/order?createAt=${getDate}`,
+                        type: 'GET',
 
-                        return `<td>${"O-" + id}</td>`
-                    }
-                },
-                {
-                    data: "createAt", render: function (createAt) {
-                        return `<td>${moment(createAt).format('h:mm:ss a')}</td>`
+                        dataSrc: ''
+                    },
+                    searching: false,
+                    columns: [
+                        {
+                            data: "id", render: function (id) {
 
-                    }
-                },
-                {data: "userId"},
-                {
-                    data: "totalQuantity"
-                },
-                {
-                    data: "grandTotal", render: function (grandTotal) {
-                        return new Intl.NumberFormat('vi-VN', {
+                                return `<td>${"O-" + id}</td>`
+                            }
+                        },
+                        {
+                            data: "createAt", render: function (createAt) {
+                                return `<td>${moment(createAt).format('h:mm:ss a')}</td>`
+
+                            }
+                        },
+                        {data: "userId",render:function (userId){
+                                for (let i = 0; i < userName.length; i++) {
+                                    if (userId == userName[i].id) {
+                                        return `<td>${userName[i].userName}</td>`
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            data: "totalQuantity"
+                        },
+                        {
+                            data: "grandTotal", render: function (grandTotal) {
+                                return new Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }).format(grandTotal)
+                            }
+                        }
+
+                    ],
+                    columnDefs: [
+                        {
+                            targets: 3,
+                            className: "text-right"
+                        },
+                        {
+                            targets: -1,
+                            className: "text-right"
+                        }
+                    ],
+                    footerCallback:function (row, data, start, end, display){
+                        var api = this.api();
+
+                        // Remove the formatting to get integer data for summation
+                        var intVal = function (i) {
+                            return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                        };
+                        total = api
+                            .column(4)
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        pageTotal = api
+                            .column(4, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        $(api.column(4).footer()).html(new Intl.NumberFormat('vi-VN', {
                             style: 'currency',
                             currency: 'VND'
-                        }).format(grandTotal)
+                        }).format(pageTotal)  );
                     }
-                }
 
-            ],
-            columnDefs: [
-                {
-                    targets: 3,
-                    className: "text-right"
-                },
-                {
-                    targets: -1,
-                    className: "text-right"
-                }
-            ],
-            footerCallback:function (row, data, start, end, display){
-                var api = this.api();
+                })
 
-                // Remove the formatting to get integer data for summation
-                var intVal = function (i) {
-                    return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
-                };
-                total = api
-                    .column(4)
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-                pageTotal = api
-                    .column(4, { page: 'current' })
-                    .data()
-                    .reduce(function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0);
-                $(api.column(4).footer()).html(new Intl.NumberFormat('vi-VN', {
-                        style: 'currency',
-                        currency: 'VND'
-                    }).format(pageTotal)  );
-            }
-
-        })
+            })
 
     }
 $("#dateReport").on('input', function (){

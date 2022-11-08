@@ -31,6 +31,11 @@ public class UserApi {
         List<User> users = userService.findAllByDeleted(false);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+    @GetMapping("/findAll")
+    public ResponseEntity<?> renderAllUser() {
+        List<UserResult> userResults = userService.findAll();
+        return new ResponseEntity<>(userResults, HttpStatus.OK);
+    }
     @GetMapping("/renderBlockUser")
     public ResponseEntity<?> ListDeletedUser() {
         List<User> users = userService.findAllByDeleted(true);

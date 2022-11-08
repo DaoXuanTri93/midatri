@@ -3,6 +3,7 @@ package vn.midatri.mapper;
 import org.springframework.stereotype.Component;
 import vn.midatri.dto.order.OrderParam;
 import vn.midatri.dto.order.OrderResult;
+import vn.midatri.dto.transaction.Information;
 import vn.midatri.repository.model.Order;
 
 
