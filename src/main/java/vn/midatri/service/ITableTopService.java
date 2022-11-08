@@ -1,5 +1,7 @@
 package vn.midatri.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import vn.midatri.dto.tableTop.TableTopRegister;
 import vn.midatri.dto.tableTop.TableTopResult;
 import vn.midatri.repository.model.TableTop;
@@ -25,4 +27,6 @@ public interface ITableTopService {
     TableTop findById(Long id);
 
     TableTopResult update(TableTop tableTop);
+
+    Page<TableTop> findAllpt(Pageable pageable);
 }

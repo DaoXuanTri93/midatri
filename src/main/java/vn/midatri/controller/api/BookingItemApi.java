@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.midatri.dto.bookingItem.BookingIitemKitChen;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
 import vn.midatri.dto.bookingItem.BookingItemUpdateStatus;
@@ -27,7 +28,7 @@ public class BookingItemApi {
     BookingItemRepository bookingItemRepository;
     @GetMapping("/findAll")
     public ResponseEntity<?> findAllBookingItem() {
-        List<BookingItemResult> bookingItems = bookingItemService.findAll();
+        List<BookingIitemKitChen> bookingItems = bookingItemService.findAllJoinTable();
         return new ResponseEntity<>(bookingItems, HttpStatus.OK);
     }
 
@@ -82,6 +83,11 @@ public class BookingItemApi {
     @PostMapping("/updateStatusCooking/{id}")
     public ResponseEntity<String> updateStatusCooking(@PathVariable Long id) {
         bookingItemService.updateStatus(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping("/removeItem/{id}")
+    public ResponseEntity<String> removeItem(@PathVariable Long id) {
+        bookingItemService.removeItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

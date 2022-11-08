@@ -13,13 +13,10 @@ import vn.midatri.dto.tableTop.TableTopResult;
 import vn.midatri.repository.model.TableTop;
 import vn.midatri.repository.model.TabletopStatus;
 import vn.midatri.service.ITableTopService;
-import vn.midatri.util.AppUtils;
 
 import java.util.List;
-import java.util.Optional;
 
 import static vn.midatri.repository.model.TabletopStatus.ACTIVE;
-import static vn.midatri.repository.model.TabletopStatus.AVAILABLE;
 
 @RestController
 @RequestMapping("/api/table-top")
@@ -96,4 +93,10 @@ public class TableTopApi {
         }
     }
 
+//    @GetMapping("/page")
+//    public ResponseEntity<?> findAllPt(int page) {
+//       Pageable pageable= PageRequest.of(page, 24);
+//        Page<TableTop> tableTops = tableTopService.findAllpt(pageable);
+//        return new ResponseEntity<>(tableTops, HttpStatus.OK);
+//    }
 }

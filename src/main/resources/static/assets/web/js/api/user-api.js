@@ -13,6 +13,7 @@ function UserAPI() {
                 fail(jqXHR);
             })
     }
+
     this.create = (data, done, fail) => {
         $.ajax({
             url: `${location.origin}/api/users/create`,

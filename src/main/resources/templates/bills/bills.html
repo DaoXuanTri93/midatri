@@ -15,6 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="/toast/iziToast.min.css">
+    <link rel="stylesheet" href="/assets/order/pos-item-bar.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
             integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
             crossorigin="anonymous"></script>
@@ -29,8 +30,8 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT">
     <meta http-equiv="pragma" content="no-cache">
 
-
     <link rel="stylesheet" href="/assets/order/pos.css">
+    <link rel="stylesheet" href="/assets/order/pos-new.css">
 </head>
 
 <body>
@@ -67,7 +68,7 @@
                                             <li>
                                                 <a class="dropdown-item " href="/orders">
                                                     <i class="fa-regular fa-calendar-check"></i>
-                                                    Lễ Tân</a>
+                                                    Thu Ngân</a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item my-3" href="#">
@@ -162,6 +163,29 @@
         </kv-cashier-page>
     </div>
 </kv-root>
+<div id="spinner-div" class="pt-5">
+    <div class="spinner-border text-primary" role="status">
+    </div>
+</div>
+<div class="container" id="duyNat">
+    <div class="row mt-2">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="text-center text-primary">Ajax spinner whilst loading</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-success my-2" id="do-call">Load the message</button>
+                        </div>
+                        <div class="col-6 mt-2">
+                            <p id="message_string">The message is:</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -169,7 +193,7 @@
 <script defer type="module" src="/assets/web/js/api/api.js"></script>
 <script defer src="/assets/order/style.js"></script>
 <script defer src="/assets/order/pos-new.js"></script>
-<script defer src="/assets/order/pos-item-Bar.js"></script>
+<script defer src="/assets/order/pos-item-bar.js"></script>
 <script defer src="/js/App.js"></script>
 <script defer src="/toast/iziToast.min.js"></script>
 <script defer src="/sweet_alert/sweetalert.min.js"></script>

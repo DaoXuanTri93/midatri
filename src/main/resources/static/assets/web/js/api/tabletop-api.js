@@ -29,6 +29,20 @@ function TabletopAPI() {
                 fail(jqXHR);
             })
     }
+
+    this.findAllPage = (numberPage, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/table-top/page?page=${numberPage}`,
+            type: "GET",
+            contentType: 'application/json'
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
 }
 
 

@@ -1,3 +1,4 @@
+
 export const userAPI=new UserAPI();
 function UserAPI() {
     this.findAll = (done, fail) => {
