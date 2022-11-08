@@ -21,4 +21,10 @@ public class OrderController {
         modelAndView.setViewName("/bills/bills");
         return modelAndView;
     }
+    @GetMapping("/billThanhToan")
+    public ModelAndView billThanhToan(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/order/billsThanhToan");
+        return modelAndView;
+    }
 }

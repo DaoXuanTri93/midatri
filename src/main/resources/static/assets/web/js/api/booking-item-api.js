@@ -115,6 +115,13 @@ function BookingItemAPI() {
             })
             .fail((jqXHR) => {
                 fail(jqXHR);
+                iziToast.warning(
+                    {
+                        timeout: 2000,
+                        position: 'center',
+                        title: 'Nhắc Nhở',
+                        message: jqXHR.responseJSON.message
+                    });
             })
     }
     this.removeBookingItemByBooking = (bookingId, done, fail) => {
@@ -161,6 +168,19 @@ function BookingItemAPI() {
     this.updateStatusCooking = (bookingItemId, done, fail) => {
         $.ajax({
             url: `${location.origin}/api/bookingItem/updateStatusCooking/${bookingItemId}`,
+            type: "POST",
+            contentType: 'application/json'
+        })
+            .done((data) => {
+                done(data);
+            })
+            .fail((jqXHR) => {
+                fail(jqXHR);
+            })
+    }
+    this.updateStatusCooking = (bookingItemId, done, fail) => {
+        $.ajax({
+            url: `${location.origin}/api/bookingItem/removeItem/${bookingItemId}`,
             type: "POST",
             contentType: 'application/json'
         })

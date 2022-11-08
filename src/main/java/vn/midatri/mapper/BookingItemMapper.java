@@ -3,6 +3,7 @@ package vn.midatri.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import vn.midatri.dto.bookingItem.BookingIitemKitChen;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
 import vn.midatri.dto.bookingItem.BookingItemUpdateStatus;
@@ -39,5 +40,15 @@ public class BookingItemMapper {
         return new BookingItem()
                 .setId(bookingItemUpdateStatus.getId())
                 .setStatus(bookingItemUpdateStatus.getStatus());
+    }
+
+    public BookingIitemKitChen toDTOkitchen(BookingItem bookingItem){
+        return new BookingIitemKitChen()
+                .setId(bookingItem.getId())
+                .setItemId(bookingItem.getItemId())
+                .setQuantity(bookingItem.getQuantity())
+                .setStatus(bookingItem.getStatus())
+                .setTableTopTitle(bookingItem.getBooking().getTableTop().getTitle())
+                .setCreateAt(bookingItem.getCreateAt());
     }
 }

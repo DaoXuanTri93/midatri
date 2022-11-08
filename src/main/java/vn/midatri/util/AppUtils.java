@@ -11,13 +11,12 @@ import java.util.Map;
 
 public class AppUtils {
 
-    public static ResponseEntity<?> mapError(BindingResult bindingResult){
+    public static ResponseEntity<?> mapError(BindingResult bindingResult) {
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         Map<String, String> errors = new HashMap<>();
-        for (FieldError fieldError : fieldErrors){
-            errors.put(fieldError.getField() , fieldError.getDefaultMessage());
+        for (FieldError fieldError : fieldErrors) {
+            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
-        System.out.println(errors);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

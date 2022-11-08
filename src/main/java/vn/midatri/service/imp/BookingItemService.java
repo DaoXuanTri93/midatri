@@ -4,6 +4,7 @@ package vn.midatri.service.imp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.midatri.dto.bookingItem.BookingIitemKitChen;
 import vn.midatri.dto.bookingItem.BookingItemCreate;
 import vn.midatri.dto.bookingItem.BookingItemResult;
 import vn.midatri.dto.bookingItem.BookingItemUpdateStatus;
@@ -50,6 +51,12 @@ public class BookingItemService implements IBookingItemService {
                 .stream()
                 .map(bookingItem -> bookingItemMapper.toDTO(bookingItem))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookingIitemKitChen> findAllJoinTable() {
+        return bookingItemRepository.findAllJoinTable();
+
     }
 
     @Override
@@ -112,7 +119,7 @@ public class BookingItemService implements IBookingItemService {
     public BookingItemResult findById(Long id) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
         if (bookingItemOptional.isEmpty()) {
-            throw new NotFoundException("khong tim thay ID : " + id);
+            throw new NotFoundException("Không tìm thấy ID : " + id);
         }
         BookingItem bookingItem = bookingItemOptional.get();
         return bookingItemMapper.toDTO(bookingItem);
@@ -121,6 +128,11 @@ public class BookingItemService implements IBookingItemService {
     @Override
     @Transactional
     public void deletedBookingItem(Long id) {
+        Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
+        if (bookingItemOptional.isEmpty()){
+            throw new NotFoundException("Không tìm thấy ID : " + id);
+        }
+
         bookingItemRepository.deleteById(id);
     }
 
@@ -197,6 +209,18 @@ public class BookingItemService implements IBookingItemService {
             bookingItem.setStatus(COOKED);
             bookingItemRepository.save(bookingItem);
         }
+    }
+
+    @Override
+    public void removeItem(long id) {
+        Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
+        if (bookingItemOptional.isEmpty()) {
+            throw new NotFoundException("not found");
+        }
+        BookingItem bookingItem = bookingItemOptional.get();
+        bookingItem.setId(id);
+        bookingItem.setStatus(NEW);
+        bookingItemRepository.save(bookingItem);
     }
 
     @Override

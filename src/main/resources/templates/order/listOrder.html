@@ -2,11 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Chi nhánh trung tâm - Thu ngân</title>
+    <title class="noPrint">Chi nhánh trung tâm - Thu ngân</title>
     <!--<base href="./">-->
     <base href=".">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/toast/iziToast.min.css">
+    <link rel="stylesheet" href="/assets/order/pos.css">
+    <link rel="stylesheet" href="/assets/order/pos-new.css">
     <link rel="icon" type="image/x-icon" href="https://cdn-pos.kiotviet.vn/kiotvietpos/fnb/static2/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -19,7 +21,6 @@
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
             crossorigin="anonymous"></script>
     <!-- No Cache index -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <meta http-equiv="cache-control" content="max-age=0">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
@@ -29,7 +30,7 @@
     <link rel="stylesheet" href="/assets/order/pos-new.css">
 </head>
 <body>
-<kv-root>
+<kv-root class="noPrint">
     <div class="fnb-app">
         <router-outlet></router-outlet>
         <kv-cashier-page>
@@ -51,29 +52,29 @@
                                             class="fa-solid fa-plate-utensils"></i> Thực đơn </a></li>
                                 </ul>
                             </div>
-                            <div class="search-wrapper">
-                                <div class="search-content">
-                                    <kv-product-search class="kv-product-search">
-                                        <div class="wrap-auto-complete not-electronic">
-                                            <kv-auto-complete _ngcontent-wfy-c1>
-                                                <div class="autocomplete">
-                                                    <i class="fa-regular fa-magnifying-glass"></i><input
-                                                        class="form-control" kvselecttext="" type="text"
-                                                        id="productSearchInput"
-                                                        placeholder="Tìm món (F3)">
-                                                    <div class="output-complete" hidden="">
-                                                        <ul>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </kv-auto-complete>
-                                        </div>
-                                        <a class="btn-icon sale-mode active" id="saleMode_productSearchInput"
-                                           title="Bấm để chuyển sang chế độ nhập thường"><i
-                                                class="fas fa-bolt-lightning"></i></a>
-                                    </kv-product-search>
-                                </div>
-                            </div>
+<!--                            <div class="search-wrapper">-->
+<!--                                <div class="search-content">-->
+<!--                                    <kv-product-search class="kv-product-search">-->
+<!--                                        <div class="wrap-auto-complete not-electronic">-->
+<!--                                            <kv-auto-complete _ngcontent-wfy-c1>-->
+<!--                                                <div class="autocomplete">-->
+<!--                                                    <i class="fa-regular fa-magnifying-glass"></i><input-->
+<!--                                                        class="form-control" kvselecttext="" type="text"-->
+<!--                                                        id="productSearchInput"-->
+<!--                                                        placeholder="Tìm món (F3)">-->
+<!--                                                    <div class="output-complete" hidden="">-->
+<!--                                                        <ul>-->
+<!--                                                        </ul>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </kv-auto-complete>-->
+<!--                                        </div>-->
+<!--                                        <a class="btn-icon sale-mode active" id="saleMode_productSearchInput"-->
+<!--                                           title="Bấm để chuyển sang chế độ nhập thường"><i-->
+<!--                                                class="fas fa-bolt-lightning"></i></a>-->
+<!--                                    </kv-product-search>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                         <div class="header-right">
                             <kv-cashier-cart-tabs>
@@ -133,109 +134,13 @@
                 <div class="wrap-content">
                     <div class="col-left col-table" id="col-table-left">
                         <kv-cashier-table-container class="cashier-table">
-                            <div class="list-filter">
-                                <div class="swiper-category">
-                                    <div class="table-groups-container swiper-container">
-                                        <div class="table-groups-wrapper swiper-wrapper">
-                                            <div class="table-group-item swiper-slide"><a class="btn btn-primary"> Tất
-                                                cả
-                                            </a>
-                                            </div>
-                                            <div class="table-group-item swiper-slide"><a class="btn btn-text-gray"> Lầu
-                                                2
-                                            </a>
-                                            </div>
-                                            <div class="table-group-item swiper-slide"><a class="btn btn-text-gray"> Lầu
-                                                3
-                                            </a>
-                                            </div>
-                                            <div class="table-group-item swiper-slide"><a class="btn btn-text-gray">
-                                                Phòng
-                                                VIP </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <kv-cashier-table-list>
-                                <div class="table-actions">
-                                    <div class="form-group">
-                                        <div class="form-control-static"><label class="radio-inline"><input
-                                                name="tableStateFilter"
-                                                type="radio" class="ng-untouched ng-pristine ng-valid"><span>Tất cả
-                                       (32)</span></label><label class="radio-inline"><input name="tableStateFilter"
-                                                                                             type="radio"
-                                                                                             class="ng-untouched ng-pristine ng-valid"><span>Sử dụng
-                                       (2)</span></label><label class="radio-inline"><input name="tableStateFilter"
-                                                                                            type="radio"
-                                                                                            class="ng-untouched ng-pristine ng-valid"><span>Còn trống
-                                       (30)</span></label>
-                                        </div>
-                                        <div class="search-autocomplete search-table" title="Tìm phòng bàn">
-                                            <kv-auto-complete>
-                                                <div class="autocomplete">
-                                                    <i class="fa-regular fa-magnifying-glass"></i><input
-                                                        class="form-control" kvselecttext="" type="text"
-                                                        id="searchTableAndRoomInput"
-                                                        placeholder="Tìm phòng bàn (F2)">
-                                                    <div class="output-complete" hidden="">
-                                                        <ul>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </kv-auto-complete>
-                                            <button class="btn btn-sm btn-light btn-icon-only" title="Ẩn tìm kiếm"><i
-                                                    class="fa-regular fa-xmark"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-list product-list">
+                                <div class="table-list product-list mt-5">
                                     <div class="swiper-container swiper-container-initialized swiper-container-horizontal">
                                         <div class="swiper-wrapper" style="transition-duration: 0ms;">
                                             <div class="swiper-slide swiper-slide-active" style="width: 100%;">
                                                 <ul tabindex="0" id="render-table">
-                                                    <li class="tableAndRoom selected-parent take-away-lk"
-                                                        style="text-align: center;"
-                                                        tabindex="1" id="-3">
-                                                        <div class="tableroom-actions"></div>
-                                                        <a container="body" placement="right top"
-                                                           class="selected take-away-lk">
-                                                            <div class="take-away">
-                                                                <span><i class="mask mask-takeaway"></i> </span>
-                                                            </div>
-                                                            <div class="product-info">
-                                                                <span class="product-name"> Mang về </span>
-                                                                <div class="wrap-note" href="javascript:void(0)">
-                                                                    <label>
-                                                                        <button class="btn-icon">
-                                                                            <span class="note-hint note-hint-input">Nhập ghi chú...</span>
-                                                                        </button>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li class="tableAndRoom delivery-lk" style="text-align: center;"
-                                                        tabindex="1" id="-1">
-                                                        <div class="tableroom-actions">
-                                                        </div>
-                                                        <a container="body" placement="right top" class="delivery-lk">
-                                                            <div class="delivery"><span>
-                                                      <i class="mask mask-deliverynew"></i>
-                                                      </span>
-                                                            </div>
-                                                            <div class="product-info">
-                                                                <span class="product-name"> Giao đi </span>
-                                                                <div class="wrap-note" href="javascript:void(0)"><label>
-                                                                    <button class="btn-icon">
-                                                         <span class="note-hint note-hint-input">Nhập ghi
-                                                         chú...</span>
-                                                                    </button>
-                                                                </label>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                         </div>
@@ -243,22 +148,6 @@
                                               aria-atomic="true"></span>
                                     </div>
                                     <div class="hidden-item"></div>
-                                    <div class="table-actions swiper-bottom">
-                                        <div class="form-inline">
-                                            <div class="form-group"><label class="checkbox-inline"><input
-                                                    type="checkbox"
-                                                    class="ng-untouched ng-pristine ng-valid"><span >Mở thực
-                                          đơn khi chọn bàn</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-paging">
-                                        <button class="btn-icon btn-icon-min move-prev" disabled=""><i
-                                                class="fa-regular fa-chevron-left"></i></button>
-                                        <strong>1 </strong> /2
-                                        <button class="btn-icon btn-icon-min move-next"><i
-                                                class="fa-regular fa-chevron-right"></i></button>
-                                    </div>
                                 </div>
                             </kv-cashier-table-list>
                         </kv-cashier-table-container>
@@ -272,9 +161,9 @@
                                             <div class="swiper-container product-category-container-parent">
                                                 <div class="product-category-wrapper swiper-wrapper"
                                                      id="renderCategory">
-                                                    <div class="swiper-slide product-category-item-parent"
+                                                    <div class="swiper-slide product-category-item-parent render-category" id="TATCA"
                                                     >
-                                                        <a class="btn btn-Primary TATCA">TAT CA</a>
+                                                        <a class="btn btn-primary ">Tất Cả</a>
                                                     </div>
                                                 </div>
                                                 <div class="product-category-wrapper swiper-wrapper">
@@ -555,6 +444,7 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
                                         id="payAllMoney"
+
                                 ><i
                                         class="fa-regular fa-circle-dollar"></i>Thanh toán (F9)
                                 </button>
@@ -606,8 +496,8 @@
     </div>
 </kv-root>
 <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
-<div class="cashier-payment d-none" id="paypal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <kv-pull-over _nghost-koq-c10="">
+<div class="cashier-payment noPrint d-none" id="paypal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <kv-pull-over >
         <div class="float-nav right">
             <div class="float-nav-content">
                 <button class="float-nav-close">
@@ -644,132 +534,106 @@
                                     
                                 </kv-cashier-cart-temp-info>
                             </div>
-                            <div class="right-payment">
-                                
-                                <kv-cashier-payment-order class="cashier-payment-order" _nghost-koq-c31="">
-                                    
-                                    <div class="wraper-payment-content">
-                                        <div class="payment-component-child">
-                                            <div class="form-group payment-header"><span
-                                                    class="k-widget k-datetimepicker" style=""><span
-                                                    class="k-picker-wrap k-state-disabled"><input
-                                                    kvkendodatetimepicker="" type="text" data-role="datetimepicker"
-                                                    class="k-input" role="combobox" aria-expanded="false"
-                                                    autocomplete="off" disabled="disabled" aria-disabled="true"
-                                                    id="getDateCurrent"
-                                                    placeholder="20/10/2022 09:36" style="width: 100%;"><span
-                                                    unselectable="on" class="k-select"><span class="k-link k-link-date"
-                                                                                             aria-label="Open the date view"><span
-                                                    unselectable="on" class="k-icon k-i-calendar"></span></span><span
-                                                    class="k-link k-link-time" aria-label="Open the time view"><span
-                                                    unselectable="on"
-                                                    class="k-icon k-i-clock"></span></span></span></span></span></div>
-                                            <div class="form-group">
-                                                <div class="form-label control-label">
-                                                    Tổng tiền hàng :<span class="badge"></span>
-                                                </div>
-                                                <div class="form-output form-control-static" id="totalGrand">
-                                                    0
-                                                </div>
-                                            </div>
-                                            <div class="form-group form-discount">
-                                                <label class="form-label control-label">
-                                                    Giảm giá :
-                                                </label>
-                                                <div class="form-output">
-                                                    <div class="popup-anchor">
-                                                        <input id="priceSale" class="form-control form-control-sm"
-                                                               outsideclick="true" placement="left" value="0"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="form-label control-label" >
-                                                    <strong >Khách cần trả</strong>
-                                                </label>
-                                                <div class="form-output form-control-static text-hightlight"
-                                                     id="customerPay">
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-group">
+                               <div class="right-payment">
+
+                                   <kv-cashier-payment-order class="cashier-payment-order" _nghost-koq-c31="">
+
+                                       <div class="wraper-payment-content">
+                                           <div class="payment-component-child">
+                                               <div class="form-group payment-header"><span
+                                                       class="k-widget k-datetimepicker" style=""><span
+                                                       class="k-picker-wrap k-state-disabled"><input
+                                                       kvkendodatetimepicker="" type="text" data-role="datetimepicker"
+                                                       class="k-input" role="combobox" aria-expanded="false"
+                                                       autocomplete="off" disabled="disabled" aria-disabled="true"
+                                                       id="getDateCurrent"
+                                                       placeholder="20/10/2022 09:36" style="width: 100%;"><span
+                                                       unselectable="on" class="k-select"><span class="k-link k-link-date"
+                                                                                                aria-label="Open the date view"><span
+                                                       unselectable="on" class="k-icon k-i-calendar"></span></span><span
+                                                       class="k-link k-link-time" aria-label="Open the time view"><span
+                                                       unselectable="on"
+                                                       class="k-icon k-i-clock"></span></span></span></span></span></div>
+                                               <div class="form-group">
+                                                   <div class="form-label control-label">
+                                                       Tổng tiền hàng :<span class="badge"></span>
+                                                   </div>
+                                                   <div class="form-output form-control-static" id="totalGrand">
+                                                       0
+                                                   </div>
+                                               </div>
+                                               <div class="form-group form-discount">
+                                                   <label class="form-label control-label">
+                                                       Giảm giá :
+                                                   </label>
+                                                   <div class="form-output">
+                                                       <div class="popup-anchor">
+                                                           <input id="priceSale" class="form-control form-control-sm"
+                                                                  outsideclick="true"
+                                                                  type="number"
+                                                                  placement="left" value="0"/>
+                                                       </div>
+                                                   </div>
+                                               </div>
+
+                                               <div class="form-group">
+                                                   <label class="form-label control-label" >
+                                                       <strong >Khách cần trả</strong>
+                                                   </label>
+                                                   <div class="form-output form-control-static text-hightlight"
+                                                        id="customerPay">
+                                                   </div>
+                                               </div>
+
+                                               <div class="form-group">
                                           <span class="form-label control-label has-icon" >
                                              <span >Khách thanh toán (F8)</span><button
-                                                  class="btn-icon"><i class="fa fa-credit-card"></i></button>
+                                                  class="btn-icon"></button>
                                           </span>
-                                                <div class="form-output">
-                                                    <input
-                                                        class="form-control form-control-sm payingAmt ng-pristine ng-valid ng-touched"
-                                                        id="payingAmountTxt" value="" maxlength="12" type="number">
-                                                </div>
-                                            </div>
-                                            
-                                            <kv-cashier-payment-order-method _nghost-koq-c33="">
-                                                
-                                                <div class="form-control-static"><label class="radio-inline"><input
-                                                        name="paymentMethod" type="radio"
-                                                        class="ng-untouched ng-pristine ng-valid"><span >Tiền mặt</span></label><label
-                                                        class="radio-inline"><input name="paymentMethod" type="radio"
-                                                                                    class="ng-untouched ng-pristine ng-valid"><span
-                                                        >Thẻ</span></label><label
-                                                        class="radio-inline"><input name="paymentMethod" type="radio"
-                                                                                    class="ng-untouched ng-pristine ng-valid"><span
-                                                        >Chuyển khoản</span></label></div>
-                                            </kv-cashier-payment-order-method>
-                                            
-                                            <div class="suggest-money form-group">
-                                                
-                                                <button class="btn btn-white" tabindex="-1" type="button"> 125,000
-                                                </button>
-                                                <button class="btn btn-white" tabindex="-1" type="button"> 126,000
-                                                </button>
-                                                <button class="btn btn-white" tabindex="-1" type="button"> 130,000
-                                                </button>
-                                                <button class="btn btn-white" tabindex="-1" type="button"> 140,000
-                                                </button>
-                                                <button class="btn btn-white" tabindex="-1" type="button"> 150,000
-                                                </button>
-                                                <button class="btn btn-white" tabindex="-1" type="button"> 200,000
-                                                </button>
-                                                <button class="btn btn-white" tabindex="-1" type="button"> 500,000
-                                                </button>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="payment-refun payment-component-child">
-                                            <div class="form-group">
-                                                
-                                                <div class="form-label control-label pay-customer" > Tiền
-                                                    thừa trả khách
-                                                </div>
-                                                
-                                                <div class="form-output form-control-static"
-                                                     id="moneySuperfluous"></div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    
-                                </kv-cashier-payment-order>
-                                
-                                <div class="float-nav-footer">
-                                    
-                                    <button class="btn btn-lg btn-success"
-                                            id="payAllOffClick"
-                                            onclick="cancelPay()"
-                                            type="button">
-                                        <i class="fas fa-dollar-sign"></i>
-                                        Hủy thanh toán
-                                    </button>
-                                    <button class="btn btn-lg btn-success"
-                                            id="payAllClick"
-                                            type="button">
-                                        <i class="fas fa-dollar-sign"></i>
-                                        Thanh toán
-                                    </button>
-                                </div>
-                            </div>
+                                                   <div class="form-output">
+                                                       <input
+                                                               class="form-control form-control-sm payingAmt ng-pristine ng-valid ng-touched"
+                                                               id="payingAmountTxt" name="payingAmountTxt" value="" maxlength="12" type="number">
+                                                   </div>
+                                               </div>
+
+
+                                           </div>
+
+                                           <div class="payment-refun payment-component-child">
+                                               <div class="form-group">
+
+                                                   <div class="form-label control-label pay-customer" > Tiền
+                                                       thừa trả khách
+                                                   </div>
+
+                                                   <div class="form-output form-control-static"
+                                                        id="moneySuperfluous"></div>
+                                               </div>
+
+                                           </div>
+                                       </div>
+
+                                   </kv-cashier-payment-order>
+
+                                   <div class="float-nav-footer">
+
+                                       <button class="btn btn-lg btn-success noPrint"
+                                               id="payAllOffClick"
+                                               onclick="cancelPay()"
+                                               type="button">
+                                           <i class="fas fa-dollar-sign"></i>
+                                           Hủy thanh toán
+                                       </button>
+                                       <button class="btn btn-lg btn-success noPrint"
+                                               id="payAllClick" type="button" >
+<!--                                           onclick="handleBillsPrint()"-->
+
+                                           <i class="fas fa-dollar-sign"></i>
+                                           Thanh toán
+                                       </button>
+                                   </div>
+                               </div>
                         </div>
                     </div>
                 </kv-cashier-payment>
@@ -779,6 +643,58 @@
     </kv-pull-over>
 </div>
 
+<div class="container print d-none" id="showPrint">
+    <div class="text-center mt-3">Cà Phê MIDATRI
+        <div class="my-3">Địa chỉ : Số 28 Nguyễn Thái Học</div>
+        <div class="fw-bold">Điện thoại: 1900 6522</div>
+    </div>
+
+    <div class="text-center mt-2 fw-bold" ><h1>HÓA ĐƠN BÁN HÀNG</h1></div>
+    <div class="row mt-4">
+        <div class="col-6">
+            <div id="timeBills" class="fw-bold">Ngày bán: <span></span> </div>
+            <div id="userBills" class="my-3 fw-bold">Người bán: <span></span></div>
+            <div id="timeInput" class="fw-bold">Thời gian vào : <span></span></div>
+        </div>
+        <div class="col-6">
+            <div id="customerBills" class="text-end fw-bold ">Khách hàng: <span></span></div>
+            <div id="timeSendBills" class="text-end fw-bold my-3">Thời gian ra : <span></span></div>
+        </div>
+    </div>
+
+    <div class="border-bottom my-3"></div>
+    <div class="row">
+        <table  class="" id="renderBills">
+            <thead >
+            <tr>
+                <th class="text-start">Tên Sản Phẩm</th>
+                <th  class="text-end">Số Lượng</th>
+                <th  class="text-end">Giá</th>
+                <th  class="text-end">Thành tiền (đ)</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot >
+            <tr class="text-end">
+                <td colspan="3" class="fw-bold">Tổng tiền hàng:</td>
+                <td id="totalBills"></td>
+            </tr>
+            <tr class="text-end" >
+                <td colspan="3" class="fw-bold" >Giảm giá:</td>
+                <td id="discountBills"></td>
+            </tr>
+            <tr class="text-end" >
+                <td colspan="3" class="fw-bold">Tổng cộng:</td>
+                <td id="totalAmountBills"></td>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+    <div class="text-center mt-3 fst-italic">Cảm ơn quý khách hẹn gặp lại !</div>
+</div>
 <!--bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-->
 <modal-container
         class="modal fade in d-none"
@@ -1034,69 +950,50 @@
     </div>
 </modal-container>
 <!--modallllllllllllllllllllllllllllllllllllllllllllllllllllllllll bills-->
-<div id="spinner-div" class="pt-5">
-    <div class="spinner-border text-primary" role="status">
-    </div>
-</div>
-<div class="container">
-    <div class="row mt-2">
-        <div class="col-12">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3 class="text-center text-primary">Ajax spinner whilst loading</h3>
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-success my-2" id="do-call">Load the message</button>
-                        </div>
-                        <div class="col-6 mt-2">
-                            <p id="message_string">The message is:</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div id="spinner-div" class="pt-5 d-none">-->
+<!--    <div class="spinner-border text-primary" role="status">-->
+<!--    </div>-->
+<!--</div>-->
 <th:block th:replace="/order/modalSaveCustomer :: saveCustomer"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
 <script defer src="/assets/admin/js/bootstrap.bundle.js"></script>
 <script defer type="module" src="/assets/web/js/api/api.js"></script>
 <script defer src="/assets/order/style.js"></script>
 <script defer src="/assets/order/pos-new.js"></script>
-<script defer src="/assets/order/pos-item-Bar.js"></script>
+<script defer src="/assets/order/pos.js"></script>
+<script defer src="/assets/order/pos-item-bar.js"></script>
 <script defer src="/js/App.js"></script>
 <script defer src="/toast/iziToast.min.js"></script>
 <script defer src="/sweet_alert/sweetalert.min.js"></script>
 <script defer src="/moments/moment.min.js"></script>
-
-<!--<script defer src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>-->
-
+<script src="/jquery-validation/dist/jquery.validate.min.js"></script>
 <script>
     $('#link-menu').click(function () {
-
         $('#col-table-left').addClass("d-none")
         $('#link-menu').addClass('active')
         $('#link-table').removeClass('active')
         $('#col-menu').removeClass("d-none")
     });
-    $('#link-table').click(function () {
 
+    $('#link-table').click(function () {
         $('#col-table-left').removeClass("d-none")
         $('#link-table').addClass('active')
         $('#link-menu').removeClass('active')
         $('#col-menu').addClass("d-none")
     });
 
-    // let grandTotal = document.getElementById("totalGrand");
-    //
-    // grandTotal.addEventListener("input", function () {
-    //     let totalValue = document.querySelector("#total").value();
-    //
-    //     let grandTotal = $('#payingAmountTxt').val() - totalValue;
-    //
-    //     $("#customerPay").text(grandTotal) ;
+    // $("#formDemo").validate({
+    //     rules:{
+    //         payingAmountTxt : {
+    //             required : true,
+    //             min : 0
+    //         }
+    //     },
+    //     messages : {
+    //         payingAmountTxt: 'Nhập số dương.'
+    //     }
     // })
-
 </script>
 </body>
 </html>
