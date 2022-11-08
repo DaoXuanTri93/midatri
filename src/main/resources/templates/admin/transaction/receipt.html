@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <th:block th:replace="/admin/layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Hóa Đơn</title>
+</head>
+
+<body>
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
+    </div>
+</div>
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="/admin/layout/navBar :: navBar"/>
+
+
+    <!-- ============================================================== -->
+    <!--Primary Content-->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="data-table-area ">
+            <div class="container-fluid">
+                <div class="row col-2" style="float:left">
+                   <th:block th:replace="/admin/transaction/left-sideBar :: sidebarTransaction"/>
+                </div>
+                <div class="row col-9">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="data-table-list">
+                            <div class="row">
+                                <div class="basic-tb-hd">
+                                    <h1>Hóa Đơn</h1>
+                                </div>
+
+                                <div class="col mb-2">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-outline-success order ">
+                                            <i class="fa fa-plus-square"></i>
+                                            Nhận Gọi Món
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive ">
+                                <table id="tblTransaction" class="table table-striped tb-padding-xs">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="fw-bold fs-6">Mã Hóa Đơn</th>
+                                        <th scope="col" class="fw-bold fs-6">Thời Gian</th>
+                                        <th scope="col" class="fw-bold fs-6">Khách Hàng</th>
+                                        <th scope="col" class="fw-bold fs-6">Tổng Tiền Hàng</th>
+                                        <th scope="col" class="fw-bold fs-6">Khách Đã Trả</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Page-->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <th:block th:replace="/admin/layout/footer :: footer"/>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+<th:block th:replace="/admin/layout/script::script"/>
+<script>
+    $('button.order').on('click', function () {
+        window.location.href = "/orders"
+    })
+    let dateReceipt = new Date();
+    let day = dateReceipt.getDate();
+    let oldDay=(dateReceipt.getDate())-1;
+    let month= (dateReceipt.getMonth())+1;
+    let oldmonth=dateReceipt.getMonth();
+    let year=dateReceipt.getFullYear();
+    let toDay =`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`;
+    let yesterday=`${year}-${month}-${oldDay<10 ? `0${oldDay}`:`${oldDay}`}`
+    let lastMonth = `${year}-${oldmonth}-${oldDay<10 ? `0${oldDay}`:`${oldDay}`}`
+    let getToDay = moment(toDay).format('DD-MM-yyyy');
+    let getYesterday=moment(yesterday).format('DD-MM-yyyy');
+    let getLastMonth =moment(lastMonth).format('DD-MM-yyyy');
+    function renderReceipt(){
+      $.ajax({
+          headers: {
+              "Accept": "application/json",
+              "Content-type": "application/json"
+          },
+          type: "GET",
+          url: `http://localhost:8080/api/order?createAt=${getToDay}`,
+      })
+          .done((data)=>{
+            renderMapReceipt(data);
+
+          })
+          .fail(()=>{
+              alert("error");
+          })
+    }
+    function renderMapReceipt(data){
+       return $.each(data,(i,item)=>{
+            let str = `
+                     <tr data-bs-toggle="collapse" data-bs-target="#id${item.id}"
+                                        aria-expanded="false"
+                                        aria-controls="collapseExample"
+                                        onclick="renderInformation(${item.id})">
+                                        <td>HD-${item.id}</td>
+                                        <td>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</td>
+                                        <td>Khách lẻ</td>
+                                        <td class="text-right">${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.grandTotal)}
+                                        </td>
+                                        <td class="text-right">
+                                        ${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.grandTotal)}
+                                        </td>
+                                    </tr>
+                                    <tr id="id${item.id}" class="collapse">
+                                        <td colspan="5" >
+                                            <div class="container" style="margin-top: 10px;">
+                                                <!-- Nav tabs -->
+                                                <ul class="nav nav-tabs">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" data-bs-toggle="tab" href="#tt${item.id}">Thông Tin</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" data-bs-toggle="tab" href="#ls${item.id}">Lịch Sử Giao Dịch</a>
+                                                    </li>
+                                                </ul>
+                                                <!-- Tab panes -->
+                                                <div class="tab-content">
+                                                    <div class="tab-pane container active" id="tt${item.id}">
+                                                        <form >
+                                                            <div class="container">
+                                                                <div class="row">
+                                                                    <div class="mb-2 col-4">
+                                                                        <span>Mã Hóa Đơn : <strong>HD-${item.id}</strong></span>
+                                                                    </div>
+                                                                    <div class="mb-2 col-4">
+                                                                        <span>Trạng thái : <strong> ${item.status=="NEW" ? "Đã Hoàn Thành" : ""}</strong></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="mb-2 col-4">
+                                                                       <span>Thời Gian :
+                                                                            <span>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</span>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="mb-2 col-4">
+                                                                        <span>Người Tạo :
+                                                                            <span>Minh</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="mb-2 col-4">
+
+                                                                    </div>
+                                                                    <div class="mb-2 col-4">
+                                                                        <span>Người Nhận Đơn :
+                                                                            <span>Minh</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-2">
+                                                                    <table id="tblInformation">
+                                                                        <thead class="bg-info">
+                                                                        <tr>
+                                                                            <th>Mã Hàng Hóa</th>
+                                                                            <th>Tên Hàng Hóa</th>
+                                                                            <th>Số Lượng</th>
+                                                                            <th>Đơn Giá</th>
+                                                                            <th>Thành Tiền</th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                          <tbody>
+
+                                                                          </tbody>
+                                                                           <tfoot class="text-right">
+                                                                                <tr >
+                                                                                    <td colspan="4">Tổng số lượng : </td>
+                                                                                    <td >${item.totalQuantity}</td>
+                                                                                </tr>
+                                                                                <tr >
+                                                                                    <td colspan="4">Tổng tiền hàng : </td>
+                                                                                    <td class="text-right">${new Intl.NumberFormat('vi-VN', {
+                                                                                                style: 'currency',
+                                                                                                currency: 'VND'
+                                                                                            }).format(item.grandTotal)}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td colspan="4">Khách cần trả : </td>
+                                                                                    <td class="text-right">${new Intl.NumberFormat('vi-VN', {
+                                                                                                style: 'currency',
+                                                                                                currency: 'VND'
+                                                                                            }).format(item.grandTotal)}
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr >
+                                                                                    <td colspan="4">Khách đã trả : </td>
+                                                                                    <td class="text-right">${new Intl.NumberFormat('vi-VN', {
+                                                                                                style: 'currency',
+                                                                                                currency: 'VND'
+                                                                                            }).format(item.grandTotal)}
+                                                                                    </td>
+                                                                                </tr>
+                                                                           </tfoot>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="row text-right">
+                                                                    <div class="d-flex justify-content-end" >
+                                                                        <button class="bg-success text-white me-2">
+                                                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                                                            Lưu</button>
+                                                                        <button class="bg-danger text-white">
+                                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                                             Hủy Bỏ
+                                                                        </button>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="tab-pane container fade" id="ls${item.id}">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <table>
+                                                                    <thead class="bg-info">
+                                                                    <tr>
+                                                                        <th>Mã phiếu</th>
+                                                                        <th>Thời gian</th>
+                                                                        <th>Người tạo</th>
+                                                                        <th>Phương thức</th>
+                                                                        <th>Trạng thái</th>
+                                                                        <th>Tiền thu</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td>TTH-${item.id}</td>
+                                                                        <td>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</td>
+                                                                        <td>Lê Minh Trí</td>
+                                                                        <td>Tiền mặt</td>
+                                                                        <td>Đã thanh toán</td>
+                                                                        <td class="text-right">${new Intl.NumberFormat('vi-VN', {
+                                                                                style: 'currency',
+                                                                                currency: 'VND'
+                                                                            }).format(item.grandTotal)}
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                `
+            $("#tblTransaction>tbody").append(str);
+        })
+    }
+    function renderInformation(orderId){
+        $("#tblInformation>tbody tr").remove();
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/transactions?orderId=${orderId}`,
+        })
+            .done((data)=>{
+                $.each(data,(i,item)=>{
+                    let str = `
+                        <tr>
+                            <td>SP-${item.itemId}</td>
+                            <td>${item.title}</td>
+                            <td class="text-right">${item.quantity}</td>
+                            <td class="text-right">${new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(item.price)}</td>
+                            <td class="text-right">${new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format((item.quantity)*(item.price))}</td>
+                         </tr>
+                    `
+                    $("#tblInformation>tbody").append(str);
+                })
+            })
+    }
+    function renderYesterdayReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order?createAt=${getYesterday}`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
+    function renderSevenDayReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order/sevenDay`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
+    function renderThisMonthReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order/thisMonth?createAt=${getToDay}`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
+    function renderLastMonthReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order/thisMonth?createAt=${getLastMonth}`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
+    function renderFilter(){
+       let filter = $("#dateReceipt")
+        filter.on('change',function (){
+            $("#tblTransaction>tbody tr").remove();
+            switch (filter.val()){
+                case "0":
+                    renderReceipt();
+                    break;
+                case "1":
+                    renderYesterdayReceipt();
+                    break;
+                case "2":
+                    renderSevenDayReceipt();
+                    break;
+                case "3":
+                    renderThisMonthReceipt();
+                    break;
+                case "4":
+                    renderLastMonthReceipt();
+                    break;
+
+            }
+        })
+
+    }
+    $("#to").val(toDay);
+    $("#from").val(toDay);
+    $("#from").attr("min",toDay);
+    function renderReceiptByBetween(){
+        $("#to").on("change",function (){
+            let toDay = $("#to").val();
+            let oldFromDay =new Date($("#from").val());
+            console.log(oldFromDay)
+            let fromDay=(oldFromDay.getDate())+1;
+            let month=(oldFromDay.getMonth())+1;
+            let year=oldFromDay.getFullYear();
+            let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
+            console.log(month)
+            $("#tblTransaction>tbody tr").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: `http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
+            }).done((data)=>{
+                renderMapReceipt(data);
+            })
+        })
+        $("#from").on('change',function (){
+            let toDay = $("#to").val()
+            let oldFromDay = new Date($("#from").val());
+            let fromDay=(oldFromDay.getDate())+1;
+            let month=(oldFromDay.getMonth())+1;
+            let year=oldFromDay.getFullYear();
+            let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
+
+            $("#tblTransaction>tbody tr").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: `http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
+            }).done((data)=>{
+                renderMapReceipt(data);
+            })
+        })
+    }
+    $("input[type='radio']").on("click", function () {
+        if ($("input[type='radio']:checked").val() == "1") {
+            renderFilter();
+        }
+        if ($("input[type='radio']:checked").val() == "2") {
+            renderReceiptByBetween();
+        }
+    })
+    renderReceipt();
+</script>
+</body>
+</html>

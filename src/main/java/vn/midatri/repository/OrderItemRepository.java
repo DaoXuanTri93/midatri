@@ -14,4 +14,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem , Long> {
     long findMaxId();
 
     List<OrderItem> findAllByOrderId(Long id);
+
+
 }

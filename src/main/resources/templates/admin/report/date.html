@@ -15,115 +15,193 @@
 <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <th:block th:replace="/admin/layout/navBar :: navBar"/>
-
-    <div class="row">
-        <div class="col-xs-10 ">
-            <div class="normal-table-list mg-t-30">
-                <div class="basic-tb-hd text-center">
-                    <h1>Báo Cáo Ngày</h1>
-                    <h6 class="fw-light">Ngày Bán : <input type="date"/>></h6>
-
+    <div class="container-fluid">
+        <div class="data-table-area ">
+            <div class="container-fluid">
+                <div class="row col-2" style="float:left">
+                    <th:block th:replace="/admin/report/left-sideBar :: sidebarReport"/>
                 </div>
-                <div class="bsc-tbl-hvr table-responsive ">
-                    <table class="table table-hover table-striped" id="tblReport">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Thời gian</th>
-                            <th>Nhân Viên</th>
-                            <th>Số Lượng</th>
-                            <th>Doanh thu</th>
-                        </tr>
-                        </thead>
-                        <tfoot class="text-right">
-                        <tr class="text-right">
-                            <th colspan="4" class="fw-bold">Tổng Doanh Thu :</th>
-                            <th>10000</th>
-                        </tr>
-                        </tfoot>
-                    </table>
+                <div class="row col-9">
+                    <div class="col-md-12" >
+                        <div class="normal-table-list mg-t-30">
+                            <div class="basic-tb-hd text-center">
+                                <h1>Báo Cáo Bán Hàng</h1>
+
+                            </div>
+                            <div class="bsc-tbl-hvr table-responsive ">
+                                <table class="table table-hover table-striped" id="tblReport" >
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Thời gian</th>
+                                        <th>Nhân Viên</th>
+                                        <th style="width: 120px">Số Lượng</th>
+                                        <th>Doanh thu</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot >
+                                    <tr>
+                                        <th colspan="4" class="fw-bold" style="text-align:right">Tổng Doanh Thu :</th>
+                                        <th style="text-align:right"></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <th:block th:replace="/admin/layout/footer :: footer"/>
 </div>
 <th:block th:replace="/admin/layout/script :: script"/>
 </body>
 <script>
-    let orderItem;
-    // renderAllOrderItem();
+    let dateReport = new Date();
+    let day = dateReport.getDate();
+    let month= (dateReport.getMonth())+1;
+    let year=dateReport.getFullYear();
+    $("#dateReport").val(`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`)
+
+    let getDate = moment($("#dateReport").val()).format('DD-MM-yyyy')
     renderDataTableReport();
 
-    function renderAllOrderItem() {
+    function renderShowUser(){
+
+    }
+    renderShowUser();
+    function renderDataTableReport() {
+        let userName
         $.ajax({
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/orderItem",
-        }).done((data) => {
-            orderItem = data;
+            url: "http://localhost:8080/api/users/findAll",
         })
-    }
+            .done(function (data){
+                userName=data;
+                $('#tblReport').dataTable({
+                    ajax: {
+                        contentType: 'application/json',
+                        url: `http://localhost:8080/api/order?createAt=${getDate}`,
+                        type: 'GET',
 
-    function renderDataTableReport() {
+                        dataSrc: ''
+                    },
+                    searching: false,
+                    columns: [
+                        {
+                            data: "id", render: function (id) {
 
-        console.log("bbb")
-        $('#tblReport').dataTable({
-            ajax: {
-                contentType: 'application/json',
-                url: 'http://localhost:8080/api/order?createAt=02-11-2022',
-                type: 'GET',
+                                return `<td>${"O-" + id}</td>`
+                            }
+                        },
+                        {
+                            data: "createAt", render: function (createAt) {
+                                return `<td>${moment(createAt).format('h:mm:ss a')}</td>`
 
-                dataSrc: ''
-            },
-            searching: false,
-            columns: [
-                {
-                    data: "id", render: function (id) {
+                            }
+                        },
+                        {data: "userId",render:function (userId){
+                                for (let i = 0; i < userName.length; i++) {
+                                    if (userId == userName[i].id) {
+                                        return `<td>${userName[i].userName}</td>`
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            data: "totalQuantity"
+                        },
+                        {
+                            data: "grandTotal", render: function (grandTotal) {
+                                return new Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }).format(grandTotal)
+                            }
+                        }
 
-                        return `<td>${"O-" + id}</td>`
-                    }
-                },
-                {
-                    data: "createAt", render: function (createAt) {
-                        return `<td>${moment(createAt).format('h:mm:ss a')}</td>`
+                    ],
+                    columnDefs: [
+                        {
+                            targets: 3,
+                            className: "text-right"
+                        },
+                        {
+                            targets: -1,
+                            className: "text-right"
+                        }
+                    ],
+                    footerCallback:function (row, data, start, end, display){
+                        var api = this.api();
 
-                    }
-                },
-                {data: "userId"},
-                {
-                    data: "id"
-                        
-
-                },
-                {
-                    data: "grandTotal", render: function (grandTotal) {
-                        return new Intl.NumberFormat('vi-VN', {
+                        // Remove the formatting to get integer data for summation
+                        var intVal = function (i) {
+                            return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
+                        };
+                        total = api
+                            .column(4)
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        pageTotal = api
+                            .column(4, { page: 'current' })
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                        $(api.column(4).footer()).html(new Intl.NumberFormat('vi-VN', {
                             style: 'currency',
                             currency: 'VND'
-                        }).format(grandTotal)
+                        }).format(pageTotal)  );
                     }
-                }
 
-            ],
-            columnDefs: [
-                {
-                    targets: 3,
-                    className: "text-right"
-                },
-                {
-                    targets: -1,
-                    className: "text-right"
-                }
-            ]
+                })
 
-        })
+            })
 
     }
+    $("input[type='radio']").on("click", function () {
+        if ($("input[type='radio']:checked").val() == "1") {
+            $("#dateReport").on('input', function (){
+                let newDate = moment($("#dateReport").val()).format('DD-MM-yyyy');
+                $('#tblReport').DataTable().ajax.url(`http://localhost:8080/api/order?createAt=${newDate}`).load().draw()
+            })
+        }
+        if ($("input[type='radio']:checked").val() == "2") {
+            $("#to").on("change",function (){
+                let toDay = $("#to").val();
+                let oldFromDay =new Date($("#from").val());
+                console.log(oldFromDay)
+                let fromDay=(oldFromDay.getDate())+1;
+                let month=(oldFromDay.getMonth())+1;
+                let year=oldFromDay.getFullYear();
+                let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
+                $('#tblReport').DataTable().ajax.url(`http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`).load().draw()
+
+            })
+            $("#from").on('change',function (){
+                let toDay = $("#to").val()
+                let oldFromDay = new Date($("#from").val());
+                let fromDay=(oldFromDay.getDate())+1;
+                let month=(oldFromDay.getMonth())+1;
+                let year=oldFromDay.getFullYear();
+                let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
+
+                $('#tblReport').DataTable().ajax.url(`http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`).load().draw()
+                
+            })
+        }
+
+
+    })
 
 
 </script>

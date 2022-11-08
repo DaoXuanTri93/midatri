@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<th:block th:fragment="sidebarReport">
+    <link rel="stylesheet" href="/assets/admin/css/style-sidebar.css">
+
+    <div class=" ">
+        <div class="">
+            <div class="">
+                <h3 class="">
+                    Thời Gian
+                </h3>
+                <div class="">
+                    <div class="form-check">
+                        <input class="form-check-input " type="radio" name="filterRadios" id="filterRadios" value="1" checked="checked" >
+                        <label class="form-check-label" for="filterRadios">
+                            <h6 class="fw-light">Ngày Bán :
+                                <input id="dateReport" type="date" value="" min="01-10-2011" max="31-12-2042" placeholder="dd-mm-yyyy"/>
+                            </h6>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="filterRadios" id="exampleRadios" value="2">
+                        <label class="form-check-label" for="exampleRadios">
+                            <div>
+                                <span>Từ : <input type="date" id="to"></span>
+                                <span>Đến : <input type="date" id="from" min=></span>
+                            </div>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="/admin/layout/script::script"/>
+
+</th:block>
+
+</html>

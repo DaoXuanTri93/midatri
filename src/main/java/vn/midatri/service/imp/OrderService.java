@@ -75,5 +75,26 @@ public class OrderService implements IOrderService {
         return orderRepository.chartByLastMonth();
     }
 
+    public List<OrderResult> findSevenDay() {
+        return orderRepository.findSevenDay()
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<OrderResult> findThisMonth(Date createAt) {
+        return orderRepository.findThisMonth(createAt)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findByCreateAtBetween(Date toDay, Date fromDay) {
+        return orderRepository.findByCreateAtBetween(toDay,fromDay)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
 }

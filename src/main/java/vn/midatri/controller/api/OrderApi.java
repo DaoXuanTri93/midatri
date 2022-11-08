@@ -33,6 +33,27 @@ public class OrderApi {
         List<OrderResult> orderResults = orderService.findAllByCreateAt(date);
         return new ResponseEntity<>(orderResults, HttpStatus.OK);
     }
+    @GetMapping("/sevenDay")
+    public ResponseEntity<?>findSevenDay() {
+        List<OrderResult> orderResults = orderService.findSevenDay();
+        return new ResponseEntity<>(orderResults,HttpStatus.OK);
+    }
+    @GetMapping("/thisMonth")
+    public ResponseEntity<?>findThisMonth(String createAt)throws ParseException{
+        SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
+        Date date = formatter2.parse(createAt);
+        List<OrderResult> orderResults = orderService.findThisMonth(date);
+        return new ResponseEntity<>(orderResults,HttpStatus.OK);
+    }
+    @GetMapping("/findByBetween")
+    public ResponseEntity<?>findThisMonth(String toDay,String fromDay)throws ParseException{
+        SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
+        Date fistDate = formatter2.parse(toDay);
+        Date secondDate = formatter2.parse(fromDay);
+        List<OrderResult> orderResults = orderService.findByCreateAtBetween(fistDate,secondDate);
+        return new ResponseEntity<>(orderResults,HttpStatus.OK);
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestBody OrderParam orderParam) {

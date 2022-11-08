@@ -24,6 +24,11 @@ public class ItemApi {
         List<ItemResult> items = itemService.findAllByDeleted(deleted);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
+    @GetMapping("/findAll")
+    public ResponseEntity<?> renderAllItem(){
+        List<ItemResult> items = itemService.findAll();
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findByIdItem(@PathVariable Long id){
