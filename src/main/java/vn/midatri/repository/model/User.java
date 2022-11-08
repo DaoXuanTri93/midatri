@@ -8,7 +8,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-
+import java.time.Instant;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +19,8 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "user")
 
+
+//chart total
 @NamedNativeQuery(
         name = "sp_chart",
         query =
@@ -35,6 +38,29 @@ import java.math.BigDecimal;
                 }
         )
 )
+
+//chart day
+@NamedNativeQuery(
+        name = "sp_chartbyday",
+        query =
+                "call midatri.sp_chartbyday();",
+        resultSetMapping = "result_chartDayDto"
+)
+@SqlResultSetMapping(
+        name = "result_chartDayDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "total", type = BigDecimal.class),
+                        @ColumnResult(name = "dates", type = Instant.class)
+
+                }
+        )
+)
+
+
+
+
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,3 +94,4 @@ public class User {
         this.id = id;
     }
 }
+

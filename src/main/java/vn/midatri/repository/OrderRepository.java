@@ -23,5 +23,16 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query(nativeQuery = true, name ="sp_chart")
     List<Chart> chartBar();
 
-
+    @Query(nativeQuery = true,name = "sp_chartbyday")
+    List<Chart> chartDay();
+    @Query(nativeQuery = true,name = "sp_chartbymonth")
+    List<Chart> chartMonth();
+    @Query(nativeQuery = true,name = "sp_chartlastday")
+    List<Chart> chartLastDay();
+    @Query(nativeQuery = true,name = "sp_last7day")
+    List<Chart> chartLast7Day();
+    @Query(nativeQuery = true,name = "sp_chartbymonth")
+    List<Chart> chartByMonth();
+    @Query(nativeQuery = true,name = "sp_last1monht")
+    List<Chart> chartByLastMonth();
 }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.order.OrderParam;
 import vn.midatri.dto.order.OrderResult;
+import vn.midatri.repository.model.Chart;
 import vn.midatri.repository.model.OrderStatus;
 import vn.midatri.service.IOrderService;
 
@@ -24,25 +25,51 @@ public class OrderApi {
     private IOrderService orderService;
 
     @GetMapping("")
-    public ResponseEntity<?>findAllByCreateAt(String createAt) throws ParseException {
+    public ResponseEntity<?> findAllByCreateAt(String createAt) throws ParseException {
 
-        SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter2 = new SimpleDateFormat("dd-MM-yyyy");
         Date date = formatter2.parse(createAt);
 
         List<OrderResult> orderResults = orderService.findAllByCreateAt(date);
-        return new ResponseEntity<>(orderResults,HttpStatus.OK);
+        return new ResponseEntity<>(orderResults, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createOrder(@RequestBody OrderParam orderParam){
+    public ResponseEntity<?> createOrder(@RequestBody OrderParam orderParam) {
         orderParam.setCreateAt(Instant.now());
         orderParam.setStatus(OrderStatus.NEW);
         return new ResponseEntity<>(orderService.create(orderParam), HttpStatus.OK);
     }
 
     @GetMapping("/chart")
-    public ResponseEntity<?> orderBarchart(){
+    public ResponseEntity<?> orderBarchart() {
         return new ResponseEntity<>(orderService.chartBar(), HttpStatus.OK);
+    }
+
+    @GetMapping("/chartByDay")
+    public ResponseEntity<?> chartByDay() {
+
+        return new ResponseEntity<>(orderService.chartDay(), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/chartLastDay")
+    public ResponseEntity<?> chartLastDay(){
+        return new ResponseEntity<>(orderService.chartLastDay(),HttpStatus.OK);
+    }
+
+    @GetMapping("/chartLast7Day")
+    public ResponseEntity<?> chartLast7Day(){
+        return new ResponseEntity<>(orderService.chartLast7Day(),HttpStatus.OK);
+    }
+    @GetMapping("/chartByMonth")
+    public ResponseEntity<?> charByMonth(){
+        return new ResponseEntity<>(orderService.chartByMonth(),HttpStatus.OK);
+    }
+
+    @GetMapping("/chartByLastMonth")
+    public ResponseEntity<?> charByLastMonth(){
+        return new ResponseEntity<>(orderService.chartByLastMonth(),HttpStatus.OK);
     }
 
 

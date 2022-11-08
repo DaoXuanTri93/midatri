@@ -86,19 +86,13 @@
                     </tr>
                         `;
                     $("tblTop tbody").append(str);
-                    Toast.success("Thành công");
-                    // Swal.fire({
-                    //     title: 'Thêm mới bàn thành công !!!',
-                    //     position: 'top-end',
-                    //     icon: 'success',
-                    //     showConfirmButton: false,
-                    //     timer: 3000
-                    // })
+
                     $('#tblTop').DataTable().ajax.reload();
                     $("#modalCreateTable").modal("hide");
                     $("#frmCreateTable")[0].reset();
                 })
-            }).fail(function (jqXHR) {
+                Toast.success("Thành công");
+            }).fail(function (jqXHR) {g
                 console.log(jqXHR)
             }
             )
