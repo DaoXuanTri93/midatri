@@ -8,6 +8,7 @@ import vn.midatri.dto.order.OrderResult;
 import vn.midatri.mapper.OrderMapper;
 import vn.midatri.repository.OrderRepository;
 import vn.midatri.repository.model.Chart;
+import vn.midatri.repository.model.Order;
 import vn.midatri.service.IOrderService;
 
 import java.util.List;
@@ -40,5 +41,29 @@ public class OrderService implements IOrderService {
                 .map(order -> orderMapper.toDTO(order))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<OrderResult> findSevenDay() {
+        return orderRepository.findSevenDay()
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findThisMonth(Date createAt) {
+        return orderRepository.findThisMonth(createAt)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResult> findByCreateAtBetween(Date toDay, Date fromDay) {
+        return orderRepository.findByCreateAtBetween(toDay,fromDay)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
     }
 }

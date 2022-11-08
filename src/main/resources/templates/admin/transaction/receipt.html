@@ -93,11 +93,16 @@
     })
     let dateReceipt = new Date();
     let day = dateReceipt.getDate();
+    let oldDay=(dateReceipt.getDate())-1;
     let month= (dateReceipt.getMonth())+1;
+    let oldmonth=dateReceipt.getMonth();
     let year=dateReceipt.getFullYear();
-    let newDay =`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`;
-    let getDate = moment(newDay).format('DD-MM-yyyy')
-    console.log(newDay);
+    let toDay =`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`;
+    let yesterday=`${year}-${month}-${oldDay<10 ? `0${oldDay}`:`${oldDay}`}`
+    let lastMonth = `${year}-${oldmonth}-${oldDay<10 ? `0${oldDay}`:`${oldDay}`}`
+    let getToDay = moment(toDay).format('DD-MM-yyyy');
+    let getYesterday=moment(yesterday).format('DD-MM-yyyy');
+    let getLastMonth =moment(lastMonth).format('DD-MM-yyyy');
     function renderReceipt(){
       $.ajax({
           headers: {
@@ -105,11 +110,19 @@
               "Content-type": "application/json"
           },
           type: "GET",
-          url: `http://localhost:8080/api/order?createAt=${getDate}`,
+          url: `http://localhost:8080/api/order?createAt=${getToDay}`,
       })
           .done((data)=>{
-            $.each(data,(i,item)=>{
-              let str = `
+            renderMapReceipt(data);
+
+          })
+          .fail(()=>{
+              alert("error");
+          })
+    }
+    function renderMapReceipt(data){
+       return $.each(data,(i,item)=>{
+            let str = `
                      <tr data-bs-toggle="collapse" data-bs-target="#id${item.id}"
                                         aria-expanded="false"
                                         aria-controls="collapseExample"
@@ -118,15 +131,15 @@
                                         <td>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</td>
                                         <td>Khách lẻ</td>
                                         <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                        style: 'currency',
-                                                        currency: 'VND'
-                                                    }).format(item.grandTotal)}
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.grandTotal)}
                                         </td>
                                         <td class="text-right">
                                         ${new Intl.NumberFormat('vi-VN', {
-                                                    style: 'currency',
-                                                    currency: 'VND'
-                                                }).format(item.grandTotal)}
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.grandTotal)}
                                         </td>
                                     </tr>
                                     <tr id="id${item.id}" class="collapse">
@@ -198,25 +211,25 @@
                                                                                 <tr >
                                                                                     <td colspan="4">Tổng tiền hàng : </td>
                                                                                     <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                                              style: 'currency',
-                                                                                              currency: 'VND'
-                                                                                          }).format(item.grandTotal)}
+                                                                                                style: 'currency',
+                                                                                                currency: 'VND'
+                                                                                            }).format(item.grandTotal)}
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td colspan="4">Khách cần trả : </td>
                                                                                     <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                                              style: 'currency',
-                                                                                              currency: 'VND'
-                                                                                          }).format(item.grandTotal)}
+                                                                                                style: 'currency',
+                                                                                                currency: 'VND'
+                                                                                            }).format(item.grandTotal)}
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr >
                                                                                     <td colspan="4">Khách đã trả : </td>
                                                                                     <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                                                  style: 'currency',
-                                                                                                  currency: 'VND'
-                                                                                              }).format(item.grandTotal)}
+                                                                                                style: 'currency',
+                                                                                                currency: 'VND'
+                                                                                            }).format(item.grandTotal)}
                                                                                     </td>
                                                                                 </tr>
                                                                            </tfoot>
@@ -259,9 +272,9 @@
                                                                         <td>Tiền mặt</td>
                                                                         <td>Đã thanh toán</td>
                                                                         <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                              style: 'currency',
-                                                                              currency: 'VND'
-                                                                          }).format(item.grandTotal)}
+                                                                                style: 'currency',
+                                                                                currency: 'VND'
+                                                                            }).format(item.grandTotal)}
                                                                         </td>
                                                                     </tr>
                                                                     </tbody>
@@ -274,13 +287,8 @@
                                         </td>
                                     </tr>
                 `
-                $("#tblTransaction>tbody").append(str);
-            })
-
-          })
-          .fail(()=>{
-              alert("error");
-          })
+            $("#tblTransaction>tbody").append(str);
+        })
     }
     function renderInformation(orderId){
         $("#tblInformation>tbody tr").remove();
@@ -313,23 +321,134 @@
                 })
             })
     }
-    renderReceipt();
-
+    function renderYesterdayReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order?createAt=${getYesterday}`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
+    function renderSevenDayReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order/sevenDay`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
+    function renderThisMonthReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order/thisMonth?createAt=${getToDay}`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
+    function renderLastMonthReceipt(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `http://localhost:8080/api/order/thisMonth?createAt=${getLastMonth}`,
+        }).done((data)=>{
+            renderMapReceipt(data);
+        })
+    }
     function renderFilter(){
        let filter = $("#dateReceipt")
         filter.on('change',function (){
+            $("#tblTransaction>tbody tr").remove();
             switch (filter.val()){
-                case 1:
+                case "0":
                     renderReceipt();
                     break;
-                case 2:
-
+                case "1":
+                    renderYesterdayReceipt();
+                    break;
+                case "2":
+                    renderSevenDayReceipt();
+                    break;
+                case "3":
+                    renderThisMonthReceipt();
+                    break;
+                case "4":
+                    renderLastMonthReceipt();
+                    break;
 
             }
         })
 
     }
-    renderFilter();
+    $("#to").val(toDay);
+    $("#from").val(toDay);
+    $("#from").attr("min",toDay);
+    function renderReceiptByBetween(){
+        $("#to").on("change",function (){
+            let toDay = $("#to").val();
+            let oldFromDay =new Date($("#from").val());
+            console.log(oldFromDay)
+            let fromDay=(oldFromDay.getDate())+1;
+            let month=(oldFromDay.getMonth())+1;
+            let year=oldFromDay.getFullYear();
+            let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
+            console.log(month)
+            $("#tblTransaction>tbody tr").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: `http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
+            }).done((data)=>{
+                renderMapReceipt(data);
+            })
+        })
+        $("#from").on('change',function (){
+            let toDay = $("#to").val()
+            let oldFromDay = new Date($("#from").val());
+            let fromDay=(oldFromDay.getDate())+1;
+            let month=(oldFromDay.getMonth())+1;
+            let year=oldFromDay.getFullYear();
+            let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
+
+            $("#tblTransaction>tbody tr").remove();
+            $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: `http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
+            }).done((data)=>{
+                renderMapReceipt(data);
+            })
+        })
+    }
+    $("input[type='radio']").on("click", function () {
+        if ($("input[type='radio']:checked").val() == "1") {
+            renderFilter();
+        }
+        if ($("input[type='radio']:checked").val() == "2") {
+            renderReceiptByBetween();
+        }
+    })
+    renderReceipt();
 </script>
 </body>
 </html>
