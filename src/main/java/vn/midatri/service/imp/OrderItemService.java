@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.orderItem.OrderItemParam;
 import vn.midatri.dto.orderItem.OrderItemResult;
+import vn.midatri.dto.report.Goods;
 import vn.midatri.mapper.OrderItemMapper;
 import vn.midatri.repository.OrderItemRepository;
 import vn.midatri.repository.OrderRepository;
@@ -52,6 +53,16 @@ public class OrderItemService implements IOrderItemService {
                 .stream()
                 .map(orderItem -> orderItemMapper.toDTO(orderItem))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Goods> findAllByToDay() {
+        return orderItemRepository.findAllByToDay();
+    }
+
+    @Override
+    public List<Goods> findAllByLastDay() {
+        return orderItemRepository.findAllByLastDay();
     }
 
 }

@@ -100,7 +100,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/parent/"+$("#catalogsParentCreate").val(),
+                url: `${location.origin}/api/category/parent/`+$("#catalogsParentCreate").val(),
             })
                 .done((data)=>{
 
@@ -137,7 +137,7 @@
                     "content-type": "application/json"
                 },
                 type: "POST",
-                url: "http://localhost:8080/api/item/create",
+                url: `${location.origin}/api/item/create`,
                 data: JSON.stringify(product)
             }).done(() => {
                Toast.success("Thành Công")

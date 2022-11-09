@@ -117,7 +117,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category"
+            url: `${location.origin}/api/category`
         })
             .done((data) => {
                 $.each(data, (i, item) => {
@@ -128,7 +128,7 @@
                             "Content-type": "application/json"
                         },
                         type: "GET",
-                        url: "http://localhost:8080/api/item/find/" + item.id
+                        url: `${location.origin}/api/item/find/` + item.id
                     }).done((data) => {
                         categoryMap.set(item.id, data)
                     })
@@ -145,7 +145,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/parent?hasParentId=true"
+                url: `${location.origin}/api/category/parent?hasParentId=true`
             })
                 .done(function (data) {
                     $.each(data, (i, item) => {
@@ -175,7 +175,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/parent",
+                url: `${location.origin}/api/category/parent`,
             })
                 .done(function (data) {
                     $.each(data, (i, item) => {
@@ -225,7 +225,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/" + id
+                url: `${location.origin}/api/category/` + id
             })
                 .done((data) => {
                     category = data;
@@ -237,7 +237,7 @@
                             "Content-type": "application/json"
                         },
                         type: "GET",
-                        url: "http://localhost:8080/api/category/parent",
+                        url: `${location.origin}/api/category/parent`,
                     })
                         .done(function (data) {
                             for (let i = 0; i < data.length; i++) {
@@ -272,7 +272,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/parent",
+                url: `${location.origin}/api/category/parent`,
             })
                 .done(function (data) {
                     for (let i = 0; i < data.length; i++) {

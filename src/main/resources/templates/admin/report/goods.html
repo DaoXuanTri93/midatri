@@ -1,10 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+
+    <th:block th:replace="/admin/layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Báo Cáo Ngày</title>
 </head>
+
 <body>
-$END$
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="/admin/layout/navBar :: navBar"/>
+    <div class="container-fluid">
+        <div class="data-table-area ">
+            <div class="container-fluid">
+                <div class="row col-2" style="float:left">
+                    <th:block th:replace="/admin/report/left-sideBar :: sidebarReportGoods"/>
+                </div>
+                <div class="row col-9">
+                    <div class="col-md-12" >
+                        <div class="normal-table-list mg-t-30">
+                            <div class="basic-tb-hd text-center">
+                                <h1>Báo Cáo Bán Hàng Theo Hàng Hóa</h1>
+                            </div>
+                            <div class="bsc-tbl-hvr table-responsive ">
+                                <table class="table table-hover table-striped" id="tblGoods" >
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên Hàng</th>
+                                        <th>Số Lượng</th>
+                                        <th>Doanh Thu</th>
+                                        <th>Doanh Thu Thuần</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot >
+                                    <tr>
+                                        <th colspan="4" class="fw-bold" style="text-align:right">Tổng Doanh Thu :</th>
+                                        <th style="text-align:right"></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block th:replace="/admin/layout/footer :: footer"/>
+</div>
+<th:block th:replace="/admin/layout/script :: script"/>
 </body>
+<script>
+    let dateReport = new Date();
+    let day = dateReport.getDate();
+    let month= (dateReport.getMonth())+1;
+    let year=dateReport.getFullYear();
+    let today=`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`;
+    let selectFomDay = $("#fromDay");
+    let selectToDay = $("#toDay");
+    selectToDay.val(today);
+    selectFomDay.val(today);
+    selectFomDay.attr("min",today);
+
+    function renderReportToDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findToday`,
+        })
+            .done((data)=>{
+                $.each(data,(i,item)=>{
+                    let str = `
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    `
+                    $('#tblGoods tbody').append(str);
+                })
+            })
+    }
+
+    if ($("input[type='radio']:checked").val() == "1") {
+
+    }
+    $("input[type='radio']").on("click", function () {
+        if ($("input[type='radio']:checked").val() == "1") {
+
+        }
+        if ($("input[type='radio']:checked").val() == "2") {
+            selectToDay.on("change",function (){
+
+
+            })
+            selectFomDay.on('change',function (){
+
+            })
+        }
+
+
+    })
+
+</script>
+
 </html>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import vn.midatri.dto.category.CategoryResult;
 import vn.midatri.dto.orderItem.OrderItemParam;
 import vn.midatri.dto.orderItem.OrderItemResult;
+import vn.midatri.dto.report.Goods;
 import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.repository.OrderRepository;
 import vn.midatri.repository.model.Order;
@@ -39,6 +40,17 @@ public class OrderItemApi {
     public ResponseEntity<?> findAllByOrderId(@PathVariable Long orderId ){
         List<OrderItemResult> orderItemResults = orderItemService.findAllByOrderId(orderId);
         return new ResponseEntity<>(orderItemResults,HttpStatus.OK);
+    }
+
+    @GetMapping("/findToday")
+    public ResponseEntity<?> findAllByToDay() {
+        List<Goods> goods = orderItemService.findAllByToDay();
+        return new ResponseEntity<>(goods, HttpStatus.OK);
+    }
+    @GetMapping("/findLastDay")
+    public ResponseEntity<?> findAllByLastDay() {
+        List<Goods> goods = orderItemService.findAllByLastDay();
+        return new ResponseEntity<>(goods, HttpStatus.OK);
     }
 
     @PostMapping("/create")
