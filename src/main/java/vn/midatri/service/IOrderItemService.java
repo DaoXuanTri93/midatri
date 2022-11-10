@@ -4,6 +4,7 @@ import vn.midatri.dto.orderItem.OrderItemParam;
 import vn.midatri.dto.orderItem.OrderItemResult;
 import vn.midatri.dto.report.Goods;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IOrderItemService {
@@ -17,4 +18,5 @@ public interface IOrderItemService {
     List<Goods> findAllByToMonth();
     List<Goods> findAllByLastMonth();
     List<Goods> findAllBySevenDay();
+    List<Goods> findAllByCreateAtBetween(Date ToDay , Date FromDay);
 }

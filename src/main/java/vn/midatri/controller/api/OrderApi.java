@@ -46,7 +46,7 @@ public class OrderApi {
         return new ResponseEntity<>(orderResults,HttpStatus.OK);
     }
     @GetMapping("/findByBetween")
-    public ResponseEntity<?>findThisMonth(String toDay,String fromDay)throws ParseException{
+    public ResponseEntity<?>findByBetween(String toDay,String fromDay)throws ParseException{
         SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
         Date fistDate = formatter2.parse(toDay);
         Date secondDate = formatter2.parse(fromDay);

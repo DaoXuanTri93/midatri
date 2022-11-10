@@ -17,7 +17,10 @@ import vn.midatri.service.IOrderItemService;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +68,14 @@ public class OrderItemApi {
     @GetMapping("/findSevenDay")
     public ResponseEntity<?> findAllBySevenDay() {
         List<Goods> goods = orderItemService.findAllBySevenDay();
+        return new ResponseEntity<>(goods, HttpStatus.OK);
+    }
+    @GetMapping("/findByBetween")
+    public ResponseEntity<?> findAllByBetween(String ToDay , String FromDay) throws ParseException {
+        SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
+        Date fistDate = formatter2.parse(ToDay);
+        Date secondDate = formatter2.parse(FromDay);
+        List<Goods> goods = orderItemService.findAllByCreateAtBetween(fistDate,secondDate);
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
 

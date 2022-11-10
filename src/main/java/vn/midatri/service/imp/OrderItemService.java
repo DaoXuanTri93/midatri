@@ -16,6 +16,7 @@ import vn.midatri.service.IOrderItemService;
 import vn.midatri.service.IOrderService;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +79,11 @@ public class OrderItemService implements IOrderItemService {
     @Override
     public List<Goods> findAllBySevenDay() {
         return orderItemRepository.findAllBySevenDay();
+    }
+
+    @Override
+    public List<Goods> findAllByCreateAtBetween(Date ToDay, Date FromDay) {
+        return orderItemRepository.findAllByCreateAtBetween(ToDay, FromDay);
     }
 
 }

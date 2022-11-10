@@ -49,6 +49,12 @@ import java.time.Instant;
                 "call midatri.sp_getallproductsevenday();",
         resultSetMapping = "result_getallproduct"
 )
+@NamedNativeQuery(
+        name = "sp_getallproduct",
+        query =
+                "call midatri.sp_getallproduct(:ToDay, :FromDay);",
+        resultSetMapping = "result_getallproduct"
+)
 @SqlResultSetMapping(
         name = "result_getallproduct",
         classes = @ConstructorResult(

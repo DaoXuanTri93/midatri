@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import vn.midatri.dto.report.Goods;
 import vn.midatri.repository.model.OrderItem;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,5 +29,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem , Long> {
     List<Goods> findAllByLastMonth();
     @Query(nativeQuery = true , name = "sp_getallproductsevenday")
     List<Goods> findAllBySevenDay();
+    @Query(nativeQuery = true , name = "sp_getallproduct")
+    List<Goods> findAllByCreateAtBetween(Date ToDay , Date FromDay);
 
 }

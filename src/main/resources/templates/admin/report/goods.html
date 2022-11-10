@@ -198,6 +198,19 @@
             }
         })
     }
+    function renderReceiptGoodsByBetween(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findByBetween?ToDay=${moment(selectToDay.val()).format('DD-MM-yyyy')}&FromDay=${moment(selectFomDay.val()).format('DD-MM-yyyy')}`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
     renderReportToDay()
     if ($("input[type='radio']:checked").val() == "1") {
         renderFilterReport();
@@ -208,11 +221,10 @@
         }
         if ($("input[type='radio']:checked").val() == "2") {
             selectToDay.on("change",function (){
-
-
+                renderReceiptGoodsByBetween();
             })
             selectFomDay.on('change',function (){
-
+                renderReceiptGoodsByBetween();
             })
         }
 
