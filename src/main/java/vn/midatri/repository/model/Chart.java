@@ -17,7 +17,7 @@ public class Chart {
     private String title;
     private BigDecimal total;
     private Instant dates;
-    private String thang;
+    private String bills;
 
 
     public Chart(String title, BigDecimal total) {
@@ -25,12 +25,16 @@ public class Chart {
         this.total = total;
     }
 
+    public Chart(BigDecimal total) {
+        this.total = total;
+    }
+
     public Chart(BigDecimal total, Instant dates) {
         this.total = total;
         this.dates = dates;
     }
-    public Chart(String thang) {
-        this.thang = thang;
+    public Chart(String bills) {
+        this.bills = bills;
     }
 }
 

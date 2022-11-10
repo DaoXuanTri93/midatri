@@ -64,21 +64,16 @@
                 })
 
             function deleteTable(id) {
-                // let deleteTable = new TableTop();
-                // deleteTable.capacity = $('#capacityTable').val();
-                // deleteTable.status = $('#statusTable').val();
+
                 $.ajax({
                     headers: {
                         "accept": "application/json",
                         "content-type": "application/json"
                     },
                     type: "POST",
-                    url: "http://localhost:8080/api/table-top/deleted/" + id,
+                    url: location.origin +  "/api/table-top/deleted/" + id,
                     // data: JSON.stringify(idTableDel)
                 }).done(function (data) {
-                     // $("#idDelete").val(data.id);
-                     // $("#statusTable").val(data.status);
-                     // $("#capacityTable").val(data.capacity);
                     window.location.href = "/table-top"
                 })
             }

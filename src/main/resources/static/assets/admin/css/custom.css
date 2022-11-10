@@ -25,7 +25,9 @@
     position: relative;
     left: 20px;
 }
-#myChart {
-    width: 920px !important;
-    height: 320px !important;
+#myInput {
+    width: 220px;
+}
+.choseee{
+    border-bottom: 2px solid #333;
 }

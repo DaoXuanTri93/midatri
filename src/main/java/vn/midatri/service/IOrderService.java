@@ -26,6 +26,14 @@ public interface IOrderService {
     List<Chart> chartByMonth();
     List<Chart> chartByLastMonth();
 
+    List<Chart> totalOrderItems();
+    List<Chart> totalOneDay();
+    List<Chart> totalLastDay();
+    List<Chart> totalLastMonth();
+    List<Chart> totalMonth();
+
+    List<Chart> allTotalToDay();
+    List<Chart> allTotalMonth();
 
     List<OrderResult> findSevenDay();
     List<OrderResult> findThisMonth(@Param("createAt")Date createAt);

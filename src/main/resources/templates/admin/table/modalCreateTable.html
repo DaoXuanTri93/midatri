@@ -72,7 +72,7 @@
                     "content-type": "application/json"
                 },
                 type: 'POST',
-                url: 'http://localhost:8080/api/table-top/create',
+                url: location.origin + '/api/table-top/create',
                 data: JSON.stringify(NewTable)
 
             }).done(function (data) {
@@ -92,8 +92,9 @@
                     $("#frmCreateTable")[0].reset();
                 })
                 Toast.success("Thành công");
-            }).fail(function (jqXHR) {g
+            }).fail(function (jqXHR) {
                 console.log(jqXHR)
+                Toast.warning("bbbbb");
             }
             )
         }

@@ -33,25 +33,28 @@ public class OrderApi {
         List<OrderResult> orderResults = orderService.findAllByCreateAt(date);
         return new ResponseEntity<>(orderResults, HttpStatus.OK);
     }
+
     @GetMapping("/sevenDay")
-    public ResponseEntity<?>findSevenDay() {
+    public ResponseEntity<?> findSevenDay() {
         List<OrderResult> orderResults = orderService.findSevenDay();
-        return new ResponseEntity<>(orderResults,HttpStatus.OK);
+        return new ResponseEntity<>(orderResults, HttpStatus.OK);
     }
+
     @GetMapping("/thisMonth")
-    public ResponseEntity<?>findThisMonth(String createAt)throws ParseException{
-        SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
+    public ResponseEntity<?> findThisMonth(String createAt) throws ParseException {
+        SimpleDateFormat formatter2 = new SimpleDateFormat("dd-MM-yyyy");
         Date date = formatter2.parse(createAt);
         List<OrderResult> orderResults = orderService.findThisMonth(date);
-        return new ResponseEntity<>(orderResults,HttpStatus.OK);
+        return new ResponseEntity<>(orderResults, HttpStatus.OK);
     }
+
     @GetMapping("/findByBetween")
-    public ResponseEntity<?>findThisMonth(String toDay,String fromDay)throws ParseException{
-        SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
+    public ResponseEntity<?> findThisMonth(String toDay, String fromDay) throws ParseException {
+        SimpleDateFormat formatter2 = new SimpleDateFormat("dd-MM-yyyy");
         Date fistDate = formatter2.parse(toDay);
         Date secondDate = formatter2.parse(fromDay);
-        List<OrderResult> orderResults = orderService.findByCreateAtBetween(fistDate,secondDate);
-        return new ResponseEntity<>(orderResults,HttpStatus.OK);
+        List<OrderResult> orderResults = orderService.findByCreateAtBetween(fistDate, secondDate);
+        return new ResponseEntity<>(orderResults, HttpStatus.OK);
     }
 
 
@@ -75,22 +78,50 @@ public class OrderApi {
 
 
     @GetMapping("/chartLastDay")
-    public ResponseEntity<?> chartLastDay(){
-        return new ResponseEntity<>(orderService.chartLastDay(),HttpStatus.OK);
+    public ResponseEntity<?> chartLastDay() {
+        return new ResponseEntity<>(orderService.chartLastDay(), HttpStatus.OK);
     }
 
     @GetMapping("/chartLast7Day")
-    public ResponseEntity<?> chartLast7Day(){
-        return new ResponseEntity<>(orderService.chartLast7Day(),HttpStatus.OK);
+    public ResponseEntity<?> chartLast7Day() {
+        return new ResponseEntity<>(orderService.chartLast7Day(), HttpStatus.OK);
     }
+
     @GetMapping("/chartByMonth")
-    public ResponseEntity<?> charByMonth(){
-        return new ResponseEntity<>(orderService.chartByMonth(),HttpStatus.OK);
+    public ResponseEntity<?> charByMonth() {
+        return new ResponseEntity<>(orderService.chartByMonth(), HttpStatus.OK);
     }
 
     @GetMapping("/chartByLastMonth")
-    public ResponseEntity<?> charByLastMonth(){
-        return new ResponseEntity<>(orderService.chartByLastMonth(),HttpStatus.OK);
+    public ResponseEntity<?> charByLastMonth() {
+        return new ResponseEntity<>(orderService.chartByLastMonth(), HttpStatus.OK);
+    }
+
+    @GetMapping("/totalOneDay")
+    public ResponseEntity<?> totalOneDay() {
+        return new ResponseEntity<>(orderService.totalOneDay(), HttpStatus.OK);
+    }
+
+    @GetMapping("/totalLastDay")
+    public ResponseEntity<?> totalLastDay() {
+        return new ResponseEntity<>(orderService.totalLastDay(), HttpStatus.OK);
+    }
+    @GetMapping("/totalLastMonth")
+    public ResponseEntity<?> totalLastMonth() {
+        return new ResponseEntity<>(orderService.totalLastMonth(), HttpStatus.OK);
+    }
+    @GetMapping("/totalMonth")
+    public ResponseEntity<?> totalMonth() {
+        return new ResponseEntity<>(orderService.totalMonth(), HttpStatus.OK);
+    }
+
+    @GetMapping("/allTotalToDay")
+    public ResponseEntity<?> allTotalToDay(){
+        return new ResponseEntity<>(orderService.allTotalToDay(),HttpStatus.OK);
+    }
+    @GetMapping("/allTotalMonth")
+    public ResponseEntity<?> allTotalMonth(){
+        return new ResponseEntity<>(orderService.allTotalMonth(),HttpStatus.OK);
     }
 
 
