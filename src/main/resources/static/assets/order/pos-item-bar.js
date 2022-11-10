@@ -49,6 +49,7 @@ function renderKitchen(index, bookingItem) {
     let item = itemMap.get(bookingItem.itemId);
     console.log(bookingItem)
     let nameUser = userMap.get(item.userId).userName
+    console.log(nameUser)
     let result = `
             <div class="billItem" id="${bookingItem.id}_kitchen">
                 <div  class="row-list">
