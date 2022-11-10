@@ -29,6 +29,10 @@ class OrderParam {
 
 let onItemClick = () => {
     $(".btn-add-product").click((event) => {
+        let sizeBookingItem = bookingItemTableTopMap.size
+        if (sizeBookingItem > 0) {
+            $(`#tb_${tableTopId} span`).attr('style','background-color: #ff8000')
+        }
         $("#notification").removeAttr("disabled");
         let itemId = parseInt($(event.currentTarget).attr('data-id'));
         booking(tableTopId, itemId);
@@ -68,14 +72,13 @@ function fetchCategory() {
 }
 
 function fetchBookings() {
-
     api.booking.findAllByStatusNotComplete((bookings) => {
         $.each(bookings, (i, booking) => {
             bookingMap.set(booking.tableTopId, booking);
             fetchBookingItems(booking.tableTopId, booking.id);
-            setTimeout(() => {
-                // $("#spinner-div").hide();
-            }, 3000)
+            // setTimeout(() => {
+            //     // $("#spinner-div").hide();
+            // }, 3000)
         })
     }, (jqXHR) => {
 
@@ -93,11 +96,13 @@ function fetchBookingItems(tableTopId, bookingId) {
 }
 
 function renderTabletop(tabletop) {
-    let result = `<li class="tableAndRoom using" id="${tabletop.id}" data-id="${tabletop.id}" style="text-align: center;"">
+    let result = `<li class="tableAndRoom using" id="${tabletop.id}" data-id="${tabletop.id}" style=" text-align: center;"">
                             <div class="tableroom-actions"></div>
                                 <a container="body" placement="right top" class="using">
-                                    <div class="table-room">
-                                        <span></span>
+                                    <div class="table-room" id="tb_${tabletop.id}">
+                                    ${(tabletop.status === 'ACTIVE') ?
+        `<span style="background-color: #ff8000"></span>` : `<span></span>`}
+                                        
                                             </div>
                                                 <div class="product-info">
                                                 <span class="product-name"> ${tabletop.title} </span>
@@ -270,7 +275,6 @@ function booking(tabletopId, itemId) {
             if (isNaN(quantity)) {
                 quantity = 1;
             }
-            console.log("here", quantity)
             $(`#${bookingItem.id} .item-quantity`).text(quantity)
             $(`#${bookingItem.id} .cell-price`).text(new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
@@ -326,16 +330,37 @@ function handleFilterCategory(idCategory) {
     onItemClick();
 }
 
-function hanldeDeletedBookingItem(bookingItemId) {
-    api.bookingItem.removeBookingItem(bookingItemId, (data) => {
-        updateQuantityBookingItem(bookingItemId)
-        deletedItemBookingItem(bookingItemId)
-        handleGrandTotal(tableTopId);
-        $(`#render-tableTop #${bookingItemId}`).remove();
-        // fetchBookings();
-    }, (jqXHR) => {
+function handleDeletedBookingItem(bookingItemId) {
+    let bookingId = bookingMap.get(tableTopId).id;
+    let sizeBookingItem = bookingItemTableTopMap.get(tableTopId)
+    if (sizeBookingItem.length <= 1) {
+        alert("ban co muon xoa ko")
 
-    })
+        api.bookingItem.removeBookingItemByBooking(bookingId, (done) => {
+            $.each(tabletops, (i, tabletop) => {
+                if (tableTopId === tabletop.id) {
+                    tabletop.status = 'AVAILABLE';
+                    $(`#tb_${tabletop.id} span`).removeAttr('style')
+                }
+            })
+            updateQuantityBookingItem(bookingItemId)
+            deletedItemBookingItem(bookingItemId)
+            handleGrandTotal(tableTopId);
+            $(`#render-tableTop #${bookingItemId}`).remove();
+        }, (jqXHR) => {
+
+        })
+    } else {
+        api.bookingItem.removeBookingItem(bookingItemId, (data) => {
+            updateQuantityBookingItem(bookingItemId)
+            deletedItemBookingItem(bookingItemId)
+            handleGrandTotal(tableTopId);
+            $(`#render-tableTop #${bookingItemId}`).remove();
+            // fetchBookings();
+        }, (jqXHR) => {
+
+        })
+    }
 }
 
 let total = 0;
@@ -345,11 +370,11 @@ function renderBookingItem(index, bookingItem) {
     let item = itemMap.get(bookingItem.itemId);
     let result = `
                      <div class="product-cart-item" id="${bookingItem.id}">
-                        <kv-cashier-cart-item class="row-list row-list-active active">
+                        <div class="row-list row-list-active active">
                             <div class="row-list-content">
                                 <div class="cell-action">
                                     <a class="btn-icon btn-trash" 
-                                    onclick="hanldeDeletedBookingItem(${bookingItem.id})"
+                                    onclick="handleDeletedBookingItem(${bookingItem.id})"
                                        title="Xóa món">
                                         <i class="fa-regular fa-trash-can" ></i>
                                     </a>
@@ -365,9 +390,9 @@ function renderBookingItem(index, bookingItem) {
                                 <div class="row-product">
                                     <div class="cell-name full">
                                         <div class="wrap-name">
-                                        ${(bookingItem.status === "COOKED") ? `
-        <h4 title="APEROL SPRITZ" style="color: red">${item.title}</h4>` : `
-        <h4 title="APEROL SPRITZ">${item.title}</h4>`}
+${(bookingItem.status === "COOKED") ?
+        `<h4 title="APEROL SPRITZ" style="color: #28B44F">${item.title}</h4>` :
+        (bookingItem.status === "COOKING") ? `<h4 title="APEROL SPRITZ" style="color: red">${item.title}</h4>` : `<h4 title="APEROL SPRITZ">${item.title}</h4>`}
                                             <span class="wrap-icons"></span>
                                             <div class="attr-wrapper">
                                             </div>
@@ -433,7 +458,7 @@ function renderBookingItem(index, bookingItem) {
                                     </div>
                                 </div>
                             </div>
-                        </kv-cashier-cart-item>
+                        </div>
                      </div>
                      
                 `;
@@ -590,7 +615,14 @@ function handlePay(tableTopId) {
         $("#priceSale").val(0);
         $("#payAllClick").click((event, c = bookingId) => {
             let number = parseFloat($("#moneySuperfluous").text());
-            if (number >= 0) {
+            let number1 = parseFloat($("#payingAmountTxt").val())
+            if (number >= 0 && number1 !== 0) {
+                $.each(tabletops, (i, tabletop) => {
+                    if (tableTopId === tabletop.id) {
+                        tabletop.status = 'AVAILABLE';
+                        $(`#tb_${tabletop.id} span`).removeAttr('style')
+                    }
+                })
                 let orderParam = bookingMap.get(tableTopId);
                 let orderItemParam = bookingItemTableTopMap.get(tableTopId);
                 api.order.create(orderParam, (data) => {
@@ -608,6 +640,7 @@ function handlePay(tableTopId) {
                                 style: 'currency',
                                 currency: 'VND'
                             }).format(0));
+
                             bookingMap.clear()
                             bookingItemTableTopMap.clear()
                             handleBillsPrint();
@@ -772,7 +805,6 @@ function handlePay(tableTopId) {
 
 
                 let booking = bookingMap.get(tableTopId);
-                console.log(booking)
                 $("#timeBills span").text(moment(booking.createAt).format('L'));
                 $("#addressBills span").text(booking.address);
                 $("#timeSendBills span").text(moment().format('LTS'));
@@ -903,6 +935,21 @@ function handleBillsPrint() {
     $("#showPrint").removeClass('d-none');
     window.print();
     $("#showPrint").addClass('d-none')
+
+}
+
+function handleSplitTable(tableTopId, bookingId) {
+    alert(tableTopId)
+}
+
+function ghepDon() {
+    $("#tachDon").addClass('d-none');
+    $("#ghepDon").removeClass('d-none')
+}
+
+function tachDon() {
+    $("#ghepDon").addClass('d-none')
+    $("#tachDon").removeClass('d-none');
 
 }
 

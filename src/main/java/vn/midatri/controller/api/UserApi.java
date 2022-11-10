@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import vn.midatri.dto.user.UserLogin;
 import vn.midatri.dto.user.UserRegister;
 import vn.midatri.dto.user.UserResult;
 import vn.midatri.mapper.UserMapper;
@@ -98,6 +99,13 @@ public class UserApi {
         User user = userService.findUserById(id);
         user.setDeleted(false);
         userService.save(user);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> restoreUser(@RequestBody UserLogin userLogin) {
+        User user = userService.findByUserNameAndPassword(userLogin.getUserName(), userLogin.getPassword());
+
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 }

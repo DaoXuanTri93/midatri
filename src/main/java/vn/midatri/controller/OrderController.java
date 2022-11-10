@@ -5,13 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
 
     @GetMapping()
-    public ModelAndView UserPage(){
+    public ModelAndView UserPage(Principal principal){
         ModelAndView modelAndView = new ModelAndView();
+        System.out.println(principal);
         modelAndView.setViewName("/order/listOrder");
         return modelAndView;
     }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title class="noPrint">Chi nhánh trung tâm - Thu ngân</title>
+    <title>Coffee Midatri</title>
     <!--<base href="./">-->
     <base href=".">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,35 +46,35 @@
                             <div class="kv-tabs">
                                 <ul>
                                     <li><a class="link-tab active" href="javascript:void(0);" id="link-table"
-                                           ><i
+                                    ><i
                                             class="fa-solid fa-border-all"></i> Phòng bàn </a></li>
-                                    <li><a class="link-tab " href="javascript:void(0);" id="link-menu" ><i
+                                    <li><a class="link-tab " href="javascript:void(0);" id="link-menu"><i
                                             class="fa-solid fa-plate-utensils"></i> Thực đơn </a></li>
                                 </ul>
                             </div>
-<!--                            <div class="search-wrapper">-->
-<!--                                <div class="search-content">-->
-<!--                                    <kv-product-search class="kv-product-search">-->
-<!--                                        <div class="wrap-auto-complete not-electronic">-->
-<!--                                            <kv-auto-complete _ngcontent-wfy-c1>-->
-<!--                                                <div class="autocomplete">-->
-<!--                                                    <i class="fa-regular fa-magnifying-glass"></i><input-->
-<!--                                                        class="form-control" kvselecttext="" type="text"-->
-<!--                                                        id="productSearchInput"-->
-<!--                                                        placeholder="Tìm món (F3)">-->
-<!--                                                    <div class="output-complete" hidden="">-->
-<!--                                                        <ul>-->
-<!--                                                        </ul>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </kv-auto-complete>-->
-<!--                                        </div>-->
-<!--                                        <a class="btn-icon sale-mode active" id="saleMode_productSearchInput"-->
-<!--                                           title="Bấm để chuyển sang chế độ nhập thường"><i-->
-<!--                                                class="fas fa-bolt-lightning"></i></a>-->
-<!--                                    </kv-product-search>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div class="search-wrapper">-->
+                            <!--                                <div class="search-content">-->
+                            <!--                                    <kv-product-search class="kv-product-search">-->
+                            <!--                                        <div class="wrap-auto-complete not-electronic">-->
+                            <!--                                            <kv-auto-complete _ngcontent-wfy-c1>-->
+                            <!--                                                <div class="autocomplete">-->
+                            <!--                                                    <i class="fa-regular fa-magnifying-glass"></i><input-->
+                            <!--                                                        class="form-control" kvselecttext="" type="text"-->
+                            <!--                                                        id="productSearchInput"-->
+                            <!--                                                        placeholder="Tìm món (F3)">-->
+                            <!--                                                    <div class="output-complete" hidden="">-->
+                            <!--                                                        <ul>-->
+                            <!--                                                        </ul>-->
+                            <!--                                                    </div>-->
+                            <!--                                                </div>-->
+                            <!--                                            </kv-auto-complete>-->
+                            <!--                                        </div>-->
+                            <!--                                        <a class="btn-icon sale-mode active" id="saleMode_productSearchInput"-->
+                            <!--                                           title="Bấm để chuyển sang chế độ nhập thường"><i-->
+                            <!--                                                class="fas fa-bolt-lightning"></i></a>-->
+                            <!--                                    </kv-product-search>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                         </div>
                         <div class="header-right">
                             <kv-cashier-cart-tabs>
@@ -100,8 +100,9 @@
                                 <ul class="header-right-ul pull-right dropdown">
                                     <div class="dropdown">
                                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                           id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                            0794512184
+                                           id="dropdownMenuLink" data-bs-toggle="dropdown"
+                                           aria-expanded="false">
+                                            <span>0794512184 - midatri</span>
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                             <li>
@@ -115,7 +116,7 @@
                                                     Lễ Tân</a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item my-3" href="#">
+                                                <a class="dropdown-item my-3" href="/products">
                                                     <i class="fa-regular fa-list-dropdown"></i>
                                                     Quản lý</a>
                                             </li>
@@ -161,7 +162,8 @@
                                             <div class="swiper-container product-category-container-parent">
                                                 <div class="product-category-wrapper swiper-wrapper"
                                                      id="renderCategory">
-                                                    <div class="swiper-slide product-category-item-parent render-category" id="TATCA"
+                                                    <div class="swiper-slide product-category-item-parent render-category"
+                                                         id="TATCA"
                                                     >
                                                         <a class="btn btn-primary ">Tất Cả</a>
                                                     </div>
@@ -364,9 +366,9 @@
                                         </div>
                                         <div class="page-empty" hidden="">
                                             <i class="mask mask-food"></i>
-                                            <div class="empty-content" >
+                                            <div class="empty-content">
                                                 <p>Chưa có món nào</p>
-                                                <span >Vui lòng chọn món trong thực đơn</span>
+                                                <span>Vui lòng chọn món trong thực đơn</span>
                                             </div>
                                         </div>
                                     </div>
@@ -375,7 +377,7 @@
                             <div class="alert-messenger" hidden="">
                                 <div class="alert-content"><i class="far fa-bell"></i> Bạn
                                     vừa cập nhật đơn hàng. Click <a class="show-alert" href="javascript:void(0);"
-                                                                    >Thông
+                                    >Thông
                                         báo</a> để gửi thông tin chế biến đến bar bếp.
                                 </div>
                             </div>
@@ -386,50 +388,49 @@
                                     <div class="row-div">
                                         <div class="col-auto form-actions-left">
                                             <ul>
-                                                <li class="li-dropdownlist form-actions-item">
-                                                    <kendo-dropdownlist
-                                                            class="sale-user form-control-custom k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"
-                                                            title="Người nhận đơn" dir="ltr">
-                                                <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                                                      class="k-dropdown-wrap k-state-default"
-                                                      id="k-cf1e4471-6c77-474e-a886-c713d718c6ee"
-                                                      dir="ltr" readonly="false" aria-disabled="false"
-                                                      aria-readonly="false"
-                                                      aria-expanded="false"
-                                                      aria-describedby="5131c46f-e629-47ad-b25b-12f14775a881"
-                                                      tabindex="0"><span
-                                                        class="k-input" unselectable="on"
-                                                        id="5131c46f-e629-47ad-b25b-12f14775a881">
-                                                Midatri
-                                                </span><span class="k-select" unselectable="on"><span
-                                                        class="k-icon k-i-arrow-s"></span></span>
-                                                </span>
-                                                    </kendo-dropdownlist>
-                                                </li>
-                                                <li class="note-invoice form-actions-item"><a
-                                                        class="btn btn-icon-only btn-light-transparent"
-                                                        href="javascript:void(0);" title="Ghi chú"><i
-                                                        class="far fa-pen"></i></a></li>
-                                                <li class="li-history form-actions-item"><a
-                                                        class="btn btn-icon-only btn-light-transparent"
-                                                        href="javascript:void(0);" title="Lịch sử báo bếp"><i
-                                                        class="far fa-clock-rotate-left"></i></a>
-                                                </li>
-                                                <li class="form-actions-item">
-                                                    <div>
-                                                        <button class="btn btn-light-transparent" 
-                                                                type="button"
-                                                                title="Tách ghép đơn"
-                                                                onclick="handelSplitTable(tableTopId,booking_id)">
-                                                            <i class="far fa-file-dashed-line"></i>
-                                                            <span>Tách ghép</span>
-                                                        </button>
-                                                    </div>
-                                                </li>
+<!--                                                <li class="li-dropdownlist form-actions-item">-->
+<!--                                                    <kendo-dropdownlist-->
+<!--                                                            class="sale-user form-control-custom k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"-->
+<!--                                                            title="Người nhận đơn" dir="ltr">-->
+<!--                                                <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
+<!--                                                      class="k-dropdown-wrap k-state-default"-->
+<!--                                                      id="k-cf1e4471-6c77-474e-a886-c713d718c6ee"-->
+<!--                                                      dir="ltr" readonly="false" aria-disabled="false"-->
+<!--                                                      aria-readonly="false"-->
+<!--                                                      aria-expanded="false"-->
+<!--                                                      aria-describedby="5131c46f-e629-47ad-b25b-12f14775a881"-->
+<!--                                                      tabindex="0"><span-->
+<!--                                                        class="k-input" unselectable="on"-->
+<!--                                                        id="5131c46f-e629-47ad-b25b-12f14775a881">-->
+<!--                                                Midatri-->
+<!--                                                </span><span class="k-select" unselectable="on"><span-->
+<!--                                                        class="k-icon k-i-arrow-s"></span></span>-->
+<!--                                                </span>-->
+<!--                                                    </kendo-dropdownlist>-->
+<!--                                                </li>-->
+<!--                                                <li class="note-invoice form-actions-item"><a-->
+<!--                                                        class="btn btn-icon-only btn-light-transparent"-->
+<!--                                                        href="javascript:void(0);" title="Ghi chú"><i-->
+<!--                                                        class="far fa-pen"></i></a></li>-->
+<!--                                                <li class="li-history form-actions-item"><a-->
+<!--                                                        class="btn btn-icon-only btn-light-transparent"-->
+<!--                                                        href="javascript:void(0);" title="Lịch sử báo bếp"><i-->
+<!--                                                        class="far fa-clock-rotate-left"></i></a>-->
+<!--                                                </li>-->
+<!--                                                <li class="form-actions-item">-->
+<!--                                                    <div>-->
+<!--                                                        <button type="button" class="btn btn-primary"-->
+<!--                                                                data-bs-toggle="modal" data-bs-target="#tachGhep"-->
+<!--                                                                onclick="handleSplitTable(tableTopId,booking_id)">-->
+<!--                                                            <i class="far fa-file-dashed-line"></i>-->
+<!--                                                            <span>Tách ghép</span>-->
+<!--                                                        </button>-->
+<!--                                                    </div>-->
+<!--                                                </li>-->
                                             </ul>
                                         </div>
                                         <div class="form-actions-right"><label class="control-label">
-                                            <span >Tổng tiền</span>
+                                            <span>Tổng tiền</span>
                                             <span class="badge badge-total-quantity">0</span>
                                         </label>
                                             <span class="form-control-static total-price">
@@ -466,7 +467,7 @@
                                 <div class="parse-history empty-area">
                                     <div class="page-empty">
                                         <i class="fal fa-inbox"></i>
-                                        <div class="empty-content" > Không có dữ liệu</div>
+                                        <div class="empty-content"> Không có dữ liệu</div>
                                     </div>
                                 </div>
                             </div>
@@ -489,15 +490,16 @@
                 <p><a class="show-alert" href="javascript:void(0);">Click để
                     bật</a> thông báo cho các yêu cầu thanh toán và cung ứng từ bếp. <a class="hide-alert"
                                                                                         href="javascript:void(0);"
-                                                                                        >Ẩn</a>
+                >Ẩn</a>
                 </p>
             </kv-request-allow-notification>
         </kv-cashier-page>
     </div>
 </kv-root>
 <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
-<div class="cashier-payment noPrint d-none" id="paypal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <kv-pull-over >
+<div class="cashier-payment noPrint d-none" id="paypal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <kv-pull-over>
         <div class="float-nav right">
             <div class="float-nav-content">
                 <button class="float-nav-close">
@@ -505,135 +507,136 @@
 
                     </i></button>
                 <kv-cashier-payment>
-                    
+
                     <div>
-                        <h3 class="title-payment"><strong >Phiếu thanh toán </strong>
+                        <h3 class="title-payment"><strong>Phiếu thanh toán </strong>
                             <strong class="table-payment"><i class="fa-solid fa-circle"></i><span> </span></strong></h3>
                         <div class="wraper-payment">
                             <div class="left-payment">
-                                
+
                                 <kv-cashier-cart-temp-info class="cashier-cart-temp-info" _nghost-koq-c30="">
-                                    
+
                                     <div class="form-group payment-header">
                                         <div class="group-name payment-name">
-                                            
+
                                             <div class="payment-customer"><i class="fa-regular fa-circle-user icon"></i><span
                                                     class="customer-info"> Khách lẻ</span></div>
                                         </div>
                                     </div>
                                     <div class="product-cart-list form-products">
                                         <div class="child-product-list">
-                                            
+
                                             <div class="product-groups" id="renderPay">
                                                 <h4 class="title-products">Khác</h4>
-                                                
+
 
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </kv-cashier-cart-temp-info>
                             </div>
-                               <div class="right-payment">
+                            <div class="right-payment">
 
-                                   <kv-cashier-payment-order class="cashier-payment-order" _nghost-koq-c31="">
+                                <kv-cashier-payment-order class="cashier-payment-order" _nghost-koq-c31="">
 
-                                       <div class="wraper-payment-content">
-                                           <div class="payment-component-child">
-                                               <div class="form-group payment-header"><span
-                                                       class="k-widget k-datetimepicker" style=""><span
-                                                       class="k-picker-wrap k-state-disabled"><input
-                                                       kvkendodatetimepicker="" type="text" data-role="datetimepicker"
-                                                       class="k-input" role="combobox" aria-expanded="false"
-                                                       autocomplete="off" disabled="disabled" aria-disabled="true"
-                                                       id="getDateCurrent"
-                                                       placeholder="20/10/2022 09:36" style="width: 100%;"><span
-                                                       unselectable="on" class="k-select"><span class="k-link k-link-date"
-                                                                                                aria-label="Open the date view"><span
-                                                       unselectable="on" class="k-icon k-i-calendar"></span></span><span
-                                                       class="k-link k-link-time" aria-label="Open the time view"><span
-                                                       unselectable="on"
-                                                       class="k-icon k-i-clock"></span></span></span></span></span></div>
-                                               <div class="form-group">
-                                                   <div class="form-label control-label">
-                                                       Tổng tiền hàng :<span class="badge"></span>
-                                                   </div>
-                                                   <div class="form-output form-control-static" id="totalGrand">
-                                                       0
-                                                   </div>
-                                               </div>
-                                               <div class="form-group form-discount">
-                                                   <label class="form-label control-label">
-                                                       Giảm giá :
-                                                   </label>
-                                                   <div class="form-output">
-                                                       <div class="popup-anchor">
-                                                           <input id="priceSale" class="form-control form-control-sm"
-                                                                  outsideclick="true"
-                                                                  type="number"
-                                                                  placement="left" value="0"/>
-                                                       </div>
-                                                   </div>
-                                               </div>
+                                    <div class="wraper-payment-content">
+                                        <div class="payment-component-child">
+                                            <div class="form-group payment-header"><span
+                                                    class="k-widget k-datetimepicker" style=""><span
+                                                    class="k-picker-wrap k-state-disabled"><input
+                                                    kvkendodatetimepicker="" type="text" data-role="datetimepicker"
+                                                    class="k-input" role="combobox" aria-expanded="false"
+                                                    autocomplete="off" disabled="disabled" aria-disabled="true"
+                                                    id="getDateCurrent"
+                                                    placeholder="20/10/2022 09:36" style="width: 100%;"><span
+                                                    unselectable="on" class="k-select"><span class="k-link k-link-date"
+                                                                                             aria-label="Open the date view"><span
+                                                    unselectable="on" class="k-icon k-i-calendar"></span></span><span
+                                                    class="k-link k-link-time" aria-label="Open the time view"><span
+                                                    unselectable="on"
+                                                    class="k-icon k-i-clock"></span></span></span></span></span></div>
+                                            <div class="form-group">
+                                                <div class="form-label control-label">
+                                                    Tổng tiền hàng :<span class="badge"></span>
+                                                </div>
+                                                <div class="form-output form-control-static" id="totalGrand">
+                                                    0
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-discount">
+                                                <label class="form-label control-label">
+                                                    Giảm giá :
+                                                </label>
+                                                <div class="form-output">
+                                                    <div class="popup-anchor">
+                                                        <input id="priceSale" class="form-control form-control-sm"
+                                                               outsideclick="true"
+                                                               type="number"
+                                                               placement="left" value="0"/>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                               <div class="form-group">
-                                                   <label class="form-label control-label" >
-                                                       <strong >Khách cần trả</strong>
-                                                   </label>
-                                                   <div class="form-output form-control-static text-hightlight"
-                                                        id="customerPay">
-                                                   </div>
-                                               </div>
+                                            <div class="form-group">
+                                                <label class="form-label control-label">
+                                                    <strong>Khách cần trả</strong>
+                                                </label>
+                                                <div class="form-output form-control-static text-hightlight"
+                                                     id="customerPay">
+                                                </div>
+                                            </div>
 
-                                               <div class="form-group">
-                                          <span class="form-label control-label has-icon" >
-                                             <span >Khách thanh toán (F8)</span><button
+                                            <div class="form-group">
+                                          <span class="form-label control-label has-icon">
+                                             <span>Khách thanh toán (F8)</span><button
                                                   class="btn-icon"></button>
                                           </span>
-                                                   <div class="form-output">
-                                                       <input
-                                                               class="form-control form-control-sm payingAmt ng-pristine ng-valid ng-touched"
-                                                               id="payingAmountTxt" name="payingAmountTxt" value="" maxlength="12" type="number">
-                                                   </div>
-                                               </div>
+                                                <div class="form-output">
+                                                    <input
+                                                            class="form-control form-control-sm payingAmt ng-pristine ng-valid ng-touched"
+                                                            id="payingAmountTxt" name="payingAmountTxt" value=""
+                                                            maxlength="12" type="number">
+                                                </div>
+                                            </div>
 
 
-                                           </div>
+                                        </div>
 
-                                           <div class="payment-refun payment-component-child">
-                                               <div class="form-group">
+                                        <div class="payment-refun payment-component-child">
+                                            <div class="form-group">
 
-                                                   <div class="form-label control-label pay-customer" > Tiền
-                                                       thừa trả khách
-                                                   </div>
+                                                <div class="form-label control-label pay-customer"> Tiền
+                                                    thừa trả khách
+                                                </div>
 
-                                                   <div class="form-output form-control-static"
-                                                        id="moneySuperfluous"></div>
-                                               </div>
+                                                <div class="form-output form-control-static"
+                                                     id="moneySuperfluous"></div>
+                                            </div>
 
-                                           </div>
-                                       </div>
+                                        </div>
+                                    </div>
 
-                                   </kv-cashier-payment-order>
+                                </kv-cashier-payment-order>
 
-                                   <div class="float-nav-footer">
+                                <div class="float-nav-footer">
 
-                                       <button class="btn btn-lg btn-success noPrint"
-                                               id="payAllOffClick"
-                                               onclick="cancelPay()"
-                                               type="button">
-                                           <i class="fas fa-dollar-sign"></i>
-                                           Hủy thanh toán
-                                       </button>
-                                       <button class="btn btn-lg btn-success noPrint"
-                                               id="payAllClick" type="button" >
-<!--                                           onclick="handleBillsPrint()"-->
+                                    <button class="btn btn-lg btn-success noPrint"
+                                            id="payAllOffClick"
+                                            onclick="cancelPay()"
+                                            type="button">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        Hủy thanh toán
+                                    </button>
+                                    <button class="btn btn-lg btn-success noPrint"
+                                            id="payAllClick" type="button">
+                                        <!--                                           onclick="handleBillsPrint()"-->
 
-                                           <i class="fas fa-dollar-sign"></i>
-                                           Thanh toán
-                                       </button>
-                                   </div>
-                               </div>
+                                        <i class="fas fa-dollar-sign"></i>
+                                        Thanh toán
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </kv-cashier-payment>
@@ -649,10 +652,10 @@
         <div class="fw-bold">Điện thoại: 1900 6522</div>
     </div>
 
-    <div class="text-center mt-2 fw-bold" ><h1>HÓA ĐƠN BÁN HÀNG</h1></div>
+    <div class="text-center mt-2 fw-bold"><h1>HÓA ĐƠN BÁN HÀNG</h1></div>
     <div class="row mt-4">
         <div class="col-6">
-            <div id="timeBills" class="fw-bold">Ngày bán: <span></span> </div>
+            <div id="timeBills" class="fw-bold">Ngày bán: <span></span></div>
             <div id="userBills" class="my-3 fw-bold">Người bán: <span></span></div>
             <div id="timeInput" class="fw-bold">Thời gian vào : <span></span></div>
         </div>
@@ -664,28 +667,28 @@
 
     <div class="border-bottom my-3"></div>
     <div class="row">
-        <table  class="" id="renderBills">
-            <thead >
+        <table class="" id="renderBills">
+            <thead>
             <tr>
                 <th class="text-start">Tên Sản Phẩm</th>
-                <th  class="text-end">Số Lượng</th>
-                <th  class="text-end">Giá</th>
-                <th  class="text-end">Thành tiền (đ)</th>
+                <th class="text-end">Số Lượng</th>
+                <th class="text-end">Giá</th>
+                <th class="text-end">Thành tiền (đ)</th>
             </tr>
             </thead>
             <tbody>
 
             </tbody>
-            <tfoot >
+            <tfoot>
             <tr class="text-end">
                 <td colspan="3" class="fw-bold">Tổng tiền hàng:</td>
                 <td id="totalBills"></td>
             </tr>
-            <tr class="text-end" >
-                <td colspan="3" class="fw-bold" >Giảm giá:</td>
+            <tr class="text-end">
+                <td colspan="3" class="fw-bold">Giảm giá:</td>
                 <td id="discountBills"></td>
             </tr>
-            <tr class="text-end" >
+            <tr class="text-end">
                 <td colspan="3" class="fw-bold">Tổng cộng:</td>
                 <td id="totalAmountBills"></td>
             </tr>
@@ -695,241 +698,174 @@
     </div>
     <div class="text-center mt-3 fst-italic">Cảm ơn quý khách hẹn gặp lại !</div>
 </div>
-<!--bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb-->
-<modal-container
-        class="modal fade in d-none"
-        id="splitTable"
-        role="dialog"
-        tabindex="-1"
-        style="display: block">
-    <div role="document" class="modal-dialog modal-changing-order ui-draggable">
-        <div class="modal-content" style="width: 700px;">
-            <kv-modal _nghost-duf-c36="">
-                
-                <div  class="modal-header ng-star-inserted ui-draggable-handle"
-                     style=" margin: 30px auto !important ;
-">
-                    <h4  class="modal-title pull-left" id="tableSplit"></h4>
-                    <button 
-                            aria-label="Close"
-                            class="close pull-right"
-                            id="closeSplitTable"
-                            onclick="closeSplitTable(tableTopId,booking_id)"
-                            type="button"><i  class="fa-light fa-xmark"></i></button>
-                </div>
-                
-                <div  class="ng-star-inserted"></div>
-                <kv-cashier-table-changing _nghost-duf-c41="" class="ng-star-inserted">
-                    
-                    <div  class="table-changing form-wraper modal-body ng-star-inserted"
-                         >
-                        <div  class="form-label-80">
-                            <div  class="form-group checkbox-changing">
-                                <div  class="form-control-static">
-                                    <label  class="radio-inline ng-star-inserted"><input
-                                         name="orderActions" type="radio" value="merge"><span
-                                         >Ghép đơn</span></label><label
-                                         class="radio-inline ng-star-inserted"><input
-                                         name="orderActions" type="radio" value="split"><span
-                                         >Tách đơn</span></label>
+
+<div class="modal" tabindex="-1" id="tachGhep">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Bàn 1</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ng-star-inserted">
+                    <div class="table-changing form-wraper modal-body ng-star-inserted">
+                        <div class="form-label-80">
+                            <div class="form-group checkbox-changing">
+                                <div class="form-control-static">
+                                    <label class="radio-inline ng-star-inserted">
+                                        <input name="orderActions" type="radio" checked onclick="ghepDon()"
+                                               value="merge"/>
+                                        <span>Ghép đơn</span>
+                                    </label>
+                                    <label
+                                            class="radio-inline ng-star-inserted">
+                                        <input name="orderActions" type="radio" onclick="tachDon()" value="split"/>
+                                        <span>Tách đơn</span></label>
                                 </div>
                             </div>
                         </div>
-                        
-                        <kv-cashier-merge-orders  _nghost-duf-c42="" class="ng-star-inserted">
-                            <div _ngcontent-duf-c42="" class="form-label-80">
-                                <div _ngcontent-duf-c42="" class="form-group">
-                                    <label _ngcontent-duf-c42="" class="form-label control-label" >Ghép
-                                        đến </label>
-                                    <div _ngcontent-duf-c42="" class="form-output" style="width: 250px;">
-                                        <kendo-dropdownlist _ngcontent-duf-c42=""
-                                                            class="form-control-custom k-widget k-dropdown k-header"
-                                                            dir="ltr">
-                                            
-                                            <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                                                  class="k-dropdown-wrap k-state-default"
-                                                  id="k-1ccce708-e6f8-4a4f-8fe4-34c31b1b6340" dir="ltr" readonly="false"
-                                                  tabindex="0" aria-disabled="false" aria-readonly="false"
-                                                  aria-expanded="false"
-                                                  aria-describedby="deacc041-93bd-458c-9231-b5d7378daaad">
-                                    <span class="k-input" unselectable="on" id="deacc041-93bd-458c-9231-b5d7378daaad">
-                                       Chọn phòng/bàn
-                                    </span>
-                                    <span class="k-select" unselectable="on"><span
-                                            class="k-icon k-i-arrow-s"></span></span>
-                                 </span>
-                                            
-                                        </kendo-dropdownlist>
+                        <div class="ng-star-inserted">
+                            <div class="form-label-80" id="ghepDon">
+                                <div class="form-group">
+                                    <label class="form-label control-label">Ghép đến </label>
+                                    <select class="form-select" aria-label="Default select example"
+                                            style="width: 200px;">
+                                        <option value="">ban 1</option>
+                                        <option value="">ban 1</option>
+                                        <option value="">ban 1</option>
+                                        <option value="">ban 1</option>
+                                    </select>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-start"><input type="checkbox"/></th>
+                                        <th>Khách Hàng</th>
+                                        <th>Mã Đơn</th>
+                                        <th class="text-end">Số Lượng Hàng</th>
+                                        <th class="text-end">Tổng Tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-start"><input type="checkbox"/></td>
+                                        <td>Kem</td>
+                                        <td>Ban 2</td>
+                                        <td class="text-end">1</td>
+                                        <td class="text-end">1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start"><input type="checkbox"/></td>
+                                        <td>Kem</td>
+                                        <td>Ban 2</td>
+                                        <td class="text-end">1</td>
+                                        <td class="text-end">1</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="form-label-80 d-none" id="tachDon">
+                                <div class="form-group">
+                                    <label class="form-label control-label">Tách Đến </label>
+                                    <div class="row">
+                                        <select class="form-select" aria-label="Default select example"
+                                                style="width: 200px;">
+                                            <option value="">ban 1</option>
+                                            <option value="">ban 1</option>
+                                            <option value="">ban 1</option>
+                                            <option value="">ban 1</option>
+                                        </select>
+                                        <select class="form-select ms-3" aria-label="Default select example"
+                                                style="width: 200px;">
+                                            <option value="">ban 1</option>
+                                            <option value="">ban 1</option>
+                                            <option value="">ban 1</option>
+                                            <option value="">ban 1</option>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div _ngcontent-duf-c42="" class="form-box">
-                                <kendo-grid _ngcontent-duf-c42="" class="k-grid-blue k-widget k-grid"
-                                            kendogridselectby="id" dir="ltr">
-                                    
-                                    <div class="k-grid-aria-root" role="grid" aria-rowcount="1" aria-colcount="5">
-                                        
-                                        <div class="k-grid-header ng-star-inserted" role="presentation"
-                                             style="padding: 0px 4px 0px 0px;">
-                                            
-                                            <div class="k-grid-header-wrap" data-scrollable="" role="presentation">
-                                                <table role="presentation">
-                                                    <colgroup  role="presentation">
-                                                        
-                                                        <col class="ng-star-inserted">
-                                                        <col class="ng-star-inserted">
-                                                        <col class="ng-star-inserted">
-                                                        <col class="ng-star-inserted">
-                                                        <col class="ng-star-inserted">
-                                                        
-                                                    </colgroup>
-                                                    <thead kendogridheader="" role="presentation" _nghost-duf-c40="">
-                                                    
-                                                    <tr  kendogridlogicalrow="" role="row"
-                                                        class="ng-star-inserted">
-                                                        
-                                                        <th  aria-selected="false"
-                                                            class="k-header cell-checkbox ng-star-inserted"
-                                                            
-                                                             role="columnheader" rowspan="1"
-                                                            colspan="1" aria-colindex="1">
-                                                            <label
-                                                                _ngcontent-duf-c42=""
-                                                                class="k-checkbox-label ng-star-inserted"
-                                                        ></label>
-                                                            
-                                                        </th>
-                                                        
-                                                        <th  aria-selected="false"
-                                                            class="k-header ng-star-inserted" kendodraggable=""
-                                                            kendodraggablecolumn="" kendodroptarget=""
-                                                             role="columnheader" rowspan="1"
-                                                            colspan="1" aria-colindex="2">
-                                                            Khách hàng
-                                                            
-                                                        </th>
-                                                        
-                                                        <th  aria-selected="false"
-                                                            class="k-header cell-date-time ng-star-inserted"
-                                                            
-                                                             role="columnheader" rowspan="1"
-                                                            colspan="1" aria-colindex="3">
-                                                            Mã đơn
-                                                            
-                                                        </th>
-                                                        
-                                                        <th  aria-selected="false"
-                                                            class="k-header text-right cell-quatity ng-star-inserted"
-                                                            
-                                                             role="columnheader" rowspan="1"
-                                                            colspan="1" aria-colindex="4">
-                                                            Số lượng hàng
-                                                            
-                                                        </th>
-                                                        
-                                                        <th  aria-selected="false"
-                                                            class="k-header cell-price ng-star-inserted"
-                                                            
-                                                             role="columnheader" rowspan="1"
-                                                            colspan="1" aria-colindex="5">
-                                                            Tổng tiền
-                                                            
-                                                        </th>
-                                                        
-                                                    </tr>
-                                                    
-                                                    </thead>
-                                                </table>
-                                                
-                                            </div>
-                                        </div>
-                                        <kendo-grid-list class="k-grid-container ng-star-inserted" role="presentation">
-                                            
-                                            <div class="k-grid-content k-virtual-content" role="presentation"
-                                                 tabindex="-1">
-                                                <div class="k-grid-table-wrap" role="presentation">
-                                                    <table class="k-grid-table" role="presentation">
-                                                        <colgroup  role="presentation">
-                                                            
-                                                            <col class="ng-star-inserted">
-                                                            <col class="ng-star-inserted">
-                                                            <col class="ng-star-inserted">
-                                                            <col class="ng-star-inserted">
-                                                            <col class="ng-star-inserted">
-                                                            
-                                                        </colgroup>
-                                                        <tbody  role="presentation">
-                                                        
-                                                        <tr class="k-grid-norecords ng-star-inserted">
-                                                            <td colspan="5">
-                                                                 Bàn chưa có hóa đơn nào
-                                                            </td>
-                                                        </tr>
-                                                        
-                                                        </tbody>
-                                                    </table>
-                                                    
-                                                </div>
-                                                
-                                                <div class="k-height-container" role="presentation">
-                                                    <div></div>
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                        </kendo-grid-list>
-                                        
-                                    </div>
-                                    
-                                    <kendo-pager class="k-pager-wrap k-grid-pager k-widget ng-star-inserted">
-                                        
-                                    </kendo-pager>
-                                    
-                                </kendo-grid>
-                            </div>
-                        </kv-cashier-merge-orders>
-                        
-                    </div>
-                    <div  class="modal-footer ng-star-inserted">
-                        <button  class="btn btn-primary"><i 
-                                                                                 class="fa fa-check-square"></i><span
-                                 >Thực hiện</span></button>
-                        <a  class="btn btn-default" onclick="closeSplitTable(tableTopId)"><i
-                                 class="fa fa-ban"></i><span
-                                 >Bỏ qua</span></a></div>
-                </kv-cashier-table-changing>
-                
-            </kv-modal>
-        </div>
-    </div>
-</modal-container>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Đồ Ăn</th>
+                                        <th class="text-end">Số Lượng Đơn Gốc</th>
+                                        <th class="text-end">Số Lượng Tách</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Kem</td>
+                                        <td class="text-end">10</td>
+                                        <td class="text-end">
+                                            <i class="fa-regular fa-minus"></i>
+                                            1
+                                            <i class="fa-regular fa-plus"></i>
+                                        </td>
 
+
+                                    </tr>
+                                    <tr>
+                                        <td>Kem</td>
+                                        <td class="text-end">10</td>
+                                        <td class="text-end">
+                                            <i class="fa-regular fa-minus"></i>
+                                            1
+                                            <i class="fa-regular fa-plus"></i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kem</td>
+                                        <td class="text-end">10</td>
+                                        <td class="text-end">
+                                            <i class="fa-regular fa-minus"></i>
+                                            1
+                                            <i class="fa-regular fa-plus"></i>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gray" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
 <!--renderBookingBar-->
 <modal-container class="modal fade in d-none" role="dialog" id="noteItemUpdate" tabindex="-1" aria-modal="true"
                  style="display: block;">
     <div role="document" class="modal-dialog modal-note ui-draggable">
         <div class="modal-content">
-            <kv-modal _nghost-bwu-c36>
-                
+            <kv-modal>
                 <div class="modal-header ng-star-inserted ui-draggable-handle">
                     <h4 class="modal-title pull-left">Ghi chú / Món thêm</h4>
                     <button aria-label="Close" class="close pull-right" skip-disable type="button"><i
                             class="fa-light fa-xmark"></i></button>
                 </div>
-                
+
                 <div class="ng-star-inserted"></div>
                 <kv-cashier-cart-item-note-and-toping class="ng-star-inserted">
                     <div class="modal-body">
-                        
+
                         <div class="form-group form-note getNoteInput">
                                                     <textarea
                                                             class="form-control ng-valid ng-dirty ng-touched"
                                                             maxlength="300"
                                                             style="height: 32px;"></textarea>
                         </div>
-                        
+
                         <div class="product-cart-list product-cart-list--addMoreTopping">
-                            
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -944,16 +880,12 @@
                         </a>
                     </div>
                 </kv-cashier-cart-item-note-and-toping>
-                
+
             </kv-modal>
         </div>
     </div>
 </modal-container>
-<!--modallllllllllllllllllllllllllllllllllllllllllllllllllllllllll bills-->
-<!--<div id="spinner-div" class="pt-5 d-none">-->
-<!--    <div class="spinner-border text-primary" role="status">-->
-<!--    </div>-->
-<!--</div>-->
+
 <th:block th:replace="/order/modalSaveCustomer :: saveCustomer"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
@@ -983,17 +915,6 @@
         $('#col-menu').addClass("d-none")
     });
 
-    // $("#formDemo").validate({
-    //     rules:{
-    //         payingAmountTxt : {
-    //             required : true,
-    //             min : 0
-    //         }
-    //     },
-    //     messages : {
-    //         payingAmountTxt: 'Nhập số dương.'
-    //     }
-    // })
 </script>
 </body>
 </html>

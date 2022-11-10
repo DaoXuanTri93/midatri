@@ -1,6 +1,9 @@
 $("#submitRes").on('click', () => {
     registerUser();
 })
+$("#submitLogin").on('click', () => {
+    login();
+})
 
 function registerUser() {
     let rePass = $("#RePasswordCre").val();
@@ -20,6 +23,42 @@ function registerUser() {
         .done((data) => {
             alert("dang ky thanh cong")
             window.location.href = "/login"
+        })
+}
+
+function login() {
+    let userLogin = {
+        userName: $("#userNameLogin").val(),
+        password: $("#passwordLogin").val()
+    };
+    $.ajax({
+        url: `${location.origin}/api/users/login`,
+        type: "POST",
+        contentType: 'application/json',
+        data: JSON.stringify(userLogin)
+    })
+        .done((data) => {
+            console.log(data)
+            iziToast.success(
+                        {
+                            timeout: 2000,
+                            position: 'topRight',
+                            title: 'OK',
+                            message: "Đăng nhập thành công !"
+                        });
+            setTimeout(()=>{
+                // load("/orders",data)
+                window.location.href = "/orders"
+            },1000)
+        })
+        .fail((jqXHR) => {
+            iziToast.error(
+                {
+                    timeout: 2000,
+                    position: 'topRight',
+                    title: 'OK',
+                    message: 'Tài khoản không đúng, xin nhập lại.'
+                });
         })
 }
 

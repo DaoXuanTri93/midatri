@@ -29,4 +29,5 @@ public interface ITableTopService {
     TableTopResult update(TableTop tableTop);
 
     Page<TableTop> findAllpt(Pageable pageable);
+    List<TableTop> findAllPage(int numberPage);
 }

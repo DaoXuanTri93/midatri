@@ -3,7 +3,7 @@
     font-size: 15px;
 }
 
-#payingAmountTxt{
+#payingAmountTxt {
     font-size: 15px;
     color: green;
 }
@@ -20,6 +20,7 @@
     margin: 0px;
     transform: translate(-104.8px, 32.8px);
 }
+
 .dropdown-menu li a {
     padding: 10px 12px;
     color: #000810;
@@ -33,6 +34,7 @@
     background-color: rgba(0, 102, 204, 0.1);
     color: #0066CC;
 }
+
 .d-none {
     display: none
 }
@@ -50,14 +52,21 @@
 }
 
 @media print {
+    head .noPrint {
+        display: none !important;
+    }
     .noPrint {
-        display: none;
-    }
-
-}
-
-@media screen {
-    .print {
-        color: red;
+        display: none !important;
     }
 }
+
+@page {
+    size: auto;
+    margin: 5px;
+}
+
+/*@media screen {*/
+/*    .print {*/
+/*        color: red;*/
+/*    }*/
+/*}*/

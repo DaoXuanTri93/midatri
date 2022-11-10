@@ -178,17 +178,17 @@ function BookingItemAPI() {
                 fail(jqXHR);
             })
     }
-    this.updateStatusCooking = (bookingItemId, done, fail) => {
-        $.ajax({
-            url: `${location.origin}/api/bookingItem/removeItem/${bookingItemId}`,
-            type: "POST",
-            contentType: 'application/json'
-        })
-            .done((data) => {
-                done(data);
-            })
-            .fail((jqXHR) => {
-                fail(jqXHR);
-            })
-    }
+    // this.removeCooking = (bookingItemId, done, fail) => {
+    //     $.ajax({
+    //         url: `${location.origin}/api/bookingItem/removeItem/${bookingItemId}`,
+    //         type: "POST",
+    //         contentType: 'application/json'
+    //     })
+    //         .done((data) => {
+    //             done(data);
+    //         })
+    //         .fail((jqXHR) => {
+    //             fail(jqXHR);
+    //         })
+    // }
 }

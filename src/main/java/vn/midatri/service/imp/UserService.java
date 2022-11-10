@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.midatri.dto.user.UserRegister;
 import vn.midatri.dto.user.UserResult;
+import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.mapper.UserMapper;
 import vn.midatri.repository.UserRepository;
 import vn.midatri.repository.model.User;
 import vn.midatri.service.IUserService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,5 +78,19 @@ public class UserService implements IUserService {
     public User findUserById(Long id) {
         return userRepository.findUserById(id);
     }
+
+    @Override
+    public User findByUserNameAndPassword(String userName, String password) {
+        User user = userRepository.findByUserNameAndPassword(userName, password);
+        System.out.println(user);
+        if (user.getAdmin() == true) {
+            return user;
+        }
+        if(user.getAdmin() == null){
+            throw new NotFoundException("Tài khoản không tồn tại, vui lòng nhập lại");
+        }
+        return user;
+    }
+
 
 }

@@ -10,8 +10,18 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/login")
 public class LoginRegisterController {
 
-    @GetMapping("")
+    @GetMapping()
     public ModelAndView Login(){
         return new ModelAndView("/admin/login-register");
     }
+//    @GetMapping("/admin")
+//    public ModelAndView admin(){
+//        return new ModelAndView("/products");
+//    }
+//    @GetMapping("/user")
+//    public ModelAndView user(){
+//        return new ModelAndView("/orders");
+//    }
+
+
 }

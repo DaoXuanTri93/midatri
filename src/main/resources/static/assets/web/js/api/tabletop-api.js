@@ -4,7 +4,7 @@ function TabletopAPI() {
     this.findAll = (done, fail) => {
         $.ajax({
             type: "GET",
-            url: `${location.origin}/api/table-top`,
+            url: `${location.origin}/api/table-top/unavaliable`,
         })
             .done((data) => {
                 done(data);

@@ -3,7 +3,6 @@ package vn.midatri.service.imp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -105,6 +104,11 @@ public class TableTopService implements ITableTopService {
     public Page<TableTop> findAllpt(Pageable pageable) {
 //        pageable= PageRequest.of(1, 10);
         return tableTopRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<TableTop> findAllPage(int numberPage) {
+        return tableTopRepository.findAllPage(numberPage);
     }
 
 

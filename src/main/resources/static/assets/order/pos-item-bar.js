@@ -26,27 +26,6 @@ function renderAllKitchen(all) {
     })
 }
 
-// if (getLocalKitChen !== undefined) {
-//     console.log("1")
-//     $.each(getLocalKitChen, (i, item) => {
-//         if (item.status === "KITCHEN") {
-//             renderKitchen(i, item)
-//         }
-//     })
-// }
-// api.bookingItem.findAllBookingItemStatusKitchen((data) => {
-//     bookingItemAll = data
-//     setLocalKitchen = JSON.stringify(bookingItemAll);
-//     localStorage.setItem("bookingKitChen", setLocalKitchen)
-//     getLocalKitChen = JSON.parse(setLocalKitchen)
-//     $.each(getLocalKitChen, (i, item) => {
-//         renderKitchen(i, item)
-//     })
-//
-// }, (jqXHR) => {
-//
-// })
-
 
 function renderAllCookingStart() {
     api.bookingItem.findAllBookingItemStatusCooking((done) => {
@@ -174,7 +153,9 @@ function handleCooking(index, bookingItemId) {
     let bookingItem = all[index];
     let item = itemMap.get(bookingItem.itemId);
     let nameUser = userMap.get(item.userId).userName;
+    console.log("1", bookingItemId)
     api.bookingItem.updateStatusCooking(bookingItemId, (data) => {
+        console.log(bookingItemId , "32")
         let result = `
             <div class="billItem" id="${bookingItem.id}_cooking">
                 <div  class="row-list">
@@ -264,5 +245,3 @@ function handleRemoveItem(index, bookingItemId){
 }
 
 renderAllBookingItem();
-
-

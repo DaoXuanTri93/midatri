@@ -29,21 +29,25 @@ public class TableTopApi {
         List<TableTopResult> tableTop = tableTopService.findAll();
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
+
     @GetMapping(("/unavaliable"))
     public ResponseEntity<?> findAllNotUnavaliable() {
         List<TableTopResult> tableTop = tableTopService.findAllByStatusNot(TabletopStatus.UNAVAILABLE);
         return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
+
     @GetMapping("/renderTableUse")
     public ResponseEntity<?> listTableUse() {
         List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(ACTIVE);
         return new ResponseEntity<>(tableTopResults, HttpStatus.OK);
     }
+
     @GetMapping("/renderWaitTable")
     public ResponseEntity<?> listTableDeleted() {
         List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(TabletopStatus.AVAILABLE);
         return new ResponseEntity<>(tableTopResults, HttpStatus.OK);
     }
+
     @GetMapping("/renderNotUseTable")
     public ResponseEntity<?> listTable() {
         List<TableTopResult> tableTopResults = tableTopService.findAllByStatus(TabletopStatus.UNAVAILABLE);
@@ -75,7 +79,7 @@ public class TableTopApi {
         tableTop.setStatus(TabletopStatus.AVAILABLE);
         tableTopService.update(tableTop);
 //        tableTop.setStatus(TabletopStatus.AVAILABLE);
-        return new ResponseEntity<>(tableTop,HttpStatus.OK);
+        return new ResponseEntity<>(tableTop, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
@@ -85,10 +89,10 @@ public class TableTopApi {
     }
 
     @PutMapping("edit/")
-    public ResponseEntity<?> editTable( @RequestBody TableTop tableTop) {
+    public ResponseEntity<?> editTable(@RequestBody TableTop tableTop) {
         try {
             return new ResponseEntity<>(tableTopService.update(tableTop), HttpStatus.ACCEPTED);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("false");
         }
     }
@@ -99,4 +103,10 @@ public class TableTopApi {
 //        Page<TableTop> tableTops = tableTopService.findAllpt(pageable);
 //        return new ResponseEntity<>(tableTops, HttpStatus.OK);
 //    }
+
+    @GetMapping("/page")
+    public ResponseEntity<?> findAllPt(int number) {
+        List<TableTop> tableTops = tableTopService.findAllPage(number);
+        return new ResponseEntity<>(tableTops, HttpStatus.OK);
+    }
 }

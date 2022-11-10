@@ -1,210 +1,210 @@
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<th:block th:fragment="tableBar">
-  <kv-root>
-    <div class="fnb-app">
-      <router-outlet></router-outlet>
-      <kv-cashier-page>
-        <div class="introduce-app">
-          <button class="btn-del"><i class="fa-solid fa-xmark"></i></button>
-          <div class="banner-introduce-app">
-          </div>
-        </div>
-        <div class="wrapper">
-          <kv-cashier-header>
-            <div class="header">
-              <div class="header-left">
-                <h3>Chờ Chế Biến</h3>
-              </div>
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
+<!--<th:block th:fragment="tableBar">-->
+<!--  <kv-root>-->
+<!--    <div class="fnb-app">-->
+<!--      <router-outlet></router-outlet>-->
+<!--      <kv-cashier-page>-->
+<!--        <div class="introduce-app">-->
+<!--          <button class="btn-del"><i class="fa-solid fa-xmark"></i></button>-->
+<!--          <div class="banner-introduce-app">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="wrapper">-->
+<!--          <kv-cashier-header>-->
+<!--            <div class="header">-->
+<!--              <div class="header-left">-->
+<!--                <h3>Chờ Chế Biến</h3>-->
+<!--              </div>-->
 
-              <div class="header-right">
-                <h3>Đã Xong</h3>
-                <kv-cashier-menu>
-                  <ul class="header-right-ul pull-right dropdown">
-                    <div class="dropdown">
-                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        0794512184
-                      </a>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li>
-                          <a class="dropdown-item my-3" href="/orders/bill">
-                            <i class="fa-regular fa-bell-concierge"></i>
-                            Nhà Bếp</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item " href="/orders">
-                            <i class="fa-regular fa-calendar-check"></i>
-                            Lễ Tân</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item my-3" href="#">
-                            <i class="fa-regular fa-list-dropdown"></i>
-                            Quản lý</a>
-                        </li>
-                        <li>
-                          <a class="dropdown-item" href="#">
-                            <i class="fa-regular fa-right-from-bracket"></i>
-                            Đăng Xuất</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </ul>
-                </kv-cashier-menu>
-              </div>
-            </div>
-          </kv-cashier-header>
-          <div class="wrap-content">
-            <div class="col-left" id="col-table-left">
-              <div  class="wrap-list-items">
-                <div  class="left">
-                  <div >
-                    <div  style="height: 100%;">
-                      <!----><!---->
-                      <virtual-scroller  style="height: 100%;"  class="vertical selfScroll">
-                        <div  class="scrollable-content" id="renderItemBar">
+<!--              <div class="header-right">-->
+<!--                <h3>Đã Xong</h3>-->
+<!--                <kv-cashier-menu>-->
+<!--                  <ul class="header-right-ul pull-right dropdown">-->
+<!--                    <div class="dropdown">-->
+<!--                      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                        0794512184-->
+<!--                      </a>-->
+<!--                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+<!--                        <li>-->
+<!--                          <a class="dropdown-item my-3" href="/orders/bill">-->
+<!--                            <i class="fa-regular fa-bell-concierge"></i>-->
+<!--                            Nhà Bếp</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                          <a class="dropdown-item " href="/orders">-->
+<!--                            <i class="fa-regular fa-calendar-check"></i>-->
+<!--                            Lễ Tân</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                          <a class="dropdown-item my-3" href="#">-->
+<!--                            <i class="fa-regular fa-list-dropdown"></i>-->
+<!--                            Quản lý</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                          <a class="dropdown-item" href="#">-->
+<!--                            <i class="fa-regular fa-right-from-bracket"></i>-->
+<!--                            Đăng Xuất</a>-->
+<!--                        </li>-->
+<!--                      </ul>-->
+<!--                    </div>-->
+<!--                  </ul>-->
+<!--                </kv-cashier-menu>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </kv-cashier-header>-->
+<!--          <div class="wrap-content">-->
+<!--            <div class="col-left" id="col-table-left">-->
+<!--              <div  class="wrap-list-items">-->
+<!--                <div  class="left">-->
+<!--                  <div >-->
+<!--                    <div  style="height: 100%;">-->
+<!--                      &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                      <virtual-scroller  style="height: 100%;"  class="vertical selfScroll">-->
+<!--                        <div  class="scrollable-content" id="renderItemBar">-->
 
-                        </div>
-                      </virtual-scroller>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+<!--                        </div>-->
+<!--                      </virtual-scroller>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="col-right">
-              <div class="col-right-content">
-                <virtual-scroller  style="height: 100%;"  class="vertical selfScroll">
-                  <div  class="scrollable-content" style="transform: translateY(0px);">
-                    <!---->
-                    <div class="billItem">
-                      <!---->
-                      <div  class="row-list">
-                        <div  class="cell-kc-name">
-                          <h4  class="name">
-                            Lemon Juice <!----><a  class="notify-no-dish" title="Gửi thông báo"><i  class="fas fa-volume-high"></i></a>
-                          </h4>
-                          <div  class="topping-note">
-                            <!----><!----><!---->
-                          </div>
-                          <!----><span  class="code-time">2-36 - 30/10/2022 09:26 - Bởi Lê Minh Trí </span>
-                        </div>
-                        <div  class="cell-kc-favorite">
-                          <!---->
-                        </div>
-                        <div  class="cell-kc-quantity">
-                          11 <!---->
-                        </div>
-                        <!---->
-                        <div  class="cell-kc-table">
-                          <h4  class="ng-binding">Bàn 1</h4>
-                          <span  class="time">một giờ trước</span><!---->
-                        </div>
-                        <!----><!---->
-                        <div  class="cell-kc-button"><button  class="btn btn-one-part" type="button" title="Chế biến xong một"><i  class="far fa-angle-right"></i></button><button  class="btn btn-all-order" type="button" title="Chế biến xong tất cả"><i  class="far fa-angle-double-right"></i></button></div>
-                      </div>
-                    </div>
-                    <div class="billItem">
-                      <!---->
-                      <div  class="row-list">
-                        <div  class="cell-kc-name">
-                          <h4  class="name">
-                            Lemon Juice <!----><a  class="notify-no-dish" title="Gửi thông báo"><i  class="fas fa-volume-high"></i></a>
-                          </h4>
-                          <div  class="topping-note">
-                            <!----><!----><!---->
-                          </div>
-                          <!----><span  class="code-time">2-36 - 30/10/2022 09:26 - Bởi Lê Minh Trí </span>
-                        </div>
-                        <div  class="cell-kc-favorite">
-                          <!---->
-                        </div>
-                        <div  class="cell-kc-quantity">
-                          11 <!---->
-                        </div>
-                        <!---->
-                        <div  class="cell-kc-table">
-                          <h4  class="ng-binding">Bàn 1</h4>
-                          <span  class="time">một giờ trước</span><!---->
-                        </div>
-                        <!----><!---->
-                        <div  class="cell-kc-button"><button  class="btn btn-one-part" type="button" title="Chế biến xong một"><i  class="far fa-angle-right"></i></button><button  class="btn btn-all-order" type="button" title="Chế biến xong tất cả"><i  class="far fa-angle-double-right"></i></button></div>
-                      </div>
-                    </div>
-                    <div class="billItem">
-                      <!---->
-                      <div  class="row-list">
-                        <div  class="cell-kc-name">
-                          <h4  class="name">
-                            Lemon Juice <!----><a  class="notify-no-dish" title="Gửi thông báo"><i  class="fas fa-volume-high"></i></a>
-                          </h4>
-                          <div  class="topping-note">
-                            <!----><!----><!---->
-                          </div>
-                          <!----><span  class="code-time">2-36 - 30/10/2022 09:26 - Bởi Lê Minh Trí </span>
-                        </div>
-                        <div  class="cell-kc-favorite">
-                          <!---->
-                        </div>
-                        <div  class="cell-kc-quantity">
-                          11 <!---->
-                        </div>
-                        <!---->
-                        <div  class="cell-kc-table">
-                          <h4  class="ng-binding">Bàn 1</h4>
-                          <span  class="time">một giờ trước</span><!---->
-                        </div>
-                        <!----><!---->
-                        <div  class="cell-kc-button"><button  class="btn btn-one-part" type="button" title="Chế biến xong một"><i  class="far fa-angle-right"></i></button><button  class="btn btn-all-order" type="button" title="Chế biến xong tất cả"><i  class="far fa-angle-double-right"></i></button></div>
-                      </div>
-                    </div>
-                  </div>
-                </virtual-scroller>
-              </div>
-            </div>
-          </div>
-          <kv-cashier-history-cart>
-
-
-            <kv-pull-over>
-              <div class="float-nav right" hidden="">
-                <div class="float-nav-content">
-                  <button class="float-nav-close"><i class="fal fa-times"></i></button>
-                  <h4 class="float-title">Lịch sử</h4>
-
-                  <div class="parse-history empty-area">
-
-                    <div class="page-empty"><i class="fal fa-inbox"></i>
-                      <div class="empty-content" translate=""> Không có dữ liệu</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="float-overlay" hidden=""></div>
-            </kv-pull-over>
-          </kv-cashier-history-cart>
-
-          <div class="support">
-            <ul>
-              <li><i class="fa-solid fa-phone"></i> Hỗ trợ 1900 6522</li>
-
-              <li><i class="fa-solid fa-location-dot"></i> Chi nhánh trung tâm
-              </li>
-
-              <li class="sort-key"><a outsideclick="true" placement="top" title="Danh sách các phím tắt"><i
-                      class="fa-solid fa-circle-info"></i> Phím tắt </a></li>
-              <li class="app-version"><span>Phiên bản 2.10.0</span></li>
-            </ul>
-          </div>
-        </div>
+<!--            <div class="col-right">-->
+<!--              <div class="col-right-content">-->
+<!--                <virtual-scroller  style="height: 100%;"  class="vertical selfScroll">-->
+<!--                  <div  class="scrollable-content" style="transform: translateY(0px);">-->
+<!--                    &lt;!&ndash;&ndash;&gt;-->
+<!--                    <div class="billItem">-->
+<!--                      &lt;!&ndash;&ndash;&gt;-->
+<!--                      <div  class="row-list">-->
+<!--                        <div  class="cell-kc-name">-->
+<!--                          <h4  class="name">-->
+<!--                            Lemon Juice &lt;!&ndash;&ndash;&gt;<a  class="notify-no-dish" title="Gửi thông báo"><i  class="fas fa-volume-high"></i></a>-->
+<!--                          </h4>-->
+<!--                          <div  class="topping-note">-->
+<!--                            &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                          </div>-->
+<!--                          &lt;!&ndash;&ndash;&gt;<span  class="code-time">2-36 - 30/10/2022 09:26 - Bởi Lê Minh Trí </span>-->
+<!--                        </div>-->
+<!--                        <div  class="cell-kc-favorite">-->
+<!--                          &lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        <div  class="cell-kc-quantity">-->
+<!--                          11 &lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;&ndash;&gt;-->
+<!--                        <div  class="cell-kc-table">-->
+<!--                          <h4  class="ng-binding">Bàn 1</h4>-->
+<!--                          <span  class="time">một giờ trước</span>&lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                        <div  class="cell-kc-button"><button  class="btn btn-one-part" type="button" title="Chế biến xong một"><i  class="far fa-angle-right"></i></button><button  class="btn btn-all-order" type="button" title="Chế biến xong tất cả"><i  class="far fa-angle-double-right"></i></button></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="billItem">-->
+<!--                      &lt;!&ndash;&ndash;&gt;-->
+<!--                      <div  class="row-list">-->
+<!--                        <div  class="cell-kc-name">-->
+<!--                          <h4  class="name">-->
+<!--                            Lemon Juice &lt;!&ndash;&ndash;&gt;<a  class="notify-no-dish" title="Gửi thông báo"><i  class="fas fa-volume-high"></i></a>-->
+<!--                          </h4>-->
+<!--                          <div  class="topping-note">-->
+<!--                            &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                          </div>-->
+<!--                          &lt;!&ndash;&ndash;&gt;<span  class="code-time">2-36 - 30/10/2022 09:26 - Bởi Lê Minh Trí </span>-->
+<!--                        </div>-->
+<!--                        <div  class="cell-kc-favorite">-->
+<!--                          &lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        <div  class="cell-kc-quantity">-->
+<!--                          11 &lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;&ndash;&gt;-->
+<!--                        <div  class="cell-kc-table">-->
+<!--                          <h4  class="ng-binding">Bàn 1</h4>-->
+<!--                          <span  class="time">một giờ trước</span>&lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                        <div  class="cell-kc-button"><button  class="btn btn-one-part" type="button" title="Chế biến xong một"><i  class="far fa-angle-right"></i></button><button  class="btn btn-all-order" type="button" title="Chế biến xong tất cả"><i  class="far fa-angle-double-right"></i></button></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="billItem">-->
+<!--                      &lt;!&ndash;&ndash;&gt;-->
+<!--                      <div  class="row-list">-->
+<!--                        <div  class="cell-kc-name">-->
+<!--                          <h4  class="name">-->
+<!--                            Lemon Juice &lt;!&ndash;&ndash;&gt;<a  class="notify-no-dish" title="Gửi thông báo"><i  class="fas fa-volume-high"></i></a>-->
+<!--                          </h4>-->
+<!--                          <div  class="topping-note">-->
+<!--                            &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                          </div>-->
+<!--                          &lt;!&ndash;&ndash;&gt;<span  class="code-time">2-36 - 30/10/2022 09:26 - Bởi Lê Minh Trí </span>-->
+<!--                        </div>-->
+<!--                        <div  class="cell-kc-favorite">-->
+<!--                          &lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        <div  class="cell-kc-quantity">-->
+<!--                          11 &lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;&ndash;&gt;-->
+<!--                        <div  class="cell-kc-table">-->
+<!--                          <h4  class="ng-binding">Bàn 1</h4>-->
+<!--                          <span  class="time">một giờ trước</span>&lt;!&ndash;&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;&ndash;&gt;&lt;!&ndash;&ndash;&gt;-->
+<!--                        <div  class="cell-kc-button"><button  class="btn btn-one-part" type="button" title="Chế biến xong một"><i  class="far fa-angle-right"></i></button><button  class="btn btn-all-order" type="button" title="Chế biến xong tất cả"><i  class="far fa-angle-double-right"></i></button></div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </virtual-scroller>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <kv-cashier-history-cart>-->
 
 
-        <kv-request-allow-notification>
-          <p><a class="show-alert" href="javascript:void(0);">Click để
-            bật</a> thông báo cho các yêu cầu thanh toán và cung ứng từ bếp. <a class="hide-alert"
-                                                                                href="javascript:void(0);"
-                                                                                translate="">Ẩn</a></p>
-        </kv-request-allow-notification>
+<!--            <kv-pull-over>-->
+<!--              <div class="float-nav right" hidden="">-->
+<!--                <div class="float-nav-content">-->
+<!--                  <button class="float-nav-close"><i class="fal fa-times"></i></button>-->
+<!--                  <h4 class="float-title">Lịch sử</h4>-->
 
-      </kv-cashier-page>
-    </div>
-  </kv-root>
-</th:block>
+<!--                  <div class="parse-history empty-area">-->
+
+<!--                    <div class="page-empty"><i class="fal fa-inbox"></i>-->
+<!--                      <div class="empty-content" translate=""> Không có dữ liệu</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="float-overlay" hidden=""></div>-->
+<!--            </kv-pull-over>-->
+<!--          </kv-cashier-history-cart>-->
+
+<!--          <div class="support">-->
+<!--            <ul>-->
+<!--              <li><i class="fa-solid fa-phone"></i> Hỗ trợ 1900 6522</li>-->
+
+<!--              <li><i class="fa-solid fa-location-dot"></i> Chi nhánh trung tâm-->
+<!--              </li>-->
+
+<!--              <li class="sort-key"><a outsideclick="true" placement="top" title="Danh sách các phím tắt"><i-->
+<!--                      class="fa-solid fa-circle-info"></i> Phím tắt </a></li>-->
+<!--              <li class="app-version"><span>Phiên bản 2.10.0</span></li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
+
+
+<!--        <kv-request-allow-notification>-->
+<!--          <p><a class="show-alert" href="javascript:void(0);">Click để-->
+<!--            bật</a> thông báo cho các yêu cầu thanh toán và cung ứng từ bếp. <a class="hide-alert"-->
+<!--                                                                                href="javascript:void(0);"-->
+<!--                                                                                translate="">Ẩn</a></p>-->
+<!--        </kv-request-allow-notification>-->
+
+<!--      </kv-cashier-page>-->
+<!--    </div>-->
+<!--  </kv-root>-->
+<!--</th:block>-->

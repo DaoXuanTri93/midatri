@@ -31,6 +31,7 @@ public class UserMapper {
 
     }
 
+
 //    public User toModel(UserResult userResult) {
 //        return new User()
 //                .setId(userResult.getId())

@@ -5,6 +5,7 @@ import vn.midatri.dto.user.UserResult;
 import vn.midatri.repository.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface IUserService {
@@ -19,6 +20,8 @@ public interface IUserService {
 
     UserResult save(User user);
     User findUserById(Long id);
+
+   User findByUserNameAndPassword(String userName, String password);
 
 
 }
