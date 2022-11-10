@@ -79,7 +79,7 @@
                 "Content-type": "application/json"
             },
             type: "PUT",
-            url: 'http://localhost:8080/api/item/restore/' + product.id,
+            url: `${location.origin}/api/item/restore/` + product.id,
             data: JSON.stringify(product)
         })
             .done(function (data) {

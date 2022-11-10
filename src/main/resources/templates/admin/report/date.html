@@ -25,8 +25,7 @@
                     <div class="col-md-12" >
                         <div class="normal-table-list mg-t-30">
                             <div class="basic-tb-hd text-center">
-                                <h1>Báo Cáo Bán Hàng</h1>
-
+                                <h1>Báo Cáo Cuối Ngày Về Bán Hàng</h1>
                             </div>
                             <div class="bsc-tbl-hvr table-responsive ">
                                 <table class="table table-hover table-striped" id="tblReport" >
@@ -64,15 +63,15 @@
     let day = dateReport.getDate();
     let month= (dateReport.getMonth())+1;
     let year=dateReport.getFullYear();
-    $("#dateReport").val(`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`)
+    let today=`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`
+    $("#dateReport").val(today)
 
     let getDate = moment($("#dateReport").val()).format('DD-MM-yyyy')
     renderDataTableReport();
 
-    function renderShowUser(){
-
-    }
-    renderShowUser();
+    $("#to").val(today);
+    $("#from").val(today);
+    $("#from").attr("min",today);
     function renderDataTableReport() {
         let userName
         $.ajax({
@@ -81,14 +80,14 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/users/findAll",
+            url: `${location.origin}/api/users/findAll`,
         })
             .done(function (data){
                 userName=data;
                 $('#tblReport').dataTable({
                     ajax: {
                         contentType: 'application/json',
-                        url: `http://localhost:8080/api/order?createAt=${getDate}`,
+                        url: `${location.origin}/api/order?createAt=${getDate}`,
                         type: 'GET',
 
                         dataSrc: ''
@@ -98,7 +97,7 @@
                         {
                             data: "id", render: function (id) {
 
-                                return `<td>${"O-" + id}</td>`
+                                return `<td>${"HD-" + id}</td>`
                             }
                         },
                         {
@@ -168,23 +167,32 @@
             })
 
     }
+    if ($("input[type='radio']:checked").val() == "1") {
+        $("#dateReport").on('input', function (){
+            let newDate = moment($("#dateReport").val()).format('DD-MM-yyyy');
+            $('#tblReport').DataTable().ajax.url(`${location.origin}/api/order?createAt=${newDate}`).load().draw()
+        })
+    }
     $("input[type='radio']").on("click", function () {
         if ($("input[type='radio']:checked").val() == "1") {
             $("#dateReport").on('input', function (){
                 let newDate = moment($("#dateReport").val()).format('DD-MM-yyyy');
-                $('#tblReport').DataTable().ajax.url(`http://localhost:8080/api/order?createAt=${newDate}`).load().draw()
+                $('#tblReport').DataTable().ajax.url(`${location.origin}/api/order?createAt=${newDate}`).load().draw()
             })
         }
         if ($("input[type='radio']:checked").val() == "2") {
             $("#to").on("change",function (){
                 let toDay = $("#to").val();
                 let oldFromDay =new Date($("#from").val());
-                console.log(oldFromDay)
                 let fromDay=(oldFromDay.getDate())+1;
                 let month=(oldFromDay.getMonth())+1;
                 let year=oldFromDay.getFullYear();
                 let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
-                $('#tblReport').DataTable().ajax.url(`http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`).load().draw()
+                console.log(newFromDay)
+                $('#tblReport').DataTable().ajax
+                    .url(`${location.origin}/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`)
+                    .load()
+                    .draw();
 
             })
             $("#from").on('change',function (){
@@ -195,7 +203,7 @@
                 let year=oldFromDay.getFullYear();
                 let newFromDay =`${year}-${month}-${fromDay<10 ? `0${fromDay}`:`${fromDay}`}`;
 
-                $('#tblReport').DataTable().ajax.url(`http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`).load().draw()
+                $('#tblReport').DataTable().ajax.url(`${location.origin}/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`).load().draw()
                 
             })
         }

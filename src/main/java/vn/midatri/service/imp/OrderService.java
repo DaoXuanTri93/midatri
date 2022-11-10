@@ -37,13 +37,13 @@ public class OrderService implements IOrderService {
         return orderRepository.chartBar();
     }
     public List<OrderResult> findAllByCreateAt(Date createAt) {
-//        return orderRepository.findAllByCreateAt(createAt)
-//                .stream()
-//                .map(order -> orderMapper.toDTO(order))
-//                .collect(Collectors.toList());
-        List<BigDecimal> a = orderRepository.findAllByCreateAt(createAt).stream().map(Order::getGrandTotal).collect(Collectors.toList());
-        return null;
+        return orderRepository.findAllByCreateAt(createAt)
+                .stream()
+                .map(order -> orderMapper.toDTO(order))
+                .collect(Collectors.toList());
     }
+
+
 
     @Override
     public List<Chart> chartDay() {

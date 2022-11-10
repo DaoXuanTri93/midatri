@@ -148,7 +148,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/parent?hasParentId=1",
+                url: `${location.origin}/api/category/parent?hasParentId=1`,
             }).done((data) => {
                 $.each(data, (c, cate) => {
                     allCategory.push(cate.id);
@@ -178,7 +178,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category/parent?hasParentId=1",
+            url: `${location.origin}/api/category/parent?hasParentId=1`,
         })
             .done(function (data) {
                 category = data;
@@ -186,7 +186,7 @@
                 $("#tblProduct").DataTable({
                     ajax: {
                         contentType: 'application/json',
-                        url: 'http://localhost:8080/api/item?deleted=0',
+                        url: `${location.origin}/api/item?deleted=0`,
                         type: 'GET',
 
                         dataSrc: ''
@@ -292,7 +292,7 @@
             query += "&";
         query += `s=${status}`;
         console.log(query)
-        $("#tblProduct").DataTable().ajax.url(`http://localhost:8080/api/item/filter?${query}`).load().draw();
+        $("#tblProduct").DataTable().ajax.url(`${location.origin}/api/item/filter?${query}`).load().draw();
     }
 
     function queryFindCategory(parameters, categoryId, status) {
@@ -321,7 +321,7 @@
             query += "&";
         query += `s=${status}`;
         console.log(query)
-        $("#tblProduct").DataTable().ajax.url(`http://localhost:8080/api/item/allCategory?${query}`).load().draw();
+        $("#tblProduct").DataTable().ajax.url(`${location.origin}/api/item/allCategory?${query}`).load().draw();
     }
 
 </script>
@@ -335,7 +335,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category",
+            url: `${location.origin}/api/category`,
         })
             .done(function (data) {
 
@@ -346,7 +346,7 @@
                         "Content-type": "application/json"
                     },
                     type: "GET",
-                    url: "http://localhost:8080/api/item/" + id
+                    url: `${location.origin}/api/item/` + id
                 })
                     .done(function (data) {
                         $("#idProductRestore").val(data.id);
@@ -384,7 +384,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category/parent?hasParentId=true",
+            url: `${location.origin}/api/category/parent?hasParentId=true`,
         })
             .done(function (data) {
                 $("#catalogsCreate").append(`
@@ -410,7 +410,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category/parent",
+            url: `${location.origin}/api/category/parent`,
         })
             .done(function (data) {
                 $("#catalogsParentCreate").append(`<option >---Lựa Chọn---</option>`);
@@ -463,7 +463,7 @@
                 "Content-type": "application/json"
             },
             type: "DELETE",
-            url: "http://localhost:8080/api/item/deleted/" + product.id,
+            url: `${location.origin}/api/item/deleted/` + product.id,
             data: JSON.stringify(product)
         })
             .done(function (data) {
@@ -499,7 +499,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/item/" + id
+            url: `${location.origin}/api/item/` + id
         })
             .done(function (data) {
                 $("#idProductDelete").val(data.id);
@@ -539,7 +539,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category/parent?hasParentId=true",
+            url: `${location.origin}/api/category/parent?hasParentId=true`,
         })
             .done(function (data) {
 
@@ -551,7 +551,7 @@
                         "Content-type": "application/json"
                     },
                     type: "GET",
-                    url: "http://localhost:8080/api/category/parent",
+                    url: `${location.origin}/api/category/parent`,
                 })
                     .done(function (data) {
                         parent = data
@@ -561,7 +561,7 @@
                                 "Content-type": "application/json"
                             },
                             type: "GET",
-                            url: "http://localhost:8080/api/item/" + id
+                            url: `${location.origin}/api/item/` + id
                         })
                             .done(function (data) {
                                 $("#idProductUpdate").val(data.id);

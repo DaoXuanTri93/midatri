@@ -16,5 +16,11 @@ public class ReportController {
         return new ModelAndView("/admin/report/date");
 
     }
+    @GetMapping("/goods")
+    public ModelAndView showReportGoods(){
+
+        return new ModelAndView("/admin/report/goods");
+
+    }
 
 }

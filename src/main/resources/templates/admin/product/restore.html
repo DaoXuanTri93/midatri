@@ -93,14 +93,14 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/category",
+            url: `${location.origin}/api/category`,
         })
             .done(function (data) {
                 category=data;
                 $("#tblProduct").DataTable({
                     ajax: {
                         contentType: 'application/json',
-                        url: 'http://localhost:8080/api/item?deleted=true',
+                        url: `${location.origin}/api/item?deleted=true`,
                         type: 'GET',
 
                         dataSrc:''

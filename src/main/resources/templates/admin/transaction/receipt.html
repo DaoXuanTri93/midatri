@@ -103,6 +103,17 @@
     let getToDay = moment(toDay).format('DD-MM-yyyy');
     let getYesterday=moment(yesterday).format('DD-MM-yyyy');
     let getLastMonth =moment(lastMonth).format('DD-MM-yyyy');
+    let users;
+    $.ajax({
+        headers: {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        },
+        type: "GET",
+        url: `${location.origin}/api/users/findAll`,
+    }).done((data)=>{
+        users = data
+    })
     function renderReceipt(){
       $.ajax({
           headers: {
@@ -110,19 +121,25 @@
               "Content-type": "application/json"
           },
           type: "GET",
-          url: `http://localhost:8080/api/order?createAt=${getToDay}`,
+          url: `${location.origin}/api/order?createAt=${getToDay}`,
       })
           .done((data)=>{
             renderMapReceipt(data);
-
           })
           .fail(()=>{
               alert("error");
           })
     }
     function renderMapReceipt(data){
-       return $.each(data,(i,item)=>{
-            let str = `
+        let userName;
+
+        $.each(data,(i,item)=>{
+        if (item.userId === users[i].id){
+            userName = users[i].userName;
+            console.log(userName)
+            console.log(i)
+        }
+           let str = `
                      <tr data-bs-toggle="collapse" data-bs-target="#id${item.id}"
                                         aria-expanded="false"
                                         aria-controls="collapseExample"
@@ -131,16 +148,16 @@
                                         <td>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</td>
                                         <td>Khách lẻ</td>
                                         <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(item.grandTotal)}
+                                                       style: 'currency',
+                                                       currency: 'VND'
+                                                   }).format(item.grandTotal)}
                                         </td>
                                         <td class="text-right">
-                                        ${new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND'
-            }).format(item.grandTotal)}
-                                        </td>
+                                                                            ${new Intl.NumberFormat('vi-VN', {
+                                                       style: 'currency',
+                                                       currency: 'VND'
+                                                   }).format(item.grandTotal)}
+                                           </td>
                                     </tr>
                                     <tr id="id${item.id}" class="collapse">
                                         <td colspan="5" >
@@ -173,9 +190,11 @@
                                                                             <span>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</span>
                                                                         </span>
                                                                     </div>
+
+
                                                                     <div class="mb-2 col-4">
                                                                         <span>Người Tạo :
-                                                                            <span>Minh</span>
+                                                                            <span>${userName}</span>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -211,42 +230,41 @@
                                                                                 <tr >
                                                                                     <td colspan="4">Tổng tiền hàng : </td>
                                                                                     <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                                                style: 'currency',
-                                                                                                currency: 'VND'
-                                                                                            }).format(item.grandTotal)}
+                                                                                           style: 'currency',
+                                                                                           currency: 'VND'
+                                                                                       }).format(item.grandTotal)}
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td colspan="4">Khách cần trả : </td>
                                                                                     <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                                                style: 'currency',
-                                                                                                currency: 'VND'
-                                                                                            }).format(item.grandTotal)}
+                                                                                           style: 'currency',
+                                                                                           currency: 'VND'
+                                                                                       }).format(item.grandTotal)}
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr >
                                                                                     <td colspan="4">Khách đã trả : </td>
                                                                                     <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                                                style: 'currency',
-                                                                                                currency: 'VND'
-                                                                                            }).format(item.grandTotal)}
+                                                                                               style: 'currency',
+                                                                                               currency: 'VND'
+                                                                                           }).format(item.grandTotal)}
                                                                                     </td>
                                                                                 </tr>
                                                                            </tfoot>
                                                                     </table>
                                                                 </div>
-                                                                <div class="row text-right">
-                                                                    <div class="d-flex justify-content-end" >
-                                                                        <button class="bg-success text-white me-2">
-                                                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                                                                            Lưu</button>
-                                                                        <button class="bg-danger text-white">
-                                                                            <i class="fa fa-times" aria-hidden="true"></i>
-                                                                             Hủy Bỏ
-                                                                        </button>
-                                                                    </div>
-
-                                                                </div>
+<!--                                                                <div class="row text-right">-->
+<!--                                                                    <div class="d-flex justify-content-end" >-->
+<!--                                                                        <button class="bg-success text-white me-2">-->
+<!--                                                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>-->
+<!--                                                                            Lưu</button>-->
+<!--                                                                        <button class="bg-danger text-white">-->
+<!--                                                                            <i class="fa fa-times" aria-hidden="true"></i>-->
+<!--                                                                             Hủy Bỏ-->
+<!--                                                                        </button>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
                                                             </div>
                                                         </form>
                                                     </div>
@@ -272,9 +290,9 @@
                                                                         <td>Tiền mặt</td>
                                                                         <td>Đã thanh toán</td>
                                                                         <td class="text-right">${new Intl.NumberFormat('vi-VN', {
-                                                                                style: 'currency',
-                                                                                currency: 'VND'
-                                                                            }).format(item.grandTotal)}
+                                                                               style: 'currency',
+                                                                               currency: 'VND'
+                                                                           }).format(item.grandTotal)}
                                                                         </td>
                                                                     </tr>
                                                                     </tbody>
@@ -286,19 +304,21 @@
                                             </div>
                                         </td>
                                     </tr>
-                `
+                `;
             $("#tblTransaction>tbody").append(str);
         })
     }
     function renderInformation(orderId){
+
         $("#tblInformation>tbody tr").remove();
+        $("tr.collapse").removeClass("show");
         $.ajax({
             headers: {
                 "Accept": "application/json",
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: `http://localhost:8080/api/transactions?orderId=${orderId}`,
+            url: `${location.origin}/api/transactions?orderId=${orderId}`,
         })
             .done((data)=>{
                 $.each(data,(i,item)=>{
@@ -328,7 +348,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: `http://localhost:8080/api/order?createAt=${getYesterday}`,
+            url: `${location.origin}/api/order?createAt=${getYesterday}`,
         }).done((data)=>{
             renderMapReceipt(data);
         })
@@ -340,7 +360,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: `http://localhost:8080/api/order/sevenDay`,
+            url: `${location.origin}/api/order/sevenDay`,
         }).done((data)=>{
             renderMapReceipt(data);
         })
@@ -352,7 +372,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: `http://localhost:8080/api/order/thisMonth?createAt=${getToDay}`,
+            url: `${location.origin}/api/order/thisMonth?createAt=${getToDay}`,
         }).done((data)=>{
             renderMapReceipt(data);
         })
@@ -364,7 +384,7 @@
                 "Content-type": "application/json"
             },
             type: "GET",
-            url: `http://localhost:8080/api/order/thisMonth?createAt=${getLastMonth}`,
+            url: `${location.origin}/api/order/thisMonth?createAt=${getLastMonth}`,
         }).done((data)=>{
             renderMapReceipt(data);
         })
@@ -414,7 +434,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: `http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
+                url: `${location.origin}/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
             }).done((data)=>{
                 renderMapReceipt(data);
             })
@@ -434,7 +454,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: `http://localhost:8080/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
+                url: `${location.origin}/api/order/findByBetween?toDay=${moment(toDay).format('DD-MM-yyyy')}&fromDay=${moment(newFromDay).format('DD-MM-yyyy')}`,
             }).done((data)=>{
                 renderMapReceipt(data);
             })
@@ -448,6 +468,9 @@
             renderReceiptByBetween();
         }
     })
+    if ($("input[type='radio']:checked").val() == "1") {
+        renderFilter();
+    }
     renderReceipt();
 </script>
 </body>

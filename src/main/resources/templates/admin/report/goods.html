@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+
+    <th:block th:replace="/admin/layout/head :: head"/>
+    <meta charset="UTF-8">
+    <title>Báo Cáo Ngày</title>
+</head>
+
+<body>
+
+
+<!-- Page Wrapper -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <th:block th:replace="/admin/layout/navBar :: navBar"/>
+    <div class="container-fluid">
+        <div class="data-table-area ">
+            <div class="container-fluid">
+                <div class="row col-2" style="float:left">
+                    <th:block th:replace="/admin/report/left-sideBar :: sidebarReportGoods"/>
+                </div>
+                <div class="row col-9">
+                    <div class="col-md-12" >
+                        <div class="normal-table-list mg-t-30">
+                            <div class="basic-tb-hd text-center">
+                                <h1>Báo Cáo Bán Hàng Theo Hàng Hóa</h1>
+                            </div>
+                            <div class="bsc-tbl-hvr table-responsive ">
+                                <table class="table table-hover table-striped" id="tblGoods" >
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Thời gian</th>
+                                        <th>Tên Hàng</th>
+                                        <th>Số Lượng</th>
+                                        <th>Doanh Thu</th>
+                                        <th>Doanh Thu Thuần</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+<!--                                    <tfoot >-->
+<!--                                    <tr>-->
+<!--                                        <th colspan="4" class="fw-bold" style="text-align:right">Tổng Doanh Thu :</th>-->
+<!--                                        <th style="text-align:right"></th>-->
+<!--                                    </tr>-->
+<!--                                    </tfoot>-->
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <th:block th:replace="/admin/layout/footer :: footer"/>
+</div>
+<th:block th:replace="/admin/layout/script :: script"/>
+</body>
+<script>
+    let dateReport = new Date();
+    let day = dateReport.getDate();
+    let month= (dateReport.getMonth())+1;
+    let year=dateReport.getFullYear();
+    let today=`${year}-${month}-${day<10 ? `0${day}`:`${day}`}`;
+    let selectFomDay = $("#fromDay");
+    let selectToDay = $("#toDay");
+    selectToDay.val(today);
+    selectFomDay.val(today);
+    selectFomDay.attr("min",today);
+
+    function renderReportToDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findToday`,
+        })
+            .done((data)=>{
+               renderTableReportGoods(data)
+            })
+    }
+    function renderReportLastDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findLastDay`,
+        })
+            .done((data)=>{
+               renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodsLastDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findLastDay`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodsToMonth(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findToMonth`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodLastMonth(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findLastMonth`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodSevenDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findSevenDay`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderTableReportGoods(data){
+        $.each(data,(i,item)=>{
+            let str = `
+                        <tr>
+                            <td>SP-${item.itemId}</td>
+                            <td>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</td>
+                            <td>${item.title}</td>
+                            <td>${item.quantity}</td>
+                            <td> ${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.quantity*item.price)}</td>
+                            <td>${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.quantity*item.price)}</td>
+                        </tr>
+                    `
+            $('#tblGoods tbody').append(str);
+        })
+    }
+
+    function renderFilterReport(){
+        let filter = $("#dateReceiptGoods")
+        filter.on('change',function (){
+            $('#tblGoods tbody tr').remove();
+            switch (filter.val()){
+                case "0":
+                    renderReportToDay();
+                    break;
+                case "1":
+                    renderReportGoodsLastDay();
+                    break;
+                case "2":
+                    renderReportGoodSevenDay();
+                    break;
+                case "3":
+                    renderReportGoodsToMonth();
+                    break;
+                case "4":
+                    renderReportGoodLastMonth();
+                    break;
+
+            }
+        })
+    }
+    function renderReceiptGoodsByBetween(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findByBetween?ToDay=${moment(selectToDay.val()).format('DD-MM-yyyy')}&FromDay=${moment(selectFomDay.val()).format('DD-MM-yyyy')}`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    renderReportToDay()
+    if ($("input[type='radio']:checked").val() == "1") {
+        renderFilterReport();
+    }
+    $("input[type='radio']").on("click", function () {
+        if ($("input[type='radio']:checked").val() == "1") {
+            renderFilterReport();
+        }
+        if ($("input[type='radio']:checked").val() == "2") {
+            selectToDay.on("change",function (){
+                renderReceiptGoodsByBetween();
+            })
+            selectFomDay.on('change',function (){
+                renderReceiptGoodsByBetween();
+            })
+        }
+
+
+    })
+
+</script>
+
+</html>

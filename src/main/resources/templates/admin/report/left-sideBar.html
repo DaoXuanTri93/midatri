@@ -35,5 +35,45 @@
     <th:block th:replace="/admin/layout/script::script"/>
 
 </th:block>
+<th:block th:fragment="sidebarReportGoods">
+    <link rel="stylesheet" href="/assets/admin/css/style-sidebar.css">
 
+    <div class=" ">
+        <div class="">
+            <div class="">
+                <h3 class="">
+                    Thời Gian
+                </h3>
+                <div class="">
+                    <div class="form-check">
+                        <input class="form-check-input " type="radio" name="filterRadios" id="goodsFilterRadios" value="1" checked="checked" >
+                        <label class="form-check-label" for="filterRadios">
+                            <div>
+                                <select class="form-select " aria-label="Default select example" id="dateReceiptGoods">
+                                    <option value="0" selected>Hôm Nay</option>
+                                    <option value="1">Hôm Qua</option>
+                                    <option value="2">7 Ngày Qua</option>
+                                    <option value="3">Tháng Này</option>
+                                    <option value="4">Tháng Trước</option>
+                                </select>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="filterRadios" id="goodsRadios" value="2">
+                        <label class="form-check-label" for="exampleRadios">
+                            <div>
+                                <span>Từ : <input type="date" id="toDay"></span>
+                                <span>Đến : <input type="date" id="fromDay" min=></span>
+                            </div>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="/admin/layout/script::script"/>
+
+</th:block>
 </html>
