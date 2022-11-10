@@ -1,6 +1,5 @@
 package vn.midatri.service.imp;
 
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,13 +7,9 @@ import vn.midatri.dto.orderItem.OrderItemParam;
 import vn.midatri.dto.orderItem.OrderItemResult;
 import vn.midatri.mapper.OrderItemMapper;
 import vn.midatri.repository.OrderItemRepository;
-import vn.midatri.repository.OrderRepository;
-import vn.midatri.repository.model.Order;
-import vn.midatri.repository.model.OrderItem;
+import vn.midatri.repository.model.Chart;
 import vn.midatri.service.IOrderItemService;
-import vn.midatri.service.IOrderService;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,5 +48,7 @@ public class OrderItemService implements IOrderItemService {
                 .map(orderItem -> orderItemMapper.toDTO(orderItem))
                 .collect(Collectors.toList());
     }
+
+
 
 }

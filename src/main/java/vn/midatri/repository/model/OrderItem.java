@@ -10,6 +10,124 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+@NamedNativeQuery(
+        name = "sp_billtoday",
+        query =
+                "call midatri.sp_billtoday();",
+        resultSetMapping = "result_billToDayDto"
+)
+@SqlResultSetMapping(
+        name = "result_billToDayDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "bills", type = String.class)
+
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "sp_totalOneDay",
+        query =
+                "call midatri.sp_totalOneDay();",
+        resultSetMapping = "result_totalOneDayDto"
+)
+@SqlResultSetMapping(
+        name = "result_totalOneDayDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "title", type = String.class),
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+
+                }
+        )
+)
+@NamedNativeQuery(
+        name = "sp_totalLastDay",
+        query =
+                "call midatri.sp_totalLastDay();",
+        resultSetMapping = "result_totalLastDayDto"
+)
+@SqlResultSetMapping(
+        name = "result_totalLastDayDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "title", type = String.class),
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+
+                }
+        )
+)
+
+@NamedNativeQuery(
+        name = "sp_totalLastMonth",
+        query =
+                "call midatri.sp_totalLastMonth();",
+        resultSetMapping = "result_totalLastMonthDto"
+)
+@SqlResultSetMapping(
+        name = "result_totalLastMonthDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "title", type = String.class),
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+
+                }
+        )
+)
+
+@NamedNativeQuery(
+        name = "sp_totalMonth",
+        query =
+                "call midatri.sp_totalMonth();",
+        resultSetMapping = "result_totalMonthDto"
+)
+@SqlResultSetMapping(
+        name = "result_totalMonthDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "title", type = String.class),
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+
+                }
+        )
+)
+
+@NamedNativeQuery(
+        name = "sp_allTotalToDay",
+        query =
+                "call midatri.sp_totalMonth();",
+        resultSetMapping = "result_allTotalToDayDto"
+)
+@SqlResultSetMapping(
+        name = "result_allTotalToDayDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+                }
+        )
+)
+
+@NamedNativeQuery(
+        name = "sp_allTotalMonth",
+        query =
+                "call midatri.sp_totalMonth();",
+        resultSetMapping = "result_allTotalMonthDto"
+)
+@SqlResultSetMapping(
+        name = "result_allTotalMonthDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+                }
+        )
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

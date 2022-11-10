@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dashboard</title>
+    <th:block th:replace="/admin/layout/head::head"/>
     <script>
         window.Promise ||
         document.write(
@@ -73,6 +74,8 @@
     <!--      ============================================ &ndash;&gt;-->
     <!--  <script src="js/vendor/modernizr-2.8.3.min.js"></script>-->
     <th:block th:replace="/admin/layout/head::head"/>
+    <th:block th:replace="/admin/layout/navBar :: navBar"/>
+
 
 </head>
 
@@ -87,207 +90,12 @@
 <!-- Mobile Menu start -->
 <div class="mobile-menu-area">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="mobile-menu">
-                    <nav id="dropdown">
-                        <ul class="mobile-menu-nav">
 
-                            <li><a data-toggle="collapse" data-target="#demoevent" href="#">Email</a>
-                                <ul id="demoevent" class="collapse dropdown-header-top">
-                                    <li><a href="inbox.html">Inbox</a></li>
-                                    <li><a href="view-email.html">View Email</a></li>
-                                    <li><a href="compose-email.html">Compose Email</a></li>
-                                </ul>
-                            </li>
-                            <li><a data-toggle="collapse" data-target="#democrou" href="#">Interface</a>
-                                <ul id="democrou" class="collapse dropdown-header-top">
-                                    <li><a href="animations.html">Animations</a></li>
-                                    <li><a href="google-map.html">Google Map</a></li>
-                                    <li><a href="data-map.html">Data Maps</a></li>
-                                    <li><a href="code-editor.html">Code Editor</a></li>
-                                    <li><a href="image-cropper.html">Images Cropper</a></li>
-                                    <li><a href="wizard.html">Wizard</a></li>
-                                </ul>
-                            </li>
-                            <li><a data-toggle="collapse" data-target="#demolibra" href="#">Charts</a>
-                                <ul id="demolibra" class="collapse dropdown-header-top">
-                                    <li><a href="flot-charts.html">Flot Charts</a></li>
-                                    <li><a href="bar-charts.html">Bar Charts</a></li>
-                                    <li><a href="line-charts.html">Line Charts</a></li>
-                                    <li><a href="area-charts.html">Area Charts</a></li>
-                                </ul>
-                            </li>
-                            <li><a data-toggle="collapse" data-target="#demodepart" href="#">Tables</a>
-                                <ul id="demodepart" class="collapse dropdown-header-top">
-                                    <li><a href="normal-table.html">Normal Table</a></li>
-                                    <li><a href="data-table.html">Data Table</a></li>
-                                </ul>
-                            </li>
-                            <li><a data-toggle="collapse" data-target="#demo" href="#">Forms</a>
-                                <ul id="demo" class="collapse dropdown-header-top">
-                                    <li><a href="form-elements.html">Form Elements</a></li>
-                                    <li><a href="form-components.html">Form Components</a></li>
-                                    <li><a href="form-examples.html">Form Examples</a></li>
-                                </ul>
-                            </li>
-                            <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">App views</a>
-                                <ul id="Miscellaneousmob" class="collapse dropdown-header-top">
-                                    <li><a href="notification.html">Notifications</a>
-                                    </li>
-                                    <li><a href="alert.html">Alerts</a>
-                                    </li>
-                                    <li><a href="modals.html">Modals</a>
-                                    </li>
-                                    <li><a href="buttons.html">Buttons</a>
-                                    </li>
-                                    <li><a href="tabs.html">Tabs</a>
-                                    </li>
-                                    <li><a href="accordion.html">Accordion</a>
-                                    </li>
-                                    <li><a href="dialog.html">Dialogs</a>
-                                    </li>
-                                    <li><a href="popovers.html">Popovers</a>
-                                    </li>
-                                    <li><a href="tooltips.html">Tooltips</a>
-                                    </li>
-                                    <li><a href="dropdown.html">Dropdowns</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a data-toggle="collapse" data-target="#Pagemob" href="#">Pages</a>
-                                <ul id="Pagemob" class="collapse dropdown-header-top">
-                                    <li><a href="contact.html">Contact</a>
-                                    </li>
-                                    <li><a href="invoice.html">Invoice</a>
-                                    </li>
-                                    <li><a href="typography.html">Typography</a>
-                                    </li>
-                                    <li><a href="color.html">Color</a>
-                                    </li>
-                                    <li><a href="login-register.html">Login Register</a>
-                                    </li>
-                                    <li><a href="404.html">404 Page</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <!-- Mobile Menu end -->
 <!-- Main Menu area start-->
-<div class="main-menu-area mg-tb-40">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
-                    <li class="active"><a data-toggle="tab" href="#Home"><i class="notika-icon notika-house"></i>
-                        Home</a>
-                    </li>
-                    <li><a data-toggle="tab" href="#mailbox"><i class="notika-icon notika-mail"></i> Email</a>
-                    </li>
-                    <li><a data-toggle="tab" href="#Interface"><i class="notika-icon notika-edit"></i> Interface</a>
-                    </li>
-                    <li><a data-toggle="tab" href="#Charts"><i class="notika-icon notika-bar-chart"></i> Charts</a>
-                    </li>
-                    <li><a data-toggle="tab" href="#Tables"><i class="notika-icon notika-windows"></i> Tables</a>
-                    </li>
-                    <li><a data-toggle="tab" href="#Forms"><i class="notika-icon notika-form"></i> Forms</a>
-                    </li>
-                    <li><a data-toggle="tab" href="#Appviews"><i class="notika-icon notika-app"></i> App views</a>
-                    </li>
-                    <li><a data-toggle="tab" href="#Page"><i class="notika-icon notika-support"></i> Pages</a>
-                    </li>
-                </ul>
-                <div class="tab-content custom-menu-content">
-                    <div id="Home" class="tab-pane in active notika-tab-menu-bg animated flipInX">
-                        <!--            <ul class="notika-main-menu-dropdown">-->
-                        <!--              <li><a href="index.html">Dashboard One</a>-->
-                        <!--              </li>-->
-                        <!--              <li><a href="index-2.html">Dashboard Two</a>-->
-                        <!--              </li>-->
-                        <!--              <li><a href="index-3.html">Dashboard Three</a>-->
-                        <!--              </li>-->
-                        <!--              <li><a href="index-4.html">Dashboard Four</a>-->
-                        <!--              </li>-->
-                        <!--              <li><a href="analytics.html">Analytics</a>-->
-                        <!--              </li>-->
-                        <!--              <li><a href="widgets.html">Widgets</a>-->
-                        <!--              </li>-->
-                        <!--            </ul>-->
-                    </div>
-                    <div id="mailbox" class="tab-pane notika-tab-menu-bg animated flipInX">
-                        <ul class="notika-main-menu-dropdown">
-                            <li><a href="inbox.html">Inbox</a>
-                            </li>
-                            <li><a href="view-email.html">View Email</a>
-                            </li>
-                            <li><a href="compose-email.html">Compose Email</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="Interface" class="tab-pane notika-tab-menu-bg animated flipInX">
-                        <ul class="notika-main-menu-dropdown">
-                            <li><a href="animations.html">Animations</a>
-                            </li>
-                            <li><a href="google-map.html">Google Map</a>
-                            </li>
-                            <li><a href="data-map.html">Data Maps</a>
-                            </li>
-                            <li><a href="code-editor.html">Code Editor</a>
-                            </li>
-                            <li><a href="image-cropper.html">Images Cropper</a>
-                            </li>
-                            <li><a href="wizard.html">Wizard</a>
-                            </li>
-                        </ul>
-
-
-                        <div id="Forms" class="tab-pane notika-tab-menu-bg animated flipInX">
-                            <ul class="notika-main-menu-dropdown">
-                                <li><a href="form-elements.html">Form Elements</a>
-                                </li>
-                                <li><a href="form-components.html">Form Components</a>
-                                </li>
-                                <li><a href="form-examples.html">Form Examples</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- <div id="Appviews" class="tab-pane notika-tab-menu-bg animated flipInX"> -->
-                        <ul class="notika-main-menu-dropdown">
-                            <li><a href="notification.html">Notifications</a>
-                            </li>
-                            <li><a href="alert.html">Alerts</a>
-                            </li>
-                            <li><a href="modals.html">Modals</a>
-                            </li>
-                            <li><a href="buttons.html">Buttons</a>
-                            </li>
-                            <li><a href="tabs.html">Tabs</a>
-                            </li>
-                            <li><a href="accordion.html">Accordion</a>
-                            </li>
-                            <li><a href="dialog.html">Dialogs</a>
-                            </li>
-                            <li><a href="popovers.html">Popovers</a>
-                            </li>
-                            <li><a href="tooltips.html">Tooltips</a>
-                            </li>
-                            <li><a href="dropdown.html">Dropdowns</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- <div id="Page" class="tab-pane notika-tab-menu-bg animated flipInX"> -->
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!---->
 </div>
 <!-- Main Menu area End-->
 <!-- Start Status area -->
@@ -297,15 +105,16 @@
         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
             <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
                 <div class="white-box analytics-info">
-                    <h3 class="box-title">Kết quả bán hàng hôm nay</h3>
-                    <div id="dateInput">
-                    </div>
+                    <h4 class="box-title">Doanh thu bán hàng hôm nay</h4>
+
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li>
-                            <i class="fa fa-dollar-sign text-success" style="font-size: 50px"></i>
+                            <i class="fa fa-dollar text-success" style="font-size: 50px"></i>
                         </li>
                         <li class="ms-auto">
-                            <span class="counter text-success" id="incomeToday"></span>
+                            <span class="counter text-primary" id="totalInDay">
+                                <tr><td style="font-size: larger"></td></tr>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -316,12 +125,12 @@
                 <div class="white-box analytics-info">
                     <h3 class="box-title">Số bill trong ngày</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
-                        <li>
-
-                            <i class="fa fa-money-bill text-purple" style="font-size: 50px"></i>
-                        </li>
-                        <li class="ms-auto">
-                            <span class="counter text-purple" id="billToday"></span>
+                        <i class="fa fa-bell text-success" style="font-size: 50px"></i>
+                        <li class="ms-auto text-success">
+                            <span class="counter text-purple" id="billToday">
+                                <div id="billInDay" class="text-center">
+                                </div>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -336,7 +145,10 @@
 
                             <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
                         </li>
-                        <li class="ms-auto"><span class="counter text-info" id="incomeToMonth"></span>
+                        <li class="ms-auto"><span class="counter text-info" id="totalToMonth"></span>
+                            <tr>
+                                <td></td>
+                            </tr>
                         </li>
                     </ul>
                 </div>
@@ -357,54 +169,48 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
+        <div class="col-12">
             <div class="sale-statistic-inner notika-shadow mg-tb-30">
-                <div class="curved-inner-pro">
-                    <div class="curved-ctn row">
-                        <div class="col-lg-9">
-                            <h2>Top 7 hàng hóa bán chạy trong tuần qua</h2>
+                <div class="curved-ctn row d-flex">
+                    <div class="col-9 align-items-end">
+                        <h2>Doanh thu hôm qua</h2>
+                        <div class="col-3">
+                            <select class="form-select col-3" id="selectChart">
+                                <option value="/chartLastDay">Hôm qua</option>
+                                <option value="/chartByDay">Hôm nay</option>
+                                <option value="/chartLast7Day">7 ngày qua</option>
+                                <option value="/chartByMonth">Tháng này</option>
+                                <option value="/chartByLastMonth">Tháng trước</option>
+                            </select>
+                        </div>
+                    </div>
 
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown button
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div id="curved-line-chart 1" class="flot-chart-sts flot-chart">
+                <div id="curved-line-chart 1">
                     <div id="myChart">
-                        <!--                        <canvas id="myChart"></canvas>-->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
-            <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
-                <div class="past-day-statis">
-                    <h2 style="color: #0a53be">Top 7 hàng hóa bán chạy trong tuần qua</h2>
-                    <table id="bar-chart">
-                        <tr>
-                            <td>Tên sản phẩm</td>
-                            <td>Số doanh thu</td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="dash-widget-visits"></div>
-                <div class="past-statistic-an">
-                    <div class="past-statistic-graph">
-                        <div class="stats-bar"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">-->
+        <!--            <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">-->
+        <!--                <div class="past-day-statis">-->
+        <!--                    <h2 style="color: #0a53be">Top 7 hàng hóa bán chạy trong tuần qua</h2>-->
+        <!--                    <table id="bar-chart">-->
+        <!--                        <tr>-->
+        <!--                            <td>Tên sản phẩm</td>-->
+        <!--                            <td>Số doanh thu</td>-->
+        <!--                        </tr>-->
+        <!--                    </table>-->
+        <!--                </div>-->
+        <!--                <div class="dash-widget-visits"></div>-->
+        <!--                <div class="past-statistic-an">-->
+        <!--                    <div class="past-statistic-graph">-->
+        <!--                        <div class="stats-bar"></div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>
 </div>
@@ -414,95 +220,27 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-9 col-md-8 col-sm-7 col-xs-12">
-            <div class="sale-statistic-inner notika-shadow mg-tb-30">
-                <div class="curved-inner-pro">
-                    <div class="curved-ctn row">
-                        <div class="col-lg-10">
-                            <h2>Số nhân viên hiện tại</h2>
-                            <div id="chartLastDay">
+        <div class="col-12">
+            <div>
+                <h1>Top 7 thức uống bán chạy nhất trong tuần qua</h1>
+                <div class="col-3">
+                    <select class="form-select col-3" id="selectChart1">
+                        <option value="/totalOneDay">Hôm nay</option>
+                        <option value="/totalLastDay">Hôm qua</option>
+                        <option value="/chart">7 ngày qua</option>
+                        <option value="/totalMonth ">Tháng này</option>
+                        <option value="/totalLastMonth">Tháng trước</option>
+                    </select>
+                </div>
+                <div id="chart1">
 
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div>
-                                <a class="btn btn-secondary" role="button">
-                                    Theo doanh thu
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Theo doanh thu</a></li>
-                                    <li><a class="dropdown-item" href="#"></a>Theo số lượng</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="curved-line-chart" class="flot-chart-sts flot-chart"></div>
-            </div>
-
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-12">
-            <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">
-                <div class="past-day-statis">
-                    <h2>Top 5 thức uống bán chạy nhất</h2>
-
-                    </div>
-                </div>
-                <div class="dash-widget-visits"></div>
-                <div class="past-statistic-an">
-                    <div class="past-statistic-ctn">
-                        <h3><span class="counter">3,20,000</span></h3>
-                        <p>Page Views</p>
-                    </div>
-                    <div class="past-statistic-graph">
-                        <div class="stats-bar"></div>
-                    </div>
-                </div>
-                <div class="past-statistic-an">
-                    <div class="past-statistic-ctn">
-                        <h3><span class="counter">1,03,000</span></h3>
-                        <p>Total Clicks</p>
-                    </div>
-                    <div class="past-statistic-graph">
-                        <div class="stats-line"></div>
-                    </div>
-                </div>
-                <div class="past-statistic-an">
-                    <div class="past-statistic-ctn">
-                        <h3><span class="counter">24,00,000</span></h3>
-                        <p>Site Visitors</p>
-                    </div>
-                    <div class="past-statistic-graph">
-                        <div class="stats-bar-2"></div>
-                    </div>
                 </div>
             </div>
-        </div>
-    <div class="row">
-        <h1>San pham 7 ngay qua</h1>
-        <div id="char7day">
 
         </div>
-
 
     </div>
-    <div class="row">
-        <h1>So tien ban dc trong 1 thang</h1>
-        <div id="chart1month">
 
-        </div>
-
-
-    </div>
-    <div class="row">
-        <h1>So tien ban dc trong  thang truoc</h1>
-        <div id="chartlastmonth">
-
-        </div>
-
-
-    </div>
-</div>
 
 </div>
 <th:block th:replace="/admin/layout/script :: script"/>
@@ -516,506 +254,187 @@
         return (_seed - 1) / 2147483646;
     };
 
-    function render() {
+    function renderChartProduct(line) {
+        let myChart1 = document.querySelector("#chart1");
+        myChart1.innerHTML = '';
         $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/order/chart",
+            url: location.origin + "/api/order" + line,
         }).done((data) => {
             console.log(data)
-            let sl = [];
+            let total = [];
             let name = [];
+            var options1;
             $.each(data, (i, item) => {
-                sl.push(item.total);
+                total.push(item.total);
                 name.push(item.title);
-
             })
-            console.log(sl)
-            console.log(name)
-            var options = {
+            options1 = {
                 series: [{
-                    data: sl
+                    data: total
                 }],
                 chart: {
                     type: 'bar',
-                    height: 380
+                    height: 350,
                 },
                 plotOptions: {
                     bar: {
-                        barHeight: '100%',
-                        distributed: true,
+                        // columnWidth: '15%',
+                        borderRadius: 4,
                         horizontal: true,
-                        dataLabels: {
-                            position: 'bottom'
-                        },
                     }
                 },
-                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-                    '#f48024', '#69d2e7'
-                ],
+
                 dataLabels: {
-                    enabled: true,
-                    textAnchor: 'start',
-                    style: {
-                        colors: ['#fff']
-                    },
-                    formatter: function (val, opt) {
-                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-                    },
-                    offsetX: 0,
-                    dropShadow: {
-                        enabled: true
-                    }
-                },
-                stroke: {
-                    width: 1,
-                    colors: ['#fff']
+                    enabled: false,
                 },
                 xaxis: {
                     categories: name,
-                },
-                yaxis: {
-                    labels: {
-                        show: false
-                    }
-                },
-                title: {
-                    text: 'Hàng hóa bán chạy nhất',
-                    align: 'center',
-                    floating: true
-                },
-                subtitle: {
-                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
-                    align: 'center',
-                },
-                tooltip: {
-                    theme: 'dark',
-                    x: {
-                        show: false
-                    },
-                    y: {
-                        title: {
-                            formatter: function () {
-                                return ''
-                            }
-                        }
-                    }
+
                 }
             };
 
-            var myChart = new ApexCharts(document.querySelector("#myChart"), options);
-            myChart.render();
+            myChart1 = new ApexCharts(document.querySelector("#chart1"), options1);
+            myChart1.render();
         })
     }
 
-    render();
+
     // ------------------------
 
-    function totalByDay() {
+    function totalLastDay(text) {
+        let myChart = document.querySelector("#myChart");
+        myChart.innerHTML = '';
         $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/order/chartByDay",
+            url: location.origin + "/api/order" + text,
         }).done((data) => {
-            console.log(data)
             let totals = [];
             let day = [];
-            // let ds = "7";
+            var options;
             $.each(data, (i, item) => {
-                ds = moment(item.dates).format('L');
-                // console.log("item.dates")
-                // console.log(item.dates)
-
+                day.push(moment(item.dates).date());
                 totals.push(item.total);
-                // day.push(item.dates);
-                console.log(totals)
-                // console.log(date)
+                // console.log('totals: ', totals)
             })
-                var options = {
-                    series: [{
-                        data: totals
-                    }],
-                    chart: {
-                        type: 'bar',
-                        height: 350
-                    },
-                    plotOptions: {
-                        bar: {
-                            borderRadius: 4,
-                            horizontal: false,
-                        }
-                    },
-                    title: {
-                        text: 'Hàng hóa bán chạy nhất',
-                        align: 'center',
-                        floating: true
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    xaxis: {
-                        categories: [ds],
-                    }
-                };
-                var myChart = new ApexCharts(document.querySelector("#dateInput"), options);
-                myChart.render();
-
-        })
-    }
-    totalByDay();
-    // chart last day
-    function totalLastDay() {
-        $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/order/chartLastDay",
-        }).done((data) => {
-            console.log(data)
-            let totals = [];
-            let day = [];
-            $.each(data, (i, item) => {
-                ds = moment(item.dates).format('L');
-
-                totals.push(item.total);
-                // day.push(item.dates);
-                console.log(totals)
-                // console.log(date)
-            })
-            var options = {
+            options = {
                 series: [{
                     data: totals
                 }],
                 chart: {
                     type: 'bar',
-                    height: 350
+                    height: 350,
                 },
                 plotOptions: {
                     bar: {
+                        columnWidth: '15%',
                         borderRadius: 4,
                         horizontal: false,
                     }
                 },
-                title: {
-                    text: 'Doanh thu ngày hôm qua',
-                    align: 'center',
-                    floating: true
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                xaxis: {
-                    categories: [ds],
-                }
-            };
-            var myChart = new ApexCharts(document.querySelector("#chartLastDay"), options);
-            myChart.render();
 
-        })
-    }
-    totalLastDay();
-
-    // chart 7 day
-
-    function renderchart7day() {
-        $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/order/chartLast7Day",
-        }).done((data) => {
-            let sl = [];
-            let ds = [];
-            $.each(data, (i, item) => {
-                // ds = moment(item.dates).format('L');
-                console.log('ds: ', ds)
-
-                ds.push(moment(item.dates).format("L"));
-                sl.push(item.total);
-            })
-            console.log(sl)
-            console.log(name)
-            var options = {
-                series: [{
-                    data: sl,ds
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 450
-                },
-                plotOptions: {
-                    bar: {
-                        barHeight: '100%',
-                        distributed: true,
-                        horizontal: true,
-                        dataLabels: {
-                            position: 'bottom'
-                        },
-                    }
-                },
-                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-                    '#f48024', '#69d2e7'
-                ],
                 dataLabels: {
                     enabled: true,
-                    textAnchor: 'start',
-                    style: {
-                        colors: ['#0000EE']
-                    },
-                    formatter: function (val, opt) {
-                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-                    },
-                    offsetX: 0,
-                    dropShadow: {
-                        enabled: false
-                    }
-                },
-                stroke: {
-                    width: 1,
-                    colors: ['#fff']
                 },
                 xaxis: {
-                    categories: [...ds],
-                },
-                yaxis: {
-                    labels: {
-                        show: false,
-                    }
-                },
-                title: {
-                    text: 'Hàng hóa bán chạy nhất',
-                    align: 'center',
-                    floating: true
-                },
-                subtitle: {
-                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
-                    align: 'center',
-                },
-                tooltip: {
-                    theme: 'dark',
-                    x: {
-                        show: false
-                    },
-                    y: {
-                        title: {
-                            formatter: function () {
-                                return ''
-                            }
-                        }
-                    }
+                    categories: day,
+
                 }
             };
-
-            var myChart = new ApexCharts(document.querySelector("#char7day"), options);
+            myChart = new ApexCharts(document.querySelector("#myChart"), options);
             myChart.render();
         })
     }
-    renderchart7day();
 
-    // chart this mounth
-    function renderChartMonth() {
+    // ------------
+    $('#selectChart').on('change', function () {
+        let text = $('#selectChart').val();
+        totalLastDay(text);
+    });
+
+    $('#selectChart1').on('change', function () {
+        let line = $('#selectChart1').val();
+        renderChartProduct(line);
+    })
+
+    // bill to day
+    function renderBillToDay() {
         $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/order/chartByMonth",
+            url: location.origin + "/api/orderItem/billToDay",
         }).done((data) => {
-            let sl = [];
-            let ds = [];
-            $.each(data, (i, item) => {
-                // ds = moment(item.dates).format('L');
-                console.log('ds: ', ds)
-
-                ds.push(moment(item.dates).format("L"));
-                sl.push(item.total);
-            })
-            console.log(sl)
-            console.log(name)
-            var options = {
-                series: [{
-                    data: sl
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 700
-                },
-                plotOptions: {
-                    bar: {
-                        barHeight: '100%',
-                        distributed: true,
-                        horizontal: false,
-                        dataLabels: {
-                            position: 'bottom'
-                        },
-                    }
-                },
-                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-                    '#f48024', '#69d2e7'
-                ],
-                dataLabels: {
-                    enabled: false,
-                    textAnchor: 'start',
-                    style: {
-                        colors: ['#0000EE']
-                    },
-                    formatter: function (val, opt) {
-                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-                    },
-                    offsetX: 0,
-                    dropShadow: {
-                        enabled: false
-                    }
-                },
-                stroke: {
-                    width: 1,
-                    colors: ['#fff']
-                },
-                xaxis: {
-                    categories: [...ds],
-                },
-                yaxis: {
-                    labels: {
-                        show: false,
-                    }
-                },
-                title: {
-                    text: 'Hàng hóa bán chạy nhất',
-                    align: 'center',
-                    floating: true
-                },
-                subtitle: {
-                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
-                    align: 'center',
-                },
-                tooltip: {
-                    theme: 'dark',
-                    x: {
-                        show: false
-                    },
-                    y: {
-                        title: {
-                            formatter: function () {
-                                return ''
-                            }
-                        }
-                    }
-                }
-            };
-
-            var myChart = new ApexCharts(document.querySelector("#chart1month"), options);
-            myChart.render();
-        })
+            let str = `
+                <tr>
+                <td>${data[0].bills}</td>
+</tr>
+                `;
+            $("#billInDay").append(str);
+        });
     }
-    renderChartMonth();
 
-    // chart last mounth
-    function renderChartLastMonth() {
+    // Format money
+    function FormatMoney(money) {
+        let str = money.toString();
+        return str.split('').reverse().reduce((prev, next, index) => {
+            return ((index % 3) ? next : (next + '.')) + prev;
+        });
+    }
+
+    function renderToTalMonth() {
         $.ajax({
             headers: {
                 "accept": "application/json",
                 "content-type": "application/json"
             },
             type: "GET",
-            url: "http://localhost:8080/api/order/chartByLastMonth",
+            url: location.origin + "/api/order/allTotalMonth",
         }).done((data) => {
-            let sl = [];
-            let ds = [];
-            $.each(data, (i, item) => {
-                // ds = moment(item.dates).format('L');
-                console.log('ds: ', ds)
-
-                ds.push(moment(item.dates).format("L"));
-                sl.push(item.total);
-            })
-            console.log(sl)
-            console.log(name)
-            var options = {
-                series: [{
-                    data: sl
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 700
-                },
-                plotOptions: {
-                    bar: {
-                        barHeight: '100%',
-                        distributed: true,
-                        horizontal: false,
-                        dataLabels: {
-                            position: 'bottom'
-                        },
-                    }
-                },
-                colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e',
-                    '#f48024', '#69d2e7'
-                ],
-                dataLabels: {
-                    enabled: false,
-                    textAnchor: 'start',
-                    style: {
-                        colors: ['#0000EE']
-                    },
-                    formatter: function (val, opt) {
-                        return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
-                    },
-                    offsetX: 0,
-                    dropShadow: {
-                        enabled: false
-                    }
-                },
-                stroke: {
-                    width: 1,
-                    colors: ['#fff']
-                },
-                xaxis: {
-                    categories: [...ds],
-                },
-                yaxis: {
-                    labels: {
-                        show: false,
-                    }
-                },
-                title: {
-                    text: 'Hàng hóa bán chạy nhất',
-                    align: 'center',
-                    floating: true
-                },
-                subtitle: {
-                    text: 'Tên sản phẩm và tổng thu nhập từ đó',
-                    align: 'center',
-                },
-                tooltip: {
-                    theme: 'dark',
-                    x: {
-                        show: false
-                    },
-                    y: {
-                        title: {
-                            formatter: function () {
-                                return ''
-                            }
-                        }
-                    }
-                }
-            };
-
-            var myChart = new ApexCharts(document.querySelector("#chartlastmonth"), options);
-            myChart.render();
-        })
+            let str = `
+                <tr>
+                <td>${FormatMoney(data[0].total)} ₫</td>
+                </tr>
+                `;
+            $("#totalToMonth").append(str);
+        });
     }
-    renderChartLastMonth();
+
+    renderToTalMonth();
+
+    renderBillToDay();
+    totalLastDay('/chartLastDay');
+    renderChartProduct('/totalOneDay');
+
+    //total to day
+    function renderToTalToDay() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order/allTotalToDay",
+        }).done((data) => {
+            let str = `
+                <tr>
+                <td>${FormatMoney(data[0].total)} ₫</td>
+                </tr>
+                `;
+            $("#totalInDay").append(str);
+        });
+    }
+
+    renderToTalToDay();
 </script>
 </html>

@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import vn.midatri.repository.model.Chart;
 import vn.midatri.repository.model.Order;
+
+import javax.validation.constraints.Max;
 import java.util.List;
 import java.util.Date;
 
@@ -32,6 +34,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     nativeQuery = true)
     List<Order> findByCreateAtBetween(Date toDay , Date fromDay);
 
+
     @Query(nativeQuery = true, name ="sp_chart")
     List<Chart> chartBar();
 
@@ -47,4 +50,19 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Chart> chartByMonth();
     @Query(nativeQuery = true,name = "sp_last1monht")
     List<Chart> chartByLastMonth();
+
+    @Query(nativeQuery = true,name = "sp_billtoday")
+    List<Chart> totalOrderItem();
+    @Query(nativeQuery = true,name = "sp_totalOneDay")
+    List<Chart> totalOneDay();
+    @Query(nativeQuery = true,name = "sp_totalLastDay")
+    List<Chart> totalLastDay();
+    @Query(nativeQuery = true,name = "sp_totalLastMonth")
+    List<Chart> totalLastMonth();
+    @Query(nativeQuery = true,name = "sp_totalMonth")
+    List<Chart> totalMonth();
+    @Query(nativeQuery = true,name = "sp_allTotalToDay")
+    List<Chart> allTotalToDay();
+    @Query(nativeQuery = true,name = "sp_allTotalMonth")
+    List<Chart> allTotalMonth();
 }

@@ -75,6 +75,41 @@ public class OrderService implements IOrderService {
         return orderRepository.chartByLastMonth();
     }
 
+    @Override
+    public List<Chart> totalOrderItems() {
+        return orderRepository.totalOrderItem();
+    }
+
+    @Override
+    public List<Chart> totalOneDay() {
+        return orderRepository.totalOneDay();
+    }
+
+    @Override
+    public List<Chart> totalLastDay() {
+        return orderRepository.totalLastDay();
+    }
+
+    @Override
+    public List<Chart> totalLastMonth() {
+        return orderRepository.totalLastMonth();
+    }
+
+    @Override
+    public List<Chart> totalMonth() {
+        return orderRepository.totalMonth();
+    }
+
+    @Override
+    public List<Chart> allTotalToDay() {
+        return orderRepository.allTotalToDay();
+    }
+
+    @Override
+    public List<Chart> allTotalMonth() {
+        return orderRepository.allTotalMonth();
+    }
+
     public List<OrderResult> findSevenDay() {
         return orderRepository.findSevenDay()
                 .stream()

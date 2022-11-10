@@ -70,4 +70,10 @@ public class OrderItemApi {
         orderRepository.save(order);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/billToDay")
+    public ResponseEntity<?> billToDay(){
+        return new ResponseEntity<>(orderRepository.totalOrderItem(),HttpStatus.OK);
+    }
+
 }

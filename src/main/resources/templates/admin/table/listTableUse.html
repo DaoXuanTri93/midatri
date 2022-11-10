@@ -83,10 +83,6 @@
   </div>
 </div>
 <th:block th:replace="/admin/layout/script :: script"/>
-<!--<th:block th:replace="/admin/table/modalCreateTable :: modalCreateTable"/>-->
-<!--<th:block th:replace="/admin/table/modalEditTable :: modalEditTable"/>-->
-<!--<th:block th:replace="/admin/table/modalDeleteTable ::modalDeleteTable"/>-->
-<!--<th:block th:replace="/admin/table/restoreTable :: restoreTable"/>-->
 
 
 </body>
@@ -95,7 +91,7 @@
     $("#tblTopAct").DataTable({
               ajax: {
                 contentType: 'application/json',
-                url: "http://localhost:8080/api/table-top/renderTableUse",
+                url: location.origin + "/api/table-top/renderTableUse",
                 type: "GET",
                 dataSrc: ''
               },
@@ -117,15 +113,6 @@
                   }
                 },
                 {data: "id"},
-                // {
-                //   data: 'id',
-                //   render: function (data, type, row, meta) {
-                //     return `<select class="form-select" id="editStatusTbl">
-                //                 <option value="AVAILABLE" selected>Chưa sử dụng</option>
-                //                 <option value="ACTIVE" selected>Đang sử dụng</option>
-                //             </select> `;
-                //   }, orderable: false
-                // },
               ]
               ,
             }

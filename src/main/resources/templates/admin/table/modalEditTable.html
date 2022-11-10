@@ -14,7 +14,7 @@
                     <form id="frmEditTable">
                         <div class="row">
                             <div class="">
-                                <input type="text" class="form-control" id="idTableEdit" name="idTableEdit" hidden>
+                                <input type="text" id="idTableEdit" name="idTableEdit" hidden>
                             </div>
                             <div class="col col-md-12">
                                 <label for="statusTableEdit" class="form-label fw-bold">Trạng thái:</label>
@@ -25,8 +25,8 @@
                                 </select>
                             </div>
                             <div class="col col-md-12">
-                                <label for="titleEdit" class="form-label fw-bold">Tên phòng/bàn:</label>
-                                <input type="text" class="form-control" id="titleEdit" name="titleEdit">
+                                <label for="titleEdit1" class="form-label fw-bold">Tên phòng/bàn:</label>
+                                <input type="text" class="form-control" id="titleEdit1" name="titleEditUp">
                             </div>
                         </div>
                         <div class="row">
@@ -34,7 +34,6 @@
                                 <label for="capacityEdit" class="form-label fw-bold">Số ghế :</label>
                                 <input type="number" class="form-control" id="capacityEdit" name="capacityEdit">
                             </div>
-
                         </div>
                         <div class="col col-md-12">
                             <label for="contentEdit" class="form-label fw-bold">Ghi chú:</label>
@@ -53,8 +52,63 @@
     </div>
     <script src="/js/App.js"></script>
     <script>
-        // $("#btnEditTable").on("click", function () {
-        //     $("#frmEditTable").submit();
-        // });
+        $("#btnEditTable").on("click", function () {
+            $("#frmEditTable").trigger("submit");
+        });
+        // edit table
+        function updateTable() {
+            let editTable = new TableTop();
+            editTable.id = $("#idTableEdit").val();
+            editTable.capacity = $("#capacityEdit").val();
+            editTable.title = $("#titleEdit1").val();
+            editTable.status = $("#statusTableEdit :selected").val();
+            editTable.content = $("#contentEdit").val();
+            return $.ajax({
+                headers: {
+                    "accept": "application/json",
+                    "content-type": "application/json"
+                },
+                type: "PUT",
+                url: location.origin + "/api/table-top/edit/",
+                data: JSON.stringify(editTable)
+            }).done(function (data) {
+                    console.log("data", data);
+                    Toast.success("Thay đổi thông tin thành công");
+                    $('#tblTop').DataTable().ajax.reload();
+                    $('#modalEditTable').modal("hide");
+                    $("#frmEditTable")[0].reset();
+                }
+            ).fail(function (jqXHR) {
+                console.log(jqXHR);
+                Toast.warning("update lỗi");
+                // Toast.warning("Dữ liệu bạn nhập không chính xác");
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Oops...',
+                //         text: "Dữ liệu bạn nhập không chính xác!!",
+                //     })
+            })
+        }
+
+        function handlerShowTableEdit(id) {
+           return  $.ajax({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-type": "application/json"
+                },
+                type: "GET",
+                url: "http://localhost:8080/api/table-top/" + id
+            })
+                .done((data) => {
+                    $("#idTableEdit").val(data.id);
+                    $("#capacityEdit").val(data.capacity);
+                    $("#statusTableEdit").find(":selected").val(data.status);
+                    $("#titleEdit1").val(data.title);
+                    $("#contentEdit").val(data.content);
+                    $("#modalEditTable").modal("show");
+                })
+        }
+
+        // end edit table
     </script>
 </th:block>

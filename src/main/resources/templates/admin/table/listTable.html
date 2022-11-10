@@ -91,7 +91,6 @@
 <th:block th:replace="/admin/table/modalCreateTable :: modalCreateTable"/>
 <th:block th:replace="/admin/table/modalEditTable :: modalEditTable"/>
 <th:block th:replace="/admin/table/modalDeleteTable ::modalDeleteTable"/>
-<!--<th:block th:replace="/admin/table/restoreTable :: restoreTable"/>-->
 </body>
 <script>
 
@@ -100,7 +99,7 @@
         $("#tblTop").DataTable({
                 ajax: {
                     contentType: 'application/json',
-                    url: "http://localhost:8080/api/table-top/unavaliable",
+                    url: location.origin + "/api/table-top/unavaliable",
                     type: "GET",
                     dataSrc: ''
                 },
@@ -142,78 +141,10 @@
     })
     // end render list table
 
-
-    // edit table
-    function updateTable() {
-        let editTable = new TableTop();
-        editTable.id = $("#idTableEdit").val();
-        editTable.capacity = $("#capacityEdit").val();
-        editTable.title = $("#titleEdit").val();
-        editTable.status = $("#statusTableEdit :selected").val();
-        editTable.content = $("#contentEdit").val();
-        $.ajax({
-            headers: {
-                "accept": "application/json",
-                "content-type": "application/json"
-            },
-            type: "PUT",
-            url: "http://localhost:8080/api/table-top/edit/",
-            data: JSON.stringify(editTable)
-        }).done(function (data) {
-                console.log("data", data);
-                // Swal.fire({
-                //     position: 'top-end',
-                //     icon: 'success',
-                //     title: 'Cập nhập thông tin thành công',
-                //     showConfirmButton: false,
-                //     timer: 4000
-                //
-                // })
-                Toast.success("Thay đổi thông tin thành công");
-                $('#tblTop').DataTable().ajax.reload();
-                $('#modalEditTable').modal("hide");
-                $("#frmEditTable")[0].reset();
-
-            }
-        ).fail(function (jqXHR) {
-            console.log(jqXHR);
-            // Toast.warning("Dữ liệu bạn nhập không chính xác");
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Oops...',
-            //         text: "Dữ liệu bạn nhập không chính xác!!",
-            //     })
-        })
-    }
-
-    function handlerShowTableEdit(id) {
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: "http://localhost:8080/api/table-top/" + id
-        })
-            .done((data) => {
-                $("#idTableEdit").val(data.id);
-                $("#capacityEdit").val(data.capacity);
-                $("#statusTableEdit").find(":selected").val(data.status);
-                $("#titleEdit").val(data.title);
-                $("#contentEdit").val(data.content);
-                $("#modalEditTable").modal("show");
-            })
-    }
-
-    // end edit table
-
-
     $("#createTable").on("click", function () {
         $("#modalCreateTable").modal("show")
     });
-    $("#btnEditTable").on("click", function () {
-        $("#frmEditTable").submit();
-    });
+
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
@@ -222,6 +153,22 @@
             });
         });
     });
+    $(document).ready(function () {
+        let url = window.location.href;
+        let choseUrl = url.split("/");
+        console.log('choseUrl: ', choseUrl[3]);
+        choseeLi(choseUrl[3]);
+    });
+    function choseeLi(li) {
+        console.log('li: ', $(".li").children())
+    }
+        // $(".li").on('click', () => {
+        //     console.log("here")
+        //     // remove classes from all
+        //     $(".li").removeClass("choseee");
+        //     // add class to the one we clicked
+        //     $(".li").addClass("choseee");
+        // });
 </script>
 </html>
 

@@ -39,7 +39,6 @@ $(document).ready(function () {
         },
         submitHandler: function () {
             CreateTable();
-
         }
     })
 
@@ -48,27 +47,31 @@ $(document).ready(function () {
         $("#modalEditTable .modal-alert-danger").removeClass("show").addClass("hide");
         $("#frmEditTable").validate().resetForm();
     })
+
     $("#frmEditTable").validate({
         rules: {
-            titleEdit: {
+            titleEditUp: {
                 required: true,
+                minlength: 5,
+                maxlength: 30
             },
             capacityEdit: {
                 required: true,
-                range: [5,16],
+                range: [2,16],
                 // min: 2
             }
         },
         messages: {
-            titleEdit: {
-                required: "Bạn phải đặt tên cho bàn"
+            titleEditUp: {
+                minlength: "Tên bàn tối thiểu 5 ký tự",
+                required : " Tên bàn không được để trống",
+                maxlength: " Tên bàn tối đa 30 ký tự"
             },
             capacityEdit: {
-                required: " Số ghế không được để trống",
-                range: " Số ghế 1 bàn không được nhỏ hơn 1 và lớn hơn 16",
+                required: "Số ghế không được để trống",
+                range: "Số ghế 1 bàn không được nhỏ hơn 1 và lớn hơn 16",
                 // min: "Số ghế phải lớn hơn 1"
             }
-
         },
         showErrors: function (errorMap, errorList) {
             if (this.numberOfInvalids() > 0) {

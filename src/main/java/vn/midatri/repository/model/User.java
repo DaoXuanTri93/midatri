@@ -32,7 +32,6 @@ import java.util.Date;
         classes = @ConstructorResult(
                 targetClass = Chart.class,
                 columns = {
-//                        @ColumnResult(name = "id", type = Long.class),
                         @ColumnResult(name = "title", type = String.class),
                         @ColumnResult(name = "total", type = BigDecimal.class)
                 }
