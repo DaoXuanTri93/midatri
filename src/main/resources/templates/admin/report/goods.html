@@ -32,18 +32,22 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Thời gian</th>
                                         <th>Tên Hàng</th>
                                         <th>Số Lượng</th>
                                         <th>Doanh Thu</th>
                                         <th>Doanh Thu Thuần</th>
                                     </tr>
                                     </thead>
-                                    <tfoot >
-                                    <tr>
-                                        <th colspan="4" class="fw-bold" style="text-align:right">Tổng Doanh Thu :</th>
-                                        <th style="text-align:right"></th>
-                                    </tr>
-                                    </tfoot>
+                                    <tbody>
+
+                                    </tbody>
+<!--                                    <tfoot >-->
+<!--                                    <tr>-->
+<!--                                        <th colspan="4" class="fw-bold" style="text-align:right">Tổng Doanh Thu :</th>-->
+<!--                                        <th style="text-align:right"></th>-->
+<!--                                    </tr>-->
+<!--                                    </tfoot>-->
                                 </table>
                             </div>
                         </div>
@@ -80,27 +84,127 @@
             url: `${location.origin}/api/orderItem/findToday`,
         })
             .done((data)=>{
-                $.each(data,(i,item)=>{
-                    let str = `
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    `
-                    $('#tblGoods tbody').append(str);
-                })
+               renderTableReportGoods(data)
             })
     }
+    function renderReportLastDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findLastDay`,
+        })
+            .done((data)=>{
+               renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodsLastDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findLastDay`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodsToMonth(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findToMonth`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodLastMonth(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findLastMonth`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderReportGoodSevenDay(){
+        $.ajax({
+            headers: {
+                "Accept": "application/json",
+                "Content-type": "application/json"
+            },
+            type: "GET",
+            url: `${location.origin}/api/orderItem/findSevenDay`,
+        })
+            .done((data)=>{
+                renderTableReportGoods(data)
+            })
+    }
+    function renderTableReportGoods(data){
+        $.each(data,(i,item)=>{
+            let str = `
+                        <tr>
+                            <td>SP-${item.itemId}</td>
+                            <td>${moment(item.createAt).format('DD-MM-yyyy h:mm')}</td>
+                            <td>${item.title}</td>
+                            <td>${item.quantity}</td>
+                            <td> ${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.quantity*item.price)}</td>
+                            <td>${new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(item.quantity*item.price)}</td>
+                        </tr>
+                    `
+            $('#tblGoods tbody').append(str);
+        })
+    }
 
+    function renderFilterReport(){
+        let filter = $("#dateReceiptGoods")
+        filter.on('change',function (){
+            $('#tblGoods tbody tr').remove();
+            switch (filter.val()){
+                case "0":
+                    renderReportToDay();
+                    break;
+                case "1":
+                    renderReportGoodsLastDay();
+                    break;
+                case "2":
+                    renderReportGoodSevenDay();
+                    break;
+                case "3":
+                    renderReportGoodsToMonth();
+                    break;
+                case "4":
+                    renderReportGoodLastMonth();
+                    break;
+
+            }
+        })
+    }
+    renderReportToDay()
     if ($("input[type='radio']:checked").val() == "1") {
-
+        renderFilterReport();
     }
     $("input[type='radio']").on("click", function () {
         if ($("input[type='radio']:checked").val() == "1") {
-
+            renderFilterReport();
         }
         if ($("input[type='radio']:checked").val() == "2") {
             selectToDay.on("change",function (){

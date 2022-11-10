@@ -12,7 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Accessors(chain = true)
+//@Accessors(chain = true)
 public class Goods {
     private Instant createAt;
     private long itemId ;

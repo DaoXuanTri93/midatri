@@ -51,8 +51,8 @@
                         <div class="row">
                             <label class="form-label fw-bold ">Hình Ảnh</label>
                             <div class="mb-3 text-center ">
-                                <img id="previewImg" width="150px" class="img-circle mb-2 " src="/assets/img/Logo.png"/>
                                 <input id="uploadCre" type="file" accept="image/*"  hidden/>
+                                <img id="previewImg" width="150px" class="img-circle mb-2 " src="/assets/img/Logo.png"/>
                             </div>
                         </div>
                         <div class="row">
@@ -128,7 +128,7 @@
             product.userId=1;
             product.deleted = false;
             if ($("#uploadCre")[0].files[0] != null) {
-                product.img = $("#productNameCreate").val();
+                product.img = $("#uploadCre").val();
             }
 
             $.ajax({

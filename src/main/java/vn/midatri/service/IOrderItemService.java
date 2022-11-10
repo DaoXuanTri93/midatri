@@ -14,4 +14,7 @@ public interface IOrderItemService {
     List<OrderItemResult> findAll();
     List<Goods> findAllByToDay();
     List<Goods> findAllByLastDay();
+    List<Goods> findAllByToMonth();
+    List<Goods> findAllByLastMonth();
+    List<Goods> findAllBySevenDay();
 }

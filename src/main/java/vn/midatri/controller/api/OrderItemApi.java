@@ -52,6 +52,21 @@ public class OrderItemApi {
         List<Goods> goods = orderItemService.findAllByLastDay();
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
+    @GetMapping("/findToMonth")
+    public ResponseEntity<?> findAllByToMonth() {
+        List<Goods> goods = orderItemService.findAllByToMonth();
+        return new ResponseEntity<>(goods, HttpStatus.OK);
+    }
+    @GetMapping("/findLastMonth")
+    public ResponseEntity<?> findAllByLastMonth() {
+        List<Goods> goods = orderItemService.findAllByLastMonth();
+        return new ResponseEntity<>(goods, HttpStatus.OK);
+    }
+    @GetMapping("/findSevenDay")
+    public ResponseEntity<?> findAllBySevenDay() {
+        List<Goods> goods = orderItemService.findAllBySevenDay();
+        return new ResponseEntity<>(goods, HttpStatus.OK);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody OrderItemParam[] orderItemParamArr) {

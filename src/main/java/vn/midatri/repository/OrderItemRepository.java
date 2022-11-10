@@ -17,28 +17,16 @@ public interface OrderItemRepository extends JpaRepository<OrderItem , Long> {
 
     List<OrderItem> findAllByOrderId(Long id);
 
-    @Query(value = "SELECT" +
-            " ANY_VALUE(oi.create_at) AS createAt," +
-            "ANY_VALUE(oi.item_id) AS itemId," +
-            "ANY_VALUE(oi.price ) AS price," +
-            "SUM(oi.quantity) as quantity," +
-            "i.title AS title " +
-            " FROM `order_item` as oi" +
-            " inner join item as i on i.id = oi.item_id" +
-            " WHERE date(oi.create_at) = date(DATE_SUB(now(), INTERVAL 1 day))" +
-            " GROUP BY i.title order by ANY_VALUE(oi.item_id) asc",nativeQuery = true)
+    @Query(name = "sp_getallproductlastday",
+            nativeQuery = true)
     List<Goods> findAllByLastDay();
-    @Modifying
-    @Query(value = "SELECT NEW vn.midatri.dto.report.Goods(" +
-            "ANY_VALUE(oi.create_at) AS createAt," +
-            "ANY_VALUE(oi.item_id) AS itemId," +
-            "ANY_VALUE(oi.price ) AS price," +
-            "SUM(oi.quantity) as quantity," +
-            "i.title AS title )" +
-            " FROM `order_item` as oi" +
-            " join item as i on i.id = oi.item_id" +
-            " WHERE date(oi.create_at) = date(NOW())" +
-            " GROUP BY i.title order by ANY_VALUE(oi.item_id) asc",nativeQuery = true)
+    @Query(nativeQuery = true , name = "sp_getallproducttoday")
     List<Goods> findAllByToDay();
+    @Query(nativeQuery = true , name = "sp_getallproducttomonth")
+    List<Goods> findAllByToMonth();
+    @Query(nativeQuery = true , name = "sp_getallproductlastmonth")
+    List<Goods> findAllByLastMonth();
+    @Query(nativeQuery = true , name = "sp_getallproductsevenday")
+    List<Goods> findAllBySevenDay();
 
 }

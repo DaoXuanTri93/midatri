@@ -65,4 +65,19 @@ public class OrderItemService implements IOrderItemService {
         return orderItemRepository.findAllByLastDay();
     }
 
+    @Override
+    public List<Goods> findAllByToMonth() {
+        return orderItemRepository.findAllByToMonth();
+    }
+
+    @Override
+    public List<Goods> findAllByLastMonth() {
+        return orderItemRepository.findAllByLastMonth();
+    }
+
+    @Override
+    public List<Goods> findAllBySevenDay() {
+        return orderItemRepository.findAllBySevenDay();
+    }
+
 }
