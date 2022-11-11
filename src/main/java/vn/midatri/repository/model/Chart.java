@@ -18,7 +18,13 @@ public class Chart {
     private BigDecimal total;
     private Instant dates;
     private String bills;
+    private String username;
 
+    public Chart(String username, Instant dates,BigDecimal total) {
+        this.username = username;
+        this.total = total;
+        this.dates = dates;
+    }
 
     public Chart(String title, BigDecimal total) {
         this.title = title;
