@@ -51,8 +51,8 @@
                         <div class="row">
                             <label class="form-label fw-bold ">Hình Ảnh</label>
                             <div class="mb-3 text-center ">
-                                <img id="previewImg" width="150px" class="img-circle mb-2 " src="/assets/img/Logo.png"/>
                                 <input id="uploadCre" type="file" accept="image/*"  hidden/>
+                                <img id="previewImg" width="150px" class="img-circle mb-2 " src="/assets/img/Logo.png"/>
                             </div>
                         </div>
                         <div class="row">
@@ -100,7 +100,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/parent/"+$("#catalogsParentCreate").val(),
+                url: `${location.origin}/api/category/parent/`+$("#catalogsParentCreate").val(),
             })
                 .done((data)=>{
 
@@ -128,7 +128,7 @@
             product.userId=1;
             product.deleted = false;
             if ($("#uploadCre")[0].files[0] != null) {
-                product.img = $("#productNameCreate").val();
+                product.img = $("#uploadCre").val();
             }
 
             $.ajax({
@@ -137,7 +137,7 @@
                     "content-type": "application/json"
                 },
                 type: "POST",
-                url: "http://localhost:8080/api/item/create",
+                url: `${location.origin}/api/item/create`,
                 data: JSON.stringify(product)
             }).done(() => {
                Toast.success("Thành Công")

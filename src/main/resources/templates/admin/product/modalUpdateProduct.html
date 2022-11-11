@@ -84,7 +84,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/category/parent/"+ ($("#catalogsParentUpdate").val()) ,
+                url: `${location.origin}/api/category/parent/`+ ($("#catalogsParentUpdate").val()) ,
             })
                 .done(function (data) {
                     parent = data
@@ -131,7 +131,7 @@
                     "Content-type": "application/json"
                 },
                 type: "PUT",
-                url: 'http://localhost:8080/api/item/edit/'+ product.id,
+                url: `${location.origin}/api/item/edit/`+ product.id,
                 data: JSON.stringify(product)
             })
                 .done(function (data) {
