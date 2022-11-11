@@ -123,6 +123,10 @@ public class OrderApi {
     public ResponseEntity<?> allTotalMonth(){
         return new ResponseEntity<>(orderService.allTotalMonth(),HttpStatus.OK);
     }
+    @GetMapping("/showBill")
+    public ResponseEntity<?> showBill(){
+        return new ResponseEntity<>(orderService.showBill(),HttpStatus.OK);
+    }
 
 
 }
