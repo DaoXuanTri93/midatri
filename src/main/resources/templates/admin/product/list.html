@@ -145,10 +145,17 @@
             $.ajax({
                 headers: {
                     "Accept": "application/json",
+<<<<<<< HEAD
                     "Content-type": "application/json"
                 },
                 type: "GET",
                 url: `${location.origin}/api/category/parent?hasParentId=1`,
+=======
+                    "Content-type": "application/json",
+                },
+                    type: "GET",
+                    url: location.origin + "/api/category/parent?hasParentId=1"
+>>>>>>> development
             }).done((data) => {
                 $.each(data, (c, cate) => {
                     allCategory.push(cate.id);
