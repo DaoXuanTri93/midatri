@@ -113,7 +113,7 @@
             var tableUser = $("#tblUser").DataTable({
                     ajax: {
                         contentType: 'application/json',
-                        url: "http://localhost:8080/api/users",
+                        url: location.origin + "/api/users",
                         type: "GET",
                         dataSrc: ''
                     },

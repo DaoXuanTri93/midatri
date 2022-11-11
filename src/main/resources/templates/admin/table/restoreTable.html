@@ -73,7 +73,7 @@
       let restoreTable=  $("#tblRestore").DataTable({
             ajax: {
                 contentType: 'application/json',
-                url: "http://localhost:8080/api/table-top/renderNotUseTable",
+                url: location.origin + "/api/table-top/renderNotUseTable",
                 type: "GET",
                 dataSrc: ''
             },
@@ -115,7 +115,7 @@
                 "Accept": "application/json",
                 "Content-type": "application/json"
             },
-            url: "http://localhost:8080/api/table-top/restore/" + id,
+            url: location.origin + "/api/table-top/restore/" + id,
             type: "POST"
         })
             .done(function (data) {
