@@ -38,14 +38,24 @@ function BookingAPI() {
             })
             .fail((jqXHR) => {
                 fail(jqXHR)
-                Swal.fire({
-                    grow : false,
+                iziToast.question({
+                    close: false,
+                    overlay: true,
+                    timeout:  false,
+                    displayMode: 'once',
+                    titleColor: '#d21e1e',
+                    backgroundColor: '#fff',
+                    id: 'question',
+                    titleLineHeight: '20',
+                    zindex: 999,
+                    title: 'Vui Lòng Chọn Bàn Để Chọn Món.',
                     position: 'center',
-                    icon: 'error',
-                    title: jqXHR.responseJSON.message,
-                    showConfirmButton: false,
-                    timer: 1500
-                })
+                    buttons: [
+                        ['<button><b>YES</b></button>', function (instance, toast) {
+                            instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+                        }, true]
+                    ]
+                });
             })
     }
     this.savingCustomer = (bookingId,data, done, fail) => {

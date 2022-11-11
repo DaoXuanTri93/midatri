@@ -14,14 +14,7 @@ public class LoginRegisterController {
     public ModelAndView Login(){
         return new ModelAndView("/admin/login-register");
     }
-//    @GetMapping("/admin")
-//    public ModelAndView admin(){
-//        return new ModelAndView("/products");
-//    }
-//    @GetMapping("/user")
-//    public ModelAndView user(){
-//        return new ModelAndView("/orders");
-//    }
+
 
 
 }

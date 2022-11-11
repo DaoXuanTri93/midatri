@@ -102,9 +102,9 @@ public class BookingItemService implements IBookingItemService {
 
         BookingItem bookingItem
                 = bookingItemRepository.findByBookingIdAndItemId(param.getBookingId(), param.getItemId());
-        if (bookingItem != null) {
-            throw new NotFoundException("NOT FOUND BookingItem !!!");
-        }
+//        if (bookingItem != null) {
+//            throw new NotFoundException("NOT FOUND BookingItem !!!");
+//        }
 
         Item item = itemOption.get();
         BookingItem newBookingItem = bookingItemMapper.toModel(param);
@@ -231,7 +231,10 @@ public class BookingItemService implements IBookingItemService {
                 throw new NotFoundException("Not found " + bookingItemResult.getId());
             }
             bookingItemOptional.get().setId(bookingItemResult.getId());
-            bookingItemOptional.get().setStatus(KITCHEN);
+
+            if (bookingItemOptional.get().getStatus().equals(NEW)){
+                bookingItemOptional.get().setStatus(KITCHEN);
+            }
             bookingItemRepository.save(bookingItemOptional.get());
         }
     }

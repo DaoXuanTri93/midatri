@@ -31,7 +31,7 @@ let onItemClick = () => {
     $(".btn-add-product").click((event) => {
         let sizeBookingItem = bookingItemTableTopMap.size
         if (sizeBookingItem > 0) {
-            $(`#tb_${tableTopId} span`).attr('style','background-color: #ff8000')
+            $(`#tb_${tableTopId} span`).attr('style', 'background-color: #ff8000')
         }
         $("#notification").removeAttr("disabled");
         let itemId = parseInt($(event.currentTarget).attr('data-id'));
@@ -119,8 +119,16 @@ function renderTabletop(tabletop) {
 function renderAllTableTop() {
     let onTabletopClick = () => {
         $(".tableAndRoom").click((event) => {
-            $("#notification").removeAttr("disabled");
+
             tableTopId = parseInt($(event.currentTarget).attr('data-id'));
+            let bookingItems = bookingItemTableTopMap.get(tableTopId);
+
+            $("#notification").attr("disabled", "")
+            $.each(bookingItems, (i, booking) => {
+                if (booking.status === "NEW") {
+                    return $("#notification").removeAttr("disabled")
+                }
+            })
             $('#link-menu').trigger('click');
             let a = tabletops;
             let titleTable = "";
@@ -268,7 +276,8 @@ function booking(tabletopId, itemId) {
     }
 
     for (const bookingItem of bookingItems) {
-        if (itemId === bookingItem.itemId) {
+        console.log("1", bookingItem.status)
+        if (itemId === bookingItem.itemId && bookingItem.status === "NEW") {
             let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text());
             let price = parseInt($(`#${bookingItem.id} .item-price`).text());
             quantity += 1;
@@ -292,19 +301,24 @@ function booking(tabletopId, itemId) {
             }, (jqXHR) => {
             });
             return;
+        } else {
+
         }
-        console.log("item " + itemId + " not found")
+        // console.log("item " + itemId + " not found")
 
 
     }
 
     newBookingItem.bookingId = booking.id;
+    console.log("2", booking.id)
+    console.log("3", newBookingItem.bookingId)
+    console.log("3", tabletopId)
     createBookingItem(tabletopId, newBookingItem);
 
 }
 
 function createBookingItem(tabletopId, newBookingItem) {
-
+    console.log("5", newBookingItem)
     api.bookingItem.create(newBookingItem, (bookingItem) => {
 
         let bookingItems = bookingItemTableTopMap.get(tabletopId);
@@ -334,32 +348,83 @@ function handleDeletedBookingItem(bookingItemId) {
     let bookingId = bookingMap.get(tableTopId).id;
     let sizeBookingItem = bookingItemTableTopMap.get(tableTopId)
     if (sizeBookingItem.length <= 1) {
-        alert("ban co muon xoa ko")
+        iziToast.question({
+            close: false,
+            overlay: true,
+            timeout: false,
+            displayMode: 'once',
+            titleColor: '#d21e1e',
+            backgroundColor: '#fff',
+            id: 'question',
+            titleLineHeight: '20',
+            zindex: 999,
+            title: 'Bạn chắc chắc muốn hủy món này không ?',
+            position: 'center',
+            buttons: [
+                ['<button><b>YES</b></button>', function (instance, toast) {
 
-        api.bookingItem.removeBookingItemByBooking(bookingId, (done) => {
-            $.each(tabletops, (i, tabletop) => {
-                if (tableTopId === tabletop.id) {
-                    tabletop.status = 'AVAILABLE';
-                    $(`#tb_${tabletop.id} span`).removeAttr('style')
-                }
-            })
-            updateQuantityBookingItem(bookingItemId)
-            deletedItemBookingItem(bookingItemId)
-            handleGrandTotal(tableTopId);
-            $(`#render-tableTop #${bookingItemId}`).remove();
-        }, (jqXHR) => {
+                    api.bookingItem.removeBookingItemByBooking(bookingId, (done) => {
+                        $.each(tabletops, (i, tabletop) => {
+                            if (tableTopId === tabletop.id) {
+                                tabletop.status = 'AVAILABLE';
+                                $(`#tb_${tabletop.id} span`).removeAttr('style')
+                            }
+                        })
+                        updateQuantityBookingItem(bookingItemId)
+                        deletedItemBookingItem(bookingItemId)
+                        handleGrandTotal(tableTopId);
+                        $(`#render-tableTop #${bookingItemId}`).remove();
+                    }, (jqXHR) => {
 
-        })
+                    })
+                    instance.hide({transitionOut: 'fadeOut'}, toast, 'button');
+
+                }, true],
+                ['<button>NO</button>', function (instance, toast) {
+                    instance.hide({transitionOut: 'fadeOut'}, toast, 'button');
+
+                }],
+            ]
+
+        });
+
+
     } else {
-        api.bookingItem.removeBookingItem(bookingItemId, (data) => {
-            updateQuantityBookingItem(bookingItemId)
-            deletedItemBookingItem(bookingItemId)
-            handleGrandTotal(tableTopId);
-            $(`#render-tableTop #${bookingItemId}`).remove();
-            // fetchBookings();
-        }, (jqXHR) => {
+        iziToast.question({
+            close: false,
+            timeout: false,
+            overlay: true,
+            displayMode: 'once',
+            titleColor: '#d21e1e',
+            backgroundColor: '#fff',
+            id: 'question',
+            titleLineHeight: '20',
+            zindex: 999,
+            title: 'Bạn chắc chắc muốn hủy món này không ?',
+            position: 'center',
+            buttons: [
+                ['<button><b>YES</b></button>', function (instance, toast) {
 
-        })
+                    api.bookingItem.removeBookingItem(bookingItemId, (data) => {
+                        updateQuantityBookingItem(bookingItemId)
+                        deletedItemBookingItem(bookingItemId)
+                        handleGrandTotal(tableTopId);
+                        $(`#render-tableTop #${bookingItemId}`).remove();
+                        // fetchBookings();
+                    }, (jqXHR) => {
+
+                    })
+                    instance.hide({transitionOut: 'fadeOut'}, toast, 'button');
+
+                }, true],
+                ['<button>NO</button>', function (instance, toast) {
+                    instance.hide({transitionOut: 'fadeOut'}, toast, 'button');
+
+                }],
+            ]
+
+        });
+
     }
 }
 
@@ -390,9 +455,13 @@ function renderBookingItem(index, bookingItem) {
                                 <div class="row-product">
                                     <div class="cell-name full">
                                         <div class="wrap-name">
-${(bookingItem.status === "COOKED") ?
+                                        ${(bookingItem.status === "COOKED") ?
         `<h4 title="APEROL SPRITZ" style="color: #28B44F">${item.title}</h4>` :
-        (bookingItem.status === "COOKING") ? `<h4 title="APEROL SPRITZ" style="color: red">${item.title}</h4>` : `<h4 title="APEROL SPRITZ">${item.title}</h4>`}
+        (bookingItem.status === "COOKING") ?
+            `<h4 title="APEROL SPRITZ" style="color: red">${item.title}</h4>` :
+            (bookingItem.status === "KITCHEN") ?
+                `<h4 title="APEROL SPRITZ" style="color: #ffc720">${item.title}</h4>` :
+                `<h4 title="APEROL SPRITZ">${item.title}</h4>`}
                                             <span class="wrap-icons"></span>
                                             <div class="attr-wrapper">
                                             </div>
@@ -641,8 +710,8 @@ function handlePay(tableTopId) {
                                 currency: 'VND'
                             }).format(0));
 
-                            bookingMap.clear()
-                            bookingItemTableTopMap.clear()
+                            bookingMap.delete(tableTopId)
+                            bookingItemTableTopMap.delete(tableTopId)
                             handleBillsPrint();
                             cancelPay();
 
@@ -833,9 +902,9 @@ function handleNotification(tableTopId) {
         return iziToast.warning(
             {
                 timeout: 2000,
-                position: 'topRight',
+                position: 'center',
                 title: 'Nhắc Nhở',
-                message: "Chưa chọn món !!!"
+                message: "Chưa có bàn để Thông Báo !"
             });
     } else {
         iziToast.success(
@@ -845,11 +914,19 @@ function handleNotification(tableTopId) {
                 title: 'OK',
                 message: "Bếp đã nhận được thông báo !!!"
             });
-        $("#notification").attr("disabled", "")
         let bookingItems = bookingItemTableTopMap.get(tableTopId);
+        $("#notification").attr("disabled", "")
+        $.each(bookingItems, (i, booking) => {
+            if (booking.status === "NEW") {
+                booking.status = "KITCHEN";
+            }
+        })
         api.bookingItem.updateStatus(bookingItems, (data) => {
-            // updateStatusBookingItem();
-
+            $.each(bookingItems, (i, booking) => {
+                if (booking.status === "NEW") {
+                    return $("#notification").removeAttr("disabled")
+                }
+            })
         }, (jqXHR) => {
 
         })
@@ -952,19 +1029,6 @@ function tachDon() {
     $("#tachDon").removeClass('d-none');
 
 }
-
-// function handlePage(numberPage) {
-//     $("#render-table li").remove();
-//     api.tabletop.findAllPage(numberPage, (data) => {
-//         console.log("data", data.content)
-//         $.each(data.content, (i, tabletop) => {
-//             console.log(tabletop)
-//             renderTabletop(tabletop);
-//         });
-//     }, (jqXHR) => {
-//
-//     })
-// }
 
 // window.history.pushState(bookingMap,"","http://localhost:8080/orders/bill")
 function renderAll() {

@@ -24,6 +24,7 @@ function renderAllKitchen(all) {
             renderKitchen(i, item)
         }
     })
+
 }
 
 
@@ -47,9 +48,7 @@ function renderAllCooking(all) {
 
 function renderKitchen(index, bookingItem) {
     let item = itemMap.get(bookingItem.itemId);
-    console.log(bookingItem)
     let nameUser = userMap.get(item.userId).userName
-    console.log(nameUser)
     let result = `
             <div class="billItem" id="${bookingItem.id}_kitchen">
                 <div  class="row-list">
@@ -154,9 +153,7 @@ function handleCooking(index, bookingItemId) {
     let bookingItem = all[index];
     let item = itemMap.get(bookingItem.itemId);
     let nameUser = userMap.get(item.userId).userName;
-    console.log("1", bookingItemId)
     api.bookingItem.updateStatusCooking(bookingItemId, (data) => {
-        console.log(bookingItemId , "32")
         let result = `
             <div class="billItem" id="${bookingItem.id}_cooking">
                 <div  class="row-list">
@@ -203,6 +200,7 @@ function handleRemoveItem(index, bookingItemId){
     iziToast.question({
         close: false,
         overlay: true,
+        timeout:  false,
         displayMode: 'once',
         titleColor: '#d21e1e',
         backgroundColor: '#fff',
