@@ -8,15 +8,13 @@ import vn.midatri.dto.booking.CreateBookingParam;
 import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.mapper.BookingMapper;
-import vn.midatri.repository.BookingItemRepository;
-import vn.midatri.repository.BookingRepository;
-import vn.midatri.repository.ItemRepository;
-import vn.midatri.repository.TableTopRepository;
+import vn.midatri.repository.*;
 import vn.midatri.repository.model.*;
 import vn.midatri.service.IBookingService;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -32,6 +30,9 @@ public class BookingService implements IBookingService {
     private BookingItemRepository bookingItemRepository;
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private BookingMapper bookingMapper;
 
@@ -72,8 +73,12 @@ public class BookingService implements IBookingService {
         TableTop tabletop = tableTopOptional.get();
         List<Booking> bookings = bookingRepository.findAllByTableTopIdAndStatusNot(param.getTabletopId(), BookingStatus.COMPLETE);
         if (bookings.isEmpty()) {
+            User user = userRepository.findUserById(param.getUserId());
+            if (Objects.isNull(user)) {
+                throw new NotFoundException("Không thể tìm thấy user bằng thông tin đã cho.");
+            }
 
-            Booking newBooking = new Booking(param.getTabletopId(), 1L);
+            Booking newBooking = new Booking(param.getTabletopId(), user.getId());
             newBooking.setCreateAt(Instant.now());
             newBooking.setStatus(BookingStatus.NEW);
             Booking booking = bookingRepository.save(newBooking);

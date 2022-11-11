@@ -19,6 +19,29 @@ function renderAllBookingItem() {
     })
 }
 
+// setInterval(() => {
+//     $.ajax({
+//         url: `${location.origin}/api/bookingItem/hasKitchenItem`,
+//         type: "GET",
+//         contentType: 'application/json'
+//     })
+//     .done((data) => {
+//         console.log(data)
+//         if (data) {
+//             $.ajax({
+//                 url: `${location.origin}/api/bookingItem/resetKitchenItem`,
+//                 type: "POST",
+//                 contentType: 'application/json'
+//             }).done((data) => {
+//                 window.location.reload();
+//             })
+//         }
+//     })
+//     .fail((jqXHR) => {
+//         fail(jqXHR);
+//     })
+// }, 5000)
+
 function renderAllKitchen(all) {
     $.each(all, (i, item) => {
         if (item.status === "KITCHEN") {

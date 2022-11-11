@@ -5,6 +5,9 @@ $("#submitLogin").on('click', () => {
     login();
 })
 
+window.localStorage.setItem("userLogin", undefined);
+
+let userLogin;
 function registerUser() {
     let rePass = $("#RePasswordCre").val();
     let user = {
@@ -20,8 +23,7 @@ function registerUser() {
         contentType: 'application/json',
         data: JSON.stringify(user)
     })
-        .done((data) => {
-            alert("dang ky thanh cong")
+        .done((user) => {
             window.location.href = "/login"
         })
 }
@@ -32,13 +34,13 @@ function login() {
         password: $("#passwordLogin").val()
     };
     $.ajax({
-        url: `${location.origin}/api/users/login`,
+        url: `${location.origin}/api/users/loginUser`,
         type: "POST",
         contentType: 'application/json',
         data: JSON.stringify(userLogin)
     })
         .done((data) => {
-            console.log(data)
+            setLoginUserToLocalStored(data);
             iziToast.success(
                         {
                             timeout: 2000,
@@ -46,20 +48,22 @@ function login() {
                             title: 'OK',
                             message: "Đăng nhập thành công !"
                         });
-            setTimeout(()=>{
-                // load("/orders",data)
-                window.location.href = "/orders"
-            },1000)
+            window.location.href = "/orders"
         })
         .fail((jqXHR) => {
             iziToast.error(
                 {
                     timeout: 2000,
                     position: 'topRight',
-                    title: 'OK',
+                    title: 'Lỗi',
                     message: 'Tài khoản không đúng, xin nhập lại.'
                 });
         })
+}
+
+function setLoginUserToLocalStored(loginUser) {
+    window.localStorage.setItem("userLogin", JSON.stringify(loginUser));
+
 }
 
 

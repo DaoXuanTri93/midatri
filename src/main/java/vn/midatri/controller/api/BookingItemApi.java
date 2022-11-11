@@ -14,6 +14,7 @@ import vn.midatri.repository.model.BookingItem;
 import vn.midatri.service.IBookingItemService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static vn.midatri.repository.model.BookingItemStatus.*;
@@ -21,6 +22,8 @@ import static vn.midatri.repository.model.BookingItemStatus.*;
 @RestController
 @RequestMapping("/api/bookingItem")
 public class BookingItemApi {
+    private Boolean hasKitchenItem = false;
+
     @Autowired
     private IBookingItemService bookingItemService;
 
@@ -93,7 +96,22 @@ public class BookingItemApi {
 
     @PostMapping("/updateStatus")
     public ResponseEntity<String> updateStatus(@RequestBody BookingItemUpdateStatus[] bookingItemUpdateStatusArr) {
+        if (Objects.nonNull(bookingItemUpdateStatusArr) && bookingItemUpdateStatusArr.length > 0) {
+            this.hasKitchenItem = true;
+        }
+
         bookingItemService.updateAllStatus(bookingItemUpdateStatusArr);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/hasKitchenItem")
+    public ResponseEntity<Boolean> getHasKitchenItem() {
+        return new ResponseEntity<>(this.hasKitchenItem, HttpStatus.OK);
+    }
+
+    @PostMapping("/resetKitchenItem")
+    public ResponseEntity<String> resetKitchenItem() {
+        this.hasKitchenItem = false;
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
