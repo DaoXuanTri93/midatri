@@ -40,7 +40,7 @@ function renderAllBookingItem() {
 //     .fail((jqXHR) => {
 //         fail(jqXHR);
 //     })
-// }, 5000)
+// }, 10000)
 
 function renderAllKitchen(all) {
     $.each(all, (i, item) => {

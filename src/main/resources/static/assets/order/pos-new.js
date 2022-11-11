@@ -278,7 +278,6 @@ function booking(tabletopId, itemId) {
     }
 
     for (const bookingItem of bookingItems) {
-        console.log("1", bookingItem.status)
         if (itemId === bookingItem.itemId && bookingItem.status === "NEW") {
             let quantity = parseInt($(`#${bookingItem.id} .item-quantity`).text());
             let price = parseInt($(`#${bookingItem.id} .item-price`).text());
@@ -307,20 +306,14 @@ function booking(tabletopId, itemId) {
 
         }
         // console.log("item " + itemId + " not found")
-
-
     }
 
     newBookingItem.bookingId = booking.id;
-    console.log("2", booking.id)
-    console.log("3", newBookingItem.bookingId)
-    console.log("3", tabletopId)
     createBookingItem(tabletopId, newBookingItem);
 
 }
 
 function createBookingItem(tabletopId, newBookingItem) {
-    console.log("5", newBookingItem)
     api.bookingItem.create(newBookingItem, (bookingItem) => {
 
         let bookingItems = bookingItemTableTopMap.get(tabletopId);
@@ -696,7 +689,6 @@ function handlePay(tableTopId) {
                 })
                 let orderParam = bookingMap.get(tableTopId);
                 let orderItemParam = bookingItemTableTopMap.get(tableTopId);
-                console.log("order",orderParam)
                 api.order.create(orderParam, (data) => {
                     api.orderItem.create(orderItemParam, (data) => {
                         api.bookingItem.removeBookingItemByBooking(c, (data) => {
