@@ -121,7 +121,6 @@
     $('input[type="checkbox"]').on('click', function () {
         if ($('input[type="checkbox"]').is(":checked") === true) {
             parameters.push($(this).val());
-            console.log(parameters)
 
 
         }
@@ -155,7 +154,6 @@
             handelDataTable();
 
         } else {
-            console.log("cp=" + parameters, "cc=" + categoryId, "s=" + status)
             query(parameters, categoryId, status);
         }
 
@@ -289,7 +287,6 @@
         if (query.length > 0)
             query += "&";
         query += `s=${status}`;
-        console.log(query)
         $("#tblProduct").DataTable().ajax.url(`${location.origin}/api/item/filter?${query}`).load().draw();
     }
 
@@ -318,7 +315,6 @@
         if (query.length > 0)
             query += "&";
         query += `s=${status}`;
-        console.log(query)
         $("#tblProduct").DataTable().ajax.url(`${location.origin}/api/item/allCategory?${query}`).load().draw();
     }
 
@@ -467,7 +463,6 @@
             .done(function (data) {
                 Toast.success('Đã Xóa Thành Công')
                 window.location.href = '/products';
-                console.log(data);
             })
             .fail(function (jqXHR) {
                 let str = ``;
@@ -528,7 +523,6 @@
 
     // show modal Edit
     function handlerShowModalEdit(id) {
-        console.log("eee")
         let category;
         let parent;
         $.ajax({
