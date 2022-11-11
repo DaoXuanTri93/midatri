@@ -85,6 +85,26 @@ import java.time.Instant;
                 }
         )
 )
+
+//show bill
+@NamedNativeQuery(
+        name = "sp_test",
+        query =
+                "call midatri.sp_test();",
+        resultSetMapping = "result_showBillDto"
+)
+@SqlResultSetMapping(
+        name = "result_showBillDto",
+        classes = @ConstructorResult(
+                targetClass = Chart.class,
+                columns = {
+                        @ColumnResult(name = "username", type = String.class),
+                        @ColumnResult(name = "dates", type = Instant.class),
+                        @ColumnResult(name = "total", type = BigDecimal.class)
+
+                }
+        )
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

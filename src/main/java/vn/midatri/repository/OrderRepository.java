@@ -65,4 +65,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Chart> allTotalToDay();
     @Query(nativeQuery = true,name = "sp_allTotalMonth")
     List<Chart> allTotalMonth();
+    @Query(nativeQuery = true,name = "sp_test")
+    List<Chart> showBill();
+
 }

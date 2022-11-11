@@ -130,7 +130,7 @@
             if ($("#uploadCre")[0].files[0] != null) {
                 product.img = $("#uploadCre").val();
             }
-
+            console.log("product: ", product)
             $.ajax({
                 headers: {
                     "accept": "application/json",
