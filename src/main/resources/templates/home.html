@@ -1,168 +1,471 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <th:block th:replace="layout/head :: head"/>
-</head>
-<body>
-<div class="preloader">
-    <div class="lds-ripple">
-        <div class="lds-pos"></div>
-        <div class="lds-pos"></div>
-    </div>
-</div>
-<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
-     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
-    <th:block th:replace="layout/navBar :: navBar"/>
-<!--    <th:block th:replace="layout/sideBar :: sideBar"/>-->
+<!--<!doctype html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="en">-->
 
-    <!-- ============================================================== -->
-    <!--Primary Content-->
-    <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb bg-white">
-            <div class="row align-items-center">
-                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 text-center">
-                    <h4 class="page-title">Dashboard</h4>
-                </div>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container">
-            <!-- ============================================================== -->
-            <!-- Three charts -->
-            <!-- ============================================================== -->
-            <div class="row justify-content-center">
-                <div class="row row-cols-2">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="white-box analytics-info">
-                            <h3 class="box-title">Doanh thu hôm nay</h3>
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <i class="fa fa-dollar-sign text-success" style="font-size: 50px"></i>
-                                </li>
-                                <li class="ms-auto">
-                                    <span class="counter text-success" id="incomeToday"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="white-box analytics-info">
-                            <h3 class="box-title">Số bill trong ngày</h3>
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <i class="fa fa-money-bill text-purple" style="font-size: 50px"></i>
-                                </li>
-                                <li class="ms-auto">
-                                    <span class="counter text-purple" id="billToday"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-lg-12">
-                        <div class="white-box analytics-info">
-                            <h3 class="box-title">Doanh thu trong tháng</h3>
-                            <ul class="list-inline two-part d-flex align-items-center mb-0">
-                                <li>
-                                    <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
-                                </li>
-                                <li class="ms-auto"><span class="counter text-info" id="incomeToMonth"></span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-lg-12">
-                    <div class="white-box analytics-info">
-                        <h3 class="box-title">Số nhân viên hiện tại</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <i class="fa fa-person text-cyan" style="font-size: 50px"></i>
-                            </li>
-                            <li class="ms-auto"><span class="counter text-cyan" id="sumStaff"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="white-box analytics-info">
-                        <h3 class="box-title">Số voucher đang áp dụng</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <i class="fa fa-tags text-hightlight" style="font-size: 50px"></i>
-                            </li>
-                            <li class="ms-auto"><span class="counter text-hightlight" id="sumVoucher"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!--             ==============================================================-->
-            <!--             PRODUCTS YEARLY SALES-->
-            <!--             ==============================================================-->
-            <div class="row">
-                <div class="col mb-2 text-end">
-                    <h3 class="box-title">5 thức uống bán chạy nhất</h3>
-                </div>
-                <div class="ct-drinks">
-                    <div class="chartist-tooltip" style="top: -17px; left: -12px;">
-                        <span class="chartist-tooltip-value">6</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <th:block th:replace="layout/footer :: footer"/>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
-    </div>
-</div>
-<th:block th:replace="layout/script :: script"/>
-<script th:inline="javascript">
-    let incomeToday = [[${incomeToday}]] > 0 ? [[${incomeToday}]] : 0;
-    let incomeToMonth = [[${incomeToMonth}]] > 0 ? [[${incomeToMonth}]] : 0;
-    let billToday = [[${billToday}]] > 0 ? [[${billToday}]] : 0;
+<!--<head>-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta http-equiv="x-ua-compatible" content="ie=edge">-->
+<!--    <title>Dashboard</title>-->
+<!--    <th:block th:replace="/admin/layout/head::head"/>-->
+<!--    <script>-->
+<!--        window.Promise ||-->
+<!--        document.write(-->
+<!--            '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'-->
+<!--        )-->
+<!--        window.Promise ||-->
+<!--        document.write(-->
+<!--            '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'-->
+<!--        )-->
+<!--        window.Promise ||-->
+<!--        document.write(-->
+<!--            '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'-->
+<!--        )-->
+<!--    </script>-->
 
-    let sumStaff = [[${sumStaff}]] > 0 ? [[${sumStaff}]] : 0;
-    let sumVoucher = [[${sumVoucher}]] > 0 ? [[${sumVoucher}]] : 0;
-    $("#incomeToday").text(App.formatNumberSpace(incomeToday));
-    $("#incomeToMonth").text(App.formatNumberSpace(incomeToMonth));
-    $("#billToday").text(billToday);
-    $("#sumStaff").text(sumStaff);
-    $("#sumVoucher").text(sumVoucher);
-    let summaryDrink = [[${listSummary}]];
-    let dink1 = summaryDrink[0];
-    let dink2 = summaryDrink[1];
-    let dink3 = summaryDrink[2];
-    let dink4 = summaryDrink[3];
-    let dink5 = summaryDrink[4];
-    new Chartist.Bar('.ct-drinks', {
-        labels: [dink1.drinkName, dink2.drinkName, dink3.drinkName, dink4.drinkName, dink5.drinkName],
-        series: [parseInt(dink1.summary), parseInt(dink2.summary), parseInt(dink3.summary), parseInt(dink4.summary), parseInt(dink5.summary)]
-        // series: [2,10,20,12,123]
-    }, {
-        distributeSeries: true
-    });
-</script>
-</body>
-</html>
+<!--    &lt;!&ndash;  <meta name="description" content="">&ndash;&gt;-->
+<!--    &lt;!&ndash;  <meta name="viewport" content="width=device-width, initial-scale=1">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; favicon&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; Google Fonts&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; Bootstrap CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/bootstrap.min.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; Bootstrap CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/font-awesome.min.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; owl.carousel CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/owl.carousel.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/owl.theme.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/owl.transitions.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; meanmenu CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/meanmenu/meanmenu.min.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; animate CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/animate.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; normalize CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/normalize.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; mCustomScrollbar CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/scrollbar/jquery.mCustomScrollbar.min.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; jvectormap CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/jvectormap/jquery-jvectormap-2.0.3.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; notika icon CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/notika-custom-icon.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; wave CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/wave/waves.min.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; main CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/main.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; style CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="style.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; responsive CSS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <link rel="stylesheet" href="css/responsive.css">&ndash;&gt;-->
+<!--    &lt;!&ndash;  &lt;!&ndash; modernizr JS&ndash;&gt;-->
+<!--    &lt;!&ndash;      ============================================ &ndash;&gt;&ndash;&gt;-->
+<!--    &lt;!&ndash;  <script src="js/vendor/modernizr-2.8.3.min.js"></script>&ndash;&gt;-->
+<!--    <th:block th:replace="/admin/layout/head::head"/>-->
+<!--    <th:block th:replace="/admin/layout/navBar :: navBar"/>-->
+
+
+<!--</head>-->
+
+<!--<body>-->
+<!--&lt;!&ndash;[if lt IE 8]>-->
+<!--<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade-->
+<!--    your browser</a> to improve your experience.</p>-->
+<!--<![endif]&ndash;&gt;-->
+<!--&lt;!&ndash; Start Header Top Area &ndash;&gt;-->
+
+<!--&lt;!&ndash; End Header Top Area &ndash;&gt;-->
+<!--&lt;!&ndash; Mobile Menu start &ndash;&gt;-->
+<!--<div class="mobile-menu-area">-->
+<!--    <div class="container">-->
+
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Mobile Menu end &ndash;&gt;-->
+<!--&lt;!&ndash; Main Menu area start&ndash;&gt;-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--</div>-->
+<!--&lt;!&ndash; Main Menu area End&ndash;&gt;-->
+<!--&lt;!&ndash; Start Status area &ndash;&gt;-->
+<!--&lt;!&ndash; <div class="notika-status-area"> &ndash;&gt;-->
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">-->
+<!--            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">-->
+<!--                <div class="white-box analytics-info">-->
+<!--                    <h4 class="box-title">Doanh thu bán hàng hôm nay</h4>-->
+
+<!--                    <ul class="list-inline two-part d-flex align-items-center mb-0">-->
+<!--                        <li>-->
+<!--                            <i class="fa fa-dollar text-success" style="font-size: 50px"></i>-->
+<!--                        </li>-->
+<!--                        <li class="ms-auto">-->
+<!--                            <span class="counter text-primary" id="totalInDay">-->
+<!--                                <tr><td style="font-size: larger"></td></tr>-->
+<!--                            </span>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">-->
+<!--            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">-->
+<!--                <div class="white-box analytics-info">-->
+<!--                    <h3 class="box-title">Số bill trong ngày</h3>-->
+<!--                    <ul class="list-inline two-part d-flex align-items-center mb-0">-->
+<!--                        <i class="fa fa-bell text-success" style="font-size: 50px"></i>-->
+<!--                        <li class="ms-auto text-success">-->
+<!--                            <span class="counter text-purple" id="billToday">-->
+<!--                                <div id="billInDay" class="text-center">-->
+<!--                                </div>-->
+<!--                            </span>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">-->
+<!--            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">-->
+<!--                <div class="white-box analytics-info">-->
+<!--                    <h3 class="box-title">Doanh thu trong tháng</h3>-->
+<!--                    <ul class="list-inline two-part d-flex align-items-center mb-0">-->
+<!--                        <li>-->
+
+<!--                            <i class="fa fa-calendar text-info" style="font-size: 50px"></i>-->
+<!--                        </li>-->
+<!--                        <li class="ms-auto"><span class="counter text-info" id="totalToMonth"></span>-->
+<!--                            <tr>-->
+<!--                                <td></td>-->
+<!--                            </tr>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">-->
+<!--            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">-->
+<!--                <div class="website-traffic-ctn">-->
+<!--                    <h2><span class="counter">1,000</span></h2>-->
+<!--                    <p>Total Support Tickets</p>-->
+<!--                </div>-->
+<!--                <div class="sparkline-bar-stats4">2,4,8,4,5,7,4,7,3,5,7,5</div>-->
+<!--            </div>-->
+<!--        </div> &ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-12">-->
+<!--            <div class="sale-statistic-inner notika-shadow mg-tb-30">-->
+<!--                <div class="curved-ctn row d-flex">-->
+<!--                    <div class="col-9 align-items-end">-->
+<!--                        <h2>Doanh thu hôm qua</h2>-->
+<!--                        <div id="curved-line-chart 1">-->
+<!--                            <div id="myChart">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-3">-->
+<!--                            <select class="form-select col-3" id="selectChart">-->
+<!--                                <option value="/chartLastDay">Hôm qua</option>-->
+<!--                                <option value="/chartByDay">Hôm nay</option>-->
+<!--                                <option value="/chartLast7Day">7 ngày qua</option>-->
+<!--                                <option value="/chartByMonth">Tháng này</option>-->
+<!--                                <option value="/chartByLastMonth">Tháng trước</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="showBill" class="col-3 text-primary" >-->
+<!--                        <h1 class="text-success">Các đơn hàng vừa thanh toán</h1>-->
+<!--                        <tr >-->
+<!--                            <td></td>-->
+<!--                        </tr>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">&ndash;&gt;-->
+<!--        &lt;!&ndash;            <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="past-day-statis">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <h2 style="color: #0a53be">Top 7 hàng hóa bán chạy trong tuần qua</h2>&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <table id="bar-chart">&ndash;&gt;-->
+<!--        &lt;!&ndash;                        <tr>&ndash;&gt;-->
+<!--        &lt;!&ndash;                            <td>Tên sản phẩm</td>&ndash;&gt;-->
+<!--        &lt;!&ndash;                            <td>Số doanh thu</td>&ndash;&gt;-->
+<!--        &lt;!&ndash;                        </tr>&ndash;&gt;-->
+<!--        &lt;!&ndash;                    </table>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="dash-widget-visits"></div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                <div class="past-statistic-an">&ndash;&gt;-->
+<!--        &lt;!&ndash;                    <div class="past-statistic-graph">&ndash;&gt;-->
+<!--        &lt;!&ndash;                        <div class="stats-bar"></div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-12">-->
+<!--            <div>-->
+<!--                <h1>Top 7 thức uống bán chạy nhất trong tuần qua</h1>-->
+<!--                <div class="col-3">-->
+<!--                    <select class="form-select col-3" id="selectChart1">-->
+<!--                        <option value="/totalOneDay">Hôm nay</option>-->
+<!--                        <option value="/totalLastDay">Hôm qua</option>-->
+<!--                        <option value="/chart">7 ngày qua</option>-->
+<!--                        <option value="/totalMonth ">Tháng này</option>-->
+<!--                        <option value="/totalLastMonth">Tháng trước</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div id="chart1">-->
+
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </div>-->
+
+<!--    </div>-->
+
+
+
+<!--</div>-->
+<!--<th:block th:replace="/admin/layout/script :: script"/>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>-->
+<!--<th:block th:replace="/admin/layout/footer :: footer"/>-->
+<!--</body>-->
+<!--<script>-->
+<!--    var _seed = 42;-->
+<!--    Math.random = function () {-->
+<!--        _seed = _seed * 16807 % 2147483647;-->
+<!--        return (_seed - 1) / 2147483646;-->
+<!--    };-->
+
+<!--    function renderChartProduct(line) {-->
+<!--        let myChart1 = document.querySelector("#chart1");-->
+<!--        myChart1.innerHTML = '';-->
+<!--        $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: location.origin + "/api/order" + line,-->
+<!--        }).done((data) => {-->
+<!--            console.log(data)-->
+<!--            let total = [];-->
+<!--            let name = [];-->
+<!--            var options1;-->
+<!--            $.each(data, (i, item) => {-->
+<!--                total.push(item.total);-->
+<!--                name.push(item.title);-->
+<!--            })-->
+<!--            options1 = {-->
+<!--                series: [{-->
+<!--                    data: total-->
+<!--                }],-->
+<!--                chart: {-->
+<!--                    type: 'bar',-->
+<!--                    height: 350,-->
+<!--                },-->
+<!--                plotOptions: {-->
+<!--                    bar: {-->
+<!--                        // columnWidth: '15%',-->
+<!--                        borderRadius: 4,-->
+<!--                        horizontal: true,-->
+<!--                    }-->
+<!--                },-->
+
+<!--                dataLabels: {-->
+<!--                    enabled: false,-->
+<!--                },-->
+<!--                xaxis: {-->
+<!--                    categories: name,-->
+
+<!--                }-->
+<!--            };-->
+
+<!--            myChart1 = new ApexCharts(document.querySelector("#chart1"), options1);-->
+<!--            myChart1.render();-->
+<!--        })-->
+<!--    }-->
+
+
+<!--    // &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+<!--    function totalLastDay(text) {-->
+<!--        console.log('text: ', text)-->
+<!--        let myChart = document.querySelector("#myChart");-->
+<!--        myChart.innerHTML = '';-->
+<!--        $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: location.origin + "/api/order" + text,-->
+<!--        }).done((data) => {-->
+<!--            let totals = [];-->
+<!--            let day = [];-->
+<!--            var options;-->
+<!--            $.each(data, (i, item) => {-->
+<!--                day.push(moment(item.dates).date());-->
+<!--                totals.push(item.total);-->
+<!--                // console.log('totals: ', totals)-->
+<!--            })-->
+<!--            options = {-->
+<!--                series: [{-->
+<!--                    data: totals-->
+<!--                }],-->
+<!--                chart: {-->
+<!--                    type: 'bar',-->
+<!--                    height: 350,-->
+<!--                },-->
+<!--                plotOptions: {-->
+<!--                    bar: {-->
+<!--                        columnWidth: '15%',-->
+<!--                        borderRadius: 4,-->
+<!--                        horizontal: false,-->
+<!--                    }-->
+<!--                },-->
+
+<!--                dataLabels: {-->
+<!--                    enabled: true,-->
+<!--                },-->
+<!--                xaxis: {-->
+<!--                    categories: day,-->
+
+<!--                }-->
+<!--            };-->
+<!--            myChart = new ApexCharts(document.querySelector("#myChart"), options);-->
+<!--            myChart.render();-->
+<!--        })-->
+<!--    }-->
+
+<!--    // &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--    $('#selectChart').on('change', function () {-->
+<!--        let text = $('#selectChart').val();-->
+<!--        totalLastDay(text);-->
+<!--    });-->
+
+<!--    $('#selectChart1').on('change', function () {-->
+<!--        let line = $('#selectChart1').val();-->
+<!--        renderChartProduct(line);-->
+<!--    })-->
+
+<!--    // bill to day-->
+<!--    function renderBillToDay() {-->
+<!--        $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: location.origin + "/api/orderItem/billToDay",-->
+<!--        }).done((data) => {-->
+<!--            let str = `-->
+<!--                <tr>-->
+<!--                <td>${data[0].bills}</td>-->
+<!--</tr>-->
+<!--                `;-->
+<!--            $("#billInDay").append(str);-->
+<!--        });-->
+<!--    }-->
+
+<!--    // Format money-->
+<!--    function FormatMoney(money) {-->
+<!--        let str = money.toString();-->
+<!--        return str.split('').reverse().reduce((prev, next, index) => {-->
+<!--            return ((index % 3) ? next : (next + '.')) + prev;-->
+<!--        });-->
+<!--    }-->
+
+<!--    function renderToTalMonth() {-->
+<!--        $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: location.origin + "/api/order/allTotalMonth",-->
+<!--        }).done((data) => {-->
+<!--            let str = `-->
+<!--                <tr>-->
+<!--                <td>${FormatMoney(data[0].total)} ₫</td>-->
+
+<!--                </tr>-->
+<!--                `;-->
+<!--            $("#totalToMonth").append(str);-->
+<!--        });-->
+<!--    }-->
+
+<!--    renderToTalMonth();-->
+
+<!--    renderBillToDay();-->
+<!--    totalLastDay('/chartLastDay');-->
+<!--    renderChartProduct('/totalOneDay');-->
+
+
+<!--    function showBill() {-->
+
+<!--        $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: location.origin + "/api/order/showBill",-->
+<!--        }).done((data) => {-->
+<!--            $.each(data,(i,item)=>{-->
+<!--                let str = `-->
+<!--                <tr>-->
+<!--                <td>${item.username} Vừa bán đơn hàng với giá ${FormatMoney(data[0].total)} ₫ lúc ${moment(item.dates).minutes()} phút trước </td>-->
+<!--                </tr>-->
+<!--                `;-->
+<!--                $("#showBill").append(str);-->
+<!--            })-->
+<!--        });-->
+<!--    }-->
+<!--    showBill();-->
+<!--    //total to day-->
+<!--    function renderToTalToDay() {-->
+<!--        $.ajax({-->
+<!--            headers: {-->
+<!--                "accept": "application/json",-->
+<!--                "content-type": "application/json"-->
+<!--            },-->
+<!--            type: "GET",-->
+<!--            url: location.origin + "/api/order/allTotalToDay",-->
+<!--        }).done((data) => {-->
+<!--            let str = `-->
+<!--                <tr>-->
+<!--                <td>${FormatMoney(data[0].total)} ₫</td>-->
+<!--                </tr>-->
+<!--                `;-->
+<!--            $("#totalInDay").append(str);-->
+<!--        });-->
+<!--    }-->
+
+<!--    renderToTalToDay();-->
+<!--</script>-->
+<!--</html>-->
