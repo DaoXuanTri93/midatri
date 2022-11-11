@@ -146,10 +146,9 @@
                 headers: {
                     "Accept": "application/json",
                     "Content-type": "application/json",
-
-                    type: "GET",
-                    url: location.origin + "/api/category/parent?hasParentId=1",
                 },
+                    type: "GET",
+                    url: location.origin + "/api/category/parent?hasParentId=1"
             }).done((data) => {
                 $.each(data, (c, cate) => {
                     allCategory.push(cate.id);

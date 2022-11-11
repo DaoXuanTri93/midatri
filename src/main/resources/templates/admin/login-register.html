@@ -15,19 +15,19 @@
 <form id="formExample">
     <div class="login-content">
         <!-- Login -->
-        <form method="post" action="/login">
+        <form th:object="user">
             <div class="nk-block toggled" id="l-login">
                 <div class="nk-form">
                     <div class="input-group">
                         <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-support"></i></span>
                         <div class="nk-int-st">
-                            <input type="text" class="form-control" placeholder="Username" id="userNameLogin">
+                            <input type="text" class="form-control" th:field="${user.userName}" placeholder="Username" id="userNameLogin">
                         </div>
                     </div>
                     <div class="input-group mg-t-15">
                         <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-edit"></i></span>
                         <div class="nk-int-st">
-                            <input type="password" class="form-control" placeholder="Password" id="passwordLogin">
+                            <input type="password" class="form-control" th:field="${user.password}" placeholder="Password" id="passwordLogin">
                         </div>
                     </div>
                     <div class="fm-checkbox">
@@ -47,6 +47,7 @@
                 </div>
             </div>
         </form>
+
         <!-- Register -->
         <div class="nk-block" id="l-register">
             <div class="nk-form">
