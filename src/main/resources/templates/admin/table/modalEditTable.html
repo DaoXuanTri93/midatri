@@ -97,7 +97,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: "http://localhost:8080/api/table-top/" + id
+                url: location.origin + "/api/table-top/" + id
             })
                 .done((data) => {
                     $("#idTableEdit").val(data.id);

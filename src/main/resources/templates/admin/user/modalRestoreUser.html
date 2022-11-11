@@ -45,7 +45,7 @@
                     "Accept": "application/json",
                     "Content-type": "application/json"
                 },
-                url: "http://localhost:8080/api/users/restore/" + id,
+                url: location.origin + "/api/users/restore/" + id,
                 type : "PUT"
             })
                 .done(function (data) {
