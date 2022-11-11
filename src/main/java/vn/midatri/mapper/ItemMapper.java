@@ -16,7 +16,7 @@ public class ItemMapper {
     UserMapper userMapper;
 
     public Item toModel(CreateItem createItem) {
-       return new Item(createItem.getCategoryId(),createItem.getCategoryId())
+       return new Item(createItem.getUserId(),createItem.getCategoryId())
                 .setTitle(createItem.getTitle())
                 .setPrice(createItem.getPrice())
                 .setQuantity(createItem.getQuantity())
