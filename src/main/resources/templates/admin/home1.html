@@ -1,117 +1,148 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dashboard</title>
     <th:block th:replace="/admin/layout/head::head"/>
-</head>
-<body>
-<div class="preloader">
-    <div class="lds-ripple">
-        <div class="lds-pos"></div>
-        <div class="lds-pos"></div>
-    </div>
-</div>
-<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
-     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <script>
+        window.Promise ||
+        document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+        )
+        window.Promise ||
+        document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+        )
+        window.Promise ||
+        document.write(
+            '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+        )
+    </script>
+
+    <!--  <meta name="description" content="">-->
+    <!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
+    <!--  &lt;!&ndash; favicon-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">-->
+    <!--  &lt;!&ndash; Google Fonts-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">-->
+    <!--  &lt;!&ndash; Bootstrap CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <!--  &lt;!&ndash; Bootstrap CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/font-awesome.min.css">-->
+    <!--  &lt;!&ndash; owl.carousel CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/owl.carousel.css">-->
+    <!--  <link rel="stylesheet" href="css/owl.theme.css">-->
+    <!--  <link rel="stylesheet" href="css/owl.transitions.css">-->
+    <!--  &lt;!&ndash; meanmenu CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/meanmenu/meanmenu.min.css">-->
+    <!--  &lt;!&ndash; animate CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/animate.css">-->
+    <!--  &lt;!&ndash; normalize CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/normalize.css">-->
+    <!--  &lt;!&ndash; mCustomScrollbar CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/scrollbar/jquery.mCustomScrollbar.min.css">-->
+    <!--  &lt;!&ndash; jvectormap CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/jvectormap/jquery-jvectormap-2.0.3.css">-->
+    <!--  &lt;!&ndash; notika icon CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/notika-custom-icon.css">-->
+    <!--  &lt;!&ndash; wave CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/wave/waves.min.css">-->
+    <!--  &lt;!&ndash; main CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/main.css">-->
+    <!--  &lt;!&ndash; style CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="style.css">-->
+    <!--  &lt;!&ndash; responsive CSS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <link rel="stylesheet" href="css/responsive.css">-->
+    <!--  &lt;!&ndash; modernizr JS-->
+    <!--      ============================================ &ndash;&gt;-->
+    <!--  <script src="js/vendor/modernizr-2.8.3.min.js"></script>-->
+    <th:block th:replace="/admin/layout/head::head"/>
     <th:block th:replace="/admin/layout/navBar :: navBar"/>
 
-    <!-- ============================================================== -->
-    <!--Primary Content-->
-    <div class="page-wrapper">
-        <!-- ============================================================== -->
-        <!-- Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <div class="page-breadcrumb bg-white">
-            <div class="row align-items-center">
-                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h1 class="page-title">Dashboard</h1>
-                </div>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Bread crumb and right sidebar toggle -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-        <div class="container">
 
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-12">
-                    <div class="white-box analytics-info">
-                        <h3 class="box-title">Doanh thu hôm nay</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <i class="fa fa-usd text-success" style="font-size: 50px"></i>
-                            </li>
-                            <li class="ms-auto">
-                                <span class="counter text-success" id="incomeToday"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="white-box analytics-info">
-                        <h3 class="box-title">Số bill trong ngày</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <i class="fa fa-money text-purple" style="font-size: 50px"></i>
-                            </li>
-                            <li class="ms-auto">
-                                <span class="counter text-purple" id="billToday"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="white-box analytics-info">
-                        <h3 class="box-title">Doanh thu trong tháng</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
-                            </li>
-                            <li class="ms-auto"><span class="counter text-info" id="incomeToMonth"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="white-box analytics-info">
-                        <h3 class="box-title">Số nhân viên hiện tại</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <i class="fa fa-user text-cyan" style="font-size: 50px"></i>
-                            </li>
-                            <li class="ms-auto"><span class="counter text-cyan" id="sumStaff"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="white-box analytics-info">
-                        <h3 class="box-title">Số voucher đang áp dụng</h3>
-                        <ul class="list-inline two-part d-flex align-items-center mb-0">
-                            <li>
-                                <i class="fa fa-tags text-hightlight" style="font-size: 50px"></i>
-                            </li>
-                            <li class="ms-auto"><span class="counter text-hightlight" id="sumVoucher"></span>
-                            </li>
-                        </ul>
-                    </div>
+</head>
+
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+<!-- Start Header Top Area -->
+
+<!-- End Header Top Area -->
+<!-- Mobile Menu start -->
+<div class="mobile-menu-area">
+    <div class="container">
+
+    </div>
+</div>
+<!-- Mobile Menu end -->
+<!-- Main Menu area start-->
+<!---->
+</div>
+<!-- Main Menu area End-->
+<!-- Start Status area -->
+<!-- <div class="notika-status-area"> -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
+                <div class="white-box analytics-info">
+                    <h4 class="box-title">Doanh thu bán hàng hôm nay</h4>
+
+                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                        <li>
+                            <i class="fa fa-dollar text-success" style="font-size: 50px"></i>
+                        </li>
+                        <li class="ms-auto">
+                            <span class="counter text-primary" id="totalInDay">
+                                <tr><td style="font-size: larger"></td></tr>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <!--             ==============================================================-->
-            <!--             PRODUCTS YEARLY SALES-->
-            <!--             ==============================================================-->
-            <div class="row">
-                <div class="col mb-2">
-                    <h3 class="box-title">5 thức uống bán chạy nhất</h3>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
+                <div class="white-box analytics-info">
+                    <h3 class="box-title">Số bill trong ngày</h3>
+                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                        <i class="fa fa-bell text-success" style="font-size: 50px"></i>
+                        <li class="ms-auto text-success">
+                            <span class="counter text-purple" id="billToday">
+                                <div id="billInDay" class="text-center">
+                                </div>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="ct-drinks">
-                    <div class="chartist-tooltip" style="top: -17px; left: -12px;">
-                        <span class="chartist-tooltip-value">6</span>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">
+                <div class="white-box analytics-info">
+                    <h3 class="box-title">Doanh thu trong tháng</h3>
+                    <ul class="list-inline two-part d-flex align-items-center mb-0">
+                        <li>
+
                             <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
                         </li>
                         <li class="ms-auto"><span class="counter text-info" id="totalToMonth"></span>
@@ -123,6 +154,15 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">
+                <div class="website-traffic-ctn">
+                    <h2><span class="counter">1,000</span></h2>
+                    <p>Total Support Tickets</p>
+                </div>
+                <div class="sparkline-bar-stats4">2,4,8,4,5,7,4,7,3,5,7,5</div>
+            </div>
+        </div> -->
     </div>
 </div>
 </div>
@@ -137,6 +177,8 @@
                             <h2 class="col-9">Doanh thu 7 ngày qua</h2>
                             <div class="col-3">
                                 <select class="form-select" id="selectChart">
+                                    <!--                                <option value="/chartLastDay">Hôm qua</option>-->
+                                    <!--                                <option value="/chartByDay">Hôm nay</option>-->
                                     <option value="/chartLast7Day">7 ngày qua</option>
                                     <option value="/chartByMonth">Tháng này</option>
                                     <option value="/chartByLastMonth">Tháng trước</option>
@@ -162,24 +204,41 @@
             <div class="sale-statistic-inner notika-shadow mg-tb-30">
                 <div class="curved-ctn row d-flex">
                     <div class="col-9 align-items-end">
-                        <div class="row d-flex">
-                            <h2 class="col-9">Doanh thu hôm qua</h2>
-                            <div class="col-3">
-                                <select class="form-select col-3" id="selectChart2">
-                                    <option value="/chartLastDay">Hôm qua</option>
-                                    <option value="/chartByDay">Hôm nay</option>
-                                </select>
+                        <h2>Doanh thu hôm qua</h2>
+                        <div id="curved-line-chart 2">
+                            <div id="myChart2">
                             </div>
-                            <div id="curved-line-chart 2">
-                                <div id="myChart2">
-                                </div>
-                            </div>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select col-3" id="selectChart2">
+                                <option value="/chartLastDay">Hôm qua</option>
+                                <option value="/chartByDay">Hôm nay</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
+        <!--        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">-->
+        <!--            <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">-->
+        <!--                <div class="past-day-statis">-->
+        <!--                    <h2 style="color: #0a53be">Top 7 hàng hóa bán chạy trong tuần qua</h2>-->
+        <!--                    <table id="bar-chart">-->
+        <!--                        <tr>-->
+        <!--                            <td>Tên sản phẩm</td>-->
+        <!--                            <td>Số doanh thu</td>-->
+        <!--                        </tr>-->
+        <!--                    </table>-->
+        <!--                </div>-->
+        <!--                <div class="dash-widget-visits"></div>-->
+        <!--                <div class="past-statistic-an">-->
+        <!--                    <div class="past-statistic-graph">-->
+        <!--                        <div class="stats-bar"></div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>
 </div>
@@ -190,63 +249,39 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="col-9 align-items-end">
-                <div class="row d-flex">
-                    <h1 class="col-9">Top 7 thức uống bán chạy nhất trong tuần qua</h1>
-                    <div class="col-3">
-                        <select class="form-select col-3" id="selectChart1">
-                            <option value="/totalOneDay">Hôm nay</option>
-                            <option value="/totalLastDay">Hôm qua</option>
-                            <option value="/chart">7 ngày qua</option>
-                            <option value="/totalMonth ">Tháng này</option>
-                            <option value="/totalLastMonth">Tháng trước</option>
-                        </select>
-                    </div>
-                    <div id="chart1">
+            <div>
+                <h1>Top 7 thức uống bán chạy nhất trong tuần qua</h1>
+                <div class="col-3">
+                    <select class="form-select col-3" id="selectChart1">
+                        <option value="/totalOneDay">Hôm nay</option>
+                        <option value="/totalLastDay">Hôm qua</option>
+                        <option value="/chart">7 ngày qua</option>
+                        <option value="/totalMonth ">Tháng này</option>
+                        <option value="/totalLastMonth">Tháng trước</option>
+                    </select>
+                </div>
+                <div id="chart1">
 
-                    </div>
                 </div>
             </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <th:block th:replace="/admin/layout/footer :: footer"/>
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
-    </div>
-<th:block th:replace="/admin/layout/script :: script"/>
-<script th:inline="javascript">
-    let incomeToday = [[${incomeToday}]] > 0 ? [[${incomeToday}]] : 0;
-    let incomeToMonth = [[${incomeToMonth}]] > 0 ? [[${incomeToMonth}]] : 0;
-    let billToday = [[${billToday}]] > 0 ? [[${billToday}]] : 0;
 
-<<<<<<< HEAD
-    let sumStaff = [[${sumStaff}]] > 0 ? [[${sumStaff}]] : 0;
-    let sumVoucher = [[${sumVoucher}]] > 0 ? [[${sumVoucher}]] : 0;
-    $("#incomeToday").text(incomeToday);
-    $("#incomeToMonth").text(incomeToMonth);
-    $("#billToday").text(billToday);
-    $("#sumStaff").text(sumStaff);
-    $("#sumVoucher").text(sumVoucher);
-    // let summaryDrink = [[${listSummary}]];
-    // let dink1 = summaryDrink[0];
-    // let dink2 = summaryDrink[1];
-    // let dink3 = summaryDrink[2];
-    // let dink4 = summaryDrink[3];
-    // let dink5 = summaryDrink[4];
-    // new Chartist.Bar('.ct-drinks', {
-    //     labels: [dink1.drinkName, dink2.drinkName, dink3.drinkName, dink4.drinkName, dink5.drinkName],
-    //     series: [parseInt(dink1.summary), parseInt(dink2.summary), parseInt(dink3.summary), parseInt(dink4.summary), parseInt(dink5.summary)]
-    //     // series: [2,10,20,12,123]
-    // }, {
-    //     distributeSeries: true
-    // });
-=======
+        </div>
+
+    </div>
+
+
+</div>
+<th:block th:replace="/admin/layout/script :: script"/>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<th:block th:replace="/admin/layout/footer :: footer"/>
+</body>
+<script>
+    var _seed = 42;
+    Math.random = function () {
+        _seed = _seed * 16807 % 2147483647;
+        return (_seed - 1) / 2147483646;
+    };
+
     function renderChartProduct(line) {
         let myChart1 = document.querySelector("#chart1");
         myChart1.innerHTML = '';
@@ -258,6 +293,7 @@
             type: "GET",
             url: location.origin + "/api/order" + line,
         }).done((data) => {
+            console.log(data)
             let total = [];
             let name = [];
             var options1;
@@ -311,7 +347,8 @@
             var options2;
             $.each(data, (i, item) => {
                 total.push(item.total);
-                day.push(moment(item.dates).date());
+                day.push(moment(item.dates).format());
+                console.log("day: ", day);
             })
             options2 = {
                 series: [{
@@ -555,7 +592,5 @@
     }
 
     renderToTalToDay();
->>>>>>> development
 </script>
-</body>
 </html>
