@@ -112,6 +112,98 @@
                 <div class="ct-drinks">
                     <div class="chartist-tooltip" style="top: -17px; left: -12px;">
                         <span class="chartist-tooltip-value">6</span>
+                            <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
+                        </li>
+                        <li class="ms-auto"><span class="counter text-info" id="totalToMonth"></span>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="sale-statistic-inner notika-shadow mg-tb-30">
+                <div class="curved-ctn row d-flex">
+                    <div class="col-9 align-items-end">
+                        <div class="row d-flex">
+                            <h2 class="col-9">Doanh thu 7 ngày qua</h2>
+                            <div class="col-3">
+                                <select class="form-select" id="selectChart">
+                                    <option value="/chartLast7Day">7 ngày qua</option>
+                                    <option value="/chartByMonth">Tháng này</option>
+                                    <option value="/chartByLastMonth">Tháng trước</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="curved-line-chart 1">
+                            <div id="myChart">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="showBill" class="col-3 text-primary">
+                        <h1 class="text-success">Các đơn hàng vừa thanh toán</h1>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="sale-statistic-inner notika-shadow mg-tb-30">
+                <div class="curved-ctn row d-flex">
+                    <div class="col-9 align-items-end">
+                        <div class="row d-flex">
+                            <h2 class="col-9">Doanh thu hôm qua</h2>
+                            <div class="col-3">
+                                <select class="form-select col-3" id="selectChart2">
+                                    <option value="/chartLastDay">Hôm qua</option>
+                                    <option value="/chartByDay">Hôm nay</option>
+                                </select>
+                            </div>
+                            <div id="curved-line-chart 2">
+                                <div id="myChart2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="col-9 align-items-end">
+                <div class="row d-flex">
+                    <h1 class="col-9">Top 7 thức uống bán chạy nhất trong tuần qua</h1>
+                    <div class="col-3">
+                        <select class="form-select col-3" id="selectChart1">
+                            <option value="/totalOneDay">Hôm nay</option>
+                            <option value="/totalLastDay">Hôm qua</option>
+                            <option value="/chart">7 ngày qua</option>
+                            <option value="/totalMonth ">Tháng này</option>
+                            <option value="/totalLastMonth">Tháng trước</option>
+                        </select>
+                    </div>
+                    <div id="chart1">
+
                     </div>
                 </div>
             </div>
@@ -127,13 +219,13 @@
         <!-- End footer -->
         <!-- ============================================================== -->
     </div>
-</div>
 <th:block th:replace="/admin/layout/script :: script"/>
 <script th:inline="javascript">
     let incomeToday = [[${incomeToday}]] > 0 ? [[${incomeToday}]] : 0;
     let incomeToMonth = [[${incomeToMonth}]] > 0 ? [[${incomeToMonth}]] : 0;
     let billToday = [[${billToday}]] > 0 ? [[${billToday}]] : 0;
 
+<<<<<<< HEAD
     let sumStaff = [[${sumStaff}]] > 0 ? [[${sumStaff}]] : 0;
     let sumVoucher = [[${sumVoucher}]] > 0 ? [[${sumVoucher}]] : 0;
     $("#incomeToday").text(incomeToday);
@@ -154,6 +246,316 @@
     // }, {
     //     distributeSeries: true
     // });
+=======
+    function renderChartProduct(line) {
+        let myChart1 = document.querySelector("#chart1");
+        myChart1.innerHTML = '';
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order" + line,
+        }).done((data) => {
+            let total = [];
+            let name = [];
+            var options1;
+            $.each(data, (i, item) => {
+                total.push(item.total);
+                name.push(item.title);
+            })
+            options1 = {
+                series: [{
+                    data: total
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                },
+                plotOptions: {
+                    bar: {
+                        // columnWidth: '15%',
+                        borderRadius: 4,
+                        horizontal: true,
+                    }
+                },
+
+                dataLabels: {
+                    enabled: false,
+                },
+                xaxis: {
+                    categories: name,
+
+                }
+            };
+
+            myChart1 = new ApexCharts(document.querySelector("#chart1"), options1);
+            myChart1.render();
+        })
+    }
+
+    function renderChartInDay(line1) {
+        let myChart1 = document.querySelector("#myChart2");
+        myChart1.innerHTML = '';
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order" + line1,
+        }).done((data) => {
+            let total = [];
+            let day = [];
+            var options2;
+            $.each(data, (i, item) => {
+                total.push(item.total);
+                day.push(moment(item.dates).date());
+            })
+            options2 = {
+                series: [{
+                    data: [...total]
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: '15%',
+                        borderRadius: 4,
+                        horizontal: false,
+                    }
+                },
+
+                dataLabels: {
+                    enabled: true,
+                },
+                xaxis: {
+                    categories: [...day],
+                }
+            };
+
+            myChart1 = new ApexCharts(document.querySelector("#myChart2"), options2);
+            myChart1.render();
+        })
+    }
+
+
+    // =========================
+
+    function totalLastDay(text) {
+        let myChart = document.querySelector("#myChart");
+        myChart.innerHTML = '';
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order" + text,
+        }).done((data) => {
+            let totals = [];
+            let day = [];
+            var options;
+            $.each(data, (i, item) => {
+                day.push(moment(item.dates).date());
+                totals.push(item.total);
+                // console.log('totals: ', totals)
+            })
+            options = {
+                series: [{
+                    data: [...totals]
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                },
+                plotOptions: {
+                    bar: {
+                        // columnWidth: '15%',
+                        borderRadius: 4,
+                        horizontal: false,
+                    }
+                },
+
+                dataLabels: {
+                    enabled: true,
+                },
+                xaxis: {
+                    categories: [...day],
+
+                }
+            };
+            myChart = new ApexCharts(document.querySelector("#myChart"), options);
+            myChart.render();
+        })
+    }
+
+    // ------------------------
+
+    function totalLast7Day(text) {
+        let myChart = document.querySelector("#myChart");
+        myChart.innerHTML = '';
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order" + text,
+        }).done((data) => {
+            let totals = [];
+            let day = [];
+            var options;
+            $.each(data, (i, item) => {
+                day.push(moment(item.dates).date());
+                totals.push(item.total);
+                // console.log('totals: ', totals)
+            })
+            options = {
+                series: [{
+                    data: [...totals]
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                },
+                plotOptions: {
+                    bar: {
+                        // columnWidth: '15%',
+                        borderRadius: 4,
+                        horizontal: false,
+                    }
+                },
+
+                dataLabels: {
+                    enabled: true,
+                },
+                xaxis: {
+                    categories: [...day],
+
+                }
+            };
+            myChart = new ApexCharts(document.querySelector("#myChart"), options);
+            myChart.render();
+        })
+    }
+
+    // ------------
+    $('#selectChart').on('change', function () {
+        let text = $('#selectChart').val();
+        totalLastDay(text);
+    });
+
+    $('#selectChart1').on('change', function () {
+        let line = $('#selectChart1').val();
+        renderChartProduct(line);
+    })
+    $('#selectChart2').on('change', function () {
+        let line1 = $('#selectChart2').val();
+        renderChartInDay(line1);
+    })
+
+    // bill to day
+    function renderBillToDay() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/orderItem/billToDay",
+        }).done((data) => {
+            let str = `
+                <tr>
+                <td>${data[0].bills}</td>
+</tr>
+                `;
+            $("#billInDay").append(str);
+        });
+    }
+
+    // Format money
+    function FormatMoney(money) {
+        let str = money.toString();
+        return str.split('').reverse().reduce((prev, next, index) => {
+            return ((index % 3) ? next : (next + '.')) + prev;
+        });
+    }
+
+    function renderToTalMonth() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order/allTotalMonth",
+        }).done((data) => {
+            let str = `
+                <tr>
+                <td>${FormatMoney(data[0].total)} ₫</td>
+
+                </tr>
+                `;
+            $("#totalToMonth").append(str);
+        });
+    }
+
+    renderChartInDay("/chartLastDay");
+    renderToTalMonth();
+
+    renderBillToDay();
+    totalLast7Day('/chartLast7Day');
+    renderChartProduct('/totalOneDay');
+
+
+    function showBill() {
+
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order/showBill",
+        }).done((data) => {
+            $.each(data, (i, item) => {
+                let str = `
+                <tr>
+                <td>${item.username} Vừa bán đơn hàng với giá ${FormatMoney(data[0].total)} ₫ lúc ${moment(item.dates).minutes()} phút trước </td>
+                </tr>
+                `;
+                $("#showBill").append(str);
+            })
+        });
+    }
+
+    showBill();
+
+    //total to day
+    function renderToTalToDay() {
+        $.ajax({
+            headers: {
+                "accept": "application/json",
+                "content-type": "application/json"
+            },
+            type: "GET",
+            url: location.origin + "/api/order/allTotalToDay",
+        }).done((data) => {
+            let str = `
+                <tr>
+                <td>${FormatMoney(data[0].total)} ₫</td>
+                </tr>
+                `;
+            $("#totalInDay").append(str);
+        });
+    }
+
+    renderToTalToDay();
+>>>>>>> development
 </script>
 </body>
 </html>
