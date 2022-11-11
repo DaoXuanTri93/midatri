@@ -38,7 +38,6 @@ function login() {
         data: JSON.stringify(userLogin)
     })
         .done((data) => {
-            console.log(data)
             iziToast.success(
                         {
                             timeout: 2000,
@@ -47,7 +46,6 @@ function login() {
                             message: "Đăng nhập thành công !"
                         });
             setTimeout(()=>{
-                // load("/orders",data)
                 window.location.href = "/orders"
             },1000)
         })
@@ -56,7 +54,7 @@ function login() {
                 {
                     timeout: 2000,
                     position: 'topRight',
-                    title: 'OK',
+                    title: 'Lỗi',
                     message: 'Tài khoản không đúng, xin nhập lại.'
                 });
         })

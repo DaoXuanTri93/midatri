@@ -8,10 +8,7 @@ import vn.midatri.dto.booking.CreateBookingParam;
 import vn.midatri.dto.booking.BookingResult;
 import vn.midatri.exceptions.NotFoundException;
 import vn.midatri.mapper.BookingMapper;
-import vn.midatri.repository.BookingItemRepository;
-import vn.midatri.repository.BookingRepository;
-import vn.midatri.repository.ItemRepository;
-import vn.midatri.repository.TableTopRepository;
+import vn.midatri.repository.*;
 import vn.midatri.repository.model.*;
 import vn.midatri.service.IBookingService;
 
@@ -32,6 +29,9 @@ public class BookingService implements IBookingService {
     private BookingItemRepository bookingItemRepository;
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private BookingMapper bookingMapper;
 
@@ -61,6 +61,7 @@ public class BookingService implements IBookingService {
     @Transactional
     public BookingResult booking(CreateBookingParam param) {
         Optional<TableTop> tableTopOptional = tableTopRepository.findById(param.getTabletopId());
+//        User user = userRepository.findByUserNameAndPassword("admin","12345678");
         if (tableTopOptional.isEmpty())
             throw new NotFoundException("Bàn  " + param.getTabletopId() + " không tìm thấy !!!");
         tableTopOptional.ifPresent(tableTop -> {

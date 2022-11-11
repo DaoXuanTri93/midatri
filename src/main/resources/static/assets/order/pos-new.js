@@ -694,6 +694,7 @@ function handlePay(tableTopId) {
                 })
                 let orderParam = bookingMap.get(tableTopId);
                 let orderItemParam = bookingItemTableTopMap.get(tableTopId);
+                console.log(orderParam)
                 api.order.create(orderParam, (data) => {
                     api.orderItem.create(orderItemParam, (data) => {
                         api.bookingItem.removeBookingItemByBooking(c, (data) => {

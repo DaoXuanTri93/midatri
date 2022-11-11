@@ -102,7 +102,7 @@ public class UserApi {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginUser")
     public ResponseEntity<?> restoreUser(@RequestBody UserLogin userLogin) {
         User user = userService.findByUserNameAndPassword(userLogin.getUserName(), userLogin.getPassword());
 
