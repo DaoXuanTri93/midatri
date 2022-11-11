@@ -39,10 +39,11 @@ public class OrderItemApi {
         List<OrderItemResult> orderItemResults = orderItemService.findAll();
         return new ResponseEntity<>(orderItemResults, HttpStatus.OK);
     }
+
     @GetMapping("/{orderId}")
-    public ResponseEntity<?> findAllByOrderId(@PathVariable Long orderId ){
+    public ResponseEntity<?> findAllByOrderId(@PathVariable Long orderId) {
         List<OrderItemResult> orderItemResults = orderItemService.findAllByOrderId(orderId);
-        return new ResponseEntity<>(orderItemResults,HttpStatus.OK);
+        return new ResponseEntity<>(orderItemResults, HttpStatus.OK);
     }
 
     @GetMapping("/findToday")
@@ -50,32 +51,37 @@ public class OrderItemApi {
         List<Goods> goods = orderItemService.findAllByToDay();
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
+
     @GetMapping("/findLastDay")
     public ResponseEntity<?> findAllByLastDay() {
         List<Goods> goods = orderItemService.findAllByLastDay();
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
+
     @GetMapping("/findToMonth")
     public ResponseEntity<?> findAllByToMonth() {
         List<Goods> goods = orderItemService.findAllByToMonth();
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
+
     @GetMapping("/findLastMonth")
     public ResponseEntity<?> findAllByLastMonth() {
         List<Goods> goods = orderItemService.findAllByLastMonth();
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
+
     @GetMapping("/findSevenDay")
     public ResponseEntity<?> findAllBySevenDay() {
         List<Goods> goods = orderItemService.findAllBySevenDay();
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
+
     @GetMapping("/findByBetween")
-    public ResponseEntity<?> findAllByBetween(String ToDay , String FromDay) throws ParseException {
-        SimpleDateFormat formatter2 =new SimpleDateFormat("dd-MM-yyyy");
+    public ResponseEntity<?> findAllByBetween(String ToDay, String FromDay) throws ParseException {
+        SimpleDateFormat formatter2 = new SimpleDateFormat("dd-MM-yyyy");
         Date fistDate = formatter2.parse(ToDay);
         Date secondDate = formatter2.parse(FromDay);
-        List<Goods> goods = orderItemService.findAllByCreateAtBetween(fistDate,secondDate);
+        List<Goods> goods = orderItemService.findAllByCreateAtBetween(fistDate, secondDate);
         return new ResponseEntity<>(goods, HttpStatus.OK);
     }
 
@@ -84,7 +90,7 @@ public class OrderItemApi {
         OrderItemParam orderItemParam = new OrderItemParam();
         long orderId = orderItemService.findMaxId();
         Optional<Order> orderOptional = orderRepository.findById(orderId);
-        if (orderOptional.isEmpty()){
+        if (orderOptional.isEmpty()) {
             throw new NotFoundException("not found id");
         }
         Order order = orderOptional.get();
@@ -110,8 +116,8 @@ public class OrderItemApi {
     }
 
     @GetMapping("/billToDay")
-    public ResponseEntity<?> billToDay(){
-        return new ResponseEntity<>(orderRepository.totalOrderItem(),HttpStatus.OK);
+    public ResponseEntity<?> billToDay() {
+        return new ResponseEntity<>(orderRepository.totalOrderItem(), HttpStatus.OK);
     }
 
 }

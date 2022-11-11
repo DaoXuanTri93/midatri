@@ -1,6 +1,4 @@
-let bookingItemAll;
-let setLocalKitchen;
-let getLocalKitChen;
+
 let all;
 
 function renderAllBookingItem() {
@@ -10,9 +8,12 @@ function renderAllBookingItem() {
 
     api.bookingItem.findAll((data) => {
         all = data;
+        $("#renderKitchen div").remove();
+        $("#renderCooking div").remove();
         renderAllKitchen(all);
         renderAllCooking(all);
         $("#spinner-div").hide();
+        // setInterval(renderAllBookingItem, 3000)
     }, (jqXHR) => {
 
     })
@@ -28,15 +29,15 @@ function renderAllKitchen(all) {
 }
 
 
-function renderAllCookingStart() {
-    api.bookingItem.findAllBookingItemStatusCooking((done) => {
-        $.each(done, (i, item) => {
-            renderCooking(i, item)
-        })
-    }, (jqXHR) => {
-
-    })
-}
+// function renderAllCookingStart() {
+//     api.bookingItem.findAllBookingItemStatusCooking((done) => {
+//         $.each(done, (i, item) => {
+//             renderCooking(i, item)
+//         })
+//     }, (jqXHR) => {
+//
+//     })
+// }
 
 function renderAllCooking(all) {
     $.each(all, (i, cooked) => {
