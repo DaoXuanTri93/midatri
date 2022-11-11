@@ -34,7 +34,6 @@ public interface IOrderService {
 
     List<Chart> allTotalToDay();
     List<Chart> allTotalMonth();
-    List<Chart> showBill();
 
     List<OrderResult> findSevenDay();
     List<OrderResult> findThisMonth(@Param("createAt")Date createAt);

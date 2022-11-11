@@ -81,7 +81,7 @@
         $("#tblRestore").DataTable({
             ajax: {
                 contentType: 'application/json',
-                url: location.origin + "/users/renderBlockUser",
+                url: "http://localhost:8080/api/users/renderBlockUser",
                 type: "GET",
                 dataSrc: ''
             },

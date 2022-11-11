@@ -57,7 +57,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: location.origin + "/api/users/" + id
+                url: "http://localhost:8080/api/users/" + id
             })
                 .done((data) => {
                     console.log(data);
@@ -93,14 +93,14 @@
                         "content-type": "application/json"
                     },
                     type: "PUT",
-                    url: location.origin + "/users/deleted/" + id,
+                    url: "http://localhost:8080/api/users/deleted/" + id,
                     data: JSON.stringify(idUserDel)
                 }).done(function (data) {
 
                     $('#tblUser').DataTable().ajax.reload();
                     $('#modalDelete').modal("hide");
                     $("#frmDeleteUser")[0].reset();
-                }).fail(function (resp) {
+                }).fail(function (resp){
                     console.log(resp);
                     Swal.fire({
                         icon: 'error',

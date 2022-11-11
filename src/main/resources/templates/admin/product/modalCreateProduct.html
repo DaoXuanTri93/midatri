@@ -51,14 +51,8 @@
                         <div class="row">
                             <label class="form-label fw-bold ">Hình Ảnh</label>
                             <div class="mb-3 text-center ">
-<!--                                <input id="uploadCre" type="file" accept="image/*"  hidden/>-->
-                                <input id="uploadCre" name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_id" data-form-data="{ &quot;upload_preset&quot;:  &quot;qspgidwe&quot;,
-                                     &quot;callback&quot;: &quot;https://www.example.com/cloudinary_cors.html&quot;}" hidden></input>
+                                <input id="uploadCre" type="file" accept="image/*"  hidden/>
                                 <img id="previewImg" width="150px" class="img-circle mb-2 " src="/assets/img/Logo.png"/>
-                            </div>
-                            <div class="progress " hidden>
-                                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0% ;" aria-valuenow="0"
-                                     aria-valuemin="0" aria-valuemax="100" ></div>
                             </div>
                         </div>
                         <div class="row">
@@ -78,24 +72,11 @@
         </div>
     </div>
     <script src="/assets/admin/App.js"></script>
-    <script src="/assets/admin/js/cloudinary/jquery.ui.widget.js"></script>
-
-    <script src="/assets/admin/js/cloudinary/jquery.cloudinary.js" type="text/javascript"></script>
-    <script src="/assets/admin/js/cloudinary/load-image.all.min.js"></script>
-    <script src="/assets/admin/js/cloudinary/canvas-to-blob.min.js"></script>
-    <script src="/assets/admin/js/cloudinary/jquery.iframe-transport.js" type="text/javascript"></script>
-    <script src="/assets/admin/js/cloudinary/jquery.fileupload.js" type="text/javascript"></script>
-    <script src="/assets/admin/js/cloudinary/jquery.fileupload-process.js"></script>
-    <script src="/assets/admin/js/cloudinary/jquery.fileupload-image.js" type="text/javascript"></script>
-    <script src="/assets/admin/js/cloudinary/jquery.fileupload-validate.js"></script>
-<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"-->
-<!--            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"-->
-<!--            crossorigin="anonymous"></script>-->
     <script>
-        let img ;
         $("#previewImg").on('click', function () {
             $("#uploadCre").trigger('click');
         })
+
         $('#uploadCre').change(function () {
             const file = this.files[0];
             if (file) {
@@ -106,44 +87,6 @@
                 reader.readAsDataURL(file);
             }
         });
-        $.cloudinary.config({
-            api_key: 575651619279873,
-            // api_secret: "_JEPI5be7qQuCaUYS7m_07RidI4",
-            // cloud_name: 'dawjpku04',
-            secure: true
-        });
-        $(document).ready(function () {
-            if ($.fn.cloudinary_fileupload !== undefined) {
-                $("input.cloudinary-fileupload[type=file]").cloudinary_fileupload({
-                    disableImageResize: false,
-                    // imageMaxWidth: 800,                           // 800 is an example value
-                    // imageMaxHeight: 600,                          // 600 is an example value
-                    maxFileSize: 20000000,                        // 20MB is an example value
-                    loadImageMaxFileSize: 200000000,               // default is 10MB
-                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png|bmp|ico)$/i
-                });
-            }
-        });
-        $("input.cloudinary-fileupload[type=file]")
-            .on('fileuploadadd', function (e, data) {
-                const file = data.files[0];
-                if (file) {
-                    let reader = new FileReader();
-                    reader.onload = function (event) {
-                        $('#previewImg').attr('src', event.target.result);
-                    }
-                    reader.readAsDataURL(file);
-                }
-            })
-            .on('fileuploaddone', function (e, data) {
-                $('.progress').attr('hidden','')
-              img= data.result.url;
-            })
-            .on('fileuploadprogress', function (e, data) {
-                $('.progress').removeAttr('hidden')
-                $(".progress-bar").css("width", `${data.loaded / data.total * 100}%`);
-            })
-
 
         $('#btnCreateProduct').on('click', function () {
             createProduct();
@@ -184,9 +127,10 @@
             product.categoryId = $("#catalogsCreate").val();
             product.userId=1;
             product.deleted = false;
-            if(img!=null){
-                product.img = img;
+            if ($("#uploadCre")[0].files[0] != null) {
+                product.img = $("#uploadCre").val();
             }
+
             $.ajax({
                 headers: {
                     "accept": "application/json",
@@ -216,6 +160,48 @@
                             .always(function () {
                                 $(".loader").addClass('hide');
                             })
+        }
+
+        $("div.image-preview, div.file-name").on('click', function () {
+            $("#imageFile").trigger('click');
+        });
+        $("#imageFile").on('change', function () {
+            changeImagePreview();
+        });
+
+        function loadImageToCanvas(imageFile) {
+            $("section .image-preview canvas").css("display", "");
+            $("section .wrapper").addClass("active");
+            $("section .wrapper .content").css("opacity", 0);
+            let imageObj = new Image();
+            imageObj.onload = function () {
+                $("#canvas")[0].getContext('2d').width = imageObj.width;
+                $("#canvas")[0].getContext('2d').height = imageObj.height;
+                $("#canvas")[0].getContext('2d').drawImage(imageObj, 0, 0, imageObj.width, imageObj.height);
+            };
+            imageObj.src = URL.createObjectURL(imageFile)
+        }
+
+        function changeImagePreview() {
+            let imageFile = $("#imageFile")[0].files[0];
+            if (imageFile) {
+                let reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function (e) {
+                    if (e.target.readyState === FileReader.DONE) {
+                        loadImageToCanvas(imageFile);
+                    }
+                }
+            } else {
+                clearImagePreview();
+            }
+        }
+
+        function clearImagePreview() {
+            $("#imageFile")[0].files[0].val("");
+            $("section .image-preview canvas").css("display", "none");
+            $("section .wrapper").removeClass("active");
+            $("section .wrapper .content").css("opacity", 1);
         }
     </script>
 </th:block>

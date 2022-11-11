@@ -80,7 +80,7 @@
                     "content-type": "application/json"
                 },
                 type: "PUT",
-                url: location.origin + "/api/users/edit/" + editUser.id,
+                url: "http://localhost:8080/api/users/edit/" + editUser.id,
                 data: JSON.stringify(editUser)
 
             }).done(function (data) {
@@ -124,7 +124,7 @@
                     "Content-type": "application/json"
                 },
                 type: "GET",
-                url: location.origin + "/api/users/" + id
+                url: "http://localhost:8080/api/users/" + id
             })
                 .done((data) => {
                     $("#idEdit").val(data.id);

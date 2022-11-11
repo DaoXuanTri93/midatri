@@ -99,10 +99,6 @@ public class OrderService implements IOrderService {
     public List<Chart> totalMonth() {
         return orderRepository.totalMonth();
     }
-    @Override
-    public List<Chart> showBill() {
-        return orderRepository.showBill();
-    }
 
     @Override
     public List<Chart> allTotalToDay() {
