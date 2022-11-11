@@ -1,3 +1,4 @@
+
 let index = "*"
 let tabletops;
 let itemMap = new Map();
@@ -255,7 +256,8 @@ function booking(tabletopId, itemId) {
     let booking = bookingMap.get(tabletopId);
     if (booking === undefined) {
         let createBooking = {
-            tabletopId: tabletopId
+            tabletopId: tabletopId,
+            userId: getLoginUser().id
         }
 
         api.booking.booking(createBooking, (booking) => {
@@ -694,7 +696,7 @@ function handlePay(tableTopId) {
                 })
                 let orderParam = bookingMap.get(tableTopId);
                 let orderItemParam = bookingItemTableTopMap.get(tableTopId);
-                console.log(orderParam)
+                console.log("order",orderParam)
                 api.order.create(orderParam, (data) => {
                     api.orderItem.create(orderItemParam, (data) => {
                         api.bookingItem.removeBookingItemByBooking(c, (data) => {
@@ -879,7 +881,8 @@ function handlePay(tableTopId) {
                 $("#addressBills span").text(booking.address);
                 $("#timeSendBills span").text(moment().format('LTS'));
                 $("#timeInput span").text(moment(booking.createAt).format('LTS'));
-                $("#userBills span").text(userMap.get(booking.userId).userName);
+                let userNameBills = getLoginUser().fullName
+                $("#userBills span").text(userNameBills);
                 $("#customerBills span").text((booking.fullName) != null ? (booking.fullName) : "Khách Lẻ")
 
             },
@@ -1045,3 +1048,12 @@ function renderAll() {
 
 renderAll();
 
+function getLoginUser() {
+    return JSON.parse(window.localStorage.getItem("userLogin"));
+}
+
+$(document).ready(() => {
+    let loginUser = getLoginUser();
+    $('#headerUsername').text("Thu Ngân " + " -  " + loginUser.fullName);
+
+})

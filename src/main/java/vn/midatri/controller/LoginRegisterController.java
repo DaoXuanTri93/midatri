@@ -14,29 +14,9 @@ import vn.midatri.repository.model.User;
 @RequestMapping("/login")
 public class LoginRegisterController {
 
-    @Autowired
-    private UserRepository userRepository;
-//    @GetMapping()
-//    public ModelAndView Login(){
-//
-//        return new ModelAndView("/admin/login-register");
-//    }
-
-
     @GetMapping()
-    public String login(Model model){
-        User user = new User();
-        model.addAttribute("user",user);
-        return "/admin/login-register";
-    }
+    public ModelAndView login(){
 
-    @PostMapping()
-    public ModelAndView loginUser(@ModelAttribute User user){
-        User userLogin = new User();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/orders");
-        userRepository.findByUserNameAndPassword(user.getUserName(), user.getPassword());
-        modelAndView.addObject("user", user);
-        return modelAndView;
+        return new ModelAndView("/admin/login-register");
     }
 }

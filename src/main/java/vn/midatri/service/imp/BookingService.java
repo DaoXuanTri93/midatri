@@ -14,6 +14,7 @@ import vn.midatri.service.IBookingService;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -61,7 +62,6 @@ public class BookingService implements IBookingService {
     @Transactional
     public BookingResult booking(CreateBookingParam param) {
         Optional<TableTop> tableTopOptional = tableTopRepository.findById(param.getTabletopId());
-//        User user = userRepository.findByUserNameAndPassword("admin","12345678");
         if (tableTopOptional.isEmpty())
             throw new NotFoundException("Bàn  " + param.getTabletopId() + " không tìm thấy !!!");
         tableTopOptional.ifPresent(tableTop -> {
@@ -73,8 +73,12 @@ public class BookingService implements IBookingService {
         TableTop tabletop = tableTopOptional.get();
         List<Booking> bookings = bookingRepository.findAllByTableTopIdAndStatusNot(param.getTabletopId(), BookingStatus.COMPLETE);
         if (bookings.isEmpty()) {
+            User user = userRepository.findUserById(param.getUserId());
+            if (Objects.isNull(user)) {
+                throw new NotFoundException("Không thể tìm thấy user bằng thông tin đã cho.");
+            }
 
-            Booking newBooking = new Booking(param.getTabletopId(), 1L);
+            Booking newBooking = new Booking(param.getTabletopId(), user.getId());
             newBooking.setCreateAt(Instant.now());
             newBooking.setStatus(BookingStatus.NEW);
             Booking booking = bookingRepository.save(newBooking);
