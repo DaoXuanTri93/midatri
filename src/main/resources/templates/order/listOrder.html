@@ -88,10 +88,10 @@
                                                       title="Xóa đơn"><i
                                                         class="fa-regular fa-xmark"></i></span>
                                             </li>
-                                            <li class="add-btn"><a class="btn btn-primary btn-icon-only"
-                                                                   href="javascript:void(0);"
-                                                                   title="Thêm đơn mới"><i class="fa-solid fa-plus"></i></a>
-                                            </li>
+<!--                                            <li class="add-btn"><a class="btn btn-primary btn-icon-only"-->
+<!--                                                                   href="javascript:void(0);"-->
+<!--                                                                   title="Thêm đơn mới"><i class="fa-solid fa-plus"></i></a>-->
+<!--                                            </li>-->
                                         </ul>
                                     </div>
                                 </kv-group-tabs>
@@ -138,7 +138,7 @@
                                 <div class="table-list product-list mt-5">
                                     <div class="swiper-container swiper-container-initialized swiper-container-horizontal">
                                         <div class="swiper-wrapper" style="transition-duration: 0ms;">
-                                            <div class="swiper-slide swiper-slide-active" style="width: 100%;">
+                                            <div class="swiper-slide swiper-slide-active" style="overflow: scroll;width: 100%;">
                                                 <ul tabindex="0" id="render-table">
 
                                                 </ul>
@@ -304,58 +304,58 @@
                                             </kv-customer-search>
                                         </div>
                                     </div>
-                                    <div class="form-actions-right">
-                                        <kendo-dropdownlist
-                                                class="price-book form-control-custom has-icon-left form-actions-item k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"
-                                                dir="ltr">
-                                       <span aria-haspopup="listbox" role="listbox" unselectable="on"
-                                             class="k-dropdown-wrap k-state-default"
-                                             id="k-4ab97e5e-5253-4331-ad17-6dfe9be79fb6"
-                                             dir="ltr"
-                                             readonly="false" tabindex="0" aria-readonly="false" aria-expanded="false"
-                                             aria-describedby="6591d021-0552-4eee-9bb4-75178765e75f"
-                                             aria-disabled="false"
-                                       ><span class="k-input"
-                                              unselectable="on" id="6591d021-0552-4eee-9bb4-75178765e75f">
-                                       Bảng giá chung
-                                       </span><span class="k-select" unselectable="on"><span
-                                               class="k-icon k-i-arrow-s"></span></span>
-                                       </span>
-                                        </kendo-dropdownlist>
-                                        <kv-select-purchase-channel class="form-actions-item">
-                                            <div class="sale-channel-dropdown" id="sale-channel-container"
-                                                 title="Kênh bán">
-                                                <button
-                                                        class="btn btn-light btn-icon-only" id="dropdown-button-id"><i
-                                                        title="Khách đến trực tiếp"
-                                                        class="fas fa-shopping-basket"></i></button>
-                                                <kv-search-sale-channel class="search-autocomplete">
-                                                    <div class="autocomplete" id="list-sale-channel-suggestion">
-                                                        <div class="output-complete">
-                                                            <div class="output-search-complete"><i
-                                                                    class="far fa-search"></i><input
-                                                                    class="form-control" kvselecttext="" type="text"
-                                                                    id="searchSaleChananelId"
-                                                                    placeholder=""></div>
-                                                            <ul>
-                                                            </ul>
-                                                            <ul class="ul-add-item">
-                                                                <li><a><i class="fa-regular fa-plus"></i> Thêm kênh bán</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </kv-search-sale-channel>
-                                            </div>
-                                        </kv-select-purchase-channel>
-                                        <div class="btn-group form-actions-item dropdown" dropdown="">
-                                            <button
-                                                    class="btn btn-light btn-icon-only dropdown-toggle"
-                                                    dropdowntoggle="" type="button"
-                                                    title="Tác vụ khác" aria-haspopup="true"><i
-                                                    class="fa-regular fa-ellipsis-vertical"></i></button>
-                                        </div>
-                                    </div>
+<!--                                    <div class="form-actions-right">-->
+<!--                                        <kendo-dropdownlist-->
+<!--                                                class="price-book form-control-custom has-icon-left form-actions-item k-widget k-dropdown k-header ng-untouched ng-pristine ng-valid"-->
+<!--                                                dir="ltr">-->
+<!--                                       <span aria-haspopup="listbox" role="listbox" unselectable="on"-->
+<!--                                             class="k-dropdown-wrap k-state-default"-->
+<!--                                             id="k-4ab97e5e-5253-4331-ad17-6dfe9be79fb6"-->
+<!--                                             dir="ltr"-->
+<!--                                             readonly="false" tabindex="0" aria-readonly="false" aria-expanded="false"-->
+<!--                                             aria-describedby="6591d021-0552-4eee-9bb4-75178765e75f"-->
+<!--                                             aria-disabled="false"-->
+<!--                                       ><span class="k-input"-->
+<!--                                              unselectable="on" id="6591d021-0552-4eee-9bb4-75178765e75f">-->
+<!--                                       Bảng giá chung-->
+<!--                                       </span><span class="k-select" unselectable="on"><span-->
+<!--                                               class="k-icon k-i-arrow-s"></span></span>-->
+<!--                                       </span>-->
+<!--                                        </kendo-dropdownlist>-->
+<!--                                        <kv-select-purchase-channel class="form-actions-item">-->
+<!--                                            <div class="sale-channel-dropdown" id="sale-channel-container"-->
+<!--                                                 title="Kênh bán">-->
+<!--                                                <button-->
+<!--                                                        class="btn btn-light btn-icon-only" id="dropdown-button-id"><i-->
+<!--                                                        title="Khách đến trực tiếp"-->
+<!--                                                        class="fas fa-shopping-basket"></i></button>-->
+<!--                                                <kv-search-sale-channel class="search-autocomplete">-->
+<!--                                                    <div class="autocomplete" id="list-sale-channel-suggestion">-->
+<!--                                                        <div class="output-complete">-->
+<!--                                                            <div class="output-search-complete"><i-->
+<!--                                                                    class="far fa-search"></i><input-->
+<!--                                                                    class="form-control" kvselecttext="" type="text"-->
+<!--                                                                    id="searchSaleChananelId"-->
+<!--                                                                    placeholder=""></div>-->
+<!--                                                            <ul>-->
+<!--                                                            </ul>-->
+<!--                                                            <ul class="ul-add-item">-->
+<!--                                                                <li><a><i class="fa-regular fa-plus"></i> Thêm kênh bán</a>-->
+<!--                                                                </li>-->
+<!--                                                            </ul>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </kv-search-sale-channel>-->
+<!--                                            </div>-->
+<!--                                        </kv-select-purchase-channel>-->
+<!--                                        <div class="btn-group form-actions-item dropdown" dropdown="">-->
+<!--                                            <button-->
+<!--                                                    class="btn btn-light btn-icon-only dropdown-toggle"-->
+<!--                                                    dropdowntoggle="" type="button"-->
+<!--                                                    title="Tác vụ khác" aria-haspopup="true"><i-->
+<!--                                                    class="fa-regular fa-ellipsis-vertical"></i></button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                             </kv-cashier-payment-info-top>
                             <div class="col-right-container" id="cashier_cart_list_item_container">

@@ -347,7 +347,7 @@
             var options2;
             $.each(data, (i, item) => {
                 total.push(item.total);
-                day.push(moment(item.dates).format());
+                day.push(moment(item.dates).date());
                 console.log("day: ", day);
             })
             options2 = {

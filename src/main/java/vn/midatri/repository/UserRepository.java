@@ -1,7 +1,10 @@
 package vn.midatri.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import vn.midatri.dto.TUserDTO;
+import vn.midatri.dto.TUserDTO1;
 import vn.midatri.dto.user.UserLogin;
 import vn.midatri.dto.user.UserResult;
 import vn.midatri.repository.model.User;
@@ -18,4 +21,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
     User save(UserResult userResult);
 //    User update(User user);
     User findByUserNameAndPassword(String userName, String password);
+
+    @Query(value = "SELECT * FROM test_view_user", nativeQuery = true)
+    List<TUserDTO> getAllTUserDTO();
+
+    @Query(value = "call test_sp_user()", nativeQuery = true)
+    List<TUserDTO1> getAllTUserDTO1();
 }
