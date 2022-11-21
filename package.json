@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "datatables.net-datetime": "^1.1.2",
-    "izitoast": "^1.4.0"
-  }
-}
