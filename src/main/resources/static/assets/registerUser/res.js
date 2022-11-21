@@ -21,7 +21,7 @@ function registerUser() {
         data: JSON.stringify(user)
     })
         .done((data) => {
-            alert("dang ky thanh cong")
+            alert("Đăng ký thành công")
             window.location.href = "/login"
         })
 }
