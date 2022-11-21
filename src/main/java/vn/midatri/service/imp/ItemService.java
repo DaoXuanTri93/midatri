@@ -57,7 +57,7 @@ public class ItemService implements vn.midatri.service.ItemService {
     @Transactional(readOnly = true)
     public ItemResult findById(Long id) {
         Optional<Item> itemOptional = itemRepository.findById(id);
-        if (itemOptional.isEmpty()){
+        if (!itemOptional.isPresent()){
             throw new NotFoundException("Not Found id "+id);
         }
         return itemMapper.toDTO(itemOptional.get());

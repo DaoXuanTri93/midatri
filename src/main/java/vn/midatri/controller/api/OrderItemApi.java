@@ -90,7 +90,7 @@ public class OrderItemApi {
         OrderItemParam orderItemParam = new OrderItemParam();
         long orderId = orderItemService.findMaxId();
         Optional<Order> orderOptional = orderRepository.findById(orderId);
-        if (orderOptional.isEmpty()) {
+        if (!orderOptional.isPresent()) {
             throw new NotFoundException("not found id");
         }
         Order order = orderOptional.get();

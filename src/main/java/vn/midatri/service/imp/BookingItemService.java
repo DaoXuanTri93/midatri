@@ -77,13 +77,13 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public void deleteAllByBookingId(long bookingId) {
         Optional<Booking> bookingOptional = bookingRepository.findById(bookingId);
-        if (bookingOptional.isEmpty()) {
+        if (!bookingOptional.isPresent()) {
             throw new NotFoundException("Not Found");
         }
         Booking booking = bookingOptional.get();
 
         Optional<TableTop> tableTopOptional = tableTopRepository.findById(booking.getTableTopId());
-        if (tableTopOptional.isEmpty()) {
+        if (!tableTopOptional.isPresent()) {
             throw new NotFoundException("Not Found");
         }
         TableTop tableTop = tableTopOptional.get();
@@ -97,7 +97,7 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public BookingItemResult create(BookingItemCreate param) {
         Optional<Item> itemOption = itemRepository.findById(param.getItemId());
-        if (itemOption.isEmpty())
+        if (!itemOption.isPresent())
             throw new NotFoundException("NOT FOUND !!!");
 
         BookingItem bookingItem
@@ -118,7 +118,7 @@ public class BookingItemService implements IBookingItemService {
     @Transactional(readOnly = true)
     public BookingItemResult findById(Long id) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
-        if (bookingItemOptional.isEmpty()) {
+        if (!bookingItemOptional.isPresent()) {
             throw new NotFoundException("Không tìm thấy ID : " + id);
         }
         BookingItem bookingItem = bookingItemOptional.get();
@@ -129,7 +129,7 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public void deletedBookingItem(Long id) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
-        if (bookingItemOptional.isEmpty()){
+        if (!bookingItemOptional.isPresent()){
             throw new NotFoundException("Không tìm thấy ID : " + id);
         }
 
@@ -141,7 +141,7 @@ public class BookingItemService implements IBookingItemService {
     public int increaseQuantity(long id) {
         Optional<BookingItem> optional = bookingItemRepository.findById(id);
 
-        if (optional.isEmpty())
+        if (!optional.isPresent())
             throw new NotFoundException("BookingItem not found");
 
         BookingItem bookingItem = optional.get();
@@ -156,7 +156,7 @@ public class BookingItemService implements IBookingItemService {
     public int decreaseQuantity(long id) {
         Optional<BookingItem> optional = bookingItemRepository.findById(id);
 
-        if (optional.isEmpty())
+        if (!optional.isPresent())
             throw new NotFoundException("BookingItem not found");
 
         BookingItem bookingItem = optional.get();
@@ -173,7 +173,7 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public int updateQuantity(Long id, int quantity) {
         Optional<BookingItem> optional = bookingItemRepository.findById(id);
-        if (optional.isEmpty())
+        if (!optional.isPresent())
             throw new NotFoundException("BookingItem not found");
         BookingItem bookingItem = optional.get();
         bookingItem.setQuantity(quantity);
@@ -185,7 +185,7 @@ public class BookingItemService implements IBookingItemService {
     @Transactional
     public String updateNote(Long id, String content) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
-        if (bookingItemOptional.isEmpty()) {
+        if (!bookingItemOptional.isPresent()) {
             throw new NotFoundException("Note ko thành công");
         }
         BookingItem bookingItem = bookingItemOptional.get();
@@ -197,7 +197,7 @@ public class BookingItemService implements IBookingItemService {
     @Override
     public void updateStatus(Long id) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
-        if (bookingItemOptional.isEmpty()) {
+        if (!bookingItemOptional.isPresent()) {
             throw new NotFoundException("not found");
         }
         BookingItem bookingItem = bookingItemOptional.get();
@@ -214,7 +214,7 @@ public class BookingItemService implements IBookingItemService {
     @Override
     public void removeItem(long id) {
         Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(id);
-        if (bookingItemOptional.isEmpty()) {
+        if (!bookingItemOptional.isPresent()) {
             throw new NotFoundException("not found");
         }
         BookingItem bookingItem = bookingItemOptional.get();
@@ -227,7 +227,7 @@ public class BookingItemService implements IBookingItemService {
     public void updateAllStatus(BookingItemUpdateStatus[] bookingItemUpdateStatusArr) {
         for (BookingItemUpdateStatus bookingItemResult : bookingItemUpdateStatusArr) {
             Optional<BookingItem> bookingItemOptional = bookingItemRepository.findById(bookingItemResult.getId());
-            if (bookingItemOptional.isEmpty()) {
+            if (!bookingItemOptional.isPresent()) {
                 throw new NotFoundException("Not found " + bookingItemResult.getId());
             }
             bookingItemOptional.get().setId(bookingItemResult.getId());
