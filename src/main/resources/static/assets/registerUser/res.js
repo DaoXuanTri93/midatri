@@ -23,12 +23,8 @@ function registerUser() {
         contentType: 'application/json',
         data: JSON.stringify(user)
     })
-<<<<<<< HEAD
         .done((user) => {
-=======
-        .done((data) => {
             alert("Đăng ký thành công")
->>>>>>> bot
             window.location.href = "/login"
         })
 }
