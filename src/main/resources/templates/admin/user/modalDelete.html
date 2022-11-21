@@ -60,7 +60,7 @@
                 url: location.origin + "/api/users/" + id
             })
                 .done((data) => {
-                    console.log(data);
+                    // console.log(data);
                     $("#idDelete").val(data.id);
                     $("#usernameDelete").val(data.userName);
                     $("#fullnameDelete").val(data.fullName);
@@ -96,7 +96,7 @@
                     url: location.origin + "/users/deleted/" + id,
                     data: JSON.stringify(idUserDel)
                 }).done(function (data) {
-
+                    console.log(data);
                     $('#tblUser').DataTable().ajax.reload();
                     $('#modalDelete').modal("hide");
                     $("#frmDeleteUser")[0].reset();
