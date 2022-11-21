@@ -62,7 +62,7 @@ public class BookingService implements IBookingService {
     @Transactional
     public BookingResult booking(CreateBookingParam param) {
         Optional<TableTop> tableTopOptional = tableTopRepository.findById(param.getTabletopId());
-        if (tableTopOptional.isEmpty())
+        if (!tableTopOptional.isPresent())
             throw new NotFoundException("Bàn  " + param.getTabletopId() + " không tìm thấy !!!");
         tableTopOptional.ifPresent(tableTop -> {
             if (tableTop.getStatus() != TabletopStatus.AVAILABLE)
@@ -104,7 +104,7 @@ public class BookingService implements IBookingService {
     @Transactional
     public void saveCustomer(long id, BookingCustomerParam bookingCustomerParam) {
         Optional<Booking> bookingOptional = bookingRepository.findById(id);
-        if (bookingOptional.isEmpty()) {
+        if (!bookingOptional.isPresent()) {
             throw new NotFoundException("Not found id");
         }
         Booking booking = bookingOptional.get();
