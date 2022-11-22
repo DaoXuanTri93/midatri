@@ -91,20 +91,25 @@
         <div class="col-12">
             <div class="sale-statistic-inner notika-shadow mg-tb-30">
                 <div class="curved-ctn row d-flex">
-                    <div class="col-9 align-items-end">
-                        <div class="row d-flex">
-                            <h2 class="col-9">Doanh thu 7 ngày qua</h2>
-                            <div class="col-3">
-                                <select class="form-select" id="selectChart">
-                                    <option value="/chartLast7Day">7 ngày qua</option>
-                                    <option value="/chartByMonth">Tháng này</option>
-                                    <option value="/chartByLastMonth">Tháng trước</option>
-                                </select>
+                    <div class="col-9">
+                        <div class="sale-statistic-inner notika-shadow mg-tb-30">
+                            <div class="curved-ctn row d-flex">
+                                <div class="col-9 align-items-end">
+                                    <h2 class="col-9">Doanh thu hôm qua</h2>
+                                </div>
+
+                                <div class="col-3">
+                                    <select class="form-select col-3" id="selectChart2">
+                                        <option value="/chartLastDay">Hôm qua</option>
+                                        <option value="/chartLastDay">Hôm nay</option>
+                                    </select>
+                                </div>
+                                <div id="curved-line-chart 2">
+                                    <div id="myChart2">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div id="curved-line-chart 1">
-                            <div id="myChart">
-                            </div>
+
                         </div>
                     </div>
                     <div id="showBill" class="col-3 text-primary">
@@ -116,27 +121,25 @@
                 </div>
 
             </div>
+            <div class="col-12 align-items-end">
+                                        <div class="row d-flex">
+                                            <h2 class="col-9">Doanh thu 7 ngày qua</h2>
+                                            <div class="col-3">
+                                                <select class="form-select" id="selectChart">
+                                                    <option value="/chartLast7Day">7 ngày qua</option>
+                                                    <option value="/chartByMonth">Tháng này</option>
+                                                    <option value="/chartByLastMonth">Tháng trước</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="curved-line-chart 1">
+                                            <div id="myChart">
+                                            </div>
+                                        </div>
+                                    </div>
         </div>
-        <div class="col-12">
-            <div class="sale-statistic-inner notika-shadow mg-tb-30">
-                <div class="curved-ctn row d-flex">
-                    <div class="col-9 align-items-end">
-                        <h2>Doanh thu hôm qua</h2>
-                        <div id="curved-line-chart 2">
-                            <div id="myChart2">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <select class="form-select col-3" id="selectChart2">
-                                <option value="/chartLastDay">Hôm qua</option>
-                                <option value="/chartByDay">Hôm nay</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
+
     </div>
 </div>
 </div>
@@ -204,7 +207,7 @@
                 },
                 plotOptions: {
                     bar: {
-                        // columnWidth: '15%',
+                        columnWidth: '40px',
                         borderRadius: 4,
                         horizontal: true,
                     }
@@ -260,7 +263,7 @@
                 },
 
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                 },
                 xaxis: {
                     categories: [...day],
@@ -304,14 +307,14 @@
                 },
                 plotOptions: {
                     bar: {
-                        // columnWidth: '15%',
+                        columnWidth: "40px",
                         borderRadius: 4,
                         horizontal: false,
                     }
                 },
 
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                 },
                 xaxis: {
                     categories: [...day],
@@ -354,18 +357,21 @@
                 },
                 plotOptions: {
                     bar: {
-                        columnWidth: '40%',
+                        columnWidth: '30px',
                         borderRadius: 4,
                         horizontal: false,
-                    }
+                        // label : {offsetY : 0},
+                        // label : {offsetX : 0}
+                    },
                 },
-                grid : {
-                    left : 30,
-                    right : 30
-                },
+                grid: {
+                    left: 30,
+                    right: 30
+                }
+                ,
 
                 dataLabels: {
-                    enabled: true,
+                    enabled: false,
                 },
                 xaxis: {
                     categories: [...day],
