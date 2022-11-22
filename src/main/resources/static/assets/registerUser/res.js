@@ -5,7 +5,6 @@ $("#submitLogin").on('click', () => {
     login();
 })
 
-window.localStorage.setItem("userLogin", undefined);
 
 let userLogin;
 function registerUser() {
@@ -41,6 +40,7 @@ function login() {
         data: JSON.stringify(userLogin)
     })
         .done((data) => {
+            console.log("usser", userLogin)
             setLoginUserToLocalStored(data);
             iziToast.success(
                         {
@@ -79,15 +79,9 @@ function notLoginDashboard(){
         contentType: 'application/json',
         data: JSON.stringify(userLogin)
     })
-        .done((data) => {
-            setLoginUserToLocalStored(data);
-            iziToast.success(
-                {
-                    timeout: 2000,
-                    position: 'topRight',
-                    title: 'OK',
-                    message: "Đăng nhập thành công !"
-                });
+        .done((userLogin) => {
+            console.log("usser", userLogin)
+            setLoginUserToLocalStored(userLogin);
             window.location.href = "/dashboard"
         })
         .fail((jqXHR) => {
@@ -111,15 +105,8 @@ function notLoginOrder(){
         contentType: 'application/json',
         data: JSON.stringify(userLogin)
     })
-        .done((data) => {
-            setLoginUserToLocalStored(data);
-            iziToast.success(
-                {
-                    timeout: 2000,
-                    position: 'topRight',
-                    title: 'OK',
-                    message: "Đăng nhập thành công !"
-                });
+        .done((userLogin) => {
+            setLoginUserToLocalStored(userLogin);
             window.location.href = "/orders"
         })
         .fail((jqXHR) => {
