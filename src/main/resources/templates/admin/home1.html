@@ -20,93 +20,23 @@
             '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
         )
     </script>
-
-    <!--  <meta name="description" content="">-->
-    <!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <!--  &lt;!&ndash; favicon-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">-->
-    <!--  &lt;!&ndash; Google Fonts-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">-->
-    <!--  &lt;!&ndash; Bootstrap CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/bootstrap.min.css">-->
-    <!--  &lt;!&ndash; Bootstrap CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/font-awesome.min.css">-->
-    <!--  &lt;!&ndash; owl.carousel CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/owl.carousel.css">-->
-    <!--  <link rel="stylesheet" href="css/owl.theme.css">-->
-    <!--  <link rel="stylesheet" href="css/owl.transitions.css">-->
-    <!--  &lt;!&ndash; meanmenu CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/meanmenu/meanmenu.min.css">-->
-    <!--  &lt;!&ndash; animate CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/animate.css">-->
-    <!--  &lt;!&ndash; normalize CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/normalize.css">-->
-    <!--  &lt;!&ndash; mCustomScrollbar CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/scrollbar/jquery.mCustomScrollbar.min.css">-->
-    <!--  &lt;!&ndash; jvectormap CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/jvectormap/jquery-jvectormap-2.0.3.css">-->
-    <!--  &lt;!&ndash; notika icon CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/notika-custom-icon.css">-->
-    <!--  &lt;!&ndash; wave CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/wave/waves.min.css">-->
-    <!--  &lt;!&ndash; main CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/main.css">-->
-    <!--  &lt;!&ndash; style CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="style.css">-->
-    <!--  &lt;!&ndash; responsive CSS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <link rel="stylesheet" href="css/responsive.css">-->
-    <!--  &lt;!&ndash; modernizr JS-->
-    <!--      ============================================ &ndash;&gt;-->
-    <!--  <script src="js/vendor/modernizr-2.8.3.min.js"></script>-->
     <th:block th:replace="/admin/layout/head::head"/>
     <th:block th:replace="/admin/layout/navBar :: navBar"/>
-
-
 </head>
 
 <body>
-<!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
-<!-- Start Header Top Area -->
-
-<!-- End Header Top Area -->
-<!-- Mobile Menu start -->
 <div class="mobile-menu-area">
     <div class="container">
 
     </div>
 </div>
-<!-- Mobile Menu end -->
-<!-- Main Menu area start-->
-<!---->
 </div>
-<!-- Main Menu area End-->
-<!-- Start Status area -->
-<!-- <div class="notika-status-area"> -->
 <div class="container">
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
             <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30">
                 <div class="white-box analytics-info">
                     <h4 class="box-title">Doanh thu bán hàng hôm nay</h4>
-
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li>
                             <i class="fa fa-dollar text-success" style="font-size: 50px"></i>
@@ -142,7 +72,6 @@
                     <h3 class="box-title">Doanh thu trong tháng</h3>
                     <ul class="list-inline two-part d-flex align-items-center mb-0">
                         <li>
-
                             <i class="fa fa-calendar text-info" style="font-size: 50px"></i>
                         </li>
                         <li class="ms-auto"><span class="counter text-info" id="totalToMonth"></span>
@@ -154,19 +83,9 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-            <div class="wb-traffic-inner notika-shadow sm-res-mg-t-30 tb-res-mg-t-30 dk-res-mg-t-30">
-                <div class="website-traffic-ctn">
-                    <h2><span class="counter">1,000</span></h2>
-                    <p>Total Support Tickets</p>
-                </div>
-                <div class="sparkline-bar-stats4">2,4,8,4,5,7,4,7,3,5,7,5</div>
-            </div>
-        </div> -->
     </div>
 </div>
 </div>
-
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -177,8 +96,6 @@
                             <h2 class="col-9">Doanh thu 7 ngày qua</h2>
                             <div class="col-3">
                                 <select class="form-select" id="selectChart">
-                                    <!--                                <option value="/chartLastDay">Hôm qua</option>-->
-                                    <!--                                <option value="/chartByDay">Hôm nay</option>-->
                                     <option value="/chartLast7Day">7 ngày qua</option>
                                     <option value="/chartByMonth">Tháng này</option>
                                     <option value="/chartByLastMonth">Tháng trước</option>
@@ -220,25 +137,6 @@
 
             </div>
         </div>
-        <!--        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">-->
-        <!--            <div class="statistic-right-area notika-shadow mg-tb-30 sm-res-mg-t-0">-->
-        <!--                <div class="past-day-statis">-->
-        <!--                    <h2 style="color: #0a53be">Top 7 hàng hóa bán chạy trong tuần qua</h2>-->
-        <!--                    <table id="bar-chart">-->
-        <!--                        <tr>-->
-        <!--                            <td>Tên sản phẩm</td>-->
-        <!--                            <td>Số doanh thu</td>-->
-        <!--                        </tr>-->
-        <!--                    </table>-->
-        <!--                </div>-->
-        <!--                <div class="dash-widget-visits"></div>-->
-        <!--                <div class="past-statistic-an">-->
-        <!--                    <div class="past-statistic-graph">-->
-        <!--                        <div class="stats-bar"></div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
     </div>
 </div>
 </div>
@@ -261,15 +159,10 @@
                     </select>
                 </div>
                 <div id="chart1">
-
                 </div>
             </div>
-
         </div>
-
     </div>
-
-
 </div>
 <th:block th:replace="/admin/layout/script :: script"/>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -360,7 +253,7 @@
                 },
                 plotOptions: {
                     bar: {
-                        columnWidth: '15%',
+                        columnWidth: '13%',
                         borderRadius: 4,
                         horizontal: false,
                     }
@@ -461,10 +354,14 @@
                 },
                 plotOptions: {
                     bar: {
-                        // columnWidth: '15%',
+                        columnWidth: '40%',
                         borderRadius: 4,
                         horizontal: false,
                     }
+                },
+                grid : {
+                    left : 30,
+                    right : 30
                 },
 
                 dataLabels: {
