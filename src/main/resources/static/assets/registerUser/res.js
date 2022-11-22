@@ -68,7 +68,7 @@ function setLoginUserToLocalStored(loginUser) {
 }
 
 
-function notLogin(){
+function notLoginDashboard(){
     let userLogin = {
         userName: "admin2",
         password: "123456789"
@@ -100,5 +100,36 @@ function notLogin(){
                 });
         })
 }
-
+function notLoginOrder(){
+    let userLogin = {
+        userName: "admin2",
+        password: "123456789"
+    };
+    $.ajax({
+        url: `${location.origin}/api/users/loginUser`,
+        type: "POST",
+        contentType: 'application/json',
+        data: JSON.stringify(userLogin)
+    })
+        .done((data) => {
+            setLoginUserToLocalStored(data);
+            iziToast.success(
+                {
+                    timeout: 2000,
+                    position: 'topRight',
+                    title: 'OK',
+                    message: "Đăng nhập thành công !"
+                });
+            window.location.href = "/orders"
+        })
+        .fail((jqXHR) => {
+            iziToast.error(
+                {
+                    timeout: 2000,
+                    position: 'topRight',
+                    title: 'Lỗi',
+                    message: 'Tài khoản không đúng, xin nhập lại.'
+                });
+        })
+}
 
