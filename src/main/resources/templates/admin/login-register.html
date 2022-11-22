@@ -5,6 +5,19 @@
     <title>Login Register</title>
     <link rel="stylesheet" href="/toast/iziToast.min.css">
     <th:block th:replace="/admin/layout/head::head"/>
+    <style>
+        .ress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: red;
+        }
+        .ress1 {
+            top: 50px;
+            left: 10px;
+        }
+
+    </style>
 </head>
 <body>
 <!--[if lt IE 8]>
@@ -44,12 +57,7 @@
                         class="notika-icon notika-plus-symbol"></i> <span>Register</span></a>
                 <a href="#" data-ma-action="nk-login-switch" data-ma-block="#l-forget-password"><i>?</i> <span>Forgot Password</span></a>
             </div>
-            <div>
-                <button class="btn btn-outline-success my-3" onclick="notLogin()"><a style="color: white" href="/dashboard">Vào dashboard Không Cần Đăng Nhập</a></button>
-            </div>
-            <div>
-                <button class="btn btn-outline-success my-3" onclick="notLogin()"><a style="color: white" href="/orders">Vào Order Không Cần Đăng Nhập</a></button>
-            </div>
+
         </div>
         <!-- Register -->
         <!--        <div class="nk-block" id="l-register">-->
@@ -144,6 +152,13 @@
         <!--    </div>-->
     </div>
 </form>
+
+<div>
+    <button class="btn btn-outline-success my-3 ress" onclick="notLoginDashboard()"><a style="color: white" >Vào dashboard Không Cần Đăng Nhập</a></button>
+</div>
+<div>
+    <button class="btn btn-outline-success my-3 ress ress1" onclick="notLoginOrder()"><a style="color: white">Vào Order Không Cần Đăng Nhập</a></button>
+</div>
 <!-- Login Register area End-->
 <script defer src="/assets/registerUser/res.js"></script>
 <script defer src="/jquery-validation/dist/jquery.validate.min.js"></script>
