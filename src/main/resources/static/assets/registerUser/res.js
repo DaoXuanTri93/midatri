@@ -5,7 +5,7 @@ $("#submitLogin").on('click', () => {
     login();
 })
 
-window.localStorage.setItem("userLogin", undefined);
+// window.localStorage.setItem("userLogin", undefined);
 
 let userLogin;
 function registerUser() {
