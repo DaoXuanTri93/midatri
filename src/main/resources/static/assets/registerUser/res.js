@@ -6,6 +6,7 @@ $("#submitLogin").on('click', () => {
 })
 
 
+
 let userLogin;
 function registerUser() {
     let rePass = $("#RePasswordCre").val();
