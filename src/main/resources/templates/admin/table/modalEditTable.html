@@ -81,15 +81,8 @@
             ).fail(function (jqXHR) {
                 console.log(jqXHR);
                 Toast.warning("update lỗi");
-                // Toast.warning("Dữ liệu bạn nhập không chính xác");
-                //     Swal.fire({
-                //         icon: 'error',
-                //         title: 'Oops...',
-                //         text: "Dữ liệu bạn nhập không chính xác!!",
-                //     })
             })
         }
-
         function handlerShowTableEdit(id) {
            return  $.ajax({
                 headers: {
@@ -108,7 +101,6 @@
                     $("#modalEditTable").modal("show");
                 })
         }
-
         // end edit table
     </script>
 </th:block>

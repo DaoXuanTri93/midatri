@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
 
     <th:block th:replace="/admin/layout/head :: head"/>
     <meta charset="UTF-8">
     <title>Báo Cáo Ngày</title>
 </head>
-
 <body>
-
-
 <!-- Page Wrapper -->
 <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
@@ -42,12 +38,6 @@
                                     <tbody>
 
                                     </tbody>
-<!--                                    <tfoot >-->
-<!--                                    <tr>-->
-<!--                                        <th colspan="4" class="fw-bold" style="text-align:right">Tổng Doanh Thu :</th>-->
-<!--                                        <th style="text-align:right"></th>-->
-<!--                                    </tr>-->
-<!--                                    </tfoot>-->
                                 </table>
                             </div>
                         </div>
@@ -56,8 +46,6 @@
             </div>
         </div>
     </div>
-
-
     <th:block th:replace="/admin/layout/footer :: footer"/>
 </div>
 <th:block th:replace="/admin/layout/script :: script"/>
@@ -82,19 +70,6 @@
             },
             type: "GET",
             url: `${location.origin}/api/orderItem/findToday`,
-        })
-            .done((data)=>{
-               renderTableReportGoods(data)
-            })
-    }
-    function renderReportLastDay(){
-        $.ajax({
-            headers: {
-                "Accept": "application/json",
-                "Content-type": "application/json"
-            },
-            type: "GET",
-            url: `${location.origin}/api/orderItem/findLastDay`,
         })
             .done((data)=>{
                renderTableReportGoods(data)

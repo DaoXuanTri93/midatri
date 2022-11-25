@@ -22,7 +22,6 @@
                                 <label for="fullNameEdit" class="form-label fw-bold ">Tên người dùng:</label>
                                 <input type="text" class="form-control" id="fullNameEdit" name="fullNameEdit" required>
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col col-md-6">
@@ -38,8 +37,6 @@
                         <div class="row">
                             <div class="col col-md-6">
                                 <label for="bartenderEdit" class="form-label fw-bold"> Người chế biến:</label>
-<!--                                <input type="radio" name="check" id="true">Có</input>-->
-<!--                                <input type="radio" name="check" id="false">Không</input>-->
                                 <select class="form-select" id="bartenderEdit">
                                     <option value="true">Có</option>
                                     <option value="false">Không</option>
@@ -59,7 +56,6 @@
                     <button type="button" class="btn btn-secondary edit" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-outline-primary" id="btnEdit">Cập nhật</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -82,7 +78,6 @@
                 type: "PUT",
                 url: location.origin + "/api/users/edit/" + editUser.id,
                 data: JSON.stringify(editUser)
-
             }).done(function (data) {
                 console.log(data.vendor);
                 Swal.fire({
@@ -93,30 +88,17 @@
                     timer: 4000
                 })
                 let tableUser = $("#tblUser").DataTable();
-                // console.log(tableUser.row(editUser.id));
-                // tableUser.row().data({
-                //     "id": data.id,
-                //     "email": data.email,
-                //     "phone": data.phone,
-                //     "fullName": data.fullName,
-                //     "username": data.userName
-                // }).draw('full-hold');
-
                 tableUser.ajax.reload(null, false);
-
                 $("#modalEdit").modal("hide");
-
             }).fail((e) => {
                 console.log(e)
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: "Dữ liệu bạn nhập không chính xác!!",
-                    // footer: '<a href="">Why do I have this issue?</a>'
                 })
             })
         }
-
         function handlerShowUserEdit(id) {
             $.ajax({
                 headers: {
@@ -135,29 +117,12 @@
                     $("#vendorEdit").val(data.vendor);
                     $("#bartenderEdit").val(data.bartender);
                     $("#modalEdit").modal("show");
-                    // $("#idEdit").val(data.id);
                     console.log(data);
                 })
-
             $("#btnEdit").on('click', function () {
                 editUser();
 
             })
-            // $("#btnEdit").on('click', function () {
-            //     let currentRow = $(this).parents('tr');
-            //     editUser(currentRow);
-            //     $("#btnEdit").trigger("submit")
-            //
-            // })
-            //     .fail()
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Oops...',
-            //     text: 'Something went wrong!',
-                // footer: '<a href="">Why do I have this issue?</a>'
-            // })
-
         }
     </script>
-    <!--    <script src="/js/validateUser.js"></script>-->
 </th:block>

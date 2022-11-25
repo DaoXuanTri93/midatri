@@ -11,10 +11,6 @@
 </head>
 
 <body>
-<!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
 <th:block th:replace="/admin/layout/navBar :: navBar"/>
 <div class="breadcomb-area">
     <div class="container">
@@ -98,12 +94,6 @@
                 },
             ],
         });
-        // setInterval(function () {
-        //     table.ajax.reload(null, false); // user paging is not reset on reload
-        // }, 1000);
-        // table.on('select.dt deselect.dt', function () {
-        //     localStorage.setItem('DataTables_selected', table.rows({selected: true}).toArray())
-        // })
     });
 
     // restore table
@@ -156,8 +146,6 @@
         )
     }
 </script>
-
-
 <script type="module" src="/assets/admin/js/api/api.js"></script>
 </html>
 

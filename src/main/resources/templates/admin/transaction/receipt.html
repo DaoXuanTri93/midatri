@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
 
     <th:block th:replace="/admin/layout/head :: head"/>
     <meta charset="UTF-8">
     <title>Hóa Đơn</title>
 </head>
-
 <body>
 <div class="preloader">
     <div class="lds-ripple">
@@ -15,14 +13,10 @@
         <div class="lds-pos"></div>
     </div>
 </div>
-
-
 <!-- Page Wrapper -->
 <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
     <th:block th:replace="/admin/layout/navBar :: navBar"/>
-
-
     <!-- ============================================================== -->
     <!--Primary Content-->
     <div class="container-fluid">
@@ -41,7 +35,6 @@
                                 <div class="basic-tb-hd">
                                     <h1>Hóa Đơn</h1>
                                 </div>
-
                                 <div class="col mb-2">
                                     <div class="d-flex justify-content-end">
                                         <button type="button" class="btn btn-outline-success order ">
@@ -63,7 +56,6 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
                                     </tbody>
                                 </table>
 
@@ -132,12 +124,9 @@
     }
     function renderMapReceipt(data){
         let userName;
-
         $.each(data,(i,item)=>{
         if (item.userId === users[i].id){
             userName = users[i].userName;
-            console.log(userName)
-            console.log(i)
         }
            let str = `
                      <tr data-bs-toggle="collapse" data-bs-target="#id${item.id}"
@@ -254,17 +243,6 @@
                                                                            </tfoot>
                                                                     </table>
                                                                 </div>
-<!--                                                                <div class="row text-right">-->
-<!--                                                                    <div class="d-flex justify-content-end" >-->
-<!--                                                                        <button class="bg-success text-white me-2">-->
-<!--                                                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>-->
-<!--                                                                            Lưu</button>-->
-<!--                                                                        <button class="bg-danger text-white">-->
-<!--                                                                            <i class="fa fa-times" aria-hidden="true"></i>-->
-<!--                                                                             Hủy Bỏ-->
-<!--                                                                        </button>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
                                                             </div>
                                                         </form>
                                                     </div>
@@ -412,7 +390,6 @@
 
             }
         })
-
     }
     $("#to").val(toDay);
     $("#from").val(toDay);

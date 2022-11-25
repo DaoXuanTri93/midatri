@@ -60,7 +60,6 @@
                 url: location.origin + "/api/users/" + id
             })
                 .done((data) => {
-                    // console.log(data);
                     $("#idDelete").val(data.id);
                     $("#usernameDelete").val(data.userName);
                     $("#fullnameDelete").val(data.fullName);
@@ -71,12 +70,12 @@
                         Swal.fire({
                             title: 'Bạn có chắc muốn xóa người dùng này ',
                             showDenyButton: true,
-                            confirmButtonText: 'Dứt',
-                            denyButtonText: `Không nhé!!!`,
+                            confirmButtonText: 'Đồng Ý',
+                            denyButtonText: `Đóng!!!`,
                         }).then((result) => {
                             /* Read more about isConfirmed, isDenied below */
                             if (result.isConfirmed) {
-                                Swal.fire('Ô cê bạn ei!', '', 'success')
+                                Swal.fire('Đã xóa thành công!!!', '', 'success')
                                 deleteUser(data.id);
                             } else if (result.isDenied) {
                                 Swal.fire('Không bạn ơi', '', 'info')

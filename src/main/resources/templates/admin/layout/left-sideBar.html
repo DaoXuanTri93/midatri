@@ -14,14 +14,6 @@
                 </h3>
                 <div class="form-check " id="menuType">
                     <ul class="">
-                        <!--                            <li  class="">-->
-                        <!--                                <div class="blue">-->
-                        <!--                                    <input type="checkbox" id="action" class="thucDon" data-label="Đồ ăn" >-->
-                        <!--                                    <a href="javascript:void(0)" tabindex="0" class=""></a>-->
-                        <!--                                    <label  class="">Đồ ăn</label>-->
-                        <!--                                </div>-->
-                        <!--                            </li>-->
-
                     </ul>
                 </div>
             </div>
@@ -38,11 +30,6 @@
                 </h3>
                 <div class="" id="groupProduct">
                     <div>
-<!--                        <div class="">-->
-<!--                            <div class=""><i class="fa fa-search"></i>-->
-<!--                                <input type="text" placeholder="Tìm kiếm nhóm hàng">-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <div class="">
                             <div id="idProductCatTreeAll" onclick="handleFilterAllCategory()"
                                  class="fw-bold">
@@ -54,16 +41,6 @@
                             </div>
                             <div id="productCatTreeView">
                                 <ul class="" role="tree">
-                                    <!--                                        <li role="treeitem" class="" data-uid="">-->
-                                    <!--                                            <div class="" >-->
-                                    <!--                                            <span class="k-in">-->
-                                    <!--                                            <span id="bia"  onclick="`${alert('aaa')}`" >BIA &amp; THUỐC LÁ</span>-->
-                                    <!--                                            <a class="" onclick="`${alert('bb')}`" title="Sửa nhóm hàng">-->
-                                    <!--                                            <i class="fa fa-pencil"></i>-->
-                                    <!--                                        </a>-->
-                                    <!--                                        </span>-->
-                                    <!--                                            </div>-->
-                                    <!--                                        </li>-->
                                 </ul>
                             </div>
                         </div>
@@ -74,7 +51,6 @@
                 <h3 class="">
                     Lựa chọn hiển thị
                 </h3>
-
                 <div class="form-check">
                     <ul class="">
                         <li class="">
@@ -93,12 +69,6 @@
                                 <label class="form-check-label" for="ActiveRadio1">Hàng ngừng Kinh doanh</label>
                             </div>
                         </li>
-                        <!--                            <li class="">-->
-                        <!--                                <div class="">-->
-                        <!--                                    <input type="radio" class="form-check-input" id="ActiveRadio2" name="ActiveRadio" data-label="Tất cả" >-->
-                        <!--                                    <a href="javascript:void(0)" tabindex="0" class=""></a>-->
-                        <!--                                    <label  class="form-check-label" for="ActiveRadio2">Tất cả</label></div>-->
-                        <!--                            </li>-->
                     </ul>
                 </div>
             </div>
@@ -107,8 +77,6 @@
     <th:block th:replace="/admin/layout/script::script"/>
     <th:block th:replace="/admin/category/modalUpdateCategory::modalUpdateCategory"/>
     <th:block th:replace="/admin/category/modalCreateCategory::modalCreateCategory"/>
-
-
     <script>
         let categoryMap = new Map();
         $.ajax({

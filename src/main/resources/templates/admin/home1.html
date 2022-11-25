@@ -382,8 +382,6 @@
             myChart.render();
         })
     }
-
-    // ------------
     $('#selectChart').on('change', function () {
         let text = $('#selectChart').val();
         totalLastDay(text);
@@ -397,7 +395,6 @@
         let line1 = $('#selectChart2').val();
         renderChartInDay(line1);
     })
-
     // bill to day
     function renderBillToDay() {
         $.ajax({
@@ -416,7 +413,6 @@
             $("#billInDay").append(str);
         });
     }
-
     // Format money
     function FormatMoney(money) {
         let str = money.toString();
@@ -424,7 +420,6 @@
             return ((index % 3) ? next : (next + '.')) + prev;
         });
     }
-
     function renderToTalMonth() {
         $.ajax({
             headers: {
@@ -443,17 +438,12 @@
             $("#totalToMonth").append(str);
         });
     }
-
     renderChartInDay("/chartLastDay");
     renderToTalMonth();
-
     renderBillToDay();
     totalLast7Day('/chartLast7Day');
     renderChartProduct('/totalOneDay');
-
-
     function showBill() {
-
         $.ajax({
             headers: {
                 "accept": "application/json",
@@ -472,9 +462,7 @@
             })
         });
     }
-
     showBill();
-
     //total to day
     function renderToTalToDay() {
         $.ajax({
@@ -493,7 +481,6 @@
             $("#totalInDay").append(str);
         });
     }
-
     renderToTalToDay();
 </script>
 </html>

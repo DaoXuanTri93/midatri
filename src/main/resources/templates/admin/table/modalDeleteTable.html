@@ -15,7 +15,6 @@
                         <div class="row">
                             <div class="row">
                                 <input type="" id="idDelete" hidden>
-
                             </div>
                             <div class="row">
                                 <div class="col col-md-6">
@@ -72,13 +71,10 @@
                     },
                     type: "POST",
                     url: location.origin +  "/api/table-top/deleted/" + id,
-                    // data: JSON.stringify(idTableDel)
                 }).done(function (data) {
                     window.location.href = "/table-top"
                 })
             }
         }
-
     </script>
-
 </th:block>

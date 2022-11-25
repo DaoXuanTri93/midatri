@@ -14,7 +14,6 @@
                     <form id="frmCreateTable" class="createTable ">
                         <div class="row">
                             <div class="col col-md-6">
-                                <!--                                <label for="idTable" class="form-label fw-bold">Số thứ tự:</label>-->
                                 <input type="number" class="form-control" id="idTable" name="idTable"  hidden>
                             </div>
                             <div class="col col-md-12">
@@ -53,12 +52,10 @@
             </div>
         </div>
     </div>
-
     <script>
         $("#btnCreateTable").on("click", function () {
             $("#frmCreateTable").trigger("submit");
         });
-
         function CreateTable() {
             let NewTable = {
                 capacity: $('#capacityTable').val(),
@@ -74,7 +71,6 @@
                 type: 'POST',
                 url: location.origin + '/api/table-top/create',
                 data: JSON.stringify(NewTable)
-
             }).done(function (data) {
                 $.each(data, (i, item) => {
                     let str = `
@@ -98,8 +94,5 @@
             }
             )
         }
-
-
     </script>
-
 </th:block>
