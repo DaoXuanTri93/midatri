@@ -121,7 +121,6 @@ public class TableTop {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "ai cho mi vô")
     @NotNull(message = "Tên bàn bắt buộc phải có")
     @Column(name = "title", length = 45, nullable = false)
     private String title;
